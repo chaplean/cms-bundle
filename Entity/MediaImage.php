@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping AS ORM;
  *     indexes={@ORM\Index(name="width_INDEX", columns={"width"}),@ORM\Index(name="height_INDEX", columns={"height"})}
  * )
  */
-class MediaImage extends \Chaplean\Bundle\CmsBundle\Entity\Media
+class MediaImage extends Media
 {
     /**
      * @var integer

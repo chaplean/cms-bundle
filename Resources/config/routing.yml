@@ -1,3 +1,55 @@
-cms_index:
-    path: /
-    defaults: { _controller: ChapleanCmsBundle:Default:index }
+cms_page_list:
+    path:     /administration/pages
+    defaults: { _controller: ChapleanCmsBundle:Page:list }
+    options:
+        expose: true
+
+cms_page_edit:
+    path:     /administration/page/{pageId}
+    defaults: { _controller: ChapleanCmsBundle:Page:edit, pageId: null }
+    requirements:
+        pageId: \d+
+    options:
+        expose: true
+
+cms_page_content_by_path:
+    path:     /contenu/{pagePath}
+    defaults: { _controller: ChapleanCmsBundle:Page:index }
+    options:
+        expose: true
+
+cms_page_content_by_id:
+    path:     /contenu/page/{pageId}
+    defaults: { _controller: ChapleanCmsBundle:Page:identifier }
+    requirements:
+        pageId: \d+
+    options:
+        expose: true
+
+cms_post_list:
+    path:     /administration/posts
+    defaults: { _controller: ChapleanCmsBundle:Post:list }
+    options:
+        expose: true
+
+cms_post_edit:
+    path:     /administration/post/{postId}
+    defaults: { _controller: ChapleanCmsBundle:Post:edit, postId: null }
+    requirements:
+        postId: \d+
+    options:
+        expose: true
+
+cms_post_content_by_path:
+    path:     /contenu/{postPath}
+    defaults: { _controller: ChapleanCmsBundle:Content:index }
+    options:
+        expose: true
+
+cms_post_content_by_id:
+    path:     /contenu/post/{postId}
+    defaults: { _controller: ChapleanCmsBundle:Content:identifier }
+    requirements:
+        postId: \d+
+    options:
+        expose: true

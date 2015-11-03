@@ -1,0 +1,25 @@
+Chaplean\Bundle\CmsBundle\Entity\Page:
+    properties:
+        title:
+            - NotBlank:
+                message: general.not_blank
+                groups: ['edit_page']
+
+Chaplean\Bundle\CmsBundle\Entity\PageRoute:
+    properties:
+        path:
+            - NotBlank:
+                message: general.not_blank
+                groups: ['edit_page']
+        menuName:
+            - NotBlank:
+                message: general.not_blank
+                groups: ['edit_page']
+        page:
+            - NotBlank:
+                message: general.not_blank
+                groups: ['edit_page']
+            - Type:
+                type: object
+                message: general.not_blank
+                groups: ['edit_page']

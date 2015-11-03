@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="cl_file_extension_image")
  */
-class FileExtensionImage extends \Chaplean\Bundle\CmsBundle\Entity\FileExtension
+class FileExtensionImage extends FileExtension
 {
     /**
      * @var ArrayCollection

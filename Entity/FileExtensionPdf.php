@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="cl_file_extension_pdf")
  */
-class FileExtensionPdf extends \Chaplean\Bundle\CmsBundle\Entity\FileExtension
+class FileExtensionPdf extends FileExtension
 {
     /**
      * @var ArrayCollection

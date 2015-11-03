@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="cl_media_pdf")
  */
-class MediaPdf extends \Chaplean\Bundle\CmsBundle\Entity\Media
+class MediaPdf extends Media
 {
     /**
      * @var string

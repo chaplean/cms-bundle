@@ -1,0 +1,39 @@
+alert:
+    page:
+        created: Page créée
+        deleted: Page supprimée
+        updated: Page mise à jour
+    post:
+        created: Post créé
+        deleted: Post supprimé
+        updated: Post mis à jour
+
+button:
+    add:
+        global: Ajouter
+    cancel:
+        global: Annuler
+    save:
+        global: Enregistrer
+    save_quit:
+        global: Enregistrer & Fermer
+    search:
+        global: Rechercher
+
+error:
+    important: Une erreur importante est survenue
+    not_found: La page demandée n'existe pas
+
+global:
+    page: Page
+    post: Post
+    title: Titre
+
+menu:
+    header: BackOffice
+    page: Page
+    pages: Pages
+
+placeholder:
+    path: chemin/sans_espace/ni_accent
+    title: Titre
