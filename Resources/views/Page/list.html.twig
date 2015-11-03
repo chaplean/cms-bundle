@@ -28,9 +28,9 @@
                 <th colspan="5"><input class="form-control" ng-model="search" type="text" placeholder="{{ 'placeholder.search.global' | trans }}"/></th>
             </tr>
             <tr>
-                <th st-sort="'path'" class="sortable">{{ 'global.expression.path' | trans }}</th>
-                <th st-sort="getters.title" class="center sortable">{{ 'global.expression.title' | trans }}</th>
-                <th st-sort="getters.metaDescription" class="center sortable">{{ 'global.expression.meta_description' | trans }}</th>
+                <th st-sort="'path'" class="sortable">{{ 'global.path' | trans }}</th>
+                <th st-sort="getters.title" class="center sortable">{{ 'global.title' | trans }}</th>
+                <th st-sort="getters.metaDescription" class="center sortable">{{ 'global.meta_description' | trans }}</th>
                 <th class="center"></th>
             </tr>
         </thead>
@@ -41,7 +41,7 @@
                 <td class="center">{^ pageRoute.page.metaDescription ^}</td>
                 <td>
                     <button type="button" ng-click="removePage(page)" class="btn btn-sm btn-danger">
-                        <i class="glyphicon glyphicon-remove-circle"></i>
+                        <i class="fa fa-minus-circle"></i>
                     </button>
                 </td>
             </tr>

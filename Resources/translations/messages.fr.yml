@@ -24,9 +24,16 @@ error:
     important: Une erreur importante est survenue
     not_found: La page demandée n'existe pas
 
+
 global:
+    content: Contenu
+    frontend: Frontend
+    label: Libellé du menu
+    meta_description: Meta description
     page: Page
+    path: Chemin
     post: Post
+    rollover: Texte en rollover
     title: Titre
 
 menu:
@@ -36,4 +43,6 @@ menu:
 
 placeholder:
     path: chemin/sans_espace/ni_accent
+    search:
+        global: Recherche globale
     title: Titre

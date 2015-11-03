@@ -14,8 +14,8 @@
                         <span class="ng-cloak">{^ 'header.edition'|trans:{'page': pageRoute.page.title} ^}</span>
                         <span>
                             <a class="frontend-link" target="_blank" href="{^ path('cms_page_content_by_path', {pagePath: pagePath}) ^}">
-                                <span class="glyphicon glyphicon-new-window"></span>
-                                {{ 'global.expression.frontend' | trans }}
+                                <span class="fa fa-external-link"></span>
+                                {{ 'global.frontend' | trans }}
                             </a>
                         </span>
                     </div>
@@ -29,7 +29,7 @@
         <div class="form-group col-xs-12">
             <div class="col-md-12 no-padding-lr">
                 <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="path" for="{{ form.path.vars.id }}">{{ 'global.expression.path'|trans }}</label>
+                    <label id="path" for="{{ form.path.vars.id }}">{{ 'global.path'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.path , {'attr': {'placeholder': 'placeholder.path'|trans, 'ng-model': 'pageRoute.path', 'pattern': '^[-_/a-z0-9]{1,}$', 'class': 'form-control'}}) }}
                         <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.path.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="label" for="{{ form.label.vars.id }}">{{ 'global.expression.label'|trans }}</label>
+                    <label id="label" for="{{ form.label.vars.id }}">{{ 'global.label'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.label , {'attr': {'ng-model': 'pageRoute.label', 'class': 'form-control'}}) }}
                         <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.label.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="rollover" for="{{ form.rollover.vars.id }}">{{ 'global.expression.rollover'|trans }}</label>
+                    <label id="rollover" for="{{ form.rollover.vars.id }}">{{ 'global.rollover'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.rollover , {'attr': {'ng-model': 'pageRoute.rollover', 'class': 'form-control'}}) }}
                         <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.rollover.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="metaDescription" for="{{ form.metaDescription.vars.id }}">{{ 'global.expression.meta_description'|trans }}</label>
+                    <label id="metaDescription" for="{{ form.metaDescription.vars.id }}">{{ 'global.meta_description'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.metaDescription , {'attr': {'ng-model': 'pageRoute.page.metaDescription', 'class': 'form-control'}}) }}
                         <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.metaDescription.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="title" for="{{ form.title.vars.id }}">{{ 'global.expression.title'|trans }}</label>
+                    <label id="title" for="{{ form.title.vars.id }}">{{ 'global.title'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.title , {'attr': {'placeholder': 'placeholder.title'|trans, 'ng-model': 'pageRoute.page.title', 'class': 'form-control'}}) }}
                         <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.title.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="content" for="{{ form.content.vars.id }}">{{ 'global.expression.content'|trans }}</label>
+                    <label id="content" for="{{ form.content.vars.id }}">{{ 'global.content'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {% form_theme form 'ChapleanCmsBundle:Form:form_type.html.twig' %}
                         {{ form_widget(form.content , {'attr': {'ng-model': 'pageRoute.page.content', 'class': 'form-control'}}) }}
