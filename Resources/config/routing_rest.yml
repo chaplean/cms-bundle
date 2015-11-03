@@ -1,0 +1,11 @@
+cms_rest:
+    path:     /
+    options:
+        expose: true
+
+cms_rest_page:
+    type: rest
+    resource: Chaplean\Bundle\CmsBundle\Controller\RestPageController
+    name_prefix: cms_rest_page_
+    options:
+        expose: true

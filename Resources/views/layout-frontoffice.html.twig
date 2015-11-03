@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="Cms" ng-controller="MainController" lang="{{ app.request.locale }}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="{% block favicon %}{% endblock %}">
+
+    {% block stylesheets %}
+        {% stylesheets
+        'vendor/angular/angular-csp.css'
+        'vendor/font-awesome/css/font-awesome.min.css'
+        'vendor/textAngular/dist/textAngular.css'
+        %}
+        <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
+        {% endstylesheets %}
+
+        {% stylesheets
+        '@ChapleanCmsBundle/Resources/public/sass/*' filter='compass' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    {% block javascripts %}
+        {% javascripts
+        'bundles/bazingajstranslation/js/translator.min.js'
+        'js/translations/config.js'
+        'js/translations/messages/*.js'
+        'js/translations/navigation/*.js'
+        'vendor/jquery/dist/jquery.min.js'
+        'vendor/bootstrap-sass-official/assets/javascripts/bootstrap.js'
+        'vendor/angular/angular.min.js'
+        'vendor/angular-resource/angular-resource.min.js'
+        'vendor/angular-animate/angular-animate.min.js'
+        'vendor/angular-sanitize/angular-sanitize.min.js'
+        'vendor/angular-cookies/angular-cookies.min.js'
+        'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
+        'vendor/angular-symfony-translation/dist/angular-symfony-translation.js'
+        'vendor/angular-utils-pagination/dirPagination.js'
+        'vendor/angular-smart-table/dist/smart-table.min.js'
+        'vendor/angular-ui-mask/dist/mask.min.js'
+        'vendor/textAngular/dist/textAngular-rangy.min.js'
+        'vendor/textAngular/dist/textAngular-sanitize.min.js'
+        'vendor/textAngular/dist/textAngular.min.js'
+        'vendor/bootbox/bootbox.js'
+        'vendor/ngBootbox/ngBootbox.js'
+        '@ChapleanCmsBundle/Resources/public/js/app.js'
+        '@ChapleanCmsBundle/Resources/public/js/services/*'
+        '@ChapleanCmsBundle/Resources/public/js/controllers/*'
+        '@ChapleanCmsBundle/Resources/public/js/filters/*'
+        '@ChapleanCmsBundle/Resources/public/js/directives/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script type="text/ng-template" src="{{ asset('vendor/angular-utils-pagination/dirPagination.tpl.html') }}"></script>
+    {% endblock %}
+
+    {% block head %}{% endblock %}
+</head>
+
+
+<header></header>
+
+<section>
+    {% block body %}
+        <div id="contenu">
+            {% block content %}{% endblock %}
+        </div>
+    {% endblock %}
+</section>
+
+<div class="clear"></div>
+
+<footer></footer>
+
+</html>

@@ -43,6 +43,41 @@ assetic:
         compass:
             bin: %compass.bin%
             no_line_comments: true
+    assets:
+        bootstrap_fonts_woff:
+            inputs:
+                - 'vendor/bootstrap-sass-official/assets/fonts/bootstrap/glyphicons-halflings-regular.woff'
+            output: fonts/bootstrap/glyphicons-halflings-regular.woff
+        bootstrap_fonts_ttf:
+            inputs:
+                - 'vendor/bootstrap-sass-official/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf'
+            output: fonts/bootstrap/glyphicons-halflings-regular.ttf
+        bootstrap_fonts_svg:
+            inputs:
+                - 'vendor/bootstrap-sass-official/assets/fonts/bootstrap/glyphicons-halflings-regular.svg'
+            output: fonts/bootstrap/glyphicons-halflings-regular.svg
+        bootstrap_fonts_eot:
+            inputs:
+                - 'vendor/bootstrap-sass-official/assets/fonts/bootstrap/glyphicons-halflings-regular.eot'
+            output: fonts/bootstrap/glyphicons-halflings-regular.eot
+        font-awesome-otf:
+            inputs: '%kernel.root_dir%/../web/vendor/font-awesome/fonts/FontAwesome.otf'
+            output: 'fonts/FontAwesome.otf'
+        font-awesome-eot:
+            inputs: '%kernel.root_dir%/../web/vendor/font-awesome/fonts/fontawesome-webfont.eot'
+            output: 'fonts/fontawesome-webfont.eot'
+        font-awesome-svg:
+            inputs: '%kernel.root_dir%/../web/vendor/font-awesome/fonts/fontawesome-webfont.svg'
+            output: 'fonts/fontawesome-webfont.svg'
+        font-awesome-ttf:
+            inputs: '%kernel.root_dir%/../web/vendor/font-awesome/fonts/fontawesome-webfont.ttf'
+            output: 'fonts/fontawesome-webfont.ttf'
+        font-awesome-woff:
+            inputs: '%kernel.root_dir%/../web/vendor/font-awesome/fonts/fontawesome-webfont.woff'
+            output: 'fonts/fontawesome-webfont.woff'
+        font-awesome-woff2:
+            inputs: '%kernel.root_dir%/../web/vendor/font-awesome/fonts/fontawesome-webfont.woff2'
+            output: 'fonts/fontawesome-webfont.woff2'
 
 monolog:
     handlers:
@@ -68,7 +103,36 @@ doctrine:
         server_version: 5.5
         mapping_types:
             enum: string
-
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+
+bazinga_js_translation:
+    locale_fallback:      fr
+    default_domain:       messages
+
+fos_rest:
+    routing_loader:
+        default_format: json
+    format_listener:
+        rules:
+            -
+                path: '^/rest'
+                priorities: ['json']
+                fallback_format: json
+                prefer_extension: false
+            -
+                path: '^/'
+                priorities: ['text/html', 'text/css', '*/*']
+                fallback_format: html
+                prefer_extension: true
+    view:
+        formats:
+            rss: false
+            json: true
+            xml: false
+        templating_formats:
+            html: true
+        force_redirects:
+            html: false
+

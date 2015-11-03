@@ -1,8 +1,8 @@
 'use strict';
 
-var app = angular.module('App');
+var cms = angular.module('Cms');
 
-app.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox, Page, TranslationService, AlertService) {
+cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox, Page, TranslationService, AlertService) {
     $scope.search = '';
 
     $scope.loadData = function() {
@@ -12,24 +12,24 @@ app.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
 
     $scope.getters = {
         title: function (value) {
-            return value.pageContent.title;
+            return value.page.title;
         },
         metaDescription: function (value) {
-            return value.pageContent.metaDescription;
+            return value.page.metaDescription;
         }
     };
 
-    $scope.removePage = function (page) {
+    $scope.removePage = function (pageRoute) {
         $ngBootbox.confirm(
-            TranslationService.trans('message.confirm.delete_page', { 'page' : page.pageContent.title })
+            TranslationService.trans('message.confirm.delete_page', { 'page' : pageRoute.page.title })
         ).then(function() {
                 Page.delete({
-                        pageId: page.id
+                        pageId: pageRoute.id
                     },
                     function (page) {
                         $scope.pages.splice($scope.pages.indexOf(page), 1);
                         AlertService.addAlert('success', TranslationService.trans('alert.page.deleted'));
-                    }, function (response) {
+                    }, function () {
                         AlertService.addAlert('danger', TranslationService.trans('error.important.title'))
                     }
                 );

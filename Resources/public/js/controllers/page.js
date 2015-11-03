@@ -1,14 +1,14 @@
 'use strict';
 
-var app = angular.module('App');
+var cms = angular.module('Cms');
 
-app.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, Page, TranslationService, AlertService) {
+cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, Page, TranslationService, AlertService) {
     $scope.loadData = function() {
         if ($scope.pageId) {
-            $scope.page = Page.get({pageId: $scope.pageId});
+            $scope.pageRoute = Page.get({pageId: $scope.pageId});
 
-            $scope.page.$promise.then(function() {
-                $scope.pagePath = $scope.page.path;
+            $scope.pageRoute.$promise.then(function() {
+                $scope.pagePath = $scope.pageRoute.path;
             });
         }
     };
@@ -16,12 +16,12 @@ app.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
     $scope.savePage = function (pageForm, quit) {
         if (pageForm.$valid) {
             var page = {
-                path: $scope.page.path,
-                label: $scope.page.label,
-                rollover: $scope.page.rollover,
-                title: $scope.page.pageContent.title,
-                metaDescription: $scope.page.pageContent.metaDescription,
-                content: $scope.page.pageContent.content
+                path: $scope.pageRoute.path,
+                label: $scope.pageRoute.label,
+                rollover: $scope.pageRoute.rollover,
+                title: $scope.pageRoute.page.title,
+                metaDescription: $scope.pageRoute.page.metaDescription,
+                content: $scope.pageRoute.page.content
             };
 
             if ($scope.pageId) {

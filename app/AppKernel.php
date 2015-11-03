@@ -25,6 +25,10 @@ class AppKernel extends Kernel
             new Chaplean\Bundle\UnitBundle\ChapleanUnitBundle(),
             new Liip\FunctionalTestBundle\LiipFunctionalTestBundle(),
             new Chaplean\Bundle\CmsBundle\ChapleanCmsBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         );
     }
 

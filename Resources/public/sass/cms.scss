@@ -1,0 +1,140 @@
+@import "bootstrap-variables";
+@import "variables";
+
+.st-sort-ascent:before{
+    content: '\25B2\00a0';
+}
+
+.st-sort-descent:before{
+    content: '\25BC\00a0';
+}
+
+html {
+    height: 100%;
+}
+
+body.cms {
+    background-color: #eee;
+    height: 100%;
+
+    .container-fluid {
+        height: 100%;
+
+        &>.row {
+            height: 100%;
+        }
+    }
+
+    .sidebar {
+        background-color: #333;
+        color: #D9D9D9;
+        height: 100%;
+
+        a {
+            color: #D9D9D9;
+
+            &:hover, &:focus {
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .custom-search-form {
+            input[type="text"], button, button:hover, button:focus {
+                box-shadow: none;
+                background-color: rgba(255, 255, 255, 0.1);
+                border: 0 solid rgba(255, 255, 255, 0.1);
+                color: #D9D9D9;
+                height: 35px;
+                outline: none;
+            }
+        }
+
+        .sidebar-header {
+            display: block;
+            font-size: 18px;
+            line-height: 40px;
+            padding: 0 10px;
+            text-align: center;
+
+            img {
+                display: block;
+                margin: 18px auto;
+            }
+        }
+
+        .sidebar-menu {
+            li.treeview {
+                a {
+                    span.glyphicon + span {
+                        margin-left: 5px;
+                    }
+                }
+
+                & + li.treeview {
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+
+    .navbar-default {
+        background-color: #fff;
+
+        span {
+            display: inline-block;
+            padding: 15px 0;
+        }
+
+        #training-request-header {
+            padding-bottom: 15px;
+
+            &>div {
+                margin-top: 15px;
+            }
+
+            span {
+                display: block;
+                font-size: 12px;
+                padding: 0;
+            }
+
+            .training-request-header-top {
+                font-size: inherit;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+    section.content-header {
+        margin: 0 -15px;
+        padding: 15px;
+    }
+
+    section.content-action {
+        background-color: transparent;
+        margin: 20px auto;
+    }
+
+    .frontend-link, .frontend-link:hover, .frontend-link:focus {
+        color: inherit;
+        font-size: 12px;
+        font-weight: bold;
+        margin-left: 20px;
+        text-decoration: none;
+    }
+
+    .frontend-link:hover {
+        color: #999999;
+    }
+
+    .table th.sortable {
+        cursor: pointer;
+    }
+}

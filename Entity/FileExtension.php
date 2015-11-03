@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * }
  * )
  */
-class FileExtension
+abstract class FileExtension
 {
     /**
      * @var integer

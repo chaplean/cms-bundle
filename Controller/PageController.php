@@ -60,10 +60,10 @@ class PageController extends Controller
         /** @var EntityRepository $pageRouteRepository */
         $pageRouteRepository = $em->getRepository('ChapleanCmsBundle:PageRoute');
 
-        /** @var PageRoute $page */
-        $page = $pageRouteRepository->findOneBy(array('path' => $pagePath));
+        /** @var PageRoute $pageRoute */
+        $pageRoute = $pageRouteRepository->findOneBy(array('path' => $pagePath));
 
-        if ($page === null) {
+        if ($pageRoute === null) {
             throw $this->createNotFoundException(
                 $this->get('translator')
                     ->trans('error.not_found')
@@ -72,9 +72,9 @@ class PageController extends Controller
 
         // redirect to the correct page
         return $this->render(
-            'ChapleanCmsBundle:Content:index.html.twig',
+            'ChapleanCmsBundle:Page:index.html.twig',
             array(
-                'page' => $page
+                'pageRoute' => $pageRoute
             )
         );
     }
@@ -91,13 +91,13 @@ class PageController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        /** @var EntityRepository $pageRepo */
-        $pageRepo = $em->getRepository('ChapleanCmsBundle:PageRoute');
+        /** @var EntityRepository $pageRouteRepository */
+        $pageRouteRepository = $em->getRepository('ChapleanCmsBundle:PageRoute');
 
-        /** @var PageRoute $page */
-        $page = ($pageId !== null) ? $pageRepo->find($pageId) : null;
+        /** @var PageRoute $pageRoute */
+        $pageRoute = ($pageId !== null) ? $pageRouteRepository->find($pageId) : null;
 
-        if ($pageId !== null && $page == null) {
+        if ($pageId !== null && $pageRoute == null) {
             throw new NotFoundHttpException();
         }
 
@@ -107,9 +107,11 @@ class PageController extends Controller
         return $this->render(
             'ChapleanCmsBundle:Page:edit.html.twig',
             array(
-                'pageId' => ($page !== null) ? $page->getId() : null,
+                'pageId' => ($pageRoute !== null) ? $pageRoute->getId() : null,
                 'form' => $form->createView(),
-                'path' => $translator->trans('menu.page')
+                'path' => array(
+                    $translator->trans('menu.page')
+                )
             )
         );
     }
@@ -126,7 +128,9 @@ class PageController extends Controller
         return $this->render(
             'ChapleanCmsBundle:Page:list.html.twig',
             array(
-                'path' => $translator->trans('menu.pages')
+                'path' => array(
+                    $translator->trans('menu.pages')
+                )
             )
         );
     }

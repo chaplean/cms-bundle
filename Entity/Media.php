@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping AS ORM;
  *     {"image"="Chaplean\Bundle\CmsBundle\Entity\MediaImage","pdf"="Chaplean\Bundle\CmsBundle\Entity\MediaPdf"}
  * )
  */
-class Media
+abstract class Media
 {
     /**
      * @var integer
