@@ -1,6 +1,9 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -15,6 +18,8 @@ class MediaImage extends Media
      * @var integer
      *
      * @ORM\Column(type="smallint", nullable=false, name="width", options={"unsigned":true})
+     *
+     * @JMS\Groups({"media_width"})
      */
     private $width;
 
@@ -22,6 +27,8 @@ class MediaImage extends Media
      * @var integer
      *
      * @ORM\Column(type="smallint", nullable=false, name="height", options={"unsigned":true})
+     *
+     * @JMS\Groups({"media_height"})
      */
     private $height;
 
@@ -29,6 +36,8 @@ class MediaImage extends Media
      * @var string
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="title")
+     *
+     * @JMS\Groups({"media_title"})
      */
     private $title;
 
@@ -36,6 +45,8 @@ class MediaImage extends Media
      * @var string
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="alternative_title")
+     *
+     * @JMS\Groups({"media_alternative_title"})
      */
     private $alternativeTitle;
 
@@ -44,6 +55,8 @@ class MediaImage extends Media
      *
      * @ORM\ManyToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\FileExtensionImage", inversedBy="images")
      * @ORM\JoinColumn(name="extension", referencedColumnName="id", nullable=false)
+     *
+     * @JMS\Groups({"media_alternative_extension"})
      */
     private $extension;
 

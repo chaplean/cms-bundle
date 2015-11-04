@@ -1,1 +1,5 @@
 services:
+  form.type.textangular:
+    class: Chaplean\Bundle\CmsBundle\Form\Type\TextAngularType
+    tags:
+      - { name: form.type, alias: textAngular }

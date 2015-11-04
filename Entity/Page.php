@@ -1,6 +1,9 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Embeddable
@@ -9,18 +12,11 @@ use Doctrine\ORM\Mapping AS ORM;
 class Page
 {
     /**
-     * @var integer
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", options={"unsigned":true})
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", length=250, nullable=false, name="title")
+     *
+     * @JMS\Groups({"page_title"})
      */
     private $title;
 
@@ -28,6 +24,8 @@ class Page
      * @var string
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="subtitle")
+     *
+     * @JMS\Groups({"page_subtitle"})
      */
     private $subtitle;
 
@@ -35,6 +33,8 @@ class Page
      * @var string
      *
      * @ORM\Column(type="text", nullable=true, name="content")
+     *
+     * @JMS\Groups({"page_content"})
      */
     private $content;
 
@@ -42,32 +42,20 @@ class Page
      * @var string
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="meta_description")
+     *
+     * @JMS\Groups({"page_meta_description"})
      */
     private $metaDescription;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=false, name="date_add")
-     */
-    private $dateAdd;
-
-    /**
      * @var Publication
      *
-     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Publication")
+     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
+     *
+     * @JMS\Groups({"page_publication"})
      */
     private $publication;
-
-    /**
-     * Get id.
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Get title.
@@ -161,30 +149,6 @@ class Page
     public function setMetaDescription($metaDescription)
     {
         $this->metaDescription = $metaDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get dateAdd.
-     *
-     * @return \DateTime
-     */
-    public function getDateAdd()
-    {
-        return $this->dateAdd;
-    }
-
-    /**
-     * Set dateAdd.
-     *
-     * @param \DateTime $dateAdd
-     *
-     * @return self
-     */
-    public function setDateAdd($dateAdd)
-    {
-        $this->dateAdd = $dateAdd;
 
         return $this;
     }

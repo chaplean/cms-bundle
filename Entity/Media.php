@@ -1,6 +1,9 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -19,43 +22,55 @@ abstract class Media
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Groups({"media_id"})
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=200, nullable=false, name="path")
+     *
+     * @JMS\Groups({"media_path"})
      */
-    private $path;
+    protected $path;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=250, nullable=false, name="file_name")
+     *
+     * @JMS\Groups({"media_file_name"})
      */
-    private $fileName;
+    protected $fileName;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false, name="file_weight", options={"unsigned":true})
+     *
+     * @JMS\Groups({"media_file_weight"})
      */
-    private $fileWeight;
+    protected $fileWeight;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
+     *
+     * @JMS\Groups({"media_date_add"})
      */
-    private $dateAdd;
+    protected $dateAdd;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_updated")
+     *
+     * @JMS\Groups({"media_date_updated"})
      */
-    private $dateUpdated;
+    protected $dateUpdated;
 
     /**
      * Get id.

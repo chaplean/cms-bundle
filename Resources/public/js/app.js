@@ -11,6 +11,14 @@ cms.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{^').endSymbol('^}');
 });
 
-cms.controller('MainController', function($scope) {
-    /**/
+cms.controller('MainController', function($scope, $rootScope, AlertService) {
+    $rootScope.path = function (url, options) {
+        return Routing.generate(url, options);
+    };
+
+    $scope.alerts = AlertService.alerts;
+
+    $scope.closeAlert = function (index) {
+        AlertService.closeAlert(index);
+    };
 });

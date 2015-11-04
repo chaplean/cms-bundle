@@ -7,7 +7,7 @@ cms.factory('Page', function($resource) {
     return $resource(Routing.generate('cms_rest') + 'pages', {}, {
         delete: {method: 'delete', url: Routing.generate('cms_rest') + 'pages/:pageId'},
         get: {method: 'get', url: Routing.generate('cms_rest') + 'pages/:pageId'},
-        getAll: {method: 'get', url: Routing.generate('cms_rest') + 'page/all', isArray: true},
+        getAll: {method: 'get', url: Routing.generate('cms_rest') + 'page/all'},
         save: {method: 'post', url: Routing.generate('cms_rest') + 'pages'},
         update: {method: 'put', url: Routing.generate('cms_rest') + 'pages/:pageId'}
     });

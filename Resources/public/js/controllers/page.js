@@ -5,23 +5,27 @@ var cms = angular.module('Cms');
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, Page, TranslationService, AlertService) {
     $scope.loadData = function() {
         if ($scope.pageId) {
-            $scope.pageRoute = Page.get({pageId: $scope.pageId});
-
-            $scope.pageRoute.$promise.then(function() {
-                $scope.pagePath = $scope.pageRoute.path;
-            });
+            Page.get(
+                {
+                    pageId: $scope.pageId
+                }, function(response) {
+                    $scope.pageRoute = response.page;
+                    $scope.pagePath = $scope.pageRoute.path;
+                }
+            );
         }
     };
 
-    $scope.savePage = function (pageForm, quit) {
+    $scope.savePage = function (pageForm, formName, quit) {
         if (pageForm.$valid) {
             var page = {
-                path: $scope.pageRoute.path,
-                label: $scope.pageRoute.label,
-                rollover: $scope.pageRoute.rollover,
                 title: $scope.pageRoute.page.title,
+                subtitle: $scope.pageRoute.page.subtitle,
+                content: $scope.pageRoute.page.content,
                 metaDescription: $scope.pageRoute.page.metaDescription,
-                content: $scope.pageRoute.page.content
+                path: $scope.pageRoute.path,
+                menuName: $scope.pageRoute.menuName,
+                rollover: $scope.pageRoute.rollover
             };
 
             if ($scope.pageId) {
@@ -29,8 +33,8 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                     pageId: $scope.pageId
                 },
                 page,
-                function (page) {
-                    $scope.pagePath = page.path;
+                function (response) {
+                    $scope.pagePath = response.page.path;
                     AlertService.addAlert('success', TranslationService.trans('alert.page.updated'));
 
                     if (quit) {
@@ -40,13 +44,14 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                     if(response.data.error) {
                         AlertService.addAlert('warning', response.data.error);
                     } else {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important.title'))
+                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
                     }
                 });
             } else {
-                Page.save(page,
-                    function (page) {
-                        $scope.pagePath = page.path;
+                Page.save(
+                    page,
+                    function (response) {
+                        $scope.pagePath = response.page.path;
                         AlertService.addAlert('success', TranslationService.trans('alert.page.created'));
 
                         if (quit) {
@@ -54,7 +59,7 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                         }
                     }, function (errors) {
                         $log.error(errors);
-                        AlertService.addAlert('danger', TranslationService.trans('error.important.title'))
+                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
                     });
             }
         } else {

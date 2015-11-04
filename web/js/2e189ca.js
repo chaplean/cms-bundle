@@ -16,20 +16,38 @@
     Translator.add("alert.post.created", "Post cr\u00e9\u00e9", "messages", "fr");
     Translator.add("alert.post.deleted", "Post supprim\u00e9", "messages", "fr");
     Translator.add("alert.post.updated", "Post mis \u00e0 jour", "messages", "fr");
+    Translator.add("alert.field.required", "Ce champ est obligatoire.", "messages", "fr");
     Translator.add("button.add.global", "Ajouter", "messages", "fr");
+    Translator.add("button.back.site", "Retour au site", "messages", "fr");
     Translator.add("button.cancel.global", "Annuler", "messages", "fr");
     Translator.add("button.save.global", "Enregistrer", "messages", "fr");
     Translator.add("button.save_quit.global", "Enregistrer & Fermer", "messages", "fr");
     Translator.add("button.search.global", "Rechercher", "messages", "fr");
     Translator.add("error.important", "Une erreur importante est survenue", "messages", "fr");
     Translator.add("error.not_found", "La page demand\u00e9e n'existe pas", "messages", "fr");
+    Translator.add("global.content", "Contenu", "messages", "fr");
+    Translator.add("global.frontend", "Frontend", "messages", "fr");
+    Translator.add("global.label", "Libell\u00e9 du menu", "messages", "fr");
+    Translator.add("global.meta_description", "Meta description", "messages", "fr");
     Translator.add("global.page", "Page", "messages", "fr");
+    Translator.add("global.path", "Chemin", "messages", "fr");
     Translator.add("global.post", "Post", "messages", "fr");
+    Translator.add("global.rollover", "Texte en rollover", "messages", "fr");
+    Translator.add("global.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("global.title", "Titre", "messages", "fr");
+    Translator.add("header.creation", "Cr\u00e9ation de page", "messages", "fr");
+    Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
     Translator.add("menu.page", "Page", "messages", "fr");
     Translator.add("menu.pages", "Pages", "messages", "fr");
+    Translator.add("message.confirm.delete_page", "Confirmez-vous la suppression de la page \"%page%\"", "messages", "fr");
+    Translator.add("message.confirm.leave_change", "Les donn\u00e9es non sauvegard\u00e9es seront perdues, continuer ?", "messages", "fr");
+    Translator.add("over.path", "Le chemin doit \u00eatre en minuscule et ne contenir ni accent, ni espace", "messages", "fr");
+    Translator.add("placeholder.menu_name", "Libell\u00e9 du menu", "messages", "fr");
     Translator.add("placeholder.path", "chemin\/sans_espace\/ni_accent", "messages", "fr");
+    Translator.add("placeholder.rollover", "Texte au survol", "messages", "fr");
+    Translator.add("placeholder.search.global", "Recherche globale", "messages", "fr");
+    Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
 })(Translator);
 
@@ -12999,8 +13017,16 @@ cms.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{^').endSymbol('^}');
 });
 
-cms.controller('MainController', function($scope) {
-    /**/
+cms.controller('MainController', function($scope, $rootScope, AlertService) {
+    $rootScope.path = function (url, options) {
+        return Routing.generate(url, options);
+    };
+
+    $scope.alerts = AlertService.alerts;
+
+    $scope.closeAlert = function (index) {
+        AlertService.closeAlert(index);
+    };
 });
 
 'use strict';
@@ -13052,7 +13078,7 @@ cms.factory('Page', function($resource) {
     return $resource(Routing.generate('cms_rest') + 'pages', {}, {
         delete: {method: 'delete', url: Routing.generate('cms_rest') + 'pages/:pageId'},
         get: {method: 'get', url: Routing.generate('cms_rest') + 'pages/:pageId'},
-        getAll: {method: 'get', url: Routing.generate('cms_rest') + 'page/all', isArray: true},
+        getAll: {method: 'get', url: Routing.generate('cms_rest') + 'page/all'},
         save: {method: 'post', url: Routing.generate('cms_rest') + 'pages'},
         update: {method: 'put', url: Routing.generate('cms_rest') + 'pages/:pageId'}
     });
@@ -13066,23 +13092,27 @@ var cms = angular.module('Cms');
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, Page, TranslationService, AlertService) {
     $scope.loadData = function() {
         if ($scope.pageId) {
-            $scope.pageRoute = Page.get({pageId: $scope.pageId});
-
-            $scope.pageRoute.$promise.then(function() {
-                $scope.pagePath = $scope.pageRoute.path;
-            });
+            Page.get(
+                {
+                    pageId: $scope.pageId
+                }, function(response) {
+                    $scope.pageRoute = response.page;
+                    $scope.pagePath = $scope.pageRoute.path;
+                }
+            );
         }
     };
 
-    $scope.savePage = function (pageForm, quit) {
+    $scope.savePage = function (pageForm, formName, quit) {
         if (pageForm.$valid) {
             var page = {
-                path: $scope.pageRoute.path,
-                label: $scope.pageRoute.label,
-                rollover: $scope.pageRoute.rollover,
                 title: $scope.pageRoute.page.title,
+                subtitle: $scope.pageRoute.page.subtitle,
+                content: $scope.pageRoute.page.content,
                 metaDescription: $scope.pageRoute.page.metaDescription,
-                content: $scope.pageRoute.page.content
+                path: $scope.pageRoute.path,
+                menuName: $scope.pageRoute.menuName,
+                rollover: $scope.pageRoute.rollover
             };
 
             if ($scope.pageId) {
@@ -13090,8 +13120,8 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                     pageId: $scope.pageId
                 },
                 page,
-                function (page) {
-                    $scope.pagePath = page.path;
+                function (response) {
+                    $scope.pagePath = response.page.path;
                     AlertService.addAlert('success', TranslationService.trans('alert.page.updated'));
 
                     if (quit) {
@@ -13101,13 +13131,14 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                     if(response.data.error) {
                         AlertService.addAlert('warning', response.data.error);
                     } else {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important.title'))
+                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
                     }
                 });
             } else {
-                Page.save(page,
-                    function (page) {
-                        $scope.pagePath = page.path;
+                Page.save(
+                    page,
+                    function (response) {
+                        $scope.pagePath = response.page.path;
                         AlertService.addAlert('success', TranslationService.trans('alert.page.created'));
 
                         if (quit) {
@@ -13115,7 +13146,7 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                         }
                     }, function (errors) {
                         $log.error(errors);
-                        AlertService.addAlert('danger', TranslationService.trans('error.important.title'))
+                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
                     });
             }
         } else {
@@ -13150,8 +13181,15 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
     $scope.search = '';
 
     $scope.loadData = function() {
-        $scope.pages = Page.getAll();
-        $scope.pagesDisplayed = [].concat($scope.pages);
+        Page.getAll(
+            {
+                /**/
+            },
+            function(response) {
+                $scope.pages = response.pages;
+                $scope.pagesDisplayed = [].concat($scope.pages);
+            }
+        );
     };
 
     $scope.getters = {
@@ -13174,7 +13212,7 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
                         $scope.pages.splice($scope.pages.indexOf(page), 1);
                         AlertService.addAlert('success', TranslationService.trans('alert.page.deleted'));
                     }, function () {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important.title'))
+                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
                     }
                 );
             }, function() {

@@ -7,10 +7,14 @@ alert:
         created: Post créé
         deleted: Post supprimé
         updated: Post mis à jour
+    field:
+        required: Ce champ est obligatoire.
 
 button:
     add:
         global: Ajouter
+    back:
+        site: Retour au site
     cancel:
         global: Annuler
     save:
@@ -34,15 +38,31 @@ global:
     path: Chemin
     post: Post
     rollover: Texte en rollover
+    subtitle: Sous-titre
     title: Titre
+
+header:
+    creation: Création de page
+    edition: Edition de "%page%"
 
 menu:
     header: BackOffice
     page: Page
     pages: Pages
 
+message:
+    confirm:
+        delete_page: Confirmez-vous la suppression de la page "%page%"
+        leave_change: Les données non sauvegardées seront perdues, continuer ?
+
+over:
+    path: Le chemin doit être en minuscule et ne contenir ni accent, ni espace
+
 placeholder:
+    menu_name: Libellé du menu
     path: chemin/sans_espace/ni_accent
+    rollover: Texte au survol
     search:
         global: Recherche globale
+    subtitle: Sous-titre
     title: Titre

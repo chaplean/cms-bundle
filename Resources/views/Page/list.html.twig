@@ -35,12 +35,12 @@
             </tr>
         </thead>
         <tbody class="ng-cloak">
-            <tr ng-repeat="page in (pagesDisplayed | pageFilter:search) ">
+            <tr ng-repeat="pageRoute in (pagesDisplayed | pageFilter:search) ">
                 <td><a href="{^ path('cms_page_edit', {pageId: pageRoute.id}) ^}">{^ pageRoute.path ^}</a></td>
                 <td class="center"><a href="{^ path('cms_page_edit', {pageId: pageRoute.id}) ^}">{^ pageRoute.page.title ^}</a></td>
                 <td class="center">{^ pageRoute.page.metaDescription ^}</td>
                 <td>
-                    <button type="button" ng-click="removePage(page)" class="btn btn-sm btn-danger">
+                    <button type="button" ng-click="removePage(pageRoute)" class="btn btn-sm btn-danger">
                         <i class="fa fa-minus-circle"></i>
                     </button>
                 </td>

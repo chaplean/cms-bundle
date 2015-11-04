@@ -1,6 +1,9 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -24,29 +27,37 @@ class Post
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Groups({"post_id"})
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
+     *
+     * @JMS\Groups({"post_date_add"})
      */
-    private $dateAdd;
+    protected $dateAdd;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_update")
+     *
+     * @JMS\Groups({"post_date_update"})
      */
-    private $dateUpdate;
+    protected $dateUpdate;
 
     /**
      * @var Page
      *
-     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page")
+     * @ORM\Embedded(class="Page")
+     *
+     * @JMS\Groups({"post_page"})
      */
-    private $page;
+    protected $page;
 
     /**
      * Get id.

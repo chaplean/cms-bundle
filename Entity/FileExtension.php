@@ -1,6 +1,9 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -25,22 +28,28 @@ abstract class FileExtension
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Groups({"file_extension_id"})
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", unique=true, length=10, nullable=false, name="extension")
+     *
+     * @JMS\Groups({"file_extension_extension"})
      */
-    private $extension;
+    protected $extension;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, name="mime_type")
+     *
+     * @JMS\Groups({"file_extension_mime_type"})
      */
-    private $mimeType;
+    protected $mimeType;
 
     /**
      * Get id.

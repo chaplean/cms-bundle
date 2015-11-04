@@ -1,6 +1,9 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -14,6 +17,8 @@ class Block
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Groups({"block_id"})
      */
     private $id;
 
@@ -21,6 +26,8 @@ class Block
      * @var string
      *
      * @ORM\Column(type="string", unique=true, length=50, nullable=false)
+     *
+     * @JMS\Groups({"block_name"})
      */
     private $name;
 
@@ -28,6 +35,8 @@ class Block
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @JMS\Groups({"block_content"})
      */
     private $content;
 
@@ -35,6 +44,8 @@ class Block
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false)
+     *
+     * @JMS\Groups({"block_date_add"})
      */
     private $dateAdd;
 
@@ -42,13 +53,18 @@ class Block
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @JMS\Groups({"block_date_update"})
      */
     private $dateUpdate;
 
     /**
      * @var Publication
      *
-     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Publication")
+     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
+     *
+     * @JMS\Groups({"block_publication"})
      */
     private $publication;
 

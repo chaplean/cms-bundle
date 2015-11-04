@@ -6,8 +6,15 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
     $scope.search = '';
 
     $scope.loadData = function() {
-        $scope.pages = Page.getAll();
-        $scope.pagesDisplayed = [].concat($scope.pages);
+        Page.getAll(
+            {
+                /**/
+            },
+            function(response) {
+                $scope.pages = response.pages;
+                $scope.pagesDisplayed = [].concat($scope.pages);
+            }
+        );
     };
 
     $scope.getters = {
@@ -30,7 +37,7 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
                         $scope.pages.splice($scope.pages.indexOf(page), 1);
                         AlertService.addAlert('success', TranslationService.trans('alert.page.deleted'));
                     }, function () {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important.title'))
+                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
                     }
                 );
             }, function() {

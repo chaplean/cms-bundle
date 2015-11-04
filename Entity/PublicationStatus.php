@@ -1,7 +1,10 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -21,6 +24,8 @@ class PublicationStatus
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Groups({"publication_status_id"})
      */
     private $id;
 
@@ -28,6 +33,8 @@ class PublicationStatus
      * @var string
      *
      * @ORM\Column(type="string", unique=true, length=50, nullable=false, name="keyname")
+     *
+     * @JMS\Groups({"publication_status_keyname"})
      */
     private $keyname;
 
@@ -35,6 +42,8 @@ class PublicationStatus
      * @var integer
      *
      * @ORM\Column(type="smallint", unique=true, nullable=false, name="position", options={"unsigned":true})
+     *
+     * @JMS\Groups({"publication_status_position"})
      */
     private $position;
 
@@ -42,6 +51,8 @@ class PublicationStatus
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Chaplean\Bundle\CmsBundle\Entity\Publication", mappedBy="status")
+     *
+     * @JMS\Groups({"publication_status_publications"})
      */
     private $publications;
 

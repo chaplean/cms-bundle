@@ -1,6 +1,9 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -14,6 +17,8 @@ class PageRoute
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Groups({"page_route_id"})
      */
     private $id;
 
@@ -21,6 +26,8 @@ class PageRoute
      * @var string
      *
      * @ORM\Column(type="string", unique=true, length=250, nullable=false, name="path")
+     *
+     * @JMS\Groups({"page_route_path"})
      */
     private $path;
 
@@ -28,6 +35,8 @@ class PageRoute
      * @var string
      *
      * @ORM\Column(type="string", length=250, nullable=false, name="menu_name")
+     *
+     * @JMS\Groups({"page_route_menu_name"})
      */
     private $menuName;
 
@@ -35,6 +44,8 @@ class PageRoute
      * @var string
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="rollover")
+     *
+     * @JMS\Groups({"page_route_rollover"})
      */
     private $rollover;
 
@@ -42,6 +53,8 @@ class PageRoute
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
+     *
+     * @JMS\Groups({"page_route_date_add"})
      */
     private $dateAdd;
 
@@ -49,13 +62,17 @@ class PageRoute
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_update")
+     *
+     * @JMS\Groups({"page_route_date_update"})
      */
     private $dateUpdate;
 
     /**
      * @var Page
      *
-     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page")
+     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", columnPrefix = false)
+     *
+     * @JMS\Groups({"page_route_page"})
      */
     private $page;
 

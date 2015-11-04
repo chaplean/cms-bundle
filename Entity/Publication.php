@@ -1,9 +1,12 @@
 <?php
+
 namespace Chaplean\Bundle\CmsBundle\Entity;
+
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Embeddable
+ * @ORM\Entity
  * @ORM\Table(
  *     name="cl_publication",
  *     indexes={
@@ -22,6 +25,8 @@ class Publication
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Groups({"publication_id"})
      */
     private $id;
 
@@ -29,6 +34,8 @@ class Publication
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_publication_begin")
+     *
+     * @JMS\Groups({"publication_date_publication_begin"})
      */
     private $datePublicationBegin;
 
@@ -36,6 +43,8 @@ class Publication
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_publication_end")
+     *
+     * @JMS\Groups({"publication_date_publication_end"})
      */
     private $datePublicationEnd;
 
@@ -43,6 +52,8 @@ class Publication
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false, name="is_highlighted", options={"default":0})
+     *
+     * @JMS\Groups({"publication_is_highlighted"})
      */
     private $isHighlighted;
 
@@ -50,6 +61,8 @@ class Publication
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
+     *
+     * @JMS\Groups({"publication_date_add"})
      */
     private $dateAdd;
 
@@ -58,6 +71,8 @@ class Publication
      *
      * @ORM\ManyToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\PublicationStatus", inversedBy="publications")
      * @ORM\JoinColumn(name="status", referencedColumnName="id", nullable=false)
+     *
+     * @JMS\Groups({"publication_status"})
      */
     private $status;
 

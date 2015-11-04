@@ -1,6 +1,6 @@
 <?php
 
-namespace Chaplean\Bundle\cmsBundle\DependencyInjection;
+namespace Chaplean\Bundle\CmsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

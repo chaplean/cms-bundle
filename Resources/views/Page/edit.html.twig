@@ -6,7 +6,7 @@
     {% else %}
         <input type="hidden" ng-model="pageId" />
     {% endif %}
-    <form id="page-form" name="pageForm" ng-controller="PageController" ng-submit="savePage(pageForm)" role="form">
+    <form id="page-form" name="pageForm" ng-controller="PageController" ng-submit="savePage(pageForm, '{{ form.vars.name }}')" role="form">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-left">
@@ -26,63 +26,69 @@
                 <div class="navbar-right"></div>
             </div>
         </nav>
-        <div class="form-group col-xs-12">
-            <div class="col-md-12 no-padding-lr">
-                <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="path" for="{{ form.path.vars.id }}">{{ 'global.path'|trans }}</label>
-                    <div class="col-md-12 no-padding-lr">
-                        {{ form_widget(form.path , {'attr': {'placeholder': 'placeholder.path'|trans, 'ng-model': 'pageRoute.path', 'pattern': '^[-_/a-z0-9]{1,}$', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.path.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
-                    </div>
+        <div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <label id="title" for="{{ form.title.vars.id }}">{{ 'global.title'|trans }}</label>
+                <div class="col-md-12 no-padding-lr">
+                    {{ form_widget(form.title , {'attr': {'placeholder': 'placeholder.title'|trans, 'ng-model': 'pageRoute.page.title', 'class': 'form-control'}}) }}
+                    <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.title.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
                 </div>
+            </div>
 
-                <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="label" for="{{ form.label.vars.id }}">{{ 'global.label'|trans }}</label>
-                    <div class="col-md-12 no-padding-lr">
-                        {{ form_widget(form.label , {'attr': {'ng-model': 'pageRoute.label', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.label.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
-                    </div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <label id="subtitle" for="{{ form.subtitle.vars.id }}">{{ 'global.subtitle'|trans }}</label>
+                <div class="col-md-12 no-padding-lr">
+                    {{ form_widget(form.subtitle , {'attr': {'placeholder': 'placeholder.subtitle'|trans, 'ng-model': 'pageRoute.page.subtitle', 'class': 'form-control'}}) }}
+                    <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.subtitle.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
                 </div>
+            </div>
 
-                <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="rollover" for="{{ form.rollover.vars.id }}">{{ 'global.rollover'|trans }}</label>
-                    <div class="col-md-12 no-padding-lr">
-                        {{ form_widget(form.rollover , {'attr': {'ng-model': 'pageRoute.rollover', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.rollover.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
-                    </div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <label id="path" for="{{ form.path.vars.id }}">{{ 'global.path'|trans }}</label>
+                <div class="col-md-12 no-padding-lr">
+                    {{ form_widget(form.path , {'attr': {'placeholder': 'placeholder.path'|trans, 'ng-model': 'pageRoute.path', 'pattern': '^[-_/a-z0-9]{1,}$', 'class': 'form-control'}}) }}
+                    <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.path.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
                 </div>
+            </div>
 
-                <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="metaDescription" for="{{ form.metaDescription.vars.id }}">{{ 'global.meta_description'|trans }}</label>
-                    <div class="col-md-12 no-padding-lr">
-                        {{ form_widget(form.metaDescription , {'attr': {'ng-model': 'pageRoute.page.metaDescription', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.metaDescription.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
-                    </div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <label id="label" for="{{ form.menuName.vars.id }}">{{ 'global.label'|trans }}</label>
+                <div class="col-md-12 no-padding-lr">
+                    {{ form_widget(form.menuName , {'attr': {'placeholder': 'placeholder.menu_name'|trans, 'ng-model': 'pageRoute.menuName', 'class': 'form-control'}}) }}
+                    <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.menuName.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
                 </div>
+            </div>
 
-                <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="title" for="{{ form.title.vars.id }}">{{ 'global.title'|trans }}</label>
-                    <div class="col-md-12 no-padding-lr">
-                        {{ form_widget(form.title , {'attr': {'placeholder': 'placeholder.title'|trans, 'ng-model': 'pageRoute.page.title', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.title.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
-                    </div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <label id="rollover" for="{{ form.rollover.vars.id }}">{{ 'global.rollover'|trans }}</label>
+                <div class="col-md-12 no-padding-lr">
+                    {{ form_widget(form.rollover , {'attr': {'placeholder': 'placeholder.rollover'|trans, 'ng-model': 'pageRoute.rollover', 'class': 'form-control'}}) }}
+                    <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.rollover.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
                 </div>
+            </div>
 
-                <div class="form-group col-xs-12 no-padding-lr">
-                    <label id="content" for="{{ form.content.vars.id }}">{{ 'global.content'|trans }}</label>
-                    <div class="col-md-12 no-padding-lr">
-                        {% form_theme form 'ChapleanCmsBundle:Form:form_type.html.twig' %}
-                        {{ form_widget(form.content , {'attr': {'ng-model': 'pageRoute.page.content', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.content.vars.full_name }}')">{{ 'alert.account.require_field'|trans }}</span>
-                    </div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <label id="metaDescription" for="{{ form.metaDescription.vars.id }}">{{ 'global.meta_description'|trans }}</label>
+                <div class="col-md-12 no-padding-lr">
+                    {{ form_widget(form.metaDescription , {'attr': {'ng-model': 'pageRoute.page.metaDescription', 'class': 'form-control'}}) }}
+                    <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.metaDescription.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
                 </div>
+            </div>
 
-                <div class="form-group col-xs-12 no-padding-lr">
-                    <div class="pull-right">
-                        <button type="submit" class="btn btn-primary save">{{ 'button.save.global'|trans }}</button>
-                        <button ng-click="savePage(pageForm, true)" type="button" class="btn btn-success save-and-quit">{{ 'button.save_quit.global'|trans }}</button>
-                        <a ng-click="cancel()" class="btn btn-default cancel">{{ 'button.cancel.global'|trans }}</a>
-                    </div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <label id="content" for="{{ form.content.vars.id }}">{{ 'global.content'|trans }}</label>
+                <div class="col-md-12 no-padding-lr">
+                    {% form_theme form 'ChapleanCmsBundle:Form:form_type.html.twig' %}
+                    {{ form_widget(form.content , {'attr': {'ng-model': 'pageRoute.page.content', 'class': 'form-control'}}) }}
+                    <span class="text-error ng-cloak" ng-if="isRequire(pageForm, '{{ form.content.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
+                </div>
+            </div>
+
+            <div class="form-group col-xs-12 no-padding-lr">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary save">{{ 'button.save.global'|trans }}</button>
+                    <button ng-click="savePage(pageForm, '{{ form.vars.name }}', true)" type="button" class="btn btn-success save-and-quit">{{ 'button.save_quit.global'|trans }}</button>
+                    <a ng-click="cancel()" class="btn btn-default cancel">{{ 'button.cancel.global'|trans }}</a>
                 </div>
             </div>
         </div>

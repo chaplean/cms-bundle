@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\View\View;
-use JMS\SecurityExtraBundle\Annotation as JSE;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +47,6 @@ class RestPageController extends FOSRestController
         $success = true;
         $errors = array();
         try {
-            $em->remove($pageRoute->getPage());
             $em->remove($pageRoute);
             $em->flush();
         } catch (\Exception $e) {
@@ -57,7 +55,7 @@ class RestPageController extends FOSRestController
         }
 
         if ($success) {
-            return $this->handleView(new View('success'));
+            return $this->handleView(new View());
         } else {
             return $this->handleView(new View($errors, 500));
         }
@@ -73,10 +71,10 @@ class RestPageController extends FOSRestController
     public function getAction($pageId)
     {
         /** @var EntityRepository $pageRouteRepository */
-        $pageRouteRepository = $this->getDoctrine()->getRepository('');
+        $pageRouteRepository = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PageRoute');
         $pageRoute = $pageRouteRepository->find($pageId);
 
-        return $this->handleView(new View($pageRoute));
+        return $this->handleView(new View(array('page' => $pageRoute)));
     }
 
     /**
@@ -90,7 +88,7 @@ class RestPageController extends FOSRestController
         $pageRouteRepository = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PageRoute');
         $pagesRoute = $pageRouteRepository->findAll();
 
-        return $this->handleView(new View($pagesRoute));
+        return $this->handleView(new View(array('pages' => $pagesRoute)));
     }
 
     /**
@@ -109,37 +107,33 @@ class RestPageController extends FOSRestController
 
         // create form and get params
         $formPage = $this->createForm(new PageType());
-        $params   = $request->request->all();
 
         // bind data in form
-        $formPage->submit($params);
+        $formPage->submit($request->request->all());
 
         if ($formPage->isValid()) {
             $pageRoute = null;
 
             try {
                 $page = new Page();
-                $page->setTitle($params['title']);
-                $page->setContent($params['content']);
-                $page->setMetaDescription($params['metaDescription']);
+                $page->setTitle($request->request->get('title', null));
+                $page->setSubtitle($request->request->get('subtitle', null));
+                $page->setContent($request->request->get('content', null));
+                $page->setMetaDescription($request->request->get('metaDescription', null));
 
-                $pageRoute = new PageRoute();
-                $pageRoute->setPath($params['path']);
-                $pageRoute->setLabel($params['label']);
-                $pageRoute->setRollover(isset($params['rollover']) ? $params['rollover'] : null);
+                $pageRoute = $formPage->getData();
                 $pageRoute->setDateAdd(new \DateTime());
                 $pageRoute->setPage($page);
 
-                $em->persist($page);
                 $em->persist($pageRoute);
                 $em->flush();
             } catch (\Exception $e) {
                 $logger->error(sprintf('%s : %', __FUNCTION__, $e->getMessage()));
 
-                return $this->handleView(new View('Page creation failed', 400));
+                return $this->handleView(new View('Page creation failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView(new View($pageRoute));
+            return $this->handleView(new View(array('page' => $pageRoute)));
         }
 
         return $this->handleView(new View($formPage->getErrors(true), 400));
@@ -170,33 +164,31 @@ class RestPageController extends FOSRestController
         }
 
         // create form and get params
-        $formPage = $this->createForm(new PageType());
-        $params   = $request->request->all();
+        $formPage = $this->createForm(new PageType(), $pageRoute);
 
         // bind data in form
-        $formPage->submit($params);
+        $formPage->submit($request->request->all());
 
         if ($formPage->isValid()) {
             try {
-                $page  = $pageRoute->getPage();
+                $page = $pageRoute->getPage();
+                $page->setTitle($request->request->get('title', null));
+                $page->setSubtitle($request->request->get('subtitle', null));
+                $page->setContent($request->request->get('content', null));
+                $page->setMetaDescription($request->request->get('metaDescription', null));
 
-                $pageRoute->setPath($params['path']);
-                $pageRoute->setLabel($params['label']);
-                $pageRoute->setRollover(isset($params['rollover']) ? $params['rollover'] : null);
+                $pageRoute = $formPage->getData();
                 $pageRoute->setDateUpdate(new \DateTime());
-                $page->setTitle($params['title']);
-                $page->setContent($params['content']);
-                $page->setMetaDescription($params['metaDescription']);
 
                 $em->persist($pageRoute);
                 $em->flush();
             } catch (\Exception $e) {
                 $logger->error(sprintf('%s : %', __FUNCTION__, $e->getMessage()));
 
-                return $this->handleView(new View('Page update failed', 400));
+                return $this->handleView(new View('Page update failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView(new View($pageRoute));
+            return $this->handleView(new View(array('page' => $pageRoute)));
         }
 
         return $this->handleView(new View($formPage->getErrors(true), 400));

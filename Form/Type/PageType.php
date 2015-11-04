@@ -25,6 +25,20 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
+            'title',
+            'text',
+            array(
+                'required' => true,
+                'mapped' => false
+            )
+        )->add(
+            'subtitle',
+            'text',
+            array(
+                'required' => false,
+                'mapped' => false
+            )
+        )->add(
             'path',
             'text',
             array(
@@ -43,27 +57,6 @@ class PageType extends AbstractType
                 'required' => false
             )
         )->add(
-            'title',
-            'text',
-            array(
-                'required' => true,
-                'mapped' => false
-            )
-        )->add(
-            'subtitle',
-            'text',
-            array(
-                'required' => false,
-                'mapped' => false
-            )
-        )->add(
-            'content',
-            'textAngular',
-            array(
-                'required' => false,
-                'mapped' => false
-            )
-        )->add(
             'metaDescription',
             'textarea',
             array(
@@ -72,6 +65,13 @@ class PageType extends AbstractType
                 'attr' => array(
                     'rows' => 5
                 )
+            )
+        )->add(
+            'content',
+            'textAngular',
+            array(
+                'required' => false,
+                'mapped' => false
             )
         );
     }
