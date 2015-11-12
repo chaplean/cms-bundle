@@ -8,10 +8,11 @@ cms.filter('pageFilter', function() {
             return items;
         }
         search = search.toLowerCase();
+
         return items.filter(function (e) {
             return (e.path.toLowerCase().indexOf(search) !== -1)
-                || (e.pageContent.title.toLowerCase().indexOf(search) !== -1)
-                || (e.pageContent.metaDescription.toLowerCase().indexOf(search) !== -1);
+                || (e.page.title.toLowerCase().indexOf(search) !== -1)
+                || (e.page.metaDescription.toLowerCase().indexOf(search) !== -1);
         });
     }
 });

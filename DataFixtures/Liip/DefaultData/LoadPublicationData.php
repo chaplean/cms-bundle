@@ -1,6 +1,6 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip;
+namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

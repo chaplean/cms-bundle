@@ -6277,7 +6277,10 @@ button.close {
   padding-left: 0; }
 
 .text-error {
-  color: red; }
+  color: #A94442; }
+
+.text-success {
+  color: #3c763d; }
 
 .st-sort-ascent:before {
   content: '\25B2\00a0'; }

@@ -1,5 +1,11 @@
 services:
-  form.type.textangular:
-    class: Chaplean\Bundle\CmsBundle\Form\Type\TextAngularType
-    tags:
-      - { name: form.type, alias: textAngular }
+    form.type.textangular:
+        class: Chaplean\Bundle\CmsBundle\Form\Type\TextAngularType
+        tags:
+            - { name: form.type, alias: textAngular }
+
+    chaplean_cms.cms_extension:
+        class: Chaplean\Bundle\CmsBundle\Twig\Extension\CmsExtension
+        arguments: [%chaplean_cms%]
+        tags:
+            - { name: 'twig.extension' }

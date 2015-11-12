@@ -136,3 +136,5 @@ fos_rest:
         force_redirects:
             html: false
 
+chaplean_cms:
+    front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
