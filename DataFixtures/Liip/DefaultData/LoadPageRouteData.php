@@ -3,7 +3,9 @@
 namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
 
 use Chaplean\Bundle\CmsBundle\Entity\Page;
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Chaplean\Bundle\CmsBundle\Entity\Publication;
+use Chaplean\Bundle\UnitBundle\Utility\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
@@ -16,7 +18,7 @@ use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class LoadPageRouteData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPageRouteData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
@@ -37,221 +39,55 @@ class LoadPageRouteData extends AbstractFixture implements OrderedFixtureInterfa
         $nextMonth = clone $now;
         $nextMonth->modify('+1 month');
 
-        /* Passed page */
-        $page = new Page();
-        $page->setTitle('Page-1');
-        $page->setContent('Page-1-content');
-        $page->setMetaDescription('Page-1-meta');
-        $page->setPublication($this->getReference('publication-passed-published-highlighted'));
+        $datas = array(
+            '1'  => array($lastMonth, 'publication-passed-published-highlighted'),
+            '2'  => array($lastMonth, 'publication-passed-published-not-highlighted'),
+            '3'  => array($lastMonth, 'publication-passed-unpublished-highlighted'),
+            '4'  => array($lastMonth, 'publication-passed-unpublished-not-highlighted'),
+            '5'  => array($yesterday, 'publication-current-published-highlighted'),
+            '6'  => array($yesterday, 'publication-current-published-not-highlighted'),
+            '7'  => array($yesterday, 'publication-current-unpublished-highlighted'),
+            '8'  => array($yesterday, 'publication-current-unpublished-not-highlighted'),
+            '9'  => array($yesterday, 'publication-incoming-published-highlighted'),
+            '10' => array($yesterday, 'publication-incoming-published-not-highlighted'),
+            '11' => array($yesterday, 'publication-incoming-unpublished-highlighted'),
+            '12' => array($yesterday, 'publication-incoming-unpublished-not-highlighted'),
+        );
 
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-1');
-        $pageRoute->setMenuName('Page-1');
-        $pageRoute->setRollover('Page-1-rollover');
-        $pageRoute->setDateAdd($lastMonth);
-        $pageRoute->setPage($page);
+        foreach ($datas as $key => $data) {
+            $page = new Page();
+            $page->setTitle('Page-' . $key);
+            $page->setContent('Page-' . $key . '-content');
+            $page->setMetaDescription('Page-' . $key . '-meta');
 
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-1', $pageRoute);
+            /** @var Publication $publication */
+            $publication = $this->getReference($data[1]);
 
+            $pageRoute = new PageRoute();
+            $pageRoute->setPath('page-' . $key);
+            $pageRoute->setMenuName('Page-' . $key);
+            $pageRoute->setRollover('Page-' . $key . '-rollover');
+            $pageRoute->setDateAdd($data[0]);
+            $pageRoute->setPublication($publication);
+            $pageRoute->setPage($page);
 
-        $page = new Page();
-        $page->setTitle('Page-2');
-        $page->setContent('Page-2-content');
-        $page->setMetaDescription('Page-2-meta');
-        $page->setPublication($this->getReference('publication-passed-published-not-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-2');
-        $pageRoute->setMenuName('Page-2');
-        $pageRoute->setRollover('Page-2-rollover');
-        $pageRoute->setDateAdd($lastMonth);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-2', $pageRoute);
-
-
-        $page = new Page();
-        $page->setTitle('Page-3');
-        $page->setContent('Page-3-content');
-        $page->setMetaDescription('Page-3-meta');
-        $page->setPublication($this->getReference('publication-passed-unpublished-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-3');
-        $pageRoute->setMenuName('Page-3');
-        $pageRoute->setRollover('Page-3-rollover');
-        $pageRoute->setDateAdd($lastMonth);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-3', $pageRoute);
-
-
-        $page = new Page();
-        $page->setTitle('Page-4');
-        $page->setContent('Page-4-content');
-        $page->setMetaDescription('Page-4-meta');
-        $page->setPublication($this->getReference('publication-passed-unpublished-not-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-4');
-        $pageRoute->setMenuName('Page-4');
-        $pageRoute->setRollover('Page-4-rollover');
-        $pageRoute->setDateAdd($lastMonth);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-4', $pageRoute);
-        /* Passed page - end */
-
-
-        /* Current page */
-        $page = new Page();
-        $page->setTitle('Page-5');
-        $page->setContent('Page-5-content');
-        $page->setMetaDescription('Page-5-meta');
-        $page->setPublication($this->getReference('publication-current-published-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-5');
-        $pageRoute->setMenuName('Page-5');
-        $pageRoute->setRollover('Page-5-rollover');
-        $pageRoute->setDateAdd($yesterday);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-5', $pageRoute);
-
-
-        $page = new Page();
-        $page->setTitle('Page-6');
-        $page->setContent('Page-6-content');
-        $page->setMetaDescription('Page-6-meta');
-        $page->setPublication($this->getReference('publication-current-published-not-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-6');
-        $pageRoute->setMenuName('Page-6');
-        $pageRoute->setRollover('Page-6-rollover');
-        $pageRoute->setDateAdd($yesterday);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-6', $pageRoute);
-
-
-        $page = new Page();
-        $page->setTitle('Page-7');
-        $page->setContent('Page-7-content');
-        $page->setMetaDescription('Page-7-meta');
-        $page->setPublication($this->getReference('publication-current-unpublished-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-7');
-        $pageRoute->setMenuName('Page-7');
-        $pageRoute->setRollover('Page-7-rollover');
-        $pageRoute->setDateAdd($yesterday);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-7', $pageRoute);
-
-
-        $page = new Page();
-        $page->setTitle('Page-8');
-        $page->setContent('Page-8-content');
-        $page->setMetaDescription('Page-8-meta');
-        $page->setPublication($this->getReference('publication-current-unpublished-not-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-8');
-        $pageRoute->setMenuName('Page-8');
-        $pageRoute->setRollover('Page-8-rollover');
-        $pageRoute->setDateAdd($yesterday);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-8', $pageRoute);
-        /* Current page - end */
-
-        /* Incoming page */
-        $page = new Page();
-        $page->setTitle('Page-9');
-        $page->setContent('Page-9-content');
-        $page->setMetaDescription('Page-9-meta');
-        $page->setPublication($this->getReference('publication-incoming-published-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-9');
-        $pageRoute->setMenuName('Page-9');
-        $pageRoute->setRollover('Page-9-rollover');
-        $pageRoute->setDateAdd($yesterday);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-9', $pageRoute);
-
-
-        $page = new Page();
-        $page->setTitle('Page-10');
-        $page->setContent('Page-10-content');
-        $page->setMetaDescription('Page-10-meta');
-        $page->setPublication($this->getReference('publication-incoming-published-not-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-10');
-        $pageRoute->setMenuName('Page-10');
-        $pageRoute->setRollover('Page-10-rollover');
-        $pageRoute->setDateAdd($yesterday);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-10', $pageRoute);
-
-
-        $page = new Page();
-        $page->setTitle('Page-11');
-        $page->setContent('Page-11-content');
-        $page->setMetaDescription('Page-11-meta');
-        $page->setPublication($this->getReference('publication-incoming-unpublished-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-11');
-        $pageRoute->setMenuName('Page-11');
-        $pageRoute->setRollover('Page-11-rollover');
-        $pageRoute->setDateAdd($yesterday);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-11', $pageRoute);
-
-
-        $page = new Page();
-        $page->setTitle('Page-12');
-        $page->setContent('Page-12-content');
-        $page->setMetaDescription('Page-12-meta');
-        $page->setPublication($this->getReference('publication-incoming-unpublished-not-highlighted'));
-
-        $pageRoute = new PageRoute();
-        $pageRoute->setPath('page-12');
-        $pageRoute->setMenuName('Page-12');
-        $pageRoute->setRollover('Page-12-rollover');
-        $pageRoute->setDateAdd($yesterday);
-        $pageRoute->setPage($page);
-
-        $manager->persist($pageRoute);
-        $this->setReference('page-route-12', $pageRoute);
+            $manager->persist($pageRoute);
+            $this->setReference('page-route-' . $key, $pageRoute);
+        }
 
         $manager->flush();
     }
 
     /**
-     * @return int
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array
      */
-    public function getOrder()
+    public function getDependencies()
     {
-        return 20;
+        return array(
+            'Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData\LoadPublicationData'
+        );
     }
 }

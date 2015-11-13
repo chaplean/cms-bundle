@@ -1,19 +1,19 @@
 <?php
-/**
- * PageType.php.
- *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
- * @since     X.Y.Z
- */
-
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PageType extends AbstractType
+/**
+ * PublicationType.php.
+ *
+ * @author    Valentin - Chaplean <valentin@chaplean.com>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @since     1.0.0
+ */
+
+class PublicationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder Builder.
@@ -25,20 +25,21 @@ class PageType extends AbstractType
     {
         $options = null;
         $builder
-            ->add('title', 'text', array(
+            ->add('datePublicationBegin', 'datetime', array(
+                'required' => false,
+                'widget'   => 'single_text',
+            ))
+            ->add('datePublicationEnd', 'datetime', array(
+                'required' => false,
+                'widget'   => 'single_text',
+            ))
+            ->add('isHighlighted', 'checkbox', array(
+                'required' => false,
+            ))
+            ->add('status', 'entity', array(
+                'class'    => 'Chaplean\Bundle\CmsBundle\Entity\PublicationStatus',
+                'property' => 'id',
                 'required' => true,
-            ))
-            ->add('subtitle', 'text', array(
-                'required' => false,
-            ))
-            ->add('metaDescription', 'textarea', array(
-                'required' => false,
-                'attr' => array(
-                    'rows' => 5
-                )
-            ))
-            ->add('content', 'textAngular', array(
-                'required' => false,
             ));
     }
 
@@ -50,17 +51,19 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\Page',
+            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\Publication',
             'translation_domain' => 'messages',
             'csrf_protection' => false,
         ));
     }
 
     /**
-     * @return string
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
      */
     public function getName()
     {
-        return 'chaplean_cms_page_form';
+        return 'chaplean_cms_publication_form';
     }
 }

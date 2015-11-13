@@ -3,7 +3,6 @@
 namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Chaplean\Bundle\CmsBundle\Entity\PublicationStatus;
 
@@ -15,7 +14,7 @@ use Chaplean\Bundle\CmsBundle\Entity\PublicationStatus;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class LoadPublicationStatusData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPublicationStatusData extends AbstractFixture
 {
     /**
      * @param ObjectManager $manager
@@ -39,13 +38,5 @@ class LoadPublicationStatusData extends AbstractFixture implements OrderedFixtur
         $this->setReference('publication-status-unpublished', $publicationStatus);
 
         $manager->flush();
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrder()
-    {
-        return 1;
     }
 }

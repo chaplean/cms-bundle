@@ -6333,6 +6333,9 @@ body .sidebar .sidebar-menu li.treeview a span.glyphicon + span {
 body .sidebar .sidebar-menu li.treeview + li.treeview {
   margin-top: 10px; }
 
+body .navbar {
+  border-radius: 0; }
+
 body .navbar-default {
   background-color: #fff; }
 
@@ -6379,3 +6382,18 @@ body .table th.sortable {
 
 body .table tfoot nav a {
   cursor: pointer; }
+
+body .panel.panel-body {
+  border-radius: 0;
+  border-top: 2px solid #337ab7; }
+
+div.alert-fix-top {
+  border-radius: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1800;
+  text-align: center; }
+
+.align-label, .align-span {
+  margin-top: 7px; }

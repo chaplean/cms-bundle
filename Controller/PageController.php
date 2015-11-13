@@ -2,7 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Controller;
 
-use Chaplean\Bundle\CmsBundle\Form\Type\PageType;
+use Chaplean\Bundle\CmsBundle\Form\Type\PageRouteType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
@@ -101,7 +101,7 @@ class PageController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $form = $this->createForm(new PageType());
+        $form = $this->createForm(new PageRouteType());
         $translator = $this->get('translator');
 
         return $this->render(

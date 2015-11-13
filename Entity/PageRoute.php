@@ -2,7 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -18,7 +18,7 @@ class PageRoute
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @JMS\Groups({"page_route_id"})
+     * @JMS\Groups({"page_route_id", "page_route_all"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class PageRoute
      *
      * @ORM\Column(type="string", unique=true, length=250, nullable=false, name="path")
      *
-     * @JMS\Groups({"page_route_path"})
+     * @JMS\Groups({"page_route_path", "page_route_all"})
      */
     private $path;
 
@@ -36,7 +36,7 @@ class PageRoute
      *
      * @ORM\Column(type="string", length=250, nullable=false, name="menu_name")
      *
-     * @JMS\Groups({"page_route_menu_name"})
+     * @JMS\Groups({"page_route_menu_name", "page_route_all"})
      */
     private $menuName;
 
@@ -45,7 +45,7 @@ class PageRoute
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="rollover")
      *
-     * @JMS\Groups({"page_route_rollover"})
+     * @JMS\Groups({"page_route_rollover", "page_route_all"})
      */
     private $rollover;
 
@@ -54,7 +54,7 @@ class PageRoute
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
      *
-     * @JMS\Groups({"page_route_date_add"})
+     * @JMS\Groups({"page_route_date_add", "page_route_all"})
      */
     private $dateAdd;
 
@@ -63,16 +63,26 @@ class PageRoute
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_update")
      *
-     * @JMS\Groups({"page_route_date_update"})
+     * @JMS\Groups({"page_route_date_update", "page_route_all"})
      */
     private $dateUpdate;
+
+    /**
+     * @var Publication
+     *
+     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
+     *
+     * @JMS\Groups({"page_route_publication", "page_route_all"})
+     */
+    private $publication;
 
     /**
      * @var Page
      *
      * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", columnPrefix = false)
      *
-     * @JMS\Groups({"page_route_page"})
+     * @JMS\Groups({"page_route_page", "page_route_all"})
      */
     private $page;
 
@@ -202,6 +212,30 @@ class PageRoute
     public function setDateUpdate($dateUpdate)
     {
         $this->dateUpdate = $dateUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get publication.
+     *
+     * @return Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * Set publication.
+     *
+     * @param Publication $publication
+     *
+     * @return self
+     */
+    public function setPublication($publication)
+    {
+        $this->publication = $publication;
 
         return $this;
     }

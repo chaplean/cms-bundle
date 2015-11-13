@@ -2,7 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -26,7 +26,7 @@ class Publication
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @JMS\Groups({"publication_id"})
+     * @JMS\Groups({"publication_id", "publication_all"})
      */
     private $id;
 
@@ -35,7 +35,7 @@ class Publication
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_publication_begin")
      *
-     * @JMS\Groups({"publication_date_publication_begin"})
+     * @JMS\Groups({"publication_date_publication_begin", "publication_all"})
      */
     private $datePublicationBegin;
 
@@ -44,7 +44,7 @@ class Publication
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_publication_end")
      *
-     * @JMS\Groups({"publication_date_publication_end"})
+     * @JMS\Groups({"publication_date_publication_end", "publication_all"})
      */
     private $datePublicationEnd;
 
@@ -53,7 +53,7 @@ class Publication
      *
      * @ORM\Column(type="boolean", nullable=false, name="is_highlighted", options={"default":0})
      *
-     * @JMS\Groups({"publication_is_highlighted"})
+     * @JMS\Groups({"publication_is_highlighted", "publication_all"})
      */
     private $isHighlighted;
 
@@ -62,7 +62,7 @@ class Publication
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
      *
-     * @JMS\Groups({"publication_date_add"})
+     * @JMS\Groups({"publication_date_add", "publication_all"})
      */
     private $dateAdd;
 
@@ -72,7 +72,7 @@ class Publication
      * @ORM\ManyToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\PublicationStatus", inversedBy="publications")
      * @ORM\JoinColumn(name="status", referencedColumnName="id", nullable=false)
      *
-     * @JMS\Groups({"publication_status"})
+     * @JMS\Groups({"publication_status", "publication_all"})
      */
     private $status;
 

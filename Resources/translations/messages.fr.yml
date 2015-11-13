@@ -28,6 +28,12 @@ error:
     important: Une erreur importante est survenue
     not_found: La page demandée n'existe pas
 
+form:
+    publication:
+        date_publication_begin: Date de publication
+        date_publication_end: Date de fin
+        date_add: Création
+        date_update: Modification
 
 global:
     content: Contenu
@@ -40,6 +46,7 @@ global:
     rollover: Texte en rollover
     subtitle: Sous-titre
     title: Titre
+    status: Status
 
 header:
     creation: Création de page
@@ -66,3 +73,8 @@ placeholder:
         global: Recherche globale
     subtitle: Sous-titre
     title: Titre
+
+publication_status:
+    status:
+        published: Publié
+        unpublished: Non publié

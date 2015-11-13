@@ -108,6 +108,10 @@ body {
         }
     }
 
+    .navbar {
+        border-radius: 0;
+    }
+
     .navbar-default {
         background-color: #fff;
 
@@ -172,4 +176,22 @@ body {
             }
         }
     }
+
+    .panel.panel-body {
+        border-radius: 0;
+        border-top: 2px solid $brand-primary;
+    }
+}
+
+div.alert-fix-top {
+    border-radius: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1800;
+    text-align: center;
+}
+
+.align-label, .align-span {
+    margin-top: 7px;
 }

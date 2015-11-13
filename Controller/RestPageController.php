@@ -4,13 +4,16 @@ namespace Chaplean\Bundle\CmsBundle\Controller;
 
 use Chaplean\Bundle\CmsBundle\Entity\Page;
 use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
+use Chaplean\Bundle\CmsBundle\Entity\Publication;
+use Chaplean\Bundle\CmsBundle\Form\Type\PageRouteType;
 use Chaplean\Bundle\CmsBundle\Form\Type\PageType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\View\View;
-use Symfony\Bridge\Monolog\Logger;
+use JMS\Serializer\SerializationContext;
+use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -70,11 +73,16 @@ class RestPageController extends FOSRestController
      */
     public function getAction($pageId)
     {
-        /** @var EntityRepository $pageRouteRepository */
-        $pageRouteRepository = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PageRoute');
-        $pageRoute = $pageRouteRepository->find($pageId);
+        /** @var PageRoute $pageRoute */
+        $pageRoute = $this->getDoctrine()->getManager()->find('ChapleanCmsBundle:PageRoute', $pageId);
 
-        return $this->handleView(new View(array('page' => $pageRoute)));
+        $view = $this->view(array('page' => $pageRoute));
+        $view->setSerializationContext(SerializationContext::create()->setGroups(array(
+            'page_route_all', 'publication_all', 'page_all',
+            'publication_status_id', 'publication_status_keyname', 'publication_status_position'
+        )));
+
+        return $this->handleView($view);
     }
 
     /**
@@ -88,7 +96,13 @@ class RestPageController extends FOSRestController
         $pageRouteRepository = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PageRoute');
         $pagesRoute = $pageRouteRepository->findAll();
 
-        return $this->handleView(new View(array('pages' => $pagesRoute)));
+        $view = $this->view(array('pages' => $pagesRoute));
+        $view->setSerializationContext(SerializationContext::create()->setGroups(array(
+            'page_route_all', 'publication_all', 'page_all',
+            'publication_status_id', 'publication_status_keyname', 'publication_status_position'
+        )));
+
+        return $this->handleView($view);
     }
 
     /**
@@ -106,7 +120,7 @@ class RestPageController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
 
         // create form and get params
-        $formPage = $this->createForm(new PageType());
+        $formPage = $this->createForm(new PageRouteType());
 
         // bind data in form
         $formPage->submit($request->request->all());
@@ -115,16 +129,16 @@ class RestPageController extends FOSRestController
             $pageRoute = null;
 
             try {
-                $page = new Page();
-                $page->setTitle($request->request->get('title', null));
-                $page->setSubtitle($request->request->get('subtitle', null));
-                $page->setContent($request->request->get('content', null));
-                $page->setMetaDescription($request->request->get('metaDescription', null));
-
                 $pageRoute = $formPage->getData();
                 $pageRoute->setDateAdd(new \DateTime());
-                $pageRoute->setPage($page);
 
+                /** @var Publication $publication */
+                $publication = $pageRoute->getPublication();
+                $publication->setDateAdd(new \DateTime());
+                $em->persist($publication);
+                $em->flush();
+
+                $pageRoute->setPublication($publication);
                 $em->persist($pageRoute);
                 $em->flush();
             } catch (\Exception $e) {
@@ -133,7 +147,7 @@ class RestPageController extends FOSRestController
                 return $this->handleView(new View('Page creation failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView(new View(array('page' => $pageRoute)));
+            return $this->handleView(new View(array('pageRoute' => $pageRoute)));
         }
 
         return $this->handleView(new View($formPage->getErrors(true), 400));
@@ -164,19 +178,13 @@ class RestPageController extends FOSRestController
         }
 
         // create form and get params
-        $formPage = $this->createForm(new PageType(), $pageRoute);
+        $formPage = $this->createForm(new PageRouteType(), $pageRoute);
 
         // bind data in form
         $formPage->submit($request->request->all());
 
         if ($formPage->isValid()) {
             try {
-                $page = $pageRoute->getPage();
-                $page->setTitle($request->request->get('title', null));
-                $page->setSubtitle($request->request->get('subtitle', null));
-                $page->setContent($request->request->get('content', null));
-                $page->setMetaDescription($request->request->get('metaDescription', null));
-
                 $pageRoute = $formPage->getData();
                 $pageRoute->setDateUpdate(new \DateTime());
 
@@ -188,7 +196,7 @@ class RestPageController extends FOSRestController
                 return $this->handleView(new View('Page update failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView(new View(array('page' => $pageRoute)));
+            return $this->handleView(new View(array('pageRoute' => $pageRoute)));
         }
 
         return $this->handleView(new View($formPage->getErrors(true), 400));

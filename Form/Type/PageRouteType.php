@@ -1,11 +1,4 @@
 <?php
-/**
- * PageType.php.
- *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
- * @since     X.Y.Z
- */
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
@@ -13,7 +6,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PageType extends AbstractType
+/**
+ * Class PageType.
+ *
+ * @package   Chaplean\Bundle\CmsBundle\Form\Type
+ * @author    Benoit - Chaplean <benoit@chaplean.com>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @since     1.0.0
+ */
+class PageRouteType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder Builder.
@@ -25,21 +26,17 @@ class PageType extends AbstractType
     {
         $options = null;
         $builder
-            ->add('title', 'text', array(
-                'required' => true,
+            ->add('path', 'text', array(
+                'required' => true
             ))
-            ->add('subtitle', 'text', array(
-                'required' => false,
+            ->add('menuName', 'text', array(
+                'required' => true
             ))
-            ->add('metaDescription', 'textarea', array(
-                'required' => false,
-                'attr' => array(
-                    'rows' => 5
-                )
+            ->add('rollover', 'text', array(
+                'required' => false
             ))
-            ->add('content', 'textAngular', array(
-                'required' => false,
-            ));
+            ->add('page', new PageType())
+            ->add('publication', new PublicationType());
     }
 
     /**
@@ -50,7 +47,7 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\Page',
+            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\PageRoute',
             'translation_domain' => 'messages',
             'csrf_protection' => false,
         ));
@@ -61,6 +58,6 @@ class PageType extends AbstractType
      */
     public function getName()
     {
-        return 'chaplean_cms_page_form';
+        return 'chaplea_cms_page_route_form';
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -49,6 +49,16 @@ class Post
      * @JMS\Groups({"post_date_update"})
      */
     protected $dateUpdate;
+
+    /**
+     * @var Publication
+     *
+     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
+     *
+     * @JMS\Groups({"post_publication"})
+     */
+    private $publication;
 
     /**
      * @var Page
@@ -113,6 +123,30 @@ class Post
     public function setDateUpdate($dateUpdate)
     {
         $this->dateUpdate = $dateUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get publication.
+     *
+     * @return Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * Set publication.
+     *
+     * @param Publication $publication
+     *
+     * @return self
+     */
+    public function setPublication($publication)
+    {
+        $this->publication = $publication;
 
         return $this;
     }

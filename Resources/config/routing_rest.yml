@@ -9,3 +9,10 @@ cms_rest_page:
     name_prefix: cms_rest_page_
     options:
         expose: true
+
+cms_rest_publication_status:
+    type: rest
+    resource: Chaplean\Bundle\CmsBundle\Controller\RestPublicationStatusController
+    name_prefix: cms_rest_publication_status_
+    options:
+        expose: true

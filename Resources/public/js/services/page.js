@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.factory('Page', function($resource) {
+cms.service('Page', function($resource) {
 
     return $resource(Routing.generate('cms_rest') + 'pages', {}, {
         delete: {method: 'delete', url: Routing.generate('cms_rest') + 'pages/:pageId'},

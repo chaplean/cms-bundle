@@ -3,6 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Chaplean\Bundle\CmsBundle\Entity\Publication;
@@ -15,7 +16,7 @@ use Chaplean\Bundle\CmsBundle\Entity\Publication;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class LoadPublicationData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPublicationData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * @param ObjectManager $manager
@@ -35,7 +36,6 @@ class LoadPublicationData extends AbstractFixture implements OrderedFixtureInter
         $lastMonth->modify('-1 month');
         $nextMonth = clone $now;
         $nextMonth->modify('+1 month');
-
 
         /* Passed publication */
         $publication = new Publication();
@@ -169,8 +169,10 @@ class LoadPublicationData extends AbstractFixture implements OrderedFixtureInter
     /**
      * @return int
      */
-    public function getOrder()
+    public function getDependencies()
     {
-        return 10;
+        return array(
+            'Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData\LoadPublicationStatusData'
+        );
     }
 }

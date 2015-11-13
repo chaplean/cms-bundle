@@ -3,7 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -25,7 +25,7 @@ class PublicationStatus
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @JMS\Groups({"publication_status_id"})
+     * @JMS\Groups({"publication_status_id", "publication_status_all"})
      */
     private $id;
 
@@ -34,7 +34,7 @@ class PublicationStatus
      *
      * @ORM\Column(type="string", unique=true, length=50, nullable=false, name="keyname")
      *
-     * @JMS\Groups({"publication_status_keyname"})
+     * @JMS\Groups({"publication_status_keyname", "publication_status_all"})
      */
     private $keyname;
 
@@ -43,7 +43,7 @@ class PublicationStatus
      *
      * @ORM\Column(type="smallint", unique=true, nullable=false, name="position", options={"unsigned":true})
      *
-     * @JMS\Groups({"publication_status_position"})
+     * @JMS\Groups({"publication_status_position", "publication_status_all"})
      */
     private $position;
 
@@ -52,7 +52,8 @@ class PublicationStatus
      *
      * @ORM\OneToMany(targetEntity="Chaplean\Bundle\CmsBundle\Entity\Publication", mappedBy="status")
      *
-     * @JMS\Groups({"publication_status_publications"})
+     * @JMS\MaxDepth(depth=1)
+     * @JMS\Groups({"publication_status_publications", "publication_status_all"})
      */
     private $publications;
 
