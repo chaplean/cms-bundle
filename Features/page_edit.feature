@@ -44,11 +44,11 @@ Feature: Edit pages
   Scenario: I change publication
     Given I am on "/administration/page/1"
     When I wait Ajax
-    When I select "2" from "#chaplea_cms_page_route_form_publication_status"
+    When I select "2" from "chaplea_cms_page_route_form_publication_status"
     When I click on ".save"
     When I am on "/administration/page/1"
     When I wait Ajax
-    Then the "2" option from "#chaplea_cms_page_route_form_publication_status" is selected
+    Then the "2" option from "chaplea_cms_page_route_form_publication_status" is selected
 
   Scenario: Save and quit
     Given I am on "/administration/page/1"

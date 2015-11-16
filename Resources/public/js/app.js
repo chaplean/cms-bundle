@@ -3,12 +3,16 @@
 var cms = angular.module('Cms', [
     'ngAnimate', 'ngResource', 'ngSanitize', 'ngBootbox', 'ui.bootstrap',
     'ui.mask', 'boxuk.translation', 'textAngular', 'smart-table',
-    'angularUtils.directives.dirPagination'
+    'angularUtils.directives.dirPagination', 'angularMoment'
 
 ]);
 
 cms.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{^').endSymbol('^}');
+});
+
+cms.run(function(amMoment) {
+    amMoment.changeLocale(locale);
 });
 
 cms.controller('MainController', function($scope, $rootScope, AlertService) {

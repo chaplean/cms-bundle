@@ -22,10 +22,10 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                 function(response) {
                     $scope.pageRoute = response.page;
                     if ($scope.pageRoute.publication.datePublicationBegin) {
-                        $scope.pageRoute.publication.datePublicationBegin = new Date($scope.pageRoute.publication.datePublicationBegin);
+                        $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
                     }
                     if ($scope.pageRoute.publication.datePublicationEnd) {
-                        $scope.pageRoute.publication.datePublicationEnd = new Date($scope.pageRoute.publication.datePublicationEnd);
+                        $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
                     }
                     $scope.pagePath = $scope.pageRoute.path;
                 });
@@ -111,9 +111,14 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         delete pageRouteTmp.publication.id;
         delete pageRouteTmp.publication.dateAdd;
         delete pageRouteTmp.publication.dateUpdate;
-        pageRouteTmp.publication.datePublicationBegin = $filter('date')(pageRouteTmp.publication.datePublicationBegin, 'dd/MM/yyyy');
-        pageRouteTmp.publication.datePublicationEnd = $filter('date')(pageRouteTmp.publication.datePublicationEnd, 'dd/MM/yyyy');
+        if (typeof pageRouteTmp.publication.datePublicationBegin == 'string') {
+            pageRouteTmp.publication.datePublicationBegin = moment(pageRouteTmp.publication.datePublicationBegin, 'DD/MM/YYYY');
+        }
+        if (typeof pageRouteTmp.publication.datePublicationEnd == 'string') {
+            pageRouteTmp.publication.datePublicationEnd = moment(pageRouteTmp.publication.datePublicationEnd, 'DD/MM/YYYY');
+        }
         pageRouteTmp.publication.status = pageRouteTmp.publication.status.id;
+        console.log(pageRouteTmp);
 
         return pageRouteTmp;
     };

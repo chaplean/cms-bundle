@@ -25,12 +25,14 @@
     "angular-ui-mask": "~1.4.1",
     "angular-utils-pagination": "~0.8.3",
     "bootstrap-sass-official": "~3.3.1",
+    "moment": "~2.10.6",
     "jquery": ">= 1.9.1",
     "bootbox.js": "~4.4.0",
     "ngBootbox": "~0.1.1",
     "requirejs": "2.1.*",
     "requirejs-domready": "~2.0.1",
-    "textAngular": "~1.4.3"
+    "textAngular": "~1.4.3",
+    "angular-moment": "~0.10.3"
   },
   "resolutions": {
     "angular": "1.3.*"
