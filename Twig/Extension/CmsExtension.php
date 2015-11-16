@@ -7,7 +7,7 @@ namespace Chaplean\Bundle\CmsBundle\Twig\Extension;
  *
  * @author    Valentin - Chaplean <valentin@chaplean.com>
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
- * @since     2.0.0
+ * @since     1.0.0
  */
 class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
