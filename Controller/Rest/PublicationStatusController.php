@@ -2,9 +2,9 @@
 
 namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
+use Chaplean\Bundle\CmsBundle\Entity\PublicationStatus;
 use FOS\RestBundle\Controller\Annotations;
-use FOS\RestBundle\Controller\FOSRestController;
-use JMS\Serializer\SerializationContext;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -16,37 +16,29 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Annotations\RouteResource("PublicationStatus")
  */
-class PublicationStatusController extends FOSRestController
+class PublicationStatusController extends ChapleanRestController
 {
     /**
-     * @param integer $id
+     * @param PublicationStatus $publicationStatus
      *
      * @return Response
      */
-    public function getAction($id)
+    public function getAction(PublicationStatus $publicationStatus)
     {
-        $publicationStatus = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PublicationStatus')->find($id);
-
-        $view = $this->view(array('publicationStatus' => $publicationStatus));
-        $view->setSerializationContext(SerializationContext::create()->setGroups(
-            array('publication_status_id', 'publication_status_keyname', 'publication_status_position')
+        return $this->handleResponse(array('publicationStatus' => $publicationStatus), array(
+            'publication_status_id', 'publication_status_keyname', 'publication_status_position'
         ));
-
-        return $this->handleView($view);
     }
 
     /**
+     * @param Request $request
+     *
      * @return Response
      */
-    public function getAllAction()
+    public function getAllAction(Request $request)
     {
-        $publicationStatus = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PublicationStatus')->findAll();
-
-        $view = $this->view(array('publicationStatus' => $publicationStatus));
-        $view->setSerializationContext(SerializationContext::create()->setGroups(
-            array('publication_status_id', 'publication_status_keyname', 'publication_status_position')
+        return $this->getAll($request, 'ChapleanCmsBundle:PublicationStatus', 'publicationStatus', array(
+            'publication_status_id', 'publication_status_keyname', 'publication_status_position'
         ));
-
-        return $this->handleView($view);
     }
 }

@@ -7,7 +7,6 @@ use Chaplean\Bundle\CmsBundle\Entity\Publication;
 use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations;
-use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializationContext;
 use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Annotations\RouteResource("Post")
  */
-class PostController extends FOSRestController
+class PostController extends ChapleanRestController
 {
     /**
      * @param Post $post
@@ -31,13 +30,10 @@ class PostController extends FOSRestController
      */
     public function getAction(Post $post)
     {
-        $view = $this->view(array('post' => $post));
-        $view->setSerializationContext(SerializationContext::create()->setGroups(array(
+        return $this->handleResponse(array('post' => $post), array(
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname'
-        )));
-
-        return $this->handleView($view);
+        ));
     }
 
     /**
@@ -47,18 +43,10 @@ class PostController extends FOSRestController
      */
     public function getAllAction(Request $request)
     {
-        $limit = $request->query->get('limit', null);
-        $sort  = $request->query->get('sort', null);
-        $order = $request->query->get('order', null);
-
-        $posts = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Post')->getAll($limit, $sort, $order);
-
-        $view = $this->view(array('posts' => $posts));
-        $view->setSerializationContext(SerializationContext::create()->setGroups(array(
-            'post_id', 'post_category', 'post_page', 'page_title'
-        )));
-
-        return $this->handleView($view);
+        return $this->getAll($request, 'ChapleanCmsBundle:Post', 'posts', array(
+            'post_all', 'publication_all', 'page_all',
+            'publication_status_id', 'publication_status_keyname'
+        ));
     }
 
     /**
@@ -75,12 +63,10 @@ class PostController extends FOSRestController
 
         $posts = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Post')->getByCategory($category, $limit, $sort, $order);
 
-        $view = $this->view(array('posts' => $posts));
-        $view->setSerializationContext(SerializationContext::create()->setGroups(array(
-            'post_id', 'post_category', 'post_page', 'page_title'
-        )));
-
-        return $this->handleView($view);
+        return $this->handleResponse(array('posts' => $posts), array(
+            'post_all', 'publication_all', 'page_all',
+            'publication_status_id', 'publication_status_keyname'
+        ));
     }
 
     /**

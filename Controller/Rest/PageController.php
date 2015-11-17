@@ -6,9 +6,7 @@ use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
 use Chaplean\Bundle\CmsBundle\Entity\Publication;
 use Chaplean\Bundle\CmsBundle\Form\Type\PageRouteType;
 use Doctrine\ORM\EntityManager;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations;
-use JMS\Serializer\SerializationContext;
 use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Annotations\RouteResource("Page")
  */
-class PageController extends FOSRestController
+class PageController extends ChapleanRestController
 {
     /**
      * Delete page
@@ -63,14 +61,11 @@ class PageController extends FOSRestController
      */
     public function getAction(PageRoute $pageRoute)
     {
-        $view = $this->view(array('page' => $pageRoute));
-        $view->setSerializationContext(SerializationContext::create()->setGroups(array(
+        return $this->handleResponse(array('page' => $pageRoute), array(
             'page_route_all', 'publication_id', 'publication_date_publication_begin', 'publication_date_publication_end',
             'publication_date_add', 'publication_status', 'publication_status_id', 'publication_status_keyname',
             'publication_status_position', 'page_all',
-        )));
-
-        return $this->handleView($view);
+        ));
     }
 
     /**
@@ -80,19 +75,10 @@ class PageController extends FOSRestController
      */
     public function getAllAction(Request $request)
     {
-        $limit = $request->query->get('limit', null);
-        $sort  = $request->query->get('sort', null);
-        $order = $request->query->get('order', null);
-
-        $pagesRoute = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PageRoute')->getAll($limit, $sort, $order);
-
-        $view = $this->view(array('pages' => $pagesRoute));
-        $view->setSerializationContext(SerializationContext::create()->setGroups(array(
+        return $this->getAll($request, 'ChapleanCmsBundle:PageRoute', 'pages', array(
             'page_route_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname', 'publication_status_position'
-        )));
-
-        return $this->handleView($view);
+        ));
     }
 
     /**

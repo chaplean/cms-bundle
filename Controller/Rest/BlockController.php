@@ -3,10 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
 use Chaplean\Bundle\CmsBundle\Entity\Block;
-use Chaplean\Bundle\CmsBundle\Entity\Publication;
-use Chaplean\Bundle\CmsBundle\Form\Type\BlockType;
 use Doctrine\ORM\EntityManager;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations;
 use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Annotations\RouteResource("Block")
  */
-class BlockController extends FOSRestController
+class BlockController extends ChapleanRestController
 {
     /**
      * Delete block
@@ -62,15 +59,10 @@ class BlockController extends FOSRestController
      */
     public function getAction(Block $block)
     {
-        $view = $this->view(array('block' => $block));
-        $view->setSerializationContext(
-            SerializationContext::create()->setGroups(array(
-                'block_all', 'publication_all', 'publication_status_id',
-                'publication_status_keyname', 'publication_status_position'
-            ))
-        );
-
-        return $this->handleView($view);
+        return $this->handleResponse(array('block' => $block), array(
+            'block_all', 'publication_all', 'publication_status_id',
+            'publication_status_keyname', 'publication_status_position'
+        ));
     }
 
     /**
@@ -80,21 +72,10 @@ class BlockController extends FOSRestController
      */
     public function getAllAction(Request $request)
     {
-        $limit = $request->query->get('limit', null);
-        $sort = $request->query->get('sort', null);
-        $order = $request->query->get('order', null);
-
-        $blocks = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Block')->getAll($limit, $sort, $order);
-
-        $view = $this->view(array('blocks' => $blocks));
-        $view->setSerializationContext(
-            SerializationContext::create()->setGroups(array(
-                'block_all', 'publication_all', 'publication_status_id',
-                'publication_status_keyname', 'publication_status_position'
-            ))
-        );
-
-        return $this->handleView($view);
+        return $this->getAll($request, 'ChapleanCmsBundle:Block', 'blocks', array(
+            'block_all', 'publication_all', 'publication_status_id',
+            'publication_status_keyname', 'publication_status_position'
+        ));
     }
 
     /**
