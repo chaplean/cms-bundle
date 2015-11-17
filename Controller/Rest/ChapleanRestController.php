@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
+use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,33 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class ChapleanRestController extends FOSRestController
 {
+    /**
+     * @param mixed $entity
+     *
+     * @return Response
+     */
+    public function delete($entity)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $success = true;
+        $errors = array();
+        try {
+            $em->remove($entity);
+            $em->flush();
+        } catch (\Exception $e) {
+            $success = false;
+            $errors[] = $e->getMessage();
+        }
+
+        if ($success) {
+            return $this->handleView($this->view());
+        } else {
+            return $this->handleView($this->view($errors, 500));
+        }
+    }
+
     /**
      * @param Request $request
      * @param string  $entity

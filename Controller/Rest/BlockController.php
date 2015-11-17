@@ -3,9 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
 use Chaplean\Bundle\CmsBundle\Entity\Block;
-use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations;
-use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,24 +28,7 @@ class BlockController extends ChapleanRestController
      */
     public function deleteAction(Block $block)
     {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $success = true;
-        $errors = array();
-        try {
-            $em->remove($block);
-            $em->flush();
-        } catch (\Exception $e) {
-            $success = false;
-            $errors[] = $e->getMessage();
-        }
-
-        if ($success) {
-            return $this->handleView($this->view());
-        } else {
-            return $this->handleView($this->view($errors, 500));
-        }
+        return $this->delete($block);
     }
 
     /**

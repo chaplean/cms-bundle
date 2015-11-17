@@ -7,7 +7,6 @@ use Chaplean\Bundle\CmsBundle\Entity\Publication;
 use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations;
-use JMS\Serializer\SerializationContext;
 use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

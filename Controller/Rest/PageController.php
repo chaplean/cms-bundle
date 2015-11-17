@@ -32,24 +32,7 @@ class PageController extends ChapleanRestController
      */
     public function deleteAction(PageRoute $pageRoute)
     {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $success = true;
-        $errors = array();
-        try {
-            $em->remove($pageRoute);
-            $em->flush();
-        } catch (\Exception $e) {
-            $success = false;
-            $errors[] = $e->getMessage();
-        }
-
-        if ($success) {
-            return $this->handleView($this->view());
-        } else {
-            return $this->handleView($this->view($errors, 500));
-        }
+        return $this->delete($pageRoute);
     }
 
     /**
