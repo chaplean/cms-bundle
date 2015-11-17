@@ -4,7 +4,6 @@ namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Chaplean\Bundle\CmsBundle\Entity\Publication;
 

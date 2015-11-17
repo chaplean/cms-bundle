@@ -1,11 +1,4 @@
 <?php
-/**
- * LoadPostData.php.
- *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
- * @since     X.Y.Z
- */
 
 namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
 
@@ -18,6 +11,13 @@ use Chaplean\Bundle\UnitBundle\Utility\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * LoadPostData.php.
+ *
+ * @author    Valentin - Chaplean <valentin@chaplean.com>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @since     X.Y.Z
+ */
 class LoadPostData extends AbstractFixture implements DependentFixtureInterface
 {
     /**

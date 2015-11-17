@@ -23,3 +23,10 @@ cms_rest_post:
     name_prefix: cms_rest_post_
     options:
         expose: true
+
+cms_rest_block:
+    type: rest
+    resource: Chaplean\Bundle\CmsBundle\Controller\Rest\BlockController
+    name_prefix: cms_rest_block_
+    options:
+        expose: true

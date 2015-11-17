@@ -2,25 +2,23 @@
 
 namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
 
-use Chaplean\Bundle\CmsBundle\Entity\Page;
+use Chaplean\Bundle\CmsBundle\Entity\Block;
 use Chaplean\Bundle\CmsBundle\Entity\Publication;
 use Chaplean\Bundle\UnitBundle\Utility\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
 
 /**
- * Class LoadPageRouteData.
+ * LoadBlockData.php.
  *
- * @package   Chaplean\Bundle\CmsBundle\DataFixtures\Liip
- * @author    Benoit - Chaplean <benoit@chaplean.com>
+ * @author    Valentin - Chaplean <valentin@chaplean.com>
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class LoadPageRouteData extends AbstractFixture implements DependentFixtureInterface
+class LoadBlockData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      *
      * @return void
      */
@@ -54,24 +52,17 @@ class LoadPageRouteData extends AbstractFixture implements DependentFixtureInter
         );
 
         foreach ($datas as $key => $data) {
-            $page = new Page();
-            $page->setTitle('Page-' . $key);
-            $page->setContent('Page-' . $key . '-content');
-            $page->setMetaDescription('Page-' . $key . '-meta');
-
             /** @var Publication $publication */
             $publication = $this->getReference($data[1]);
+            
+            $block = new Block();
+            $block->setName('Block-' . $key);
+            $block->setContent('<p>Big Content ' . $key . '</p>');
+            $block->setDateAdd($data[0]);
+            $block->setPublication($publication);
 
-            $pageRoute = new PageRoute();
-            $pageRoute->setPath('page-' . $key);
-            $pageRoute->setMenuName('Page-' . $key);
-            $pageRoute->setRollover('Page-' . $key . '-rollover');
-            $pageRoute->setDateAdd($data[0]);
-            $pageRoute->setPublication($publication);
-            $pageRoute->setPage($page);
-
-            $manager->persist($pageRoute);
-            $this->setReference('page-route-' . $key, $pageRoute);
+            $manager->persist($block);
+            $this->setReference('block-' . $key, $block);
         }
 
         $manager->flush();

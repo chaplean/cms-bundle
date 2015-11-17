@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Chaplean\Bundle\CmsBundle\Repository\BlockRepository")
  * @ORM\Table(name="cl_block", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"})})
  */
 class Block
