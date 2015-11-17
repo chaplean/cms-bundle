@@ -18,7 +18,7 @@ class Block
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @JMS\Groups({"block_id"})
+     * @JMS\Groups({"block_id", "block_all"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Block
      *
      * @ORM\Column(type="string", unique=true, length=50, nullable=false)
      *
-     * @JMS\Groups({"block_name"})
+     * @JMS\Groups({"block_name", "block_all"})
      */
     private $name;
 
@@ -36,7 +36,7 @@ class Block
      *
      * @ORM\Column(type="text", nullable=true)
      *
-     * @JMS\Groups({"block_content"})
+     * @JMS\Groups({"block_content", "block_all"})
      */
     private $content;
 
@@ -45,7 +45,7 @@ class Block
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @JMS\Groups({"block_date_add"})
+     * @JMS\Groups({"block_date_add", "block_all"})
      */
     private $dateAdd;
 
@@ -54,7 +54,7 @@ class Block
      *
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @JMS\Groups({"block_date_update"})
+     * @JMS\Groups({"block_date_update", "block_all"})
      */
     private $dateUpdate;
 
@@ -64,7 +64,7 @@ class Block
      * @ORM\OneToOne(targetEntity="Publication")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
      *
-     * @JMS\Groups({"block_publication"})
+     * @JMS\Groups({"block_publication", "block_all"})
      */
     private $publication;
 
