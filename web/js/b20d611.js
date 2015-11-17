@@ -13219,6 +13219,20 @@ cms.service('PublicationStatus', function ($resource) {
 
 var cms = angular.module('Cms');
 
+cms.controller('MediaManager', function($scope, $uibModalInstance) {
+    $scope.quitInsertMedia = function() {
+        $uibModalInstance.close();
+    };
+
+    $scope.quitWithoutMedia = function() {
+        $uibModalInstance.close();
+    };
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Page, PublicationStatus,
                                           TranslationService, AlertService, Datepicker) {
@@ -13340,6 +13354,10 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         return pageRouteTmp;
     };
 
+    $scope.onDismissMediaManager = function() {
+
+    };
+
     $scope.loadData();
 });
 
@@ -13411,4 +13429,28 @@ cms.filter('pageFilter', function() {
                 || (e.page.metaDescription.toLowerCase().indexOf(search) !== -1);
         });
     }
+});
+
+'use strict';
+
+var app = angular.module('Cms');
+
+app.directive('mediaManager', function() {
+    return {
+        scope: {
+            callback: '&callback'
+        },
+        templateUrl: 'media-manager.html',
+        controller: function($scope, $uibModal) {
+            $scope.openModal = function() {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'media-manager-modal.html',
+                    controller: 'MediaManager',
+                    size: 'lg',
+                    resolve: $scope.callback
+                });
+            };
+        }
+    };
 });

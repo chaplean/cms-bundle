@@ -13137,6 +13137,20 @@ cms.service('PublicationStatus', function ($resource) {
 
 var cms = angular.module('Cms');
 
+cms.controller('MediaManager', function($scope, $uibModalInstance) {
+    $scope.quitInsertMedia = function() {
+        $uibModalInstance.close();
+    };
+
+    $scope.quitWithoutMedia = function() {
+        $uibModalInstance.close();
+    };
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Page, PublicationStatus,
                                           TranslationService, AlertService, Datepicker) {
@@ -13256,6 +13270,10 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         console.log(pageRouteTmp);
 
         return pageRouteTmp;
+    };
+
+    $scope.onDismissMediaManager = function() {
+
     };
 
     $scope.loadData();
