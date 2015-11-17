@@ -27,6 +27,13 @@ class PostTest extends LogicalTest
     /**
      * @return void
      */
+    public function setUp()
+    {
+    }
+
+    /**
+     * @return void
+     */
     public function testGetInstanceOf()
     {
         $postVideo = new PostVideo();
