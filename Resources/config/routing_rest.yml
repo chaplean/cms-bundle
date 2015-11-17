@@ -5,14 +5,21 @@ cms_rest:
 
 cms_rest_page:
     type: rest
-    resource: Chaplean\Bundle\CmsBundle\Controller\RestPageController
+    resource: Chaplean\Bundle\CmsBundle\Controller\Rest\PageController
     name_prefix: cms_rest_page_
     options:
         expose: true
 
 cms_rest_publication_status:
     type: rest
-    resource: Chaplean\Bundle\CmsBundle\Controller\RestPublicationStatusController
+    resource: Chaplean\Bundle\CmsBundle\Controller\Rest\PublicationStatusController
     name_prefix: cms_rest_publication_status_
+    options:
+        expose: true
+
+cms_rest_post:
+    type: rest
+    resource: Chaplean\Bundle\CmsBundle\Controller\Rest\PostController
+    name_prefix: cms_rest_post_
     options:
         expose: true

@@ -1,17 +1,14 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Controller;
+namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
-use Chaplean\Bundle\CmsBundle\Entity\Page;
 use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
 use Chaplean\Bundle\CmsBundle\Entity\Publication;
 use Chaplean\Bundle\CmsBundle\Form\Type\PageRouteType;
-use Chaplean\Bundle\CmsBundle\Form\Type\PageType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
 use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,25 +24,19 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Annotations\RouteResource("Page")
  */
-class RestPageController extends FOSRestController
+class PageController extends FOSRestController
 {
     /**
-     * Remove a page
+     * Delete page
      *
-     * @param integer $pageId
+     * @param PageRoute $pageRoute
      *
      * @return Response
      */
-    public function deleteAction($pageId)
+    public function deleteAction(PageRoute $pageRoute)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-
-        /** @var EntityRepository $pageRouteRepository */
-        $pageRouteRepository = $em->getRepository('ChapleanCmsBundle:PageRoute');
-
-        /** @var PageRoute $pageRoute */
-        $pageRoute = $pageRouteRepository->find($pageId);
 
         $success = true;
         $errors = array();
@@ -58,43 +49,43 @@ class RestPageController extends FOSRestController
         }
 
         if ($success) {
-            return $this->handleView(new View());
+            return $this->handleView($this->view());
         } else {
-            return $this->handleView(new View($errors, 500));
+            return $this->handleView($this->view($errors, 500));
         }
     }
 
     /**
-     * Send page
+     * Get one page
      *
-     * @param integer $pageId Page route Id
+     * @param PageRoute $pageRoute
      *
      * @return Response
      */
-    public function getAction($pageId)
+    public function getAction(PageRoute $pageRoute)
     {
-        /** @var PageRoute $pageRoute */
-        $pageRoute = $this->getDoctrine()->getManager()->find('ChapleanCmsBundle:PageRoute', $pageId);
-
         $view = $this->view(array('page' => $pageRoute));
         $view->setSerializationContext(SerializationContext::create()->setGroups(array(
-            'page_route_all', 'publication_all', 'page_all',
-            'publication_status_id', 'publication_status_keyname', 'publication_status_position'
+            'page_route_all', 'publication_id', 'publication_date_publication_begin', 'publication_date_publication_end',
+            'publication_date_add', 'publication_status', 'publication_status_id', 'publication_status_keyname',
+            'publication_status_position', 'page_all',
         )));
 
         return $this->handleView($view);
     }
 
     /**
-     * Send pages
+     * @param Request $request
      *
      * @return Response
      */
-    public function getAllAction()
+    public function getAllAction(Request $request)
     {
-        /** @var EntityRepository $pageRouteRepository */
-        $pageRouteRepository = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PageRoute');
-        $pagesRoute = $pageRouteRepository->findAll();
+        $limit = $request->query->get('limit', null);
+        $sort  = $request->query->get('sort', null);
+        $order = $request->query->get('order', null);
+
+        $pagesRoute = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PageRoute')->getAll($limit, $sort, $order);
 
         $view = $this->view(array('pages' => $pagesRoute));
         $view->setSerializationContext(SerializationContext::create()->setGroups(array(
@@ -144,37 +135,32 @@ class RestPageController extends FOSRestController
             } catch (\Exception $e) {
                 $logger->error(sprintf('%s : %', __FUNCTION__, $e->getMessage()));
 
-                return $this->handleView(new View('Page creation failed : ' . $e->getMessage(), 400));
+                return $this->handleView($this->view('Page creation failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView(new View(array('pageRoute' => $pageRoute)));
+            return $this->handleView($this->view(array('pageRoute' => $pageRoute)));
         }
 
-        return $this->handleView(new View($formPage->getErrors(true), 400));
+        return $this->handleView($this->view($formPage->getErrors(true), 400));
     }
 
     /**
      * Update page
      *
-     * @param Request $request
-     * @param integer $pageId  Page route Id
+     * @param Request   $request
+     * @param PageRoute $pageRoute
      *
      * @return Response
      */
-    public function putAction(Request $request, $pageId)
+    public function putAction(Request $request, PageRoute $pageRoute)
     {
         /** @var Logger $logger */
         $logger = $this->get('logger');
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        /** @var EntityRepository $pageRouteRepository */
-        $pageRouteRepository = $this->getDoctrine()->getRepository('ChapleanCmsBundle:PageRoute');
 
-        /** @var PageRoute $pageRoute */
-        $pageRoute = $pageRouteRepository->find($pageId);
-
-        if ($pageRoute === null) {
-            return $this->handleView(new View('Page not found', 400));
+        if (empty($pageRoute)) {
+            return $this->handleView($this->view('Page not found', 404));
         }
 
         // create form and get params
@@ -193,12 +179,12 @@ class RestPageController extends FOSRestController
             } catch (\Exception $e) {
                 $logger->error(sprintf('%s : %', __FUNCTION__, $e->getMessage()));
 
-                return $this->handleView(new View('Page update failed : ' . $e->getMessage(), 400));
+                return $this->handleView($this->view('Page update failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView(new View(array('pageRoute' => $pageRoute)));
+            return $this->handleView($this->view(array('pageRoute' => $pageRoute)));
         }
 
-        return $this->handleView(new View($formPage->getErrors(true), 400));
+        return $this->handleView($this->view($formPage->getErrors(true), 400));
     }
 }

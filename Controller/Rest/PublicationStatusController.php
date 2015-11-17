@@ -1,6 +1,6 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Controller;
+namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Annotations\RouteResource("PublicationStatus")
  */
-class RestPublicationStatusController extends FOSRestController
+class PublicationStatusController extends FOSRestController
 {
     /**
      * @param integer $id

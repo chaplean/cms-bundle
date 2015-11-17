@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Chaplean\Bundle\CmsBundle\Repository\PostRepository")
  * @ORM\Table(name="cl_post")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="category", type="string")
@@ -28,7 +28,7 @@ class Post
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @JMS\Groups({"post_id"})
+     * @JMS\Groups({"post_id", "post_all"})
      */
     protected $id;
 
@@ -37,7 +37,7 @@ class Post
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
      *
-     * @JMS\Groups({"post_date_add"})
+     * @JMS\Groups({"post_date_add", "post_all"})
      */
     protected $dateAdd;
 
@@ -46,7 +46,7 @@ class Post
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_update")
      *
-     * @JMS\Groups({"post_date_update"})
+     * @JMS\Groups({"post_date_update", "post_all"})
      */
     protected $dateUpdate;
 
@@ -56,7 +56,7 @@ class Post
      * @ORM\OneToOne(targetEntity="Publication")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
      *
-     * @JMS\Groups({"post_publication"})
+     * @JMS\Groups({"post_publication", "post_all"})
      */
     private $publication;
 
@@ -65,7 +65,7 @@ class Post
      *
      * @ORM\Embedded(class="Page")
      *
-     * @JMS\Groups({"post_page"})
+     * @JMS\Groups({"post_page", "post_all"})
      */
     protected $page;
 
@@ -173,5 +173,27 @@ class Post
         $this->page = $page;
 
         return $this;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("category")
+     * @JMS\Groups({"post_category", "post_all"})
+     *
+     * @return string
+     */
+    public function getInstanceOf()
+    {
+        switch (true) {
+            case $this instanceof PostVideo:
+                return 'video';
+            case $this instanceof PostZoom:
+                return 'zoom';
+            case $this instanceof PostTestimonial:
+                return 'testimonial';
+            case $this instanceof Post:
+            default:
+                return 'news';
+        }
     }
 }
