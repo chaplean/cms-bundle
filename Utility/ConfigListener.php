@@ -32,9 +32,9 @@ class ConfigListener
                 $featureName = $this->controllerToFeature[$controllerName];
 
                 if (isset($this->configCms[$featureName])) {
-                    $featureValue = !$this->configCms[$featureName];
+                    $featureValue = $this->configCms[$featureName];
 
-                    if(!is_array($featureValue) || !$featureValue) {
+                    if(!is_array($featureValue) && !$featureValue) {
                         throw new NotFoundHttpException;
                     }
                 }

@@ -16,3 +16,10 @@ cms_rest_publication_status:
     name_prefix: cms_rest_publication_status_
     options:
         expose: true
+
+cms_rest_media:
+    type: rest
+    resource: Chaplean\Bundle\CmsBundle\Controller\Rest\MediaController
+    name_prefix: cms_rest_media_
+    options:
+        expose: true

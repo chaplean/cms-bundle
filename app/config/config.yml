@@ -138,4 +138,4 @@ fos_rest:
 
 chaplean_cms:
     front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
-    media: false
+    media: true
