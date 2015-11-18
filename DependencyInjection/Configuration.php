@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\DependencyInjection;
 
+use JMS\DiExtraBundle\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -23,6 +24,19 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('front_layout')->isRequired()->end()
+                ->variableNode('media')
+                    ->isRequired()
+                    ->validate()
+                        ->always(function($v) use ($rootNode) {
+                            if (is_bool($v)) {
+                                return $v;
+                            } else if (is_array($v)) {
+                                return $v;
+                            } else {
+                                throw new InvalidTypeException();
+                            }
+                        })
+                    ->end()
             ->end();
 
         // Here you should define the parameters that are allowed to

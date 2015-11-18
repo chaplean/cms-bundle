@@ -9,3 +9,8 @@ services:
         arguments: [%chaplean_cms%]
         tags:
             - { name: 'twig.extension' }
+    app.tokens.action_listener:
+        class: Chaplean\Bundle\CmsBundle\Utility\ConfigListener
+        arguments: [%chaplean_cms%]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
