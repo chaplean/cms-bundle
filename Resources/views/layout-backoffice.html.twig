@@ -28,6 +28,7 @@
     <script type="text/javascript">
         var locale = '{{ app.request.locale }}';
     </script>
+
     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
@@ -87,6 +88,12 @@
                                 <a href="{{ path('cms_page_list') }}">
                                     <span class="fa fa-file"></span>
                                     <span>{{ 'menu.pages' | trans }}</span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="{{ path('cms_post_list') }}">
+                                    <span class="fa fa-puzzle-piece"></span>
+                                    <span>{{ 'menu.posts' | trans }}</span>
                                 </a>
                             </li>
                         </ul>

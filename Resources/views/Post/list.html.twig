@@ -1,0 +1,57 @@
+{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+
+{% block cms_action_top %}
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-left"></div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown sonata-actions">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Liste d'actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a class="sonata-action-element" href="{{ path('cms_post_edit') }}">
+                                <i class="fa fa-plus-circle"></i>
+                                {{ 'button.add.global' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block cms %}
+    <table id="posts-list" st-table="postsDisplayed" st-safe-src="posts" class="table table-striped" ng-controller="PostsController">
+        <thead>
+        <tr>
+            <th colspan="5">
+                <input id="filter-post" st-search="" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
+            </th>
+        </tr>
+        <tr>
+            <th st-sort="'category'" class="sortable">{{ 'global.path' | trans }}</th>
+            <th st-sort="getters.title" class="center sortable">{{ 'global.title' | trans }}</th>
+            <th class="center"></th>
+        </tr>
+        </thead>
+        <tbody class="ng-cloak">
+        <tr ng-repeat="post in postsDisplayed">
+            <td><a href="{^ path('cms_post_edit', {postId: post.id}) ^}">{^ ('post.category.' + post.category)|trans ^}</a></td>
+            <td class="center"><a href="{^ path('cms_post_edit', {postId: post.id}) ^}">{^ post.page.title ^}</a></td>
+            <td>
+                <button type="button" ng-click="removePost(post)" class="btn btn-sm btn-danger">
+                    <i class="fa fa-minus-circle"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

@@ -6,7 +6,6 @@ use Chaplean\Bundle\CmsBundle\Entity\Page;
 use Chaplean\Bundle\CmsBundle\Entity\Publication;
 use Chaplean\Bundle\UnitBundle\Utility\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
 

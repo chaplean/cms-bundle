@@ -25,7 +25,9 @@
     <table id="pages-list" st-table="pagesDisplayed" st-safe-src="pages" class="table table-striped" ng-controller="PagesController">
         <thead>
             <tr>
-                <th colspan="5"><input id="filter-page" class="form-control" ng-model="search" type="text" placeholder="{{ 'placeholder.search.global' | trans }}"/></th>
+                <th colspan="5">
+                    <input id="filter-page" st-search="" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
+                </th>
             </tr>
             <tr>
                 <th st-sort="'path'" class="sortable">{{ 'global.path' | trans }}</th>
@@ -35,7 +37,7 @@
             </tr>
         </thead>
         <tbody class="ng-cloak">
-            <tr ng-repeat="pageRoute in (pagesDisplayed | pageFilter:search) ">
+            <tr ng-repeat="pageRoute in pagesDisplayed">
                 <td><a href="{^ path('cms_page_edit', {pageId: pageRoute.id}) ^}">{^ pageRoute.path ^}</a></td>
                 <td class="center"><a href="{^ path('cms_page_edit', {pageId: pageRoute.id}) ^}">{^ pageRoute.page.title ^}</a></td>
                 <td class="center">{^ pageRoute.page.metaDescription ^}</td>

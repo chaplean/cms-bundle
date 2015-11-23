@@ -22,6 +22,8 @@ framework:
     fragments:       ~
     http_method_override: true
     profiler: { only_exceptions: false }
+    serializer:
+        enable_annotations: true
 
 
 # Twig Configuration
@@ -31,7 +33,7 @@ twig:
 
 # Assetic Configuration
 assetic:
-    debug:          "%use_assetic_debug%"
+    debug:          true
     use_controller: "%use_assetic_controller%"
     bundles:        ['ChapleanCmsBundle']
     ruby: %ruby.bin%
@@ -135,6 +137,8 @@ fos_rest:
             html: true
         force_redirects:
             html: false
+    serializer:
+        serialize_null: true
 
 chaplean_cms:
     front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"

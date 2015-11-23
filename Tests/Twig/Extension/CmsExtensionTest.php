@@ -22,6 +22,13 @@ class CmsExtensionTest extends LogicalTest
     /**
      * @return void
      */
+    public static function setUpBeforeClass()
+    {
+    }
+
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
