@@ -1,21 +1,57 @@
 <script type="text/ng-template" id="media-manager-modal.html">
     <div id="media-manager">
         <div class="modal-header">
-            <h3 class="modal-title">{{ 'media_manager.title' | trans }}</h3>
+            <h3 class="modal-title">{{ 'media_manager.title' | trans }}
+                <button id="quit" class="btn btn-warning pull-right" type="button" ng-click="quitWithoutMedia()">{{ 'media_manager.close' | trans }}</button>
+            </h3>
         </div>
         <div class="modal-body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xs-12 col-md-9"></div>
-                        <div class="media-element" dir-paginate="media in medias | itemsPerPage: 9"></div>
-                        <dir-pagination-controls></dir-pagination-controls>
-                    <div class="col-xs-12 col-md-3"></div>
+                    <div class="col-xs-12 col-md-6">
+                        <button>{{ 'upload' | trans }}</button>
+                    </div>
+                    <div class="col-xs-12 col-md-6 text-right">
+                        <form>
+                            <input type="text" placeholder="{{ 'search.name' | trans }}" ng-model="nameFilter" ng-change="updateFilter()" />
+                            <select ng-model="sortType">
+                                <option value="dateUpdate">{{ 'date' | trans }}</option>
+                                <option value="fileName">{{ 'name' | trans }}</option>
+                            </select>
+                            <select ng-model="categoryFilter" ng-change="updateFilter()">
+                                <option value="">{{ 'filter.type' | trans }}</option>
+                                <option value="image">{{ 'image' | trans }}</option>
+                                <option value="pdf">{{ 'pdf' | trans }}</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-9">
+                        <div class="media-element col-xs-12 col-sm-6 col-md-4" dir-paginate="media in mediasFiltered | orderBy: sortFilter | itemsPerPage: 9" ng-class="{active: media.id == selectedMedia.id}" ng-click="selectMedia(media)">
+                            <p>{^ media.category ^}</p>
+                        </div>
+                        <dir-pagination-controls class="col-xs-12 text-center"></dir-pagination-controls>
+                    </div>
+                    <div class="col-xs-12 col-md-3" ng-show="selectedMedia">
+                        <h4>{{ 'media.details' | trans }}</h4>
+
+                        <form>
+                            <span>{^ selectedMedia.fileName ^}</span>
+                            <span>{^ selectedMedia.dateAdd ^}</span>
+                            <span>{^ selectedMedia.fileWeight ^}</span>
+                            <span>{^ selectedMedia.fileWidth ^} x {^ selectedMedia.fileHeight ^} Px</span>
+                            <span>{^ selectedMedia.path ^}</span>
+                            <span>{^ selectedMedia.title ^}</span>
+                            <span>{^ selectedMedia.alternativeTitle ^}</span>
+                        </form>
+                        <button id="insert" class="btn btn-primary" type="button" ng-click="quitInsertMedia()">{{ 'media_manager.insert' | trans }}</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button id="insert" class="btn btn-primary" type="button" ng-click="quitInsertMedia()">{{ 'media_manager.insert' | trans }}</button>
-            <button id="quit" class="btn btn-warning" type="button" ng-click="quitWithoutMedia()">{{ 'media_manager.close' | trans }}</button>
         </div>
     </div>
 </script>

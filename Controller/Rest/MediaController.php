@@ -6,6 +6,7 @@ use Chaplean\Bundle\CmsBundle\Entity\Media;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,9 +24,10 @@ class MediaController extends FOSRestController
     public function getAllAction()
     {
         $medias = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Media')->findAll();
-
+        $response = $this->view($medias);
+        $response->setSerializationContext(SerializationContext::create()->setGroups(array('media_all')));
         if ($medias) {
-            return $this->handleView(new View($medias));
+            return $this->handleView($response);
         } else {
             return $this->handleView(new View('nothing to return', 404));
         }

@@ -23,7 +23,7 @@ abstract class Media
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @JMS\Groups({"media_id"})
+     * @JMS\Groups({"media_id", "media_all"})
      */
     protected $id;
 
@@ -32,7 +32,7 @@ abstract class Media
      *
      * @ORM\Column(type="string", length=200, nullable=false, name="path")
      *
-     * @JMS\Groups({"media_path"})
+     * @JMS\Groups({"media_path", "media_all"})
      */
     protected $path;
 
@@ -41,7 +41,7 @@ abstract class Media
      *
      * @ORM\Column(type="string", length=250, nullable=false, name="file_name")
      *
-     * @JMS\Groups({"media_file_name"})
+     * @JMS\Groups({"media_file_name", "media_all"})
      */
     protected $fileName;
 
@@ -50,7 +50,7 @@ abstract class Media
      *
      * @ORM\Column(type="integer", nullable=false, name="file_weight", options={"unsigned":true})
      *
-     * @JMS\Groups({"media_file_weight"})
+     * @JMS\Groups({"media_file_weight", "media_all"})
      */
     protected $fileWeight;
 
@@ -59,7 +59,7 @@ abstract class Media
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
      *
-     * @JMS\Groups({"media_date_add"})
+     * @JMS\Groups({"media_date_add", "media_all"})
      */
     protected $dateAdd;
 
@@ -68,7 +68,7 @@ abstract class Media
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_updated")
      *
-     * @JMS\Groups({"media_date_updated"})
+     * @JMS\Groups({"media_date_updated", "media_all"})
      */
     protected $dateUpdated;
 
@@ -200,5 +200,37 @@ abstract class Media
         $this->dateUpdated = $dateUpdated;
 
         return $this;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("category")
+     * @JMS\Groups({"media_category", "media_all"})
+     *
+     * @return string
+     */
+    public function getInstanceOf()
+    {
+        switch (true) {
+            case $this instanceof MediaImage:
+                return 'image';
+            case $this instanceof MediaPdf:
+                return 'pdf';
+        }
+    }
+
+    /**
+     * @param string $media
+     *
+     * @return string
+     */
+    public static function getClassByInstance($media)
+    {
+        switch ($media) {
+            case 'image':
+                return MediaImage::class;
+            case 'pdf':
+                return MediaPdf::class;
+        }
     }
 }

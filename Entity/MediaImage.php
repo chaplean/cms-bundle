@@ -19,7 +19,7 @@ class MediaImage extends Media
      *
      * @ORM\Column(type="smallint", nullable=false, name="width", options={"unsigned":true})
      *
-     * @JMS\Groups({"media_width"})
+     * @JMS\Groups({"media_width", "media_all"})
      */
     private $width;
 
@@ -28,7 +28,7 @@ class MediaImage extends Media
      *
      * @ORM\Column(type="smallint", nullable=false, name="height", options={"unsigned":true})
      *
-     * @JMS\Groups({"media_height"})
+     * @JMS\Groups({"media_height", "media_all"})
      */
     private $height;
 
@@ -37,7 +37,7 @@ class MediaImage extends Media
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="title")
      *
-     * @JMS\Groups({"media_title"})
+     * @JMS\Groups({"media_title", "media_all"})
      */
     private $title;
 
@@ -46,7 +46,7 @@ class MediaImage extends Media
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="alternative_title")
      *
-     * @JMS\Groups({"media_alternative_title"})
+     * @JMS\Groups({"media_alternative_title", "media_all"})
      */
     private $alternativeTitle;
 
@@ -56,7 +56,7 @@ class MediaImage extends Media
      * @ORM\ManyToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\FileExtensionImage", inversedBy="images")
      * @ORM\JoinColumn(name="extension", referencedColumnName="id", nullable=false)
      *
-     * @JMS\Groups({"media_alternative_extension"})
+     * @JMS\Groups({"media_alternative_extension", "media_all"})
      */
     private $extension;
 

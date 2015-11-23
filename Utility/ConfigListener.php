@@ -37,6 +37,8 @@ class ConfigListener
                     if(!is_array($featureValue) && !$featureValue) {
                         throw new NotFoundHttpException;
                     }
+                } else {
+                    throw new NotFoundHttpException;
                 }
             }
         }
