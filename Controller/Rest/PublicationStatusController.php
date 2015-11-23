@@ -25,7 +25,7 @@ class PublicationStatusController extends ChapleanRestController
      */
     public function getAction(PublicationStatus $publicationStatus)
     {
-        return $this->handleResponse(array('publicationStatus' => $publicationStatus), array(
+        return $this->handleResponse($publicationStatus, array(
             'publication_status_id', 'publication_status_keyname', 'publication_status_position'
         ));
     }
@@ -37,7 +37,7 @@ class PublicationStatusController extends ChapleanRestController
      */
     public function getAllAction(Request $request)
     {
-        return $this->getAll($request, 'ChapleanCmsBundle:PublicationStatus', 'publicationStatus', array(
+        return $this->getAll($request, 'ChapleanCmsBundle:PublicationStatus', array(
             'publication_status_id', 'publication_status_keyname', 'publication_status_position'
         ));
     }

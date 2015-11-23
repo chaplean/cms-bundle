@@ -9,3 +9,7 @@ services:
         arguments: [%chaplean_cms%]
         tags:
             - { name: 'twig.extension' }
+
+    chaplean_cms.post_cast_utility:
+        class: Chaplean\Bundle\CmsBundle\Utility\Entity\PostCast
+        arguments: [@doctrine]

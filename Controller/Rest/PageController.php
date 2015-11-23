@@ -44,7 +44,7 @@ class PageController extends ChapleanRestController
      */
     public function getAction(PageRoute $pageRoute)
     {
-        return $this->handleResponse(array('page' => $pageRoute), array(
+        return $this->handleResponse($pageRoute, array(
             'page_route_all', 'publication_id', 'publication_date_publication_begin', 'publication_date_publication_end',
             'publication_date_add', 'publication_status', 'publication_status_id', 'publication_status_keyname',
             'publication_status_position', 'page_all',
@@ -58,7 +58,7 @@ class PageController extends ChapleanRestController
      */
     public function getAllAction(Request $request)
     {
-        return $this->getAll($request, 'ChapleanCmsBundle:PageRoute', 'pages', array(
+        return $this->getAll($request, 'ChapleanCmsBundle:PageRoute', array(
             'page_route_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname', 'publication_status_position'
         ));
@@ -93,6 +93,7 @@ class PageController extends ChapleanRestController
 
                 /** @var Publication $publication */
                 $publication = $pageRoute->getPublication();
+                $publication->setIsHighlighted(false);
                 $publication->setDateAdd(new \DateTime());
                 $em->persist($publication);
                 $em->flush();
@@ -106,7 +107,11 @@ class PageController extends ChapleanRestController
                 return $this->handleView($this->view('Page creation failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView($this->view(array('pageRoute' => $pageRoute)));
+            return $this->handleResponse($pageRoute, array(
+                'page_route_all', 'publication_id', 'publication_date_publication_begin', 'publication_date_publication_end',
+                'publication_date_add', 'publication_status', 'publication_status_id', 'publication_status_keyname',
+                'publication_status_position', 'page_all',
+            ));
         }
 
         return $this->handleView($this->view($formPage->getErrors(true), 400));
@@ -150,7 +155,11 @@ class PageController extends ChapleanRestController
                 return $this->handleView($this->view('Page update failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView($this->view(array('pageRoute' => $pageRoute)));
+            return $this->handleResponse($pageRoute, array(
+                'page_route_all', 'publication_id', 'publication_date_publication_begin', 'publication_date_publication_end',
+                'publication_date_add', 'publication_status', 'publication_status_id', 'publication_status_keyname',
+                'publication_status_position', 'page_all',
+            ));
         }
 
         return $this->handleView($this->view($formPage->getErrors(true), 400));

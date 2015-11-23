@@ -23,6 +23,20 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $options = null;
+        $builder
+            ->add('category', 'choice', array(
+                'mapped' => false,
+                'choices' => array(
+                    'news'        => 'post.category.news',
+                    'testimonial' => 'post.category.testimonial',
+                    'video'       => 'post.category.video',
+                    'zoom'        => 'post.category.zoom',
+                ),
+                'empty_data' => 'news',
+            ))
+            ->add('page', new PageType())
+            ->add('publication', new PublicationType());
     }
 
     /**

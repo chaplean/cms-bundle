@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
+use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -194,6 +195,26 @@ class Post
             case $this instanceof Post:
             default:
                 return 'news';
+        }
+    }
+
+    /**
+     * @param string $post
+     *
+     * @return string
+     */
+    public static function getClassByInstance($post)
+    {
+        switch ($post) {
+            case 'video':
+                return PostVideo::class;
+            case 'zoom':
+                return PostZoom::class;
+            case 'testimonial':
+                return PostTestimonial::class;
+            case 'news':
+            default:
+                return Post::class;
         }
     }
 }

@@ -40,7 +40,7 @@ class BlockController extends ChapleanRestController
      */
     public function getAction(Block $block)
     {
-        return $this->handleResponse(array('block' => $block), array(
+        return $this->handleResponse($block, array(
             'block_all', 'publication_all', 'publication_status_id',
             'publication_status_keyname', 'publication_status_position'
         ));
@@ -53,7 +53,7 @@ class BlockController extends ChapleanRestController
      */
     public function getAllAction(Request $request)
     {
-        return $this->getAll($request, 'ChapleanCmsBundle:Block', 'blocks', array(
+        return $this->getAll($request, 'ChapleanCmsBundle:Block', array(
             'block_all', 'publication_all', 'publication_status_id',
             'publication_status_keyname', 'publication_status_position'
         ));

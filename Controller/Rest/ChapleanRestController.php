@@ -47,12 +47,11 @@ abstract class ChapleanRestController extends FOSRestController
     /**
      * @param Request $request
      * @param string  $entity
-     * @param string  $key
      * @param array   $group
      *
      * @return Response
      */
-    public function getAll(Request $request, $entity, $key, $group = null)
+    public function getAll(Request $request, $entity, $group = null)
     {
         $limit = $request->query->get('limit', null);
         $sort  = $request->query->get('sort', null);
@@ -66,7 +65,7 @@ abstract class ChapleanRestController extends FOSRestController
             $entities = $entityRepository->findAll();
         }
 
-        return $this->handleResponse(array($key => $entities), $group);
+        return $this->handleResponse($entities, $group);
     }
 
     /**

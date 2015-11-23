@@ -3,6 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
 
 use Chaplean\Bundle\CmsBundle\Entity\Page;
+use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
 use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
 use Chaplean\Bundle\CmsBundle\Entity\PostZoom;
@@ -40,37 +41,40 @@ class LoadPostData extends AbstractFixture implements DependentFixtureInterface
         $nextMonth->modify('+1 month');
 
         $datas = array(
-            '1'  => array(new PostVideo()      , $lastMonth, 'publication-passed-published-highlighted'),
-            '2'  => array(new PostVideo()      , $lastMonth, 'publication-passed-published-not-highlighted'),
-            '3'  => array(new PostVideo()      , $lastMonth, 'publication-passed-unpublished-highlighted'),
-            '4'  => array(new PostVideo()      , $lastMonth, 'publication-passed-unpublished-not-highlighted'),
-            '5'  => array(new PostZoom()       , $yesterday, 'publication-current-published-highlighted'),
-            '6'  => array(new PostZoom()       , $yesterday, 'publication-current-published-not-highlighted'),
-            '7'  => array(new PostZoom()       , $yesterday, 'publication-current-unpublished-highlighted'),
-            '8'  => array(new PostZoom()       , $yesterday, 'publication-current-unpublished-not-highlighted'),
-            '9'  => array(new PostTestimonial(), $yesterday, 'publication-incoming-published-highlighted'),
-            '10' => array(new PostTestimonial(), $yesterday, 'publication-incoming-published-not-highlighted'),
-            '11' => array(new PostTestimonial(), $yesterday, 'publication-incoming-unpublished-highlighted'),
-            '12' => array(new PostTestimonial(), $yesterday, 'publication-incoming-unpublished-not-highlighted'),
+            '1'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-published-highlighted'),
+            '2'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-published-not-highlighted'),
+            '3'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-unpublished-highlighted'),
+            '4'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-unpublished-not-highlighted'),
+            '5'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-published-highlighted'),
+            '6'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-published-not-highlighted'),
+            '7'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-unpublished-highlighted'),
+            '8'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-unpublished-not-highlighted'),
+            '9'  => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-published-highlighted'),
+            '10' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-published-not-highlighted'),
+            '11' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-unpublished-highlighted'),
+            '12' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-unpublished-not-highlighted'),
+            '13' => array('news'       , new Post()           , $yesterday, 'publication-incoming-published-not-highlighted-1'),
+            '14' => array('news'       , new Post()           , $yesterday, 'publication-incoming-unpublished-highlighted-1'),
+            '15' => array('news'       , new Post()           , $yesterday, 'publication-incoming-unpublished-not-highlighted-1'),
         );
 
         foreach ($datas as $key => $data) {
             $page = new Page();
-            $page->setTitle('Page-' . $key);
-            $page->setContent('Page-' . $key . '-content');
-            $page->setMetaDescription('Page-' . $key . '-meta');
+            $page->setTitle('Page-' . $data[0] . '-' . $key);
+            $page->setContent('Page-' . $data[0] . '-' . $key . '-content');
+            $page->setMetaDescription('Page-' . $data[0] . '-' . $key . '-meta');
 
             /** @var Publication $publication */
-            $publication = $this->getReference($data[2]);
+            $publication = $this->getReference($data[3]);
 
             /** @var PostVideo|PostZoom|PostTestimonial $post */
-            $post = $data[0];
-            $post->setDateAdd($data[1]);
+            $post = $data[1];
+            $post->setDateAdd($data[2]);
             $post->setPublication($publication);
             $post->setPage($page);
 
-            $manager->persist($post);
-            $this->setReference('post-' . $key, $post);
+            $this->persist($post, $manager);
+            $this->setReference('post-' . $data[0] . '-' . $key, $post);
         }
 
         $manager->flush();

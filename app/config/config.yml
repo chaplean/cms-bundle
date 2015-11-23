@@ -33,7 +33,7 @@ twig:
 
 # Assetic Configuration
 assetic:
-    debug:          "%use_assetic_debug%"
+    debug:          true
     use_controller: "%use_assetic_controller%"
     bundles:        ['ChapleanCmsBundle']
     ruby: %ruby.bin%

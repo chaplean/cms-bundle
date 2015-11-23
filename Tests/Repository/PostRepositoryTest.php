@@ -24,7 +24,7 @@ class PostRepositoryTest extends LogicalTest
     {
         $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
 
-        $this->assertCount(12, $postRepository->getAll());
+        $this->assertCount(15, $postRepository->getAll());
     }
 
     /**
@@ -47,11 +47,11 @@ class PostRepositoryTest extends LogicalTest
         /** @var Post[] $posts */
         $posts = $postRepository->getAll();
 
-        $this->assertEquals(9, $posts[0]->getId());
+        $this->assertEquals(12, $posts[0]->getId());
 
         $posts = $postRepository->getAll(null, 'id', 'desc');
 
-        $this->assertEquals(12, $posts[0]->getId());
+        $this->assertEquals(15, $posts[0]->getId());
     }
 
     /**
@@ -64,11 +64,11 @@ class PostRepositoryTest extends LogicalTest
         /** @var Post[] $posts */
         $posts = $postRepository->getAll();
 
-        $this->assertEquals('Page-1', $posts[0]->getPage()->getTitle());
+        $this->assertEquals('Page-video-1', $posts[0]->getPage()->getTitle());
 
         $posts = $postRepository->getAll(null, 'title', 'asc');
 
-        $this->assertEquals('Page-1', $posts[0]->getPage()->getTitle());
+        $this->assertEquals('Page-news-13', $posts[0]->getPage()->getTitle());
     }
 
     /**
@@ -81,8 +81,8 @@ class PostRepositoryTest extends LogicalTest
         $posts = new ArrayCollection($postRepository->getAll(5, 'title', 'asc'));
 
         // Page-1, Page-10, Page-11, Page-12, Page-2
-        $this->assertEquals('Page-1', $posts->first()->getPage()->getTitle());
-        $this->assertEquals('Page-2', $posts->last()->getPage()->getTitle());
+        $this->assertEquals('Page-news-13', $posts->first()->getPage()->getTitle());
+        $this->assertEquals('Page-testimonial-11', $posts->last()->getPage()->getTitle());
     }
 
     /**
@@ -94,7 +94,7 @@ class PostRepositoryTest extends LogicalTest
 
         $posts = new ArrayCollection($postRepository->getAll(null, 'datePublicationEnd', 'desc'));
 
-        $this->assertEquals(1, $posts->first()->getId());
+        $this->assertEquals(4, $posts->first()->getId());
     }
 
     /**

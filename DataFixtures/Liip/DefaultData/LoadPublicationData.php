@@ -162,6 +162,37 @@ class LoadPublicationData extends AbstractFixture implements DependentFixtureInt
         $this->setReference('publication-incoming-unpublished-not-highlighted', $publication);
         /* Incoming publication - end */
 
+        $publication = new Publication();
+        $publication->setDatePublicationBegin($tomorrow);
+        $publication->setDatePublicationEnd($nextMonth);
+        $publication->setIsHighlighted(false);
+        $publication->setDateAdd($yesterday);
+        $publication->setStatus($this->getReference('publication-status-published'));
+
+        $manager->persist($publication);
+        $this->setReference('publication-incoming-published-not-highlighted-1', $publication);
+
+        $publication = new Publication();
+        $publication->setDatePublicationBegin($tomorrow);
+        $publication->setDatePublicationEnd($nextMonth);
+        $publication->setIsHighlighted(true);
+        $publication->setDateAdd($yesterday);
+        $publication->setStatus($this->getReference('publication-status-unpublished'));
+
+        $manager->persist($publication);
+        $this->setReference('publication-incoming-unpublished-highlighted-1', $publication);
+
+        $publication = new Publication();
+        $publication->setDatePublicationBegin($tomorrow);
+        $publication->setDatePublicationEnd($nextMonth);
+        $publication->setIsHighlighted(false);
+        $publication->setDateAdd($yesterday);
+        $publication->setStatus($this->getReference('publication-status-unpublished'));
+
+        $manager->persist($publication);
+        $this->setReference('publication-incoming-unpublished-not-highlighted-1', $publication);
+        /* Incoming publication - end */
+
         $manager->flush();
     }
 

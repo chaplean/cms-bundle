@@ -58,6 +58,6 @@ class PageRouteType extends AbstractType
      */
     public function getName()
     {
-        return 'chaplea_cms_page_route_form';
+        return 'chaplean_cms_page_route_form';
     }
 }

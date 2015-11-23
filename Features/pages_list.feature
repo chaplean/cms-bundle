@@ -11,5 +11,6 @@ Feature: List pages
   Scenario: I can click on page
     When I wait for Angular
     And I fill in "filter-page" with "page-1-"
+#    And I click on "table tbody tr:nth-child(5) td:nth-child(2) a"
     And I click on "table tbody tr td a"
     Then I should be on "/administration/page/1"

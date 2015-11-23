@@ -23,13 +23,25 @@ use Symfony\Component\HttpFoundation\Response;
 class PostController extends ChapleanRestController
 {
     /**
+     * Delete post
+     *
+     * @param Post $post
+     *
+     * @return Response
+     */
+    public function deleteAction(Post $post)
+    {
+        return $this->delete($post);
+    }
+
+    /**
      * @param Post $post
      *
      * @return Response
      */
     public function getAction(Post $post)
     {
-        return $this->handleResponse(array('post' => $post), array(
+        return $this->handleResponse($post, array(
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname'
         ));
@@ -42,7 +54,7 @@ class PostController extends ChapleanRestController
      */
     public function getAllAction(Request $request)
     {
-        return $this->getAll($request, 'ChapleanCmsBundle:Post', 'posts', array(
+        return $this->getAll($request, 'ChapleanCmsBundle:Post', array(
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname'
         ));
@@ -62,7 +74,7 @@ class PostController extends ChapleanRestController
 
         $posts = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Post')->getByCategory($category, $limit, $sort, $order);
 
-        return $this->handleResponse(array('posts' => $posts), array(
+        return $this->handleResponse($posts, array(
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname'
         ));
@@ -114,7 +126,10 @@ class PostController extends ChapleanRestController
                 return $this->handleView($this->view('Post creation failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView($this->view(array('post' => $post)));
+            return $this->handleResponse($post, array(
+                'post_all', 'publication_all', 'page_all',
+                'publication_status_id', 'publication_status_keyname'
+            ));
         }
 
         return $this->handleView($this->view($formPost->getErrors(true), 400));
@@ -132,10 +147,16 @@ class PostController extends ChapleanRestController
         $logger = $this->get('logger');
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $postCastUtility = $this->get('chaplean_cms.post_cast_utility');
 
         if (empty($post)) {
             return $this->handleView($this->view('Post not found', 404));
         }
+
+        $parameters = $request->request->all();
+        $category = $parameters['category'];
+
+        unset($parameters['category']);
 
         // create form and get params
         $formPost = $this->createForm(new PostType(), $post);
@@ -145,7 +166,10 @@ class PostController extends ChapleanRestController
 
         if ($formPost->isValid()) {
             try {
+                /** @var Post $post */
                 $post = $formPost->getData();
+
+                $postCastUtility->castPostTo($post, $category);
                 $post->setDateUpdate(new \DateTime());
 
                 $em->persist($post);
@@ -156,7 +180,10 @@ class PostController extends ChapleanRestController
                 return $this->handleView($this->view('Post update failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleView($this->view(array('post' => $formPost)));
+            return $this->handleResponse($post, array(
+                'post_all', 'publication_all', 'page_all',
+                'publication_status_id', 'publication_status_keyname'
+            ));
         }
 
         return $this->handleView($this->view($formPost->getErrors(true), 400));
