@@ -26,25 +26,25 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('front_layout')->isRequired()->end()
                 ->variableNode('post')
-                ->isRequired()
-                ->validate()
-                ->always(function($v) use ($rootNode) {
-                    if (is_bool($v)) {
-                        return $v;
-                    } elseif (is_array($v)) {
-                        $availableType = array_values(PostUtility::getAvailableInstance());
-                        foreach ($v as $item) {
-                            if (!in_array($item, $availableType)) {
-                                throw new InvalidTypeException(sprintf('Invalid configuration for post, \'%s\' is undefined type', $item));
+                    ->isRequired()
+                    ->validate()
+                    ->always(function($v) use ($rootNode) {
+                        if (is_bool($v)) {
+                            return $v;
+                        } elseif (is_array($v)) {
+                            $availableType = array_values(PostUtility::getAvailableInstance());
+                            foreach ($v as $item) {
+                                if (!in_array($item, $availableType)) {
+                                    throw new InvalidTypeException(sprintf('Invalid configuration for post, \'%s\' is undefined type', $item));
+                                }
                             }
-                        }
 
-                        return $v;
-                    } else {
-                        throw new InvalidTypeException();
-                    }
-                })
-                ->end()
+                            return $v;
+                        } else {
+                            throw new InvalidTypeException();
+                        }
+                    })
+                    ->end()
                 ->end()
                 ->booleanNode('page')->isRequired()->end()
             ->end();
