@@ -10,18 +10,9 @@ services:
         tags:
             - { name: 'twig.extension' }
 
-    chaplean_cms.post_cast_utility:
-        class: Chaplean\Bundle\CmsBundle\Utility\Entity\PostCast
-        arguments: [@doctrine]
-
     chaplean_cms.form.post_type:
         class: Chaplean\Bundle\CmsBundle\Form\Type\PostType
         arguments: [%chaplean_cms.post%]
         tags:
             - { name: form.type, alias: 'chaplean_cms_post_form' }
 
-    app.tokens.action_listener:
-        class: Chaplean\Bundle\CmsBundle\Utility\ConfigListener
-        arguments: [%chaplean_cms%]
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
