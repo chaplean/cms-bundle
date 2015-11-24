@@ -7,6 +7,7 @@
     Translator.add("alert.post.deleted", "Article supprim\u00e9", "messages", "fr");
     Translator.add("alert.post.updated", "Article mis \u00e0 jour", "messages", "fr");
     Translator.add("alert.field.required", "Ce champ est obligatoire.", "messages", "fr");
+    Translator.add("alert.field.date", "Cette n'est pas valide", "messages", "fr");
     Translator.add("button.add.global", "Ajouter", "messages", "fr");
     Translator.add("button.back.site", "Retour au site", "messages", "fr");
     Translator.add("button.cancel.global", "Annuler", "messages", "fr");
@@ -34,7 +35,8 @@
     Translator.add("global.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("global.title", "Titre", "messages", "fr");
     Translator.add("global.yes", "Oui", "messages", "fr");
-    Translator.add("header.creation", "Cr\u00e9ation de page", "messages", "fr");
+    Translator.add("header.creation.page", "Cr\u00e9ation de page", "messages", "fr");
+    Translator.add("header.creation.post", "Cr\u00e9ation d'article", "messages", "fr");
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
@@ -51,10 +53,13 @@
     Translator.add("placeholder.search.global", "Recherche globale", "messages", "fr");
     Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
+    Translator.add("post.category.all", "Toutes", "messages", "fr");
     Translator.add("post.category.news", "Nouvelles", "messages", "fr");
     Translator.add("post.category.testimonial", "Testimoniale", "messages", "fr");
     Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
     Translator.add("post.category.zoom", "Zoom", "messages", "fr");
+    Translator.add("publication_status.status.archived", "Archiv\u00e9", "messages", "fr");
     Translator.add("publication_status.status.published", "Publi\u00e9", "messages", "fr");
     Translator.add("publication_status.status.unpublished", "Non publi\u00e9", "messages", "fr");
+    Translator.add("publication_status.status.published_unpublished", "Publi\u00e9s et non", "messages", "fr");
 })(Translator);

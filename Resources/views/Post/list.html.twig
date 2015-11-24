@@ -1,31 +1,51 @@
 {% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
 
+{% block controller %}
+    ng-controller="PostsController"
+{% endblock %}
+
 {% block cms_action_top %}
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-left"></div>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown sonata-actions">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Liste d'actions <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a class="sonata-action-element" href="{{ path('cms_post_edit') }}">
-                                <i class="fa fa-plus-circle"></i>
-                                {{ 'button.add.global' | trans }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            {#<div class="row">#}
+                <div class="col-xs-12 col-sm-6 col-md-3 filter-select">
+                    <select class="form-control" name="" id=""
+                            ng-change="updateFilter()"
+                            ng-model="category"
+                            ng-options="('post.category.' + cat)|trans for cat in categories|orderBy:'toString()'">
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 filter-select">
+                    <select class="form-control" name="status" id="filter-status"
+                            ng-change="updateFilter()"
+                            ng-model="status"
+                            ng-options="('publication_status.status.' + publicationStatus.keyname)|trans for publicationStatus in publicationStatuses|orderBy:position track by publicationStatus.id">
+                    </select>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown sonata-actions">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Liste d'actions <b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a class="sonata-action-element" href="{{ path('cms_post_edit') }}">
+                                    <i class="fa fa-plus-circle"></i>
+                                    {{ 'button.add.global' | trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            {#</div>#}
         </div>
     </nav>
 {% endblock %}
 
 {% block cms %}
-    <table id="posts-list" st-table="postsDisplayed" st-safe-src="posts" class="table table-striped" ng-controller="PostsController">
+    <table id="posts-list" st-table="postsDisplayed" st-safe-src="postsFiltered" class="table table-striped">
         <thead>
         <tr>
-            <th colspan="5">
+            <th class="no-padding-lr" colspan="5">
                 <input id="filter-post" st-search="" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
             </th>
         </tr>

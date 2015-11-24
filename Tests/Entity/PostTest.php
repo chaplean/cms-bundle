@@ -47,15 +47,4 @@ class PostTest extends LogicalTest
 
         $this->assertEquals('news', $post->getInstanceOf());
     }
-
-    /**
-     * @return void
-     */
-    public function testGetClassByInstance()
-    {
-        $this->assertEquals(Post::class, Post::getClassByInstance('news'));
-        $this->assertEquals(PostTestimonial::class, Post::getClassByInstance('testimonial'));
-        $this->assertEquals(PostVideo::class, Post::getClassByInstance('video'));
-        $this->assertEquals(PostZoom::class, Post::getClassByInstance('zoom'));
-    }
 }

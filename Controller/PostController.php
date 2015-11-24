@@ -2,7 +2,6 @@
 
 namespace Chaplean\Bundle\CmsBundle\Controller;
 
-use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -27,7 +26,7 @@ class PostController extends Controller
      */
     public function editAction($postId = null)
     {
-        $form = $this->createForm(new PostType());
+        $form = $this->createForm('chaplean_cms_post_form');
 
         return $this->render(
             'ChapleanCmsBundle:Post:edit.html.twig',

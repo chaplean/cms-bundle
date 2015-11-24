@@ -4,7 +4,8 @@ namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
 use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\Publication;
-use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
+use Chaplean\Bundle\CmsBundle\Utility\ErrorFormUtility;
+use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations;
 use Monolog\Logger;
@@ -45,6 +46,24 @@ class PostController extends ChapleanRestController
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname'
         ));
+    }
+
+    /**
+     * @return Response
+     */
+    public function getAvailableCategoriesAction()
+    {
+        $categories = $this->getParameter('chaplean_cms.post');
+
+        if (is_bool($categories) && $categories) {
+            $categories = array_values(PostUtility::getAvailableInstance());
+        } else {
+            if (!in_array('news', $categories)) {
+                $categories[] = 'news';
+            }
+        }
+
+        return $this->handleResponse($categories);
     }
 
     /**
@@ -93,7 +112,7 @@ class PostController extends ChapleanRestController
         $em = $this->getDoctrine()->getManager();
 
         // create form and get params
-        $formPost = $this->createForm(new PostType());
+        $formPost = $this->createForm('chaplean_cms_post_form');
 
         // bind data in form
         $formPost->submit($request->request->all());
@@ -132,7 +151,7 @@ class PostController extends ChapleanRestController
             ));
         }
 
-        return $this->handleView($this->view($formPost->getErrors(true), 400));
+        return $this->handleView($this->view(ErrorFormUtility::getErrorsForAngular($formPost->getErrors(true), $formPost->getName()), 400));
     }
 
     /**
@@ -147,7 +166,7 @@ class PostController extends ChapleanRestController
         $logger = $this->get('logger');
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $postCastUtility = $this->get('chaplean_cms.post_cast_utility');
+        $postRepository = $em->getRepository('ChapleanCmsBundle:Post');
 
         if (empty($post)) {
             return $this->handleView($this->view('Post not found', 404));
@@ -159,7 +178,7 @@ class PostController extends ChapleanRestController
         unset($parameters['category']);
 
         // create form and get params
-        $formPost = $this->createForm(new PostType(), $post);
+        $formPost = $this->createForm('chaplean_cms_post_form', $post);
 
         // bind data in form
         $formPost->submit($request->request->all());
@@ -169,7 +188,7 @@ class PostController extends ChapleanRestController
                 /** @var Post $post */
                 $post = $formPost->getData();
 
-                $postCastUtility->castPostTo($post, $category);
+                $postRepository->castPostTo($post, $category);
                 $post->setDateUpdate(new \DateTime());
 
                 $em->persist($post);
@@ -186,6 +205,6 @@ class PostController extends ChapleanRestController
             ));
         }
 
-        return $this->handleView($this->view($formPost->getErrors(true), 400));
+        return $this->handleView($this->view(ErrorFormUtility::getErrorsForAngular($formPost->getErrors(true), $formPost->getName()), 400));
     }
 }

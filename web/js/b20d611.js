@@ -17,6 +17,7 @@
     Translator.add("alert.post.deleted", "Article supprim\u00e9", "messages", "fr");
     Translator.add("alert.post.updated", "Article mis \u00e0 jour", "messages", "fr");
     Translator.add("alert.field.required", "Ce champ est obligatoire.", "messages", "fr");
+    Translator.add("alert.field.date", "Cette n'est pas valide", "messages", "fr");
     Translator.add("button.add.global", "Ajouter", "messages", "fr");
     Translator.add("button.back.site", "Retour au site", "messages", "fr");
     Translator.add("button.cancel.global", "Annuler", "messages", "fr");
@@ -44,7 +45,8 @@
     Translator.add("global.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("global.title", "Titre", "messages", "fr");
     Translator.add("global.yes", "Oui", "messages", "fr");
-    Translator.add("header.creation", "Cr\u00e9ation de page", "messages", "fr");
+    Translator.add("header.creation.page", "Cr\u00e9ation de page", "messages", "fr");
+    Translator.add("header.creation.post", "Cr\u00e9ation d'article", "messages", "fr");
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
@@ -61,12 +63,15 @@
     Translator.add("placeholder.search.global", "Recherche globale", "messages", "fr");
     Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
+    Translator.add("post.category.all", "Toutes", "messages", "fr");
     Translator.add("post.category.news", "Nouvelles", "messages", "fr");
     Translator.add("post.category.testimonial", "Testimoniale", "messages", "fr");
     Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
     Translator.add("post.category.zoom", "Zoom", "messages", "fr");
+    Translator.add("publication_status.status.archived", "Archiv\u00e9", "messages", "fr");
     Translator.add("publication_status.status.published", "Publi\u00e9", "messages", "fr");
     Translator.add("publication_status.status.unpublished", "Non publi\u00e9", "messages", "fr");
+    Translator.add("publication_status.status.published_unpublished", "Publi\u00e9s et non", "messages", "fr");
 })(Translator);
 
 /*! jQuery v2.1.4 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
@@ -13235,12 +13240,13 @@ var cms = angular.module('Cms');
 cms.service('Post', function($resource) {
 
     return $resource(Routing.generate('cms_rest') + 'posts', {}, {
-        delete:        {method: 'delete', url: Routing.generate('cms_rest') + 'posts/:postId'},
-        get:           {method: 'get'   , url: Routing.generate('cms_rest') + 'posts/:postId'},
-        getAll:        {method: 'get'   , url: Routing.generate('cms_rest') + 'post/all', isArray: true},
-        getByCategory: {method: 'get'   , url: Routing.generate('cms_rest') + 'post/:category/category'},
-        save:          {method: 'post'  , url: Routing.generate('cms_rest') + 'posts'},
-        update:        {method: 'put'   , url: Routing.generate('cms_rest') + 'posts/:postId'}
+        delete:                 {method: 'delete', url: Routing.generate('cms_rest') + 'posts/:postId'},
+        get:                    {method: 'get'   , url: Routing.generate('cms_rest') + 'posts/:postId'},
+        getAvailableCategories: {method: 'get'   , url: Routing.generate('cms_rest') + 'post/available/categories', isArray: true},
+        getAll:                 {method: 'get'   , url: Routing.generate('cms_rest') + 'post/all', isArray: true},
+        getByCategory:          {method: 'get'   , url: Routing.generate('cms_rest') + 'post/:category/category'},
+        save:                   {method: 'post'  , url: Routing.generate('cms_rest') + 'posts'},
+        update:                 {method: 'put'   , url: Routing.generate('cms_rest') + 'posts/:postId'}
     });
 
 });
@@ -13264,20 +13270,32 @@ var cms = angular.module('Cms');
 
 cms.factory('Validator', function() {
 
-    var validator = {};
-
-    validator.isRequire = function (form, name) {
-        return form.$invalid && form[name] && (form[name].$touched || form.$submitted) && form[name].$error.required;
+    var validator = {
+        errors: {}
     };
 
-    validator.getError = function (errors, form, name) {
-        var onError = form[name] && (form[name].$touched || form.$submitted) && errors[name];
+    validator.isRequire = function (form, name) {
+        return validator.onError(form, name, 'required');
+    };
 
-        if (onError) {
-            return errors[name];
-        }
+    validator.onError = function (form, name, type) {
+        return form.$invalid && form[name] && (form[name].$touched || form.$submitted) && form[name].$error[type];
+    };
 
-        return false;
+    validator.addError = function (form, errors) {
+        angular.forEach(errors, function (error, field) {
+            if (form.hasOwnProperty(field)) {
+                validator.errors[field] = error;
+            }
+        });
+    };
+
+    validator.isInvalidFieldSumitted = function (name) {
+        return typeof validator.errors[name] != 'undefined';
+    };
+
+    validator.getInvalidError = function(name) {
+        return validator.isInvalidFieldSumitted(name) ? validator.errors[name] : '';
     };
 
     return validator;
@@ -13471,18 +13489,19 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
         }
     };
     $scope.datepicker = Datepicker;
-    $scope.errors = {};
+    $scope.title = '';
 
     $scope.loadData = function() {
         if ($scope.postId) {
             Post.get({postId: $scope.postId}, function(post) {
 
                     $scope.post = post;
+                    $scope.title = $scope.post.page.title;
                     if ($scope.post.publication.datePublicationBegin) {
-                        $scope.post.publication.datePublicationBegin = moment($scope.post.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        $scope.post.publication.datePublicationBegin = moment($scope.post.publication.datePublicationBegin, 'YYYY-MM-DD').toDate();
                     }
                     if ($scope.post.publication.datePublicationEnd) {
-                        $scope.post.publication.datePublicationEnd = moment($scope.post.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        $scope.post.publication.datePublicationEnd = moment($scope.post.publication.datePublicationEnd, 'YYYY-MM-DD').toDate();
                     }
                 });
         }
@@ -13497,17 +13516,20 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
             var post = $scope.buildData($scope.post);
 
             if ($scope.postId) {
-                Post.update({postId: $scope.postId}, post, function (post) {
+                Post.update({postId: $scope.postId}, post,
+                    function (post) {
 
                         $scope.post.dateUpdate = $filter('date')(post.dateUpdate, 'dd/MM/yyyy');
+                        $scope.title = $scope.post.page.title;
                         AlertService.addAlert('success', TranslationService.trans('alert.post.updated'));
 
                         if (quit) {
                             window.location = Routing.generate('cms_post_list');
                         }
                     }, function (response) {
-                        if(response.data.error) {
-                            AlertService.addAlert('warning', response.data.error);
+                        if(response.status == 400) {
+                            Validator.addError(postForm, response.data);
+                            AlertService.addAlert('warning', TranslationService.trans('error.important'));
                         } else {
                             AlertService.addAlert('danger', TranslationService.trans('error.important'))
                         }
@@ -13515,6 +13537,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
             } else {
                 Post.save(post, function (post) {
                         $scope.post.dateAdd = $filter('date')(post.dateAdd, 'dd/MM/yyyy');
+                        $scope.title = $scope.post.page.title;
                         AlertService.addAlert('success', TranslationService.trans('alert.post.created'));
 
                         if (quit) {
@@ -13543,10 +13566,9 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
     };
 
     $scope.isRequire = Validator.isRequire;
-
-    $scope.translateStatus = function (key) {
-        return TranslationService.trans('publication_status.status.' + key);
-    };
+    $scope.onError = Validator.onError;
+    $scope.isInvalidFieldSumitted = Validator.isInvalidFieldSumitted;
+    $scope.getInvalidError = Validator.getInvalidError;
 
     $scope.buildData = function (post) {
         var postTmp = angular.copy(post);
@@ -13577,22 +13599,47 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, TranslationService, AlertService) {
-    $scope.search = '';
+cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, PublicationStatus, TranslationService, AlertService) {
 
+    $scope.search = '';
     $scope.post = {
         category: null
     };
+    $scope.publicationStatuses = [];
+    $scope.categories = [];
+    $scope.category = 'all';
 
     $scope.loadData = function() {
         Post.getAll(
             {},
             function(posts) {
                 $scope.posts = [].concat(posts);
-                $scope.postsDisplayed = [].concat($scope.posts);
-                console.log($scope.posts);
+                $scope.postsFiltered = [].concat(posts);
             }
         );
+
+        PublicationStatus.getAll(function (publicationStatus) {
+            $scope.publicationStatuses = [
+                {
+                    id: 0,
+                    position: 0,
+                    keyname: 'published_unpublished'
+                }
+            ];
+            $scope.publicationStatuses = $scope.publicationStatuses.concat(publicationStatus);
+            $scope.status = $scope.publicationStatuses[0];
+            $scope.updateFilter();
+        });
+
+        Post.getAvailableCategories(function (categories) {
+            $scope.categories = categories;
+            if ($scope.categories.length == 1) {
+                $scope.category = $scope.categories[0];
+            } else {
+                $scope.categories.push('all');
+            }
+            $scope.updateFilter();
+        });
     };
 
     $scope.getters = {
@@ -13601,8 +13648,23 @@ cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbo
         }
     };
 
-    $scope.filterPosts = function (posts, search) {
-        return $filter('postFilter')(posts, search);
+    $scope.updateFilter = function () {
+        $scope.postsFiltered = [].concat($scope.posts);
+
+        if ($scope.status.id != 0) {
+            $scope.postsFiltered = $filter('filter')($scope.postsFiltered, {publication: {status: {id: $scope.status.id}}});
+        } else {
+            $scope.postsFiltered = [].concat(
+                $filter('filter')($scope.postsFiltered, {publication: {status: {id: 1}}}),
+                $filter('filter')($scope.postsFiltered, {publication: {status: {id: 2}}})
+            );
+        }
+
+        if ($scope.category != 'all') {
+            $scope.postsFiltered = $filter('filter')($scope.postsFiltered, {category: $scope.category});
+        } else {
+            $scope.postsFiltered = [].concat($scope.postsFiltered);
+        }
     };
 
     $scope.removePost = function (post) {

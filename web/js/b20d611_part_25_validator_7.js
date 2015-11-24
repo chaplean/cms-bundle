@@ -4,20 +4,32 @@ var cms = angular.module('Cms');
 
 cms.factory('Validator', function() {
 
-    var validator = {};
-
-    validator.isRequire = function (form, name) {
-        return form.$invalid && form[name] && (form[name].$touched || form.$submitted) && form[name].$error.required;
+    var validator = {
+        errors: {}
     };
 
-    validator.getError = function (errors, form, name) {
-        var onError = form[name] && (form[name].$touched || form.$submitted) && errors[name];
+    validator.isRequire = function (form, name) {
+        return validator.onError(form, name, 'required');
+    };
 
-        if (onError) {
-            return errors[name];
-        }
+    validator.onError = function (form, name, type) {
+        return form.$invalid && form[name] && (form[name].$touched || form.$submitted) && form[name].$error[type];
+    };
 
-        return false;
+    validator.addError = function (form, errors) {
+        angular.forEach(errors, function (error, field) {
+            if (form.hasOwnProperty(field)) {
+                validator.errors[field] = error;
+            }
+        });
+    };
+
+    validator.isInvalidFieldSumitted = function (name) {
+        return typeof validator.errors[name] != 'undefined';
+    };
+
+    validator.getInvalidError = function(name) {
+        return validator.isInvalidFieldSumitted(name) ? validator.errors[name] : '';
     };
 
     return validator;

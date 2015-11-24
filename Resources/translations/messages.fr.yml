@@ -9,6 +9,7 @@ alert:
         updated: Article mis à jour
     field:
         required: Ce champ est obligatoire.
+        date: Cette n'est pas valide
 
 button:
     add:
@@ -86,6 +87,7 @@ placeholder:
 
 post:
     category:
+        all: Toutes
         news: Nouvelles
         testimonial: Testimoniale
         video: Vidéo
@@ -93,5 +95,7 @@ post:
 
 publication_status:
     status:
+        archived: Archivé
         published: Publié
         unpublished: Non publié
+        published_unpublished: Publiés et non

@@ -37,6 +37,13 @@ class LoadPublicationStatusData extends AbstractFixture
         $manager->persist($publicationStatus);
         $this->setReference('publication-status-unpublished', $publicationStatus);
 
+        $publicationStatus = new PublicationStatus();
+        $publicationStatus->setKeyname('archived');
+        $publicationStatus->setPosition(3);
+
+        $manager->persist($publicationStatus);
+        $this->setReference('publication-status-archived', $publicationStatus);
+
         $manager->flush();
     }
 }

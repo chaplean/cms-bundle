@@ -5,6 +5,7 @@ namespace Chaplean\Bundle\CmsBundle\Tests\Repository;
 use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
 use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
+use Chaplean\Bundle\CmsBundle\Repository\PostRepository;
 use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -18,13 +19,28 @@ use Doctrine\Common\Collections\ArrayCollection;
 class PostRepositoryTest extends LogicalTest
 {
     /**
+     * @var PostRepository
+     */
+    private $postRepository;
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
+    }
+
+    /**
      * @return void
      */
     public function testGetAll()
     {
         $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
 
-        $this->assertCount(15, $postRepository->getAll());
+        $this->assertCount(15, $this->postRepository->getAll());
     }
 
     /**
@@ -32,9 +48,7 @@ class PostRepositoryTest extends LogicalTest
      */
     public function testGetOnly5()
     {
-        $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
-
-        $this->assertCount(5, $postRepository->getAll(5));
+        $this->assertCount(5, $this->postRepository->getAll(5));
     }
 
     /**
@@ -42,14 +56,12 @@ class PostRepositoryTest extends LogicalTest
      */
     public function testGetAllOrderByDescId()
     {
-        $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
-
         /** @var Post[] $posts */
-        $posts = $postRepository->getAll();
+        $posts = $this->postRepository->getAll();
 
         $this->assertEquals(12, $posts[0]->getId());
 
-        $posts = $postRepository->getAll(null, 'id', 'desc');
+        $posts = $this->postRepository->getAll(null, 'id', 'desc');
 
         $this->assertEquals(15, $posts[0]->getId());
     }
@@ -59,14 +71,12 @@ class PostRepositoryTest extends LogicalTest
      */
     public function testGetAllOrderByAscTitle()
     {
-        $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
-
         /** @var Post[] $posts */
-        $posts = $postRepository->getAll();
+        $posts = $this->postRepository->getAll();
 
         $this->assertEquals('Page-video-1', $posts[0]->getPage()->getTitle());
 
-        $posts = $postRepository->getAll(null, 'title', 'asc');
+        $posts = $this->postRepository->getAll(null, 'title', 'asc');
 
         $this->assertEquals('Page-news-13', $posts[0]->getPage()->getTitle());
     }
@@ -76,9 +86,7 @@ class PostRepositoryTest extends LogicalTest
      */
     public function testGetAllOrderByAscTitleLimit5()
     {
-        $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
-
-        $posts = new ArrayCollection($postRepository->getAll(5, 'title', 'asc'));
+        $posts = new ArrayCollection($this->postRepository->getAll(5, 'title', 'asc'));
 
         // Page-1, Page-10, Page-11, Page-12, Page-2
         $this->assertEquals('Page-news-13', $posts->first()->getPage()->getTitle());
@@ -90,9 +98,7 @@ class PostRepositoryTest extends LogicalTest
      */
     public function testGetAllOrderByDescDatePublicationEnd()
     {
-        $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
-
-        $posts = new ArrayCollection($postRepository->getAll(null, 'datePublicationEnd', 'desc'));
+        $posts = new ArrayCollection($this->postRepository->getAll(null, 'datePublicationEnd', 'desc'));
 
         $this->assertEquals(4, $posts->first()->getId());
     }
@@ -102,9 +108,7 @@ class PostRepositoryTest extends LogicalTest
      */
     public function testGetByCategoryVideo()
     {
-        $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
-
-        $posts = $postRepository->getByCategory('video');
+        $posts = $this->postRepository->getByCategory('video');
 
         $this->assertCount(4, $posts);
         $this->assertInstanceOf(PostVideo::class, $posts[0]);
@@ -120,12 +124,114 @@ class PostRepositoryTest extends LogicalTest
     {
         $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
 
-        $posts = $postRepository->getByCategory('testimonial');
+        $posts = $this->postRepository->getByCategory('testimonial');
 
         $this->assertCount(4, $posts);
         $this->assertInstanceOf(PostTestimonial::class, $posts[0]);
         $this->assertInstanceOf(PostTestimonial::class, $posts[1]);
         $this->assertInstanceOf(PostTestimonial::class, $posts[2]);
         $this->assertInstanceOf(PostTestimonial::class, $posts[3]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCastPostToVideo()
+    {
+        /** @var Post $post */
+        $post = $this->getRealEntity('post-news-13');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $this->assertCount(4, $posts);
+
+        $this->postRepository->castPostTo($post, 'video');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $this->assertCount(5, $posts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCastPostToTestimonial()
+    {
+        /** @var Post $post */
+        $post = $this->getRealEntity('post-news-13');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostTestimonial')->findAll();
+        $this->assertCount(4, $posts);
+
+        $this->postRepository->castPostTo($post, 'testimonial');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostTestimonial')->findAll();
+        $this->assertCount(5, $posts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCastPostToZoom()
+    {
+        /** @var Post $post */
+        $post = $this->getRealEntity('post-news-13');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostZoom')->findAll();
+        $this->assertCount(4, $posts);
+
+        $this->postRepository->castPostTo($post, 'zoom');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostZoom')->findAll();
+        $this->assertCount(5, $posts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCastPostZoomToVideo()
+    {
+        /** @var Post $post */
+        $post = $this->getRealEntity('post-zoom-5');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $this->assertCount(4, $posts);
+
+        $this->postRepository->castPostTo($post, 'video');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $this->assertCount(5, $posts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCastPostVideoToPost()
+    {
+        /** @var Post $post */
+        $post = $this->getRealEntity('post-video-1');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $this->assertCount(4, $posts);
+
+        $this->postRepository->castPostTo($post, 'news');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $this->assertCount(3, $posts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCastPostVideoToPostVideo()
+    {
+        /** @var Post $post */
+        $post = $this->getRealEntity('post-video-1');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $this->assertCount(4, $posts);
+
+        $this->postRepository->castPostTo($post, 'video');
+
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $this->assertCount(4, $posts);
     }
 }

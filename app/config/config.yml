@@ -116,6 +116,7 @@ bazinga_js_translation:
 fos_rest:
     routing_loader:
         default_format: json
+        include_format: false
     format_listener:
         rules:
             -
@@ -142,3 +143,5 @@ fos_rest:
 
 chaplean_cms:
     front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
+    post: true
+    page: true

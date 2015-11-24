@@ -14,18 +14,19 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
         }
     };
     $scope.datepicker = Datepicker;
-    $scope.errors = {};
+    $scope.title = '';
 
     $scope.loadData = function() {
         if ($scope.postId) {
             Post.get({postId: $scope.postId}, function(post) {
 
                     $scope.post = post;
+                    $scope.title = $scope.post.page.title;
                     if ($scope.post.publication.datePublicationBegin) {
-                        $scope.post.publication.datePublicationBegin = moment($scope.post.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        $scope.post.publication.datePublicationBegin = moment($scope.post.publication.datePublicationBegin, 'YYYY-MM-DD').toDate();
                     }
                     if ($scope.post.publication.datePublicationEnd) {
-                        $scope.post.publication.datePublicationEnd = moment($scope.post.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        $scope.post.publication.datePublicationEnd = moment($scope.post.publication.datePublicationEnd, 'YYYY-MM-DD').toDate();
                     }
                 });
         }
@@ -40,17 +41,20 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
             var post = $scope.buildData($scope.post);
 
             if ($scope.postId) {
-                Post.update({postId: $scope.postId}, post, function (post) {
+                Post.update({postId: $scope.postId}, post,
+                    function (post) {
 
                         $scope.post.dateUpdate = $filter('date')(post.dateUpdate, 'dd/MM/yyyy');
+                        $scope.title = $scope.post.page.title;
                         AlertService.addAlert('success', TranslationService.trans('alert.post.updated'));
 
                         if (quit) {
                             window.location = Routing.generate('cms_post_list');
                         }
                     }, function (response) {
-                        if(response.data.error) {
-                            AlertService.addAlert('warning', response.data.error);
+                        if(response.status == 400) {
+                            Validator.addError(postForm, response.data);
+                            AlertService.addAlert('warning', TranslationService.trans('error.important'));
                         } else {
                             AlertService.addAlert('danger', TranslationService.trans('error.important'))
                         }
@@ -58,6 +62,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
             } else {
                 Post.save(post, function (post) {
                         $scope.post.dateAdd = $filter('date')(post.dateAdd, 'dd/MM/yyyy');
+                        $scope.title = $scope.post.page.title;
                         AlertService.addAlert('success', TranslationService.trans('alert.post.created'));
 
                         if (quit) {
@@ -86,10 +91,9 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
     };
 
     $scope.isRequire = Validator.isRequire;
-
-    $scope.translateStatus = function (key) {
-        return TranslationService.trans('publication_status.status.' + key);
-    };
+    $scope.onError = Validator.onError;
+    $scope.isInvalidFieldSumitted = Validator.isInvalidFieldSumitted;
+    $scope.getInvalidError = Validator.getInvalidError;
 
     $scope.buildData = function (post) {
         var postTmp = angular.copy(post);

@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="navbar-left">
                     <div ng-show="postId">
-                        <span class="ng-cloak">{^ 'header.edition'|trans:{'page': post.page.title} ^}</span>
+                        <span class="ng-cloak">{^ 'header.edition'|trans:{'page': title} ^}</span>
                     </div>
                     <div class="ng-cloak" ng-show="!postId">
                         <span>{{ 'header.creation.post'|trans }}</span>
@@ -27,6 +27,7 @@
                     <label for="{{ form.category.vars.id }}" class="col-xs-4 control-label no-padding-left">{{ 'form.post.category'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.category , {'attr': {'ng-model': 'post.category', 'class': 'form-control', 'required': ''}}) }}
+                        <span class="text-error ng-cloak" ng-if="isInvalidFieldSumitted('{{ form.category.vars.full_name }}')"><i class="fa fa-times"></i> {^ getInvalidError('{{ form.category.vars.full_name }}') ^}</span>
                     </div>
                 </div>
                  {# MetaDescription #}
@@ -34,7 +35,7 @@
                     <label id="metaDescription" for="{{ form.page.metaDescription.vars.id }}">{{ 'global.meta_description'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.page.metaDescription , {'attr': {'ng-model': 'post.page.metaDescription', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.page.metaDescription.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
+                        <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.page.metaDescription.vars.full_name }}')"><i class="fa fa-times"></i> {{ 'alert.field.required'|trans }}</span>
                     </div>
                 </div>
                 {# Title #}
@@ -42,7 +43,7 @@
                     <label id="title" for="{{ form.page.title.vars.id }}">{{ 'global.title'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.page.title , {'attr': {'placeholder': 'placeholder.title'|trans, 'ng-model': 'post.page.title', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.page.title.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
+                        <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.page.title.vars.full_name }}')"><i class="fa fa-times"></i> {{ 'alert.field.required'|trans }}</span>
                     </div>
                 </div>
                 {# Subtitle #}
@@ -50,7 +51,7 @@
                     <label id="subtitle" for="{{ form.page.subtitle.vars.id }}">{{ 'global.subtitle'|trans }}</label>
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.page.subtitle , {'attr': {'placeholder': 'placeholder.subtitle'|trans, 'ng-model': 'post.page.subtitle', 'class': 'form-control'}}) }}
-                        <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.page.subtitle.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
+                        <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.page.subtitle.vars.full_name }}')"><i class="fa fa-times"></i> {{ 'alert.field.required'|trans }}</span>
                     </div>
                 </div>
             </div>
@@ -63,13 +64,14 @@
                     <div class="form-group col-xs-12">
                         <label for="{{ form.publication.status.vars.id }}" class="col-xs-4 control-label align-label text-right">{{ 'global.status'|trans }}</label>
                         <div class="col-xs-8">
-                            <select id="{{ form.publication.status.vars.id }}" name="{{ form.publication.status.vars.full_name }}" class="form-control" ng-options="translateStatus(publicationStatus.keyname) for publicationStatus in publicationStatuses track by publicationStatus.id" ng-model="post.publication.status"></select>
+                            <select id="{{ form.publication.status.vars.id }}" name="{{ form.publication.status.vars.full_name }}" class="form-control" ng-options="('publication_status.status.' + publicationStatus.keyname)|trans for publicationStatus in publicationStatuses track by publicationStatus.id" ng-model="post.publication.status"></select>
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="{{ form.publication.datePublicationBegin.vars.id }}" class="col-xs-4 control-label align-label text-right">{{ 'form.publication.date_publication_begin'|trans }}</label>
                         <div class="col-xs-8">
                             <input id="{{ form.publication.datePublicationBegin.vars.id }}" name="{{ form.publication.datePublicationBegin.vars.full_name }}" class="form-control" ng-focus="datepicker.open($event, 1)" datepicker-options="datepicker.options" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" is-open="datepicker.open1" ng-model="post.publication.datePublicationBegin" type="text" maxlength="10" autocomplete="off">
+                            <span class="text-error ng-cloak" ng-if="onError(postForm, '{{ form.publication.datePublicationBegin.vars.full_name }}', 'date')"><i class="fa fa-times"></i> {{ 'alert.field.date'|trans }}</span>
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
@@ -106,8 +108,8 @@
                 <label id="content" for="{{ form.page.content.vars.id }}">{{ 'global.content'|trans }}</label>
                 <div class="col-md-12 no-padding-lr">
                     {% form_theme form.page 'ChapleanCmsBundle:Form:form_type.html.twig' %}
-                    {{ form_widget(form.page.content , {'attr': {'ng-model': 'post.page.content', 'class': 'form-control'}}) }}
-                    <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.page.content.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
+                    {{ form_widget(form.page.content , {'attr': {'ng-model': 'post.page.content', 'class': 'form-control', 'ng-required': ''}}) }}
+                    <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.page.content.vars.full_name }}')"><i class="fa fa-times"></i> {{ 'alert.field.required'|trans }}</span>
                 </div>
             </div>
             <div class="form-group col-xs-12 no-padding-lr">

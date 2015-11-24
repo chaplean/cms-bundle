@@ -17,17 +17,19 @@
     transition: $transition;
 }
 // Mixin - end
+.no-padding {
+    &-left {
+        padding-left: 0 !important;
+    }
 
-.no-padding-right {
-    padding-right: 0;
-}
-.no-padding-left {
-    padding-left: 0;
-}
+    &-right {
+        padding-right: 0 !important;
+    }
 
-.no-padding-lr {
-    @extend .no-padding-left;
-    @extend .no-padding-right;
+    &-lr {
+        @extend .no-padding-left;
+        @extend .no-padding-right;
+    }
 }
 
 .text-error {
@@ -44,6 +46,10 @@
 
 .st-sort-descent:before{
     content: '\25BC\00a0';
+}
+
+.filter-select {
+    margin-top: 8px;
 }
 
 body {
@@ -198,4 +204,8 @@ div.alert-fix-top {
 
 .align-choices {
     padding-top: 5px;
+}
+
+.default-logo {
+    height: 130px;
 }
