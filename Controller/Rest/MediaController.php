@@ -33,7 +33,7 @@ class MediaController extends FOSRestController
         }
     }
 
-    public function postAction(Request $request, Media $mediaId)
+    public function postAction(Request $request)
     {
 
     }
@@ -43,12 +43,11 @@ class MediaController extends FOSRestController
 
     }
 
-    public function deleteAction(Media $mediaId)
+    public function deleteAction(Media $media)
     {
-        $media = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Media')->findBy($mediaId);
-
         if ($media) {
             $this->getDoctrine()->getManager()->remove($media);
+            $this->getDoctrine()->getManager()->flush();
             return $this->handleView(new View());
         } else {
             return $this->handleView(new View('nothing to return', 404));

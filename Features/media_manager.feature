@@ -54,9 +54,10 @@ Feature: Media Manager
   Scenario: I can edit a media
     When I click on ".media-element"
     Then TODO
-    # TODO
+    # TODO: How to upload a file in behat ?
 
   Scenario: I can delete a media
     When I click on ".media-element"
-    Then TODO
-    # TODO
+    Then I should see "png_1" in the ".media-details" element
+    When I click on "#delete"
+    Then I should not see "png_1"

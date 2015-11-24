@@ -50,7 +50,7 @@
                                 <span class="pull-right">
                                 <input type="file" id="uploadEdit" class="hidden" ng-model="editMediaFile" ng-change="uploadEditFile()" />
                                 <label for="uploadNew"><span class="glyphicon glyphicon-edit"></span></label>
-                                <span ng-click="deleteCurrentMedia()"><span class="glyphicon glyphicon-trash"></span></span>
+                                <span id="delete" ng-click="deleteCurrentMedia()"><span class="glyphicon glyphicon-trash"></span></span>
                             </span>
                             </h4>
 
@@ -61,16 +61,16 @@
                                 <span>{^ selectedMedia.width ^} x {^ selectedMedia.height ^} Px</span>
                                 <span>{^ selectedMedia.path ^}</span>
 
-                            <span ng-if="selectedMedia.category == 'image'">
-                                <div class="form-group">
-                                    <label>{{ 'media_manager.edit.title.label' | trans }}</label>
-                                    <input class="form-control" type="text" ng-model="selectedMedia.title" />
-                                </div>
-                                <div class="form-group">
-                                    <label>{{ 'media_manager.edit.title_alt.label' | trans }}</label>
-                                    <input class="form-control" type="text" ng-model="selectedMedia.alternativeTitle" />
-                                </div>
-                            </span>
+                                <span ng-if="selectedMedia.category == 'image'">
+                                    <div class="form-group">
+                                        <label>{{ 'media_manager.edit.title.label' | trans }}</label>
+                                        <input class="form-control" type="text" ng-model="selectedMedia.title" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'media_manager.edit.title_alt.label' | trans }}</label>
+                                        <input class="form-control" type="text" ng-model="selectedMedia.alternativeTitle" />
+                                    </div>
+                                </span>
                                 <button id="insert" type="submit" class="btn btn-primary" type="button" ng-click="quitInsertMedia()">{{ 'media_manager.insert' | trans }}</button>
                             </form>
                         </div>

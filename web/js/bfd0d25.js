@@ -13104,7 +13104,7 @@ var cms = angular.module('Cms');
 
 cms.factory('Media', function($resource) {
 
-    return $resource(Routing.generate('cms_rest') + 'media', {}, {
+    return $resource(Routing.generate('cms_rest') + 'media/:id', {id: '@id'}, {
         getAll: {method: 'get', url: Routing.generate('cms_rest') + 'media/all', isArray: true}
     });
 
@@ -13149,7 +13149,7 @@ cms.service('PublicationStatus', function ($resource) {
 
 var cms = angular.module('Cms');
 
-cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter, Media) {
+cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService) {
 
     $scope.updateFilter = function() {
         $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
@@ -13203,13 +13203,25 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
     };
 
     $scope.insertCurrentMedia = function() {
-        $scope.quitInsertMedia();
-    };
-
-    $scope.editCurrentMedia = function() {
+        $scope.selectedMedia.$save({},
+            function() {
+                $scope.quitInsertMedia();
+            }, function() {
+                AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.save'));
+            }
+        );
     };
 
     $scope.deleteCurrentMedia = function() {
+        $scope.selectedMedia.$delete({},
+            function () {
+                $scope.medias.splice($scope.selectedMedia, 1);
+                $scope.selectedMedia = null;
+                $scope.updateFilter();
+            }, function() {
+                AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'));
+            }
+        );
     };
 
     $scope.uploadNewFile = function() {
