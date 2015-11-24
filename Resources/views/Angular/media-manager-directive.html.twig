@@ -1,5 +1,7 @@
 {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
 
 <script type="text/ng-template" id="media-manager.html">
+    {% if media_is_activate %}
     <button type="button" class="btn btn-default open-media-manager" ng-click="openModal()">{{ 'media_manager.open' | trans }}</button>
+    {% endif %}
 </script>
