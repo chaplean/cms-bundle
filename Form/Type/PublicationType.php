@@ -33,8 +33,15 @@ class PublicationType extends AbstractType
                 'required' => false,
                 'widget'   => 'single_text',
             ))
-            ->add('isHighlighted', 'checkbox', array(
+            ->add('isHighlighted', 'choice', array(
+                'choices' => array(
+                    '0' => 'no',
+                    '1' => 'yes',
+                ),
+                'multiple' => false,
+                'expanded' => true,
                 'required' => false,
+                'empty_data' => '0',
             ))
             ->add('status', 'entity', array(
                 'class'    => 'Chaplean\Bundle\CmsBundle\Entity\PublicationStatus',

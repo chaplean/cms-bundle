@@ -13080,6 +13080,22 @@ cms.factory('AlertService', function($timeout) {
 
 var cms = angular.module('Cms');
 
+cms.service('Block', function($resource) {
+
+    return $resource(Routing.generate('cms_rest') + 'blocks', {}, {
+        delete: {method: 'delete', url: Routing.generate('cms_rest') + 'blocks/:blockId'},
+        get:    {method: 'get'   , url: Routing.generate('cms_rest') + 'blocks/:blockId'},
+        getAll: {method: 'get'   , url: Routing.generate('cms_rest') + 'block/all'      },
+        save:   {method: 'post'  , url: Routing.generate('cms_rest') + 'blocks'         },
+        update: {method: 'put'   , url: Routing.generate('cms_rest') + 'blocks/:blockId'}
+    });
+
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
 cms.factory('Datepicker', function() {
 
     var datepicker = {};
@@ -13106,10 +13122,27 @@ cms.service('Page', function($resource) {
 
     return $resource(Routing.generate('cms_rest') + 'pages', {}, {
         delete: {method: 'delete', url: Routing.generate('cms_rest') + 'pages/:pageId'},
-        get: {method: 'get', url: Routing.generate('cms_rest') + 'pages/:pageId'},
-        getAll: {method: 'get', url: Routing.generate('cms_rest') + 'page/all'},
-        save: {method: 'post', url: Routing.generate('cms_rest') + 'pages'},
-        update: {method: 'put', url: Routing.generate('cms_rest') + 'pages/:pageId'}
+        get:    {method: 'get'   , url: Routing.generate('cms_rest') + 'pages/:pageId'},
+        getAll: {method: 'get'   , url: Routing.generate('cms_rest') + 'page/all'     },
+        save:   {method: 'post'  , url: Routing.generate('cms_rest') + 'pages'        },
+        update: {method: 'put'   , url: Routing.generate('cms_rest') + 'pages/:pageId'}
+    });
+
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
+cms.service('Post', function($resource) {
+
+    return $resource(Routing.generate('cms_rest') + 'posts', {}, {
+        delete:        {method: 'delete', url: Routing.generate('cms_rest') + 'posts/:postId'},
+        get:           {method: 'get'   , url: Routing.generate('cms_rest') + 'posts/:postId'},
+        getAll:        {method: 'get'   , url: Routing.generate('cms_rest') + 'post/all'},
+        getByCategory: {method: 'get'   , url: Routing.generate('cms_rest') + 'post/:category/category'},
+        save:          {method: 'post'  , url: Routing.generate('cms_rest') + 'posts'},
+        update:        {method: 'put'   , url: Routing.generate('cms_rest') + 'posts/:postId'}
     });
 
 });

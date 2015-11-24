@@ -6270,11 +6270,11 @@ button.close {
   .hidden-print {
     display: none !important; } }
 /*** Global variables ***/
-.no-padding-right, .no-padding-lr {
-  padding-right: 0; }
-
 .no-padding-left, .no-padding-lr {
-  padding-left: 0; }
+  padding-left: 0 !important; }
+
+.no-padding-right, .no-padding-lr {
+  padding-right: 0 !important; }
 
 .text-error {
   color: #A94442; }
@@ -6287,6 +6287,9 @@ button.close {
 
 .st-sort-descent:before {
   content: '\25BC\00a0'; }
+
+.filter-select {
+  margin-top: 8px; }
 
 body {
   background-color: #eee; }
@@ -6397,3 +6400,9 @@ div.alert-fix-top {
 
 .align-label, .align-span {
   margin-top: 7px; }
+
+.align-choices {
+  padding-top: 5px; }
+
+.default-logo {
+  height: 130px; }

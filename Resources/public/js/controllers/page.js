@@ -3,7 +3,7 @@
 var cms = angular.module('Cms');
 
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Page, PublicationStatus,
+                                          Page, PublicationStatus, Validator,
                                           TranslationService, AlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
@@ -19,8 +19,8 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
     $scope.loadData = function() {
         if ($scope.pageId) {
             Page.get({pageId: $scope.pageId},
-                function(response) {
-                    $scope.pageRoute = response.page;
+                function(page) {
+                    $scope.pageRoute = page;
                     if ($scope.pageRoute.publication.datePublicationBegin) {
                         $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
                     }
@@ -31,9 +31,8 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                 });
         }
 
-        PublicationStatus.getAll(function (response) {
-            /** @namespace response.publicationStatus */
-            $scope.publicationStatuses = response.publicationStatus;
+        PublicationStatus.getAll(function (publicationStatus) {
+            $scope.publicationStatuses = publicationStatus;
         });
     };
 
@@ -46,9 +45,9 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                     pageId: $scope.pageId
                 },
                 pageRoute,
-                function (response) {
-                    $scope.pagePath = response.pageRoute.path;
-                    $scope.pageRoute.dateUpdate = $filter('date')(response.pageRoute.dateUpdate, 'dd/MM/yyyy');
+                function (pageRoute) {
+                    $scope.pagePath = pageRoute.path;
+                    $scope.pageRoute.dateUpdate = $filter('date')(pageRoute.dateUpdate, 'dd/MM/yyyy');
                     AlertService.addAlert('success', TranslationService.trans('alert.page.updated'));
 
                     if (quit) {
@@ -64,9 +63,11 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
             } else {
                 Page.save(
                     pageRoute,
-                    function (response) {
-                        $scope.pagePath = response.pageRoute.path;
-                        $scope.pageRoute.dateAdd = $filter('date')(response.pageRoute.dateAdd, 'dd/MM/yyyy');
+                    function (pageRoute) {
+                        $scope.pageRoute = pageRoute;
+                        $scope.pageId = pageRoute.id;
+                        $scope.pagePath = pageRoute.path;
+                        $scope.pageRoute.dateAdd = $filter('date')(pageRoute.dateAdd, 'dd/MM/yyyy');
                         AlertService.addAlert('success', TranslationService.trans('alert.page.created'));
 
                         if (quit) {
@@ -93,9 +94,7 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         );
     };
 
-    $scope.isRequire = function (form, name) {
-        return form.$invalid && form[name] && form[name].$touched && form[name].$error.required;
-    };
+    $scope.isRequire = Validator.isRequire;
 
     $scope.translateStatus = function (key) {
         return TranslationService.trans('publication_status.status.' + key);

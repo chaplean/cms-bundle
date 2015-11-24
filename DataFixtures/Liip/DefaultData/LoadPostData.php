@@ -1,0 +1,95 @@
+<?php
+
+namespace Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData;
+
+use Chaplean\Bundle\CmsBundle\Entity\Page;
+use Chaplean\Bundle\CmsBundle\Entity\Post;
+use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
+use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
+use Chaplean\Bundle\CmsBundle\Entity\PostZoom;
+use Chaplean\Bundle\CmsBundle\Entity\Publication;
+use Chaplean\Bundle\UnitBundle\Utility\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+
+/**
+ * LoadPostData.php.
+ *
+ * @author    Valentin - Chaplean <valentin@chaplean.com>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @since     X.Y.Z
+ */
+class LoadPostData extends AbstractFixture implements DependentFixtureInterface
+{
+    /**
+     * @param ObjectManager $manager
+     *
+     * @return void
+     */
+    public function load(ObjectManager $manager)
+    {
+        $now = new \DateTime('now');
+
+        $yesterday = clone $now;
+        $yesterday->modify('-1 day');
+        $tomorrow = clone $now;
+        $tomorrow->modify('+1 day');
+
+        $lastMonth = clone $now;
+        $lastMonth->modify('-1 month');
+        $nextMonth = clone $now;
+        $nextMonth->modify('+1 month');
+
+        $datas = array(
+            '1'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-published-highlighted'),
+            '2'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-published-not-highlighted'),
+            '3'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-unpublished-highlighted'),
+            '4'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-unpublished-not-highlighted'),
+            '5'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-published-highlighted'),
+            '6'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-published-not-highlighted'),
+            '7'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-unpublished-highlighted'),
+            '8'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-unpublished-not-highlighted'),
+            '9'  => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-published-highlighted'),
+            '10' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-published-not-highlighted'),
+            '11' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-unpublished-highlighted'),
+            '12' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-unpublished-not-highlighted'),
+            '13' => array('news'       , new Post()           , $yesterday, 'publication-incoming-published-not-highlighted-1'),
+            '14' => array('news'       , new Post()           , $yesterday, 'publication-incoming-unpublished-highlighted-1'),
+            '15' => array('news'       , new Post()           , $yesterday, 'publication-incoming-unpublished-not-highlighted-1'),
+        );
+
+        foreach ($datas as $key => $data) {
+            $page = new Page();
+            $page->setTitle('Page-' . $data[0] . '-' . $key);
+            $page->setContent('Page-' . $data[0] . '-' . $key . '-content');
+            $page->setMetaDescription('Page-' . $data[0] . '-' . $key . '-meta');
+
+            /** @var Publication $publication */
+            $publication = $this->getReference($data[3]);
+
+            /** @var PostVideo|PostZoom|PostTestimonial $post */
+            $post = $data[1];
+            $post->setDateAdd($data[2]);
+            $post->setPublication($publication);
+            $post->setPage($page);
+
+            $this->persist($post, $manager);
+            $this->setReference('post-' . $data[0] . '-' . $key, $post);
+        }
+
+        $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return array(
+            'Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData\LoadPublicationData'
+        );
+    }
+}

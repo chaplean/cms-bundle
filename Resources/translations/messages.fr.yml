@@ -4,11 +4,12 @@ alert:
         deleted: Page supprimée
         updated: Page mise à jour
     post:
-        created: Post créé
-        deleted: Post supprimé
-        updated: Post mis à jour
+        created: Article créé
+        deleted: Article supprimé
+        updated: Article mis à jour
     field:
         required: Ce champ est obligatoire.
+        date: Cette n'est pas valide
 
 button:
     add:
@@ -29,37 +30,47 @@ error:
     not_found: La page demandée n'existe pas
 
 form:
+    post:
+        category: Categorie
     publication:
         date_publication_begin: Date de publication
         date_publication_end: Date de fin
         date_add: Création
         date_update: Modification
+        is_highlighted: Affiché sur la home
 
 global:
     content: Contenu
     frontend: Frontend
     label: Libellé du menu
     meta_description: Meta description
+    no: Non
     page: Page
     path: Chemin
-    post: Post
+    post: Article
     rollover: Texte en rollover
+    status: Status
     subtitle: Sous-titre
     title: Titre
-    status: Status
+    yes: Oui
 
 header:
-    creation: Création de page
+    creation:
+        page: Création de page
+        post: Création d'article
     edition: Edition de "%page%"
+    publication_setting: Paramètres de publication
 
 menu:
     header: BackOffice
     page: Page
     pages: Pages
+    posts: Articles
 
 message:
     confirm:
         delete_page: Confirmez-vous la suppression de la page "%page%"
+        delete_post: Confirmez-vous la suppression de l'article "%post%"
         leave_change: Les données non sauvegardées seront perdues, continuer ?
 
 over:
@@ -74,10 +85,20 @@ placeholder:
     subtitle: Sous-titre
     title: Titre
 
+post:
+    category:
+        all: Toutes
+        news: Nouvelles
+        testimonial: Testimoniale
+        video: Vidéo
+        zoom: Zoom
+
 publication_status:
     status:
+        archived: Archivé
         published: Publié
         unpublished: Non publié
+        published_unpublished: Publiés et non
 
 media_manager:
     title:

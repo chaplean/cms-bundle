@@ -1,0 +1,11 @@
+Chaplean\Bundle\CmsBundle\Entity\Publication:
+    properties:
+        datePublicationBegin: <(new \DateTime('-1 day'))>
+        datePublicationEnd: <(new \DateTime('-1 day'))>
+        isHighlighted: true
+        dateAdd: <(new \DateTime())>
+        status: 1
+
+Chaplean\Bundle\CmsBundle\Entity\Page:
+    properties:
+        title: Page-<current()>

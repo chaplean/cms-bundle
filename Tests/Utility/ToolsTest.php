@@ -18,6 +18,13 @@ class ToolsTest extends LogicalTest
     /**
      * @return void
      */
+    public static function setUpBeforeClass()
+    {
+    }
+
+    /**
+     * @return void
+     */
     public function testSlugify()
     {
         $this->assertEquals('sensio', Tools::slugify('Sensio'));
