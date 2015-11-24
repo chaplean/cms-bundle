@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b4d358729f6b7e8dfe85e1a07afe8b32",
+    "hash": "b03a93ae7995ba47ba65faf530acb26a",
     "content-hash": "a9f4b07108dd6154e763cb806d13a74a",
     "packages": [
         {
@@ -2715,7 +2715,7 @@
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:chaplean/unit-bundle.git",
-                "reference": "a0a7ff87c27ecd402319bd0824dcdaa912f47898"
+                "reference": "2d6b7752f8101f9a9561df478d69b52f5112ac3c"
             },
             "require": {
                 "behat/behat": "~3.0",
@@ -2765,7 +2765,7 @@
             "keywords": [
                 "symfony2"
             ],
-            "time": "2015-11-10 16:58:10"
+            "time": "2015-11-23 13:55:35"
         },
         {
             "name": "doctrine/data-fixtures",

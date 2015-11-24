@@ -1,28 +1,41 @@
 <script type="text/ng-template" id="media-manager-modal.html">
     <div id="media-manager">
         <div class="modal-header">
-            <h3 class="modal-title">{{ 'media_manager.title' | trans }}
-                <button id="quit" class="btn btn-warning pull-right" type="button" ng-click="quitWithoutMedia()">{{ 'media_manager.close' | trans }}</button>
+            <h3 class="modal-title">{{ 'media_manager.title.label' | trans }}
+                <span class="pull-right"></span>
+                <button id="quit" type="button" class="close" ng-click="quitWithoutMedia()"><span class="glyphicon glyphicon-remove"></span></button>
             </h3>
         </div>
         <div class="modal-body">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
-                        <button>{{ 'upload' | trans }}</button>
+                        <input type="file" id="uploadNew" class="hidden" ng-model="newMediaFile" ng-change="uploadNewFile()" />
+                        <label class="btn btn-default" for="uploadNew"><span class="glyphicon glyphicon-cloud-upload"></span> {{ 'media_manager.upload.label' | trans }}
+                        </label>
                     </div>
                     <div class="col-xs-12 col-md-6 text-right">
-                        <form>
-                            <input type="text" placeholder="{{ 'search.name' | trans }}" ng-model="nameFilter" ng-change="updateFilter()" />
-                            <select ng-model="sortType">
-                                <option value="dateUpdate">{{ 'date' | trans }}</option>
-                                <option value="fileName">{{ 'name' | trans }}</option>
-                            </select>
-                            <select ng-model="categoryFilter" ng-change="updateFilter()">
-                                <option value="">{{ 'filter.type' | trans }}</option>
-                                <option value="image">{{ 'image' | trans }}</option>
-                                <option value="pdf">{{ 'pdf' | trans }}</option>
-                            </select>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input class="form-control" type="text" placeholder="{{ 'media_manager.search.label' | trans }}" ng-model="nameFilter" ng-change="updateFilter()" name="media-search" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <select class="form-control" ng-model="sortType" name="media-sort">
+                                        <option value="dateUpdate">{{ 'media_manager.sort.date.label' | trans }}</option>
+                                        <option value="fileName">{{ 'media_manager.sort.name.label' | trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-6">
+                                    <select class="form-control col-xs-6" ng-model="categoryFilter" ng-change="updateFilter()" name="media-type">
+                                        <option value="">{{ 'media_manager.filter.type.label' | trans }}</option>
+                                        <option value="image">{{ 'media_manager.filter.image.label' | trans }}</option>
+                                        <option value="pdf">{{ 'media_manager.filter.pdf.label' | trans }}</option>
+                                    </select>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -30,25 +43,45 @@
                 <hr />
 
                 <div class="row">
-                    <div class="col-xs-12 col-md-9">
-                        <div class="media-element col-xs-12 col-sm-6 col-md-4" dir-paginate="media in mediasFiltered | orderBy: sortFilter | itemsPerPage: 9" ng-class="{active: media.id == selectedMedia.id}" ng-click="selectMedia(media)">
-                            <p>{^ media.category ^}</p>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-sm-push-6 col-md-push-8 media-details">
+                        <div ng-show="selectedMedia">
+                            <h4>
+                                {{ 'media_manager.details.label' | trans }}
+                                <span class="pull-right">
+                                <input type="file" id="uploadEdit" class="hidden" ng-model="editMediaFile" ng-change="uploadEditFile()" />
+                                <label for="uploadNew"><span class="glyphicon glyphicon-edit"></span></label>
+                                <span ng-click="deleteCurrentMedia()"><span class="glyphicon glyphicon-trash"></span></span>
+                            </span>
+                            </h4>
+
+                            <form role="form" ng-submit="insertCurrentMedia()">
+                                <span>{^ selectedMedia.fileName ^}</span>
+                                <span>{^ selectedMedia.dateUpdate ^}</span>
+                                <span>{^ selectedMedia.fileWeight ^}</span>
+                                <span>{^ selectedMedia.width ^} x {^ selectedMedia.height ^} Px</span>
+                                <span>{^ selectedMedia.path ^}</span>
+
+                            <span ng-if="selectedMedia.category == 'image'">
+                                <div class="form-group">
+                                    <label>{{ 'media_manager.edit.title.label' | trans }}</label>
+                                    <input class="form-control" type="text" ng-model="selectedMedia.title" />
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ 'media_manager.edit.title_alt.label' | trans }}</label>
+                                    <input class="form-control" type="text" ng-model="selectedMedia.alternativeTitle" />
+                                </div>
+                            </span>
+                                <button id="insert" type="submit" class="btn btn-primary" type="button" ng-click="quitInsertMedia()">{{ 'media_manager.insert' | trans }}</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-sm-pull-6 col-md-pull-4 media-list">
+                        <div class="media-element col-xs-12 col-md-4 text-center" dir-paginate="media in mediasFiltered | orderBy: sortFilter | itemsPerPage: 9" ng-class="{active: media.id == selectedMedia.id}" ng-click="selectMedia(media)">
+                            <img src="" height="180" width="180" />
+
+                            <p>{^ media.fileName ^}</p>
                         </div>
                         <dir-pagination-controls class="col-xs-12 text-center"></dir-pagination-controls>
-                    </div>
-                    <div class="col-xs-12 col-md-3" ng-show="selectedMedia">
-                        <h4>{{ 'media.details' | trans }}</h4>
-
-                        <form>
-                            <span>{^ selectedMedia.fileName ^}</span>
-                            <span>{^ selectedMedia.dateAdd ^}</span>
-                            <span>{^ selectedMedia.fileWeight ^}</span>
-                            <span>{^ selectedMedia.fileWidth ^} x {^ selectedMedia.fileHeight ^} Px</span>
-                            <span>{^ selectedMedia.path ^}</span>
-                            <span>{^ selectedMedia.title ^}</span>
-                            <span>{^ selectedMedia.alternativeTitle ^}</span>
-                        </form>
-                        <button id="insert" class="btn btn-primary" type="button" ng-click="quitInsertMedia()">{{ 'media_manager.insert' | trans }}</button>
                     </div>
                 </div>
             </div>

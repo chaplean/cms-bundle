@@ -13239,14 +13239,22 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
 
     $scope.medias = Media.getAll().$promise.then(function(data) {
         $scope.medias = data;
+        $scope.medias.forEach(function(media) {
+            if (typeof media.dateUpdate == 'undefined' || media.dateUpdate == null) {
+                media.dateUpdate = media.dateAdd;
+            }
+        });
         $scope.updateFilter();
     });
 
     $scope.nameFilter = null;
-    $scope.sortType = null;
+    $scope.sortType = 'dateUpdate';
     $scope.categoryFilter = null;
 
     $scope.selectedMedia = null;
+
+    $scope.newMediaFile = null;
+    $scope.editMediaFile = null;
 
     $scope.quitInsertMedia = function() {
         $uibModalInstance.close();
@@ -13274,7 +13282,27 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
 
     $scope.selectMedia = function(media) {
         $scope.selectedMedia = media;
-    }
+    };
+
+    $scope.insertCurrentMedia = function() {
+        $scope.quitInsertMedia();
+    };
+
+    $scope.editCurrentMedia = function() {
+    };
+
+    $scope.deleteCurrentMedia = function() {
+    };
+
+    $scope.uploadNewFile = function() {
+        console.log('new');
+        console.log($scope.newMediaFile);
+    };
+
+    $scope.uploadEditFile = function() {
+        console.log('edit');
+        console.log($scope.editMediaFile);
+    };
 
 });
 

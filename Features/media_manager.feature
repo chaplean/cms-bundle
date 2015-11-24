@@ -10,38 +10,53 @@ Feature: Media Manager
     Then I should see a visible "#media-manager" element
     # TODO: How to upload a file in behat ?
     # Then I should see a visible ".media-element.active" element
+    Then the media should be uploaded
 
   Scenario: I can select a file and include it
     When I click on ".media-element"
     Then I should see a visible ".media-element.active" element
     Then I should see 9 visibles ".media-element" elements
+    Then I should see a visible ".pagination" element
     Then I should see a visible ".media-element.active" element
-    Then I should see "test-selected-file.png"
+    Then I should see "png_1" in the ".media-details" element
     When I click on "#insert"
     Then I should not see a visible "#media-manager" element
-    # TODO: Check that the media is inserted in the wysiwyg editor
+    Then the media should be inserted in the wysiwyg editor
 
   Scenario: I can search for a media by name
-    When I fill in "media-search" with "test"
-    Then I should see 1 visibles ".media-element" elements
+    When I fill in "media-search" with "1"
+    Then I should see 2 visibles ".media-element" elements
+    Then I should see "png_1"
+    Then I should see "pdf_1"
 
   Scenario: I can order by date
+    When I select "date" from "media-sort"
+    Then it should be sorted by date
     # TODO
 
   Scenario: I can order by name
+    When I select "name" from "media-sort"
+    Then it should be sorted by name
     # TODO
 
-  Scenario: I can filter by images
-    # TODO
+  Scenario: I can filter by image
+    When I select "image" from "media-type"
+    Then I should see 9 visibles ".media-element" elements
+    Then I should not see a visible ".pagination" element
+    Then I should see "png_1"
 
   Scenario: I can filter by pdf
-    # TODO
+    When I select "pdf" from "media-type"
+    Then I should see 9 visibles ".media-element" elements
+    Then I should not see a visible ".pagination" element
+    Then I should see "pdf_1"
 
-  Scenario: I can edit a media and validate
-    # TODO
-
-  Scenario: I can edit a media and cancel
+  Scenario: I can edit a media
+    When I click on ".media-element"
+    Then TODO
     # TODO
 
   Scenario: I can delete a media
+    When I click on ".media-element"
+    Then TODO
     # TODO

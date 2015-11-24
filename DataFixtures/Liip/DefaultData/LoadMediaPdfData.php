@@ -27,15 +27,15 @@ class LoadMediaPdfData extends AbstractFixture implements DependentFixtureInterf
         $now = new \DateTime('now');
 
         $datas = array(
-            '1'  => array('test_path_pdf_1', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
-            '2'  => array('test_path_pdf_2', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
-            '3'  => array('test_path_pdf_3', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
-            '4'  => array('test_path_pdf_4', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
-            '5'  => array('test_path_pdf_5', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
-            '6'  => array('test_path_pdf_6', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
-            '7'  => array('test_path_pdf_7', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
-            '8'  => array('test_path_pdf_8', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
-            '9'  => array('test_path_pdf_9', 'test_file_name_pdf', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '1'  => array('test_path_pdf_1', 'pdf_1', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '2'  => array('test_path_pdf_2', 'pdf_2', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '3'  => array('test_path_pdf_3', 'pdf_3', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '4'  => array('test_path_pdf_4', 'pdf_4', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '5'  => array('test_path_pdf_5', 'pdf_5', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '6'  => array('test_path_pdf_6', 'pdf_6', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '7'  => array('test_path_pdf_7', 'pdf_7', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '8'  => array('test_path_pdf_8', 'pdf_8', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
+            '9'  => array('test_path_pdf_9', 'pdf_9', '42', $now, $now, 'file-extension-pdf-pdf', 'test_image'),
         );
 
         foreach ($datas as $key => $data) {

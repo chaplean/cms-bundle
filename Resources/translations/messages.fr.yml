@@ -78,3 +78,30 @@ publication_status:
     status:
         published: Publié
         unpublished: Non publié
+
+media_manager:
+    title:
+        label: Gestionnaire de médias
+    upload:
+        label: Ajouter
+    search:
+        label: Chercher
+    sort:
+        date:
+            label: Trier par date
+        name:
+            label: Trier par nom
+    filter:
+        type:
+            label: Tous les types de média
+        image:
+            label: Image
+        pdf:
+            label: Pdf
+    details:
+        label: Détails
+    edit:
+        title:
+            label: Titre
+        title_alt:
+            label: Titre alternatif
