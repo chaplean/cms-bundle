@@ -54,7 +54,7 @@
     Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
     Translator.add("post.category.all", "Toutes", "messages", "fr");
-    Translator.add("post.category.news", "Nouvelles", "messages", "fr");
+    Translator.add("post.category.news", "Nouvelle", "messages", "fr");
     Translator.add("post.category.testimonial", "Testimoniale", "messages", "fr");
     Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
     Translator.add("post.category.zoom", "Zoom", "messages", "fr");

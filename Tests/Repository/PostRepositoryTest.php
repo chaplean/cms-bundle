@@ -38,8 +38,6 @@ class PostRepositoryTest extends LogicalTest
      */
     public function testGetAll()
     {
-        $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
-
         $this->assertCount(15, $this->postRepository->getAll());
     }
 
@@ -122,8 +120,6 @@ class PostRepositoryTest extends LogicalTest
      */
     public function testGetByCategoryTestimonial()
     {
-        $postRepository = $this->em->getRepository('ChapleanCmsBundle:Post');
-
         $posts = $this->postRepository->getByCategory('testimonial');
 
         $this->assertCount(4, $posts);
@@ -233,5 +229,43 @@ class PostRepositoryTest extends LogicalTest
 
         $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
         $this->assertCount(4, $posts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAllActive()
+    {
+        /** @var Post[] $postsActive */
+        $postsActive = $this->postRepository->getAllActive();
+
+        $this->assertCount(2, $postsActive);
+        $this->assertEquals('Page-zoom-5', $postsActive[0]->getPage()->getTitle());
+        $this->assertEquals('Page-zoom-6', $postsActive[1]->getPage()->getTitle());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindActiveWithPost()
+    {
+        $id = self::$fixtures->getReference('post-zoom-5')->getId();
+
+        $post = $this->postRepository->findActive($id);
+
+        $this->assertNotNull($post);
+        $this->assertInstanceOf(Post::class, $post);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindActiveWithInactivePost()
+    {
+        $id = self::$fixtures->getReference('post-video-1')->getId();
+
+        $post = $this->postRepository->findActive($id);
+
+        $this->assertNull($post);
     }
 }

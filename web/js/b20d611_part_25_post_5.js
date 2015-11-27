@@ -9,6 +9,7 @@ cms.service('Post', function($resource) {
         get:                    {method: 'get'   , url: Routing.generate('cms_rest') + 'posts/:postId'},
         getAvailableCategories: {method: 'get'   , url: Routing.generate('cms_rest') + 'post/available/categories', isArray: true},
         getAll:                 {method: 'get'   , url: Routing.generate('cms_rest') + 'post/all', isArray: true},
+        getAllActive:           {method: 'get'   , url: Routing.generate('cms_rest') + 'post/all/active', isArray: true},
         getByCategory:          {method: 'get'   , url: Routing.generate('cms_rest') + 'post/:category/category'},
         save:                   {method: 'post'  , url: Routing.generate('cms_rest') + 'posts'},
         update:                 {method: 'put'   , url: Routing.generate('cms_rest') + 'posts/:postId'}

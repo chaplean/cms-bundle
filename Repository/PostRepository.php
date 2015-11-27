@@ -4,8 +4,9 @@ namespace Chaplean\Bundle\CmsBundle\Repository;
 
 use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * PostRepository.php.
@@ -16,27 +17,6 @@ use Doctrine\ORM\Mapping\ClassMetadata;
  */
 class PostRepository extends CmsRepository
 {
-    /**
-     * @param string  $category
-     * @param integer $limit
-     * @param string  $sort
-     * @param string  $order
-     *
-     * @return Post[]
-     */
-    public function getByCategory($category, $limit = null, $sort = null, $order = null)
-    {
-        $qb = $this->buildQueryGetAll();
-
-        $qb = $this->buildParam($qb, $limit, $sort, $order);
-        if (!empty($category)) {
-            $qb->andWhere('p INSTANCE OF :category');
-            $qb->setParameter('category', $category);
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
     /**
      * @return QueryBuilder
      */
@@ -68,6 +48,83 @@ class PostRepository extends CmsRepository
         );
 
         return array_key_exists($sort, $filters) ? $filters[$sort] : null;
+    }
+
+    /**
+     * @param integer $postId
+     *
+     * @return Post
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findActive($postId)
+    {
+        $now = new \DateTime();
+        $qb = $this->buildQueryGetAll();
+
+        $qb->where('p.id = :postId');
+        $qb->andWhere('ps.id = :published');
+        $qb->andWhere('pu.datePublicationBegin IS NULL OR pu.datePublicationBegin <= :now');
+        $qb->andWhere('pu.datePublicationEnd IS NULL OR pu.datePublicationEnd >= :now');
+        $qb->setParameters(
+            array(
+                'postId'    => $postId,
+                'published' => 1,
+                'now'       => $now
+            )
+        );
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param integer $limit
+     * @param string  $sort
+     * @param string  $order
+     *
+     * @return Post[]
+     */
+    public function getAllActive($limit = null, $sort = null, $order = null)
+    {
+        $now = new \DateTime();
+
+        $qb = $this->buildQueryGetAll();
+        $qb = $this->buildParam($qb, $limit, $sort, $order);
+        $qb->where('ps.id = :published');
+        $qb->andWhere('pu.datePublicationBegin IS NULL OR pu.datePublicationBegin <= :now');
+        $qb->andWhere('pu.datePublicationEnd IS NULL OR pu.datePublicationEnd >= :now');
+        $qb->setParameters(
+            array(
+                'published' => 1,
+                'now'       => $now
+            )
+        );
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param string  $category
+     * @param integer $limit
+     * @param string  $sort
+     * @param string  $order
+     *
+     * @return Post[]
+     */
+    public function getByCategory($category, $limit = null, $sort = null, $order = null)
+    {
+        $qb = $this->buildQueryGetAll();
+
+        $qb = $this->buildParam($qb, $limit, $sort, $order);
+        if (!empty($category)) {
+            $qb->andWhere('p INSTANCE OF :category');
+            $qb->setParameter('category', $category);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -103,11 +160,11 @@ class PostRepository extends CmsRepository
      *
      * @return void
      */
-    public function remove($class, $id)
+    public function insert($class, $id)
     {
         /** @var ClassMetadata $metadata */
-        $metadata = $this->_em->getClassMetadata(get_class($class));
-        $query = 'DELETE FROM ' . $metadata->table['name'] . ' WHERE id = ' . $id;
+        $metadata = $this->_em->getClassMetadata($class);
+        $query = 'INSERT INTO ' . $metadata->table['name'] . ' VALUES (' . $id . ')';
         $this->_em->getConnection()->exec($query);
     }
 
@@ -117,11 +174,11 @@ class PostRepository extends CmsRepository
      *
      * @return void
      */
-    public function insert($class, $id)
+    public function remove($class, $id)
     {
         /** @var ClassMetadata $metadata */
-        $metadata = $this->_em->getClassMetadata($class);
-        $query = 'INSERT INTO ' . $metadata->table['name'] . ' VALUES (' . $id . ')';
+        $metadata = $this->_em->getClassMetadata(get_class($class));
+        $query = 'DELETE FROM ' . $metadata->table['name'] . ' WHERE id = ' . $id;
         $this->_em->getConnection()->exec($query);
     }
 

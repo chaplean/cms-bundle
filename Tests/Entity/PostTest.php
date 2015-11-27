@@ -22,8 +22,6 @@ class PostTest extends LogicalTest
      */
     public static function setUpBeforeClass()
     {
-        parent::$iWantDefaultData = false;
-        parent::setUpBeforeClass();
     }
 
     /**

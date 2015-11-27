@@ -9,6 +9,7 @@ use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations;
 use Monolog\Logger;
+use Symfony\Component\Debug\Exception\UndefinedMethodException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -74,6 +75,20 @@ class PostController extends ChapleanRestController
     public function getAllAction(Request $request)
     {
         return $this->getAll($request, 'ChapleanCmsBundle:Post', array(
+            'post_all', 'publication_all', 'page_all',
+            'publication_status_id', 'publication_status_keyname'
+        ));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     * @throws UndefinedMethodException
+     */
+    public function getAllActiveAction(Request $request)
+    {
+        return $this->getAllActive($request, 'ChapleanCmsBundle:Post', array(
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname'
         ));

@@ -5,6 +5,7 @@ namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializationContext;
+use Symfony\Component\Debug\Exception\UndefinedMethodException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -53,9 +54,7 @@ abstract class ChapleanRestController extends FOSRestController
      */
     public function getAll(Request $request, $entity, $group = null)
     {
-        $limit = $request->query->get('limit', null);
-        $sort  = $request->query->get('sort', null);
-        $order = $request->query->get('order', null);
+        list($limit, $sort , $order) = $this->getLimitOrderParamters($request);
 
         $entityRepository = $this->getDoctrine()->getRepository($entity);
 
@@ -63,6 +62,30 @@ abstract class ChapleanRestController extends FOSRestController
             $entities = $entityRepository->getAll($limit, $sort, $order);
         } else {
             $entities = $entityRepository->findAll();
+        }
+
+        return $this->handleResponse($entities, $group);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $entity
+     * @param array   $group
+     *
+     * @return Response
+     * @throws UndefinedMethodException
+     */
+    public function getAllActive(Request $request, $entity, $group = null)
+    {
+        list($limit, $sort , $order) = $this->getLimitOrderParamters($request);
+
+        $em = $this->getDoctrine()->getManager();
+        $entityRepository = $em->getRepository($entity);
+
+        if (method_exists($entityRepository, 'getAllActive')) {
+            $entities = $entityRepository->getAllActive($limit, $sort, $order);
+        } else {
+            throw new UndefinedMethodException(sprintf('%s not implement \'getAllActive\'', get_class($entityRepository)), new \ErrorException());
         }
 
         return $this->handleResponse($entities, $group);
@@ -83,5 +106,15 @@ abstract class ChapleanRestController extends FOSRestController
         }
 
         return $this->handleView($view);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function getLimitOrderParamters($request)
+    {
+        return array($request->query->get('limit', null), $request->query->get('sort', null), $request->query->get('order', null));
     }
 }

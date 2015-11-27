@@ -2,7 +2,6 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
-use Chaplean\Bundle\CmsBundle\Utility\Entity\PostCast;
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

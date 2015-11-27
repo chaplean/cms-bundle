@@ -11,7 +11,6 @@ Feature: Create page
 
   Scenario: I can see fields
     Given I am on "/administration/post"
-    When I wait Ajax
     When I select "news" from "chaplean_cms_post_form_category"
     When I fill in "chaplean_cms_post_form_page_metaDescription" with "This is super menu"
     When I fill in "chaplean_cms_post_form_page_title" with "Super Menu"

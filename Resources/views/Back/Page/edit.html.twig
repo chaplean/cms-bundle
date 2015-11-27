@@ -13,7 +13,7 @@
                     <div ng-show="pageId">
                         <span class="ng-cloak">{^ 'header.edition'|trans:{'page': pageRoute.page.title} ^}</span>
                         <span>
-                            <a class="frontend-link" target="_blank" href="{^ path('cms_page_content_by_path', {pagePath: pagePath}) ^}">
+                            <a class="frontend-link" target="_blank" href="{^ path('cms_page_view', {pagePath: pagePath}) ^}">
                                 <span class="fa fa-external-link"></span>
                                 {{ 'global.frontend' | trans }}
                             </a>
@@ -26,7 +26,7 @@
                 <div class="navbar-right"></div>
             </div>
         </nav>
-        <div class="panel panel-body">
+        <div class="panel panel-body panel-back">
             <div class="col-sm-12 col-md-7 no-padding-lr">
                 {# Path #}
                 <div class="form-group col-xs-12 no-padding-lr">
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-5">
-                <div class="panel panel-body">
+                <div class="panel panel-body panel-back">
                     <div class="form-group col-xs-12 text-center">
                         <h4>{{ 'header.publication_setting'|trans }}</h4>
                         <hr>

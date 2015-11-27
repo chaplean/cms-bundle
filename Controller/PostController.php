@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Controller;
 
+use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -29,7 +30,7 @@ class PostController extends Controller
         $form = $this->createForm('chaplean_cms_post_form');
 
         return $this->render(
-            'ChapleanCmsBundle:Post:edit.html.twig',
+            'ChapleanCmsBundle:Back/Post:edit.html.twig',
             array(
                 'postId' => $postId,
                 'form' => $form->createView(),
@@ -47,12 +48,60 @@ class PostController extends Controller
         $translator = $this->get('translator');
 
         return $this->render(
-            'ChapleanCmsBundle:Post:list.html.twig',
+            'ChapleanCmsBundle:Back/Post:list.html.twig',
             array(
                 'path' => array(
                     $translator->trans('menu.posts')
                 )
             )
         );
+    }
+
+    /**
+     * @return Response
+     */
+    public function indexAction()
+    {
+        return $this->render('ChapleanCmsBundle:Front/Post:index.html.twig');
+    }
+
+    /**
+     * @param integer $postId
+     *
+     * @return Response
+     */
+    public function viewAction($postId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $postRepository = $em->getRepository('ChapleanCmsBundle:Post');
+
+        /** @var Post $post */
+        $post = $postRepository->findActive($postId);
+
+        if (empty($post)) {
+            throw new NotFoundHttpException;
+        }
+
+        return $this->render('ChapleanCmsBundle:Front/Post:view.html.twig', array(
+            'post' => $post,
+        ));
+    }
+
+    /**
+     * @param integer $postId
+     *
+     * @return Response
+     */
+    public function previewAction($postId)
+    {
+        $post = $this->getDoctrine()->getManager()->find('ChapleanCmsBundle:Post', $postId);
+
+        if (($this->container->has('security.token_storage') && empty($this->getUser())) || empty($post)) {
+            throw new NotFoundHttpException;
+        }
+
+        return $this->render('ChapleanCmsBundle:Front/Post:view.html.twig', array(
+            'post' => $post,
+        ));
     }
 }

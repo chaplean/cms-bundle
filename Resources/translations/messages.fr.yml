@@ -45,6 +45,7 @@ global:
     label: Libellé du menu
     meta_description: Meta description
     no: Non
+    no_results: Aucun résultats
     page: Page
     path: Chemin
     post: Article
@@ -59,6 +60,8 @@ header:
         page: Création de page
         post: Création d'article
     edition: Edition de "%page%"
+    front:
+        pages: Listes des pages
     publication_setting: Paramètres de publication
 
 menu:
@@ -88,7 +91,7 @@ placeholder:
 post:
     category:
         all: Toutes
-        news: Nouvelles
+        news: Nouvelle
         testimonial: Testimoniale
         video: Vidéo
         zoom: Zoom

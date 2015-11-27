@@ -1,0 +1,35 @@
+{% extends cms_front_layout %}
+
+{% block body %}
+    <section class="container" ng-controller="PostsListController">
+        <div class="row">
+            <div class="header-post col-xs-12">
+                <h3 class="text-center">{^ ('post.category.' + category)|trans ^}</h3>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown sonata-actions">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="cat in categories|orderBy:'toString()'" ng-class="{'active': cat == category}">
+                                <a ng-click="updateCategory(cat)" class="sonata-action-element" href="">
+                                    {^ ('post.category.' + cat)|trans ^}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <article class="block-content-info list link" ng-click="go('cms_post_view', {postId: post.id})" dir-paginate="post in postsFiltered|orderBy:(post.dateUpdate ? post.dateUpdate : post.dateAdd)|itemsPerPage:pageSize" current-page="currentPage">
+            <h4>{^ post.page.title ^}</h4>
+            <h5 ng-if="post.page.subtitle">{^ post.page.subtitle ^}</h5>
+            <div class="content" ng-bind-html="post.page.content">
+            </div>
+        </article>
+        <article class="block-content-info list text-center" ng-if="postsFiltered.length == 0">
+            <p>Aucun résultats</p>
+        </article>
+        <div class="text-center">
+            <dir-pagination-controls auto-hide="false"></dir-pagination-controls>
+        </div>
+    </section>
+{% endblock %}

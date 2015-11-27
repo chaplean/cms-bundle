@@ -1,0 +1,19 @@
+{% extends cms_front_layout %}
+
+{% block body %}
+    <section class="container" ng-controller="PagesListController">
+        <div class="row">
+            <div class="header-post col-xs-12">
+                <h3 class="text-center">{{ 'header.front.pages'|trans }}</h3>
+            </div>
+        </div>
+        <ul>
+            <li class="page" dir-paginate="page in pages|orderBy:(page.dateUpdate ? page.dateUpdate : page.dateAdd)|itemsPerPage:pageSize" current-page="currentPage">
+                <a href="" ng-click="go('cms_page_view', {pagePath: page.path})" title="{^ page.rollover ^}">{^ page.page.title ^}</a>
+            </li>
+        </ul>
+        <div class="text-center">
+            <dir-pagination-controls auto-hide="false"></dir-pagination-controls>
+        </div>
+    </section>
+{% endblock %}

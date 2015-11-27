@@ -1,17 +1,17 @@
 <?php
+
+namespace Chaplean\Bundle\CmsBundle\Repository;
+
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * CmsRepository.php.
  *
  * @author    Valentin - Chaplean <valentin@chaplean.com>
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
- * @since     X.Y.Z
+ * @since     1.0.0
  */
-
-namespace Chaplean\Bundle\CmsBundle\Repository;
-
-use Doctrine\DBAL\Query\QueryBuilder;
-use Doctrine\ORM\EntityRepository;
-
 abstract class CmsRepository extends EntityRepository
 {
     /**
@@ -39,7 +39,7 @@ abstract class CmsRepository extends EntityRepository
      * @param string       $sort
      * @param string       $order
      *
-     * @return mixed
+     * @return QueryBuilder
      */
     protected function buildParam($qb, $limit = null, $sort = null, $order = null)
     {
