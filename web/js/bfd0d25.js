@@ -13322,6 +13322,8 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                 Page.save(
                     pageRoute,
                     function (pageRoute) {
+                        $scope.pageRoute = pageRoute;
+                        $scope.pageId = pageRoute.id;
                         $scope.pagePath = pageRoute.path;
                         $scope.pageRoute.dateAdd = $filter('date')(pageRoute.dateAdd, 'dd/MM/yyyy');
                         AlertService.addAlert('success', TranslationService.trans('alert.page.created'));
