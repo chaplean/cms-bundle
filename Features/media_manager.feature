@@ -18,7 +18,7 @@ Feature: Media Manager
     Then I should see 9 visibles ".media-element" elements
     Then I should see a visible ".pagination" element
     Then I should see a visible ".media-element.active" element
-    Then I should see "png_1" in the ".media-details" element
+    Then I should see "png_7" in the ".media-details" element
     When I click on "#insert"
     Then I should not see a visible "#media-manager" element
     Then the media should be inserted in the wysiwyg editor
@@ -30,14 +30,12 @@ Feature: Media Manager
     Then I should see "pdf_1"
 
   Scenario: I can order by date
-    When I select "date" from "media-sort"
-    Then it should be sorted by date
-    # TODO
+    When I select "dateUpdate" from "media-sort"
+    Then I should see "png_7" in the ".media-list" element
 
   Scenario: I can order by name
-    When I select "name" from "media-sort"
-    Then it should be sorted by name
-    # TODO
+    When I select "fileName" from "media-sort"
+    Then I should see "pdf_1" in the ".media-list" element
 
   Scenario: I can filter by image
     When I select "image" from "media-type"
@@ -58,6 +56,6 @@ Feature: Media Manager
 
   Scenario: I can delete a media
     When I click on ".media-element"
-    Then I should see "png_1" in the ".media-details" element
+    Then I should see "png_7" in the ".media-details" element
     When I click on "#delete"
-    Then I should not see "png_1"
+    Then I should not see "png_7"

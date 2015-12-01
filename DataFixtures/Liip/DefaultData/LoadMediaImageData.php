@@ -25,6 +25,7 @@ class LoadMediaImageData extends AbstractFixture implements DependentFixtureInte
     public function load(ObjectManager $manager)
     {
         $now = new \DateTime('now');
+        $old = new \DateTime('-1 day');
 
         $datas = array(
             '1'  => array('test_path_image_1', 'png_1', '42', $now, $now, 'file-extension-image-png', 400, 300, 'test_image', 'test_image_alt'),
@@ -33,7 +34,7 @@ class LoadMediaImageData extends AbstractFixture implements DependentFixtureInte
             '4'  => array('test_path_image_4', 'png_4', '42', $now, $now, 'file-extension-image-png', 400, 300, 'test_image', 'test_image_alt'),
             '5'  => array('test_path_image_5', 'png_5', '42', $now, $now, 'file-extension-image-png', 400, 300, 'test_image', 'test_image_alt'),
             '6'  => array('test_path_image_6', 'png_6', '42', $now, $now, 'file-extension-image-png', 400, 300, 'test_image', 'test_image_alt'),
-            '7'  => array('test_path_image_7', 'png_7', '42', $now, $now, 'file-extension-image-png', 400, 300, 'test_image', 'test_image_alt'),
+            '7'  => array('test_path_image_7', 'png_7', '42', $old, $old, 'file-extension-image-png', 400, 300, 'test_image', 'test_image_alt'),
             '8'  => array('test_path_image_8', 'png_8', '42', $now, $now, 'file-extension-image-png', 400, 300, 'test_image', 'test_image_alt'),
             '9'  => array('test_path_image_9', 'png_9', '42', $now, $now, 'file-extension-image-png', 400, 300, 'test_image', 'test_image_alt'),
         );

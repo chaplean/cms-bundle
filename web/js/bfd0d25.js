@@ -13032,7 +13032,7 @@ angular.module('ngBootbox', [])
 var cms = angular.module('Cms', [
     'ngAnimate', 'ngResource', 'ngSanitize', 'ngBootbox', 'ui.bootstrap',
     'ui.mask', 'boxuk.translation', 'textAngular', 'smart-table',
-    'angularUtils.directives.dirPagination', 'angularMoment'
+    'angularUtils.directives.dirPagination', 'angularMoment', 'angularFileUpload'
 
 ]);
 
@@ -13235,7 +13235,7 @@ cms.factory('Validator', function() {
 
 var cms = angular.module('Cms');
 
-cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService) {
+cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService, FileUploader) {
 
     $scope.updateFilter = function() {
         $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
@@ -13259,6 +13259,14 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
 
     $scope.newMediaFile = null;
     $scope.editMediaFile = null;
+
+    $scope.newUploader = new FileUploader({
+        url: '/rest/media/news',
+        autoUpload: true
+    });
+
+    $scope.editUploader = new FileUploader({
+    });
 
     $scope.quitInsertMedia = function() {
         $uibModalInstance.close();
@@ -13301,7 +13309,8 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
     $scope.deleteCurrentMedia = function() {
         $scope.selectedMedia.$delete({},
             function () {
-                $scope.medias.splice($scope.selectedMedia, 1);
+                var position = $scope.medias.indexOf($scope.selectedMedia);
+                $scope.medias.splice(position, 1);
                 $scope.selectedMedia = null;
                 $scope.updateFilter();
             }, function() {
