@@ -38,17 +38,26 @@ class MediaUtility
     /** @var Logger $logger */
     private $logger;
 
+    /** @var string $publicDir */
+    private $publicDir;
+
+    /** @var bool|array $mediaConfig */
+    private $mediaConfig;
+
     /**
      * MediaUtility constructor.
      *
      * @param Registry $doctrine
      * @param Logger   $logger
+     * @param string   $rootDir
+     * @param string   $chapleanCms
      */
-    public function __construct(Registry $doctrine, Logger $logger, $rootDir)
+    public function __construct(Registry $doctrine, Logger $logger, $rootDir, $mediaConfig)
     {
         $this->em = $doctrine->getManager();
         $this->logger = $logger;
         $this->publicDir = $rootDir . '/../web';
+        $this->mediaConfig = $mediaConfig;
     }
 
     /**
@@ -109,19 +118,20 @@ class MediaUtility
         }
 
         $this->existingMedia = null;
+        $type = '';
         if ($this->newFileExtension instanceof FileExtensionImage) {
+            $type = 'image';
             $this->existingMedia = new MediaImage();
             $this->existingMedia->setTitle('');
             $this->existingMedia->setAlternativeTitle('');
             $this->setImageSize();
-        } else {
-            if ($this->newFileExtension instanceof FileExtensionPdf) {
-                $this->existingMedia = new MediaPdf();
-                $this->existingMedia->setTitle('');
-            }
+        } elseif ($this->newFileExtension instanceof FileExtensionPdf) {
+            $type = 'pdf';
+            $this->existingMedia = new MediaPdf();
+            $this->existingMedia->setTitle('');
         }
 
-        if (!$this->existingMedia) {
+        if (!$this->existingMedia || (is_array($this->mediaConfig) && !in_array($type, $this->mediaConfig))) {
             return null;
         }
 
