@@ -35,6 +35,9 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
             $scope.selectMedia(newMedia);
             $scope.medias.push(newMedia);
             $scope.updateFilter();
+        },
+        onErrorItem: function(item, response) {
+            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
         }
     });
 
@@ -42,6 +45,9 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
         autoUpload: true,
         onSuccessItem: function(item, response) {
             angular.extend($scope.selectedMedia, response);
+        },
+        onErrorItem: function(item, response) {
+            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
         },
         onBeforeUploadItem: function(item) {
             item.url = 'http://localhost:8000/app_test.php/rest/media/' + $scope.selectedMedia.id + '/edits';

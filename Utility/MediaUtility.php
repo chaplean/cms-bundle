@@ -126,7 +126,7 @@ class MediaUtility
 
         $fileDir = 'medias/';
         $fileName = md5(uniqid());
-        $this->existingMedia->setPath($fileDir . $fileName);
+        $this->existingMedia->setPath('/' . $fileDir . $fileName);
         $this->existingMedia->setFileName($this->uploadedFile->getClientOriginalName());
         $this->existingMedia->setFileWeight($this->uploadedFile->getSize() / 1000);
         $this->existingMedia->setDateAdd(new \DateTime('now'));
@@ -136,7 +136,7 @@ class MediaUtility
         $this->em->persist($this->existingMedia);
         $this->em->flush();
 
-        return $this->moveFile($fileDir, $fileName);
+        return $this->moveFile($fileDir, $fileName, true);
     }
 
     /**
@@ -150,7 +150,7 @@ class MediaUtility
             $this->getUploadedFileExtension();
         }
 
-        $var =  get_class($this->newFileExtension);
+        $var = get_class($this->newFileExtension);
         if ($this->existingMedia->getExtension() instanceof $var) {
             if ($this->existingMedia instanceof MediaImage) {
                 $this->setImageSize();
@@ -166,8 +166,8 @@ class MediaUtility
             $pathSplited = explode('/', $this->existingMedia->getPath());
             $fileName = array_pop($pathSplited);
             $fileDir = implode('/', $pathSplited);
-            return $this->moveFile($fileDir, $fileName);
 
+            return $this->moveFile($fileDir, $fileName);
         } else {
             return null;
         }
@@ -190,17 +190,20 @@ class MediaUtility
      *
      * @param $fileDir
      * @param $fileName
+     * @param $deleteOnFail
      *
      * @return Media|null
      */
-    private function moveFile($fileDir, $fileName)
+    private function moveFile($fileDir, $fileName, $deleteOnFail = false)
     {
         try {
             $this->uploadedFile->move($fileDir, $fileName);
         } catch (FileException $e) {
             $this->logger->error(sprintf('[ERROR] %s : %s', __FUNCTION__, $e->getMessage()));
-            $this->em->remove($this->existingMedia);
-            $this->em->flush();
+            if ($deleteOnFail) {
+                $this->em->remove($this->existingMedia);
+                $this->em->flush();
+            }
 
             return null;
         }

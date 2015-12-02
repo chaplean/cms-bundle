@@ -71,14 +71,23 @@
                                         <input class="form-control" type="text" ng-model="selectedMedia.alternativeTitle" />
                                     </div>
                                 </span>
-                                <button id="insert" type="submit" class="btn btn-primary" type="button" ng-click="quitInsertMedia()">{{ 'media_manager.insert' | trans }}</button>
+
+                                <span ng-if="selectedMedia.category == 'pdf'">
+                                    <div class="form-group">
+                                        <label>{{ 'media_manager.edit.title.label' | trans }}</label>
+                                        <input class="form-control" type="text" ng-model="selectedMedia.title" />
+                                    </div>
+                                </span>
+
+                                <button id="insert" type="submit" class="btn btn-primary" type="button" ng-click="quitInsertMedia()">{{ 'media_manager.insert.label' | trans }}</button>
                             </form>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-8 col-sm-pull-6 col-md-pull-4 media-list">
                         <div class="media-element col-xs-12 col-md-4 text-center" dir-paginate="media in mediasFiltered | orderBy:sortType | itemsPerPage: 9" ng-class="{active: media.id == selectedMedia.id}" ng-click="selectMedia(media)">
-                            <img src="" height="180" width="180" />
-
+                            <i class="fa fa-check fa-2x"></i>
+                            <img ng-src="{^ media.path ^}" ng-if="media.category == 'image'" height="180" width="180" />
+                            <img ng-src="{{ asset('bundles/chapleancms/images/pdf.png') }}" ng-if="media.category == 'pdf'" height="180" width="180" />
                             <p>{^ media.fileName ^}</p>
                         </div>
                         <dir-pagination-controls class="col-xs-12 text-center"></dir-pagination-controls>

@@ -1,6 +1,5 @@
 @import "../../../web/vendor/bootstrap-sass-official/assets/stylesheets/bootstrap-compass";
 @import "../../../web/vendor/bootstrap-sass-official/assets/stylesheets/bootstrap";
-
 @import "bootstrap-variables";
 @import "variables";
 
@@ -11,11 +10,13 @@
     -ms-border-radius: $radius;
     border-radius: $radius;
 }
+
 @mixin transition($transition) {
     -webkit-transition: $transition;
     -moz-transition: $transition;
     transition: $transition;
 }
+
 // Mixin - end
 .no-padding {
     &-left {
@@ -37,14 +38,14 @@
 }
 
 .text-success {
-    color: #3c763d;
+    color: #3C763D;
 }
 
-.st-sort-ascent:before{
+.st-sort-ascent:before {
     content: '\25B2\00a0';
 }
 
-.st-sort-descent:before{
+.st-sort-descent:before {
     content: '\25BC\00a0';
 }
 
@@ -53,7 +54,7 @@
 }
 
 body {
-    background-color: #eee;
+    background-color: #EEE;
 
     .sidebar {
         background-color: #333;
@@ -65,7 +66,7 @@ body {
             color: #D9D9D9;
 
             &:hover, &:focus {
-                color: #fff;
+                color: #FFF;
                 text-decoration: none;
             }
         }
@@ -119,7 +120,7 @@ body {
     }
 
     .navbar-default {
-        background-color: #fff;
+        background-color: #FFF;
 
         span {
             display: inline-block;
@@ -129,7 +130,7 @@ body {
         #training-request-header {
             padding-bottom: 15px;
 
-            &>div {
+            & > div {
                 margin-top: 15px;
             }
 
@@ -208,4 +209,23 @@ div.alert-fix-top {
 
 .default-logo {
     height: 130px;
+}
+
+#media-manager .media-element {
+    i.fa {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    &.active {
+        i.fa {
+            display: block;
+        }
+
+        img {
+            box-shadow: 0 0 10px #424242;
+        }
+    }
 }

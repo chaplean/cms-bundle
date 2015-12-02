@@ -72,6 +72,21 @@
     Translator.add("publication_status.status.published", "Publi\u00e9", "messages", "fr");
     Translator.add("publication_status.status.unpublished", "Non publi\u00e9", "messages", "fr");
     Translator.add("publication_status.status.published_unpublished", "Publi\u00e9s et non", "messages", "fr");
+    Translator.add("media_manager.title.label", "Gestionnaire de m\u00e9dias", "messages", "fr");
+    Translator.add("media_manager.upload.label", "Ajouter", "messages", "fr");
+    Translator.add("media_manager.search.label", "Chercher", "messages", "fr");
+    Translator.add("media_manager.sort.date.label", "Trier par date", "messages", "fr");
+    Translator.add("media_manager.sort.name.label", "Trier par nom", "messages", "fr");
+    Translator.add("media_manager.filter.type.label", "Tous les types de m\u00e9dia", "messages", "fr");
+    Translator.add("media_manager.filter.image.label", "Image", "messages", "fr");
+    Translator.add("media_manager.filter.pdf.label", "Pdf", "messages", "fr");
+    Translator.add("media_manager.details.label", "D\u00e9tails", "messages", "fr");
+    Translator.add("media_manager.edit.title.label", "Titre", "messages", "fr");
+    Translator.add("media_manager.edit.title_alt.label", "Titre alternatif", "messages", "fr");
+    Translator.add("media_manager.alert.delete", "Une erreur est survenue lors de la suppression du m\u00e9dia.", "messages", "fr");
+    Translator.add("media_manager.alert.save", "Une erreur est survenue lors de la modification du m\u00e9dia.", "messages", "fr");
+    Translator.add("media_manager.alert.upload", "Une erreur est survenue lors l'envoie du m\u00e9dia.", "messages", "fr");
+    Translator.add("media_manager.link.label", "Lien", "messages", "fr");
 })(Translator);
 
 /*! jQuery v2.1.4 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
@@ -13357,6 +13372,9 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
             $scope.selectMedia(newMedia);
             $scope.medias.push(newMedia);
             $scope.updateFilter();
+        },
+        onErrorItem: function(item, response) {
+            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
         }
     });
 
@@ -13364,6 +13382,9 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
         autoUpload: true,
         onSuccessItem: function(item, response) {
             angular.extend($scope.selectedMedia, response);
+        },
+        onErrorItem: function(item, response) {
+            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
         },
         onBeforeUploadItem: function(item) {
             item.url = 'http://localhost:8000/app_test.php/rest/media/' + $scope.selectedMedia.id + '/edits';
