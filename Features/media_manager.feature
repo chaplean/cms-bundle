@@ -4,6 +4,7 @@ Feature: Media Manager
     Given I load default datafixture with "Chaplean\Bundle\CmsBundle\"
     Given I am on "/administration/page/1"
     When I wait Ajax
+    When I click on ".ta-editor"
     When I click on ".open-media-manager"
 
   Scenario: I can add a media
@@ -15,7 +16,7 @@ Feature: Media Manager
   Scenario: I can select a file and include it
     When I click on ".media-element"
     Then I should see a visible ".media-element.active" element
-    Then I should see 9 visibles ".media-element" elements
+    Then I should see 12 visibles ".media-element" elements
     Then I should see a visible ".pagination" element
     Then I should see a visible ".media-element.active" element
     Then I should see "png_7" in the ".media-details" element
@@ -39,13 +40,13 @@ Feature: Media Manager
 
   Scenario: I can filter by image
     When I select "image" from "media-type"
-    Then I should see 9 visibles ".media-element" elements
+    Then I should see 12 visibles ".media-element" elements
     Then I should not see a visible ".pagination" element
     Then I should see "png_1"
 
   Scenario: I can filter by pdf
     When I select "pdf" from "media-type"
-    Then I should see 9 visibles ".media-element" elements
+    Then I should see 12 visibles ".media-element" elements
     Then I should not see a visible ".pagination" element
     Then I should see "pdf_1"
 

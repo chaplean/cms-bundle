@@ -13345,6 +13345,7 @@ cms.config(function($provide){
     $provide.decorator('taOptions', function(taRegisterTool, $delegate, TranslationService, $uibModal){
         taRegisterTool('mediaManager', {
             buttontext: TranslationService.trans('media_manager.open.label'),
+            iconclass: 'fa fa-file-image-o open-media-manager',
             action: function(){
 
                 var that = this;
