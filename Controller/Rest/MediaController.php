@@ -3,6 +3,10 @@
 namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
 use Chaplean\Bundle\CmsBundle\Entity\Media;
+use Chaplean\Bundle\CmsBundle\Entity\MediaImage;
+use Chaplean\Bundle\CmsBundle\Entity\MediaPdf;
+use Chaplean\Bundle\CmsBundle\Form\Type\MediaImageType;
+use Chaplean\Bundle\CmsBundle\Form\Type\MediaPdfType;
 use Chaplean\Bundle\CmsBundle\Utility\MediaUtility;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -26,9 +30,14 @@ class MediaController extends FOSRestController
 {
     public function getAllAction()
     {
-        $medias = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Media')->findAll();
+        $medias = $this->getDoctrine()
+                       ->getRepository('ChapleanCmsBundle:Media')
+                       ->findAll();
         $response = $this->view($medias);
-        $response->setSerializationContext(SerializationContext::create()->setGroups(array('media_all')));
+        $response->setSerializationContext(
+            SerializationContext::create()
+                                ->setGroups(array('media_all'))
+        );
         if ($medias) {
             return $this->handleView($response);
         } else {
@@ -38,11 +47,11 @@ class MediaController extends FOSRestController
 
     public function postAction(Request $request)
     {
-        if (!empty($request->files)) {
-            $files = $request->files;
+        $files = $request->files;
+        /** @var UploadedFile $uploadedMedia */
+        $uploadedMedia = $files->get('file');
 
-            /** @var UploadedFile $uploadedMedia */
-            $uploadedMedia = $files->get('file');
+        if (!empty($uploadedMedia)) {
 
             if (!$uploadedMedia->isValid()) {
                 return $this->handleView(new View('Invalid filename', 400));
@@ -58,7 +67,11 @@ class MediaController extends FOSRestController
             }
 
             $response = $this->view($media);
-            $response->setSerializationContext(SerializationContext::create()->setGroups(array('media_all')));
+            $response->setSerializationContext(
+                SerializationContext::create()
+                                    ->setGroups(array('media_all'))
+            );
+
             return $this->handleView($response);
         } else {
             return $this->handleView(new View('Nothing to upload', 400));
@@ -67,7 +80,6 @@ class MediaController extends FOSRestController
 
     public function putAction(Request $request, Media $mediaId)
     {
-
     }
 
     public function deleteAction(Media $media)
@@ -96,12 +108,11 @@ class MediaController extends FOSRestController
     public function postEditAction(Request $request, Media $media)
     {
         if ($media) {
-            if (!empty($request->files)) {
-                $files = $request->files;
+            $files = $request->files;
+            /** @var UploadedFile $uploadedMedia */
+            $uploadedMedia = $files->get('file');
 
-                /** @var UploadedFile $uploadedMedia */
-                $uploadedMedia = $files->get('file');
-
+            if (!empty($uploadedMedia)) {
                 if (!$uploadedMedia->isValid()) {
                     return $this->handleView(new View('Invalid filename', 400));
                 }
@@ -116,8 +127,26 @@ class MediaController extends FOSRestController
                 }
             }
 
+            if ($media instanceof MediaImage) {
+                $form = $this->createForm(new MediaImageType(), $media);
+            } elseif ($media instanceof MediaPdf) {
+                $form = $this->createForm(new MediaPdfType(), $media);
+            }
+
+            if ($form) {
+                $form->submit($request->request->all());
+                if ($form->isValid()) {
+                    $this->getDoctrine()->getManager()->persist($media);
+                    $this->getDoctrine()->getManager()->flush();
+                }
+            }
+
             $response = $this->view($media);
-            $response->setSerializationContext(SerializationContext::create()->setGroups(array('media_all')));
+            $response->setSerializationContext(
+                SerializationContext::create()
+                                    ->setGroups(array('media_all'))
+            );
+
             return $this->handleView($response);
         } else {
             return $this->handleView(new View('media not found', 404));

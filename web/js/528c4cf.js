@@ -13248,6 +13248,7 @@ var cms = angular.module('Cms');
 cms.factory('Media', function($resource) {
 
     return $resource(Routing.generate('cms_rest') + 'media/:id', {id: '@id'}, {
+        save: {method: 'post', url: Routing.generate('cms_rest') + 'media/:id/edits'},
         getAll: {method: 'get', url: Routing.generate('cms_rest') + 'media/all', isArray: true}
     });
 
@@ -13341,33 +13342,31 @@ cms.factory('Validator', function() {
 
 var cms = angular.module('Cms');
 
-cms.config(function($provide){
-    $provide.decorator('taOptions', function(taRegisterTool, $delegate, TranslationService, $uibModal){
+cms.config(function ($provide) {
+    $provide.decorator('taOptions', function (taRegisterTool, $delegate, TranslationService, $uibModal) {
         taRegisterTool('mediaManager', {
             buttontext: TranslationService.trans('media_manager.open.label'),
-            iconclass: 'fa fa-file-image-o open-media-manager',
-            action: function(){
+            iconclass:  'fa fa-file-image-o open-media-manager',
+            action:     function () {
 
                 var that = this;
 
                 var modalInstance = $uibModal.open({
-                    animation: true,
+                    animation:   true,
                     templateUrl: 'media-manager-modal.html',
-                    controller: 'MediaManager',
-                    size: 'lg'
+                    controller:  'MediaManager',
+                    size:        'lg'
                 });
-                modalInstance.result.then(
-                    function(media) {
-                        var text = '';
-                        if (media.category == 'image') {
-                            text = '<img src="' + media.path + '" title="' + media.title + '" alt="' + media.alternativeTitle + '"/>';
-                        } else {
-                            text = '<a href="' + media.path + '">' + media.title + '</a>';
-                        }
-
-                        that.$editor().wrapSelection('insertHtml', text, true);
+                modalInstance.result.then(function (media) {
+                    var text = '';
+                    if (media.category == 'image') {
+                        text = '<img src="' + media.path + '" title="' + media.title + '" alt="' + media.alternativeTitle + '"/>';
+                    } else {
+                        text = '<a href="' + media.path + '">' + media.title + '</a>';
                     }
-                );
+
+                    that.$editor().wrapSelection('insertHtml', text, true);
+                });
             }
         });
 
@@ -13376,24 +13375,22 @@ cms.config(function($provide){
     });
 });
 
-cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService, FileUploader, FileItem) {
+cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService, FileUploader, FileItem) {
 
-    $scope.updateFilter = function() {
+    $scope.updateFilter = function () {
         $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
     };
 
-    $scope.medias = Media.getAll().$promise.then(
-        function(data) {
-            $scope.medias = data;
-            $scope.medias.forEach(function(media) {
-                $scope.mediaInit(media);
-            });
-            $scope.updateFilter();
-        }, function() {
-            $scope.medias = [];
-            $scope.updateFilter();
-        }
-    );
+    $scope.medias = Media.getAll().$promise.then(function (data) {
+        $scope.medias = data;
+        $scope.medias.forEach(function (media) {
+            $scope.mediaInit(media);
+        });
+        $scope.updateFilter();
+    }, function () {
+        $scope.medias = [];
+        $scope.updateFilter();
+    });
 
     $scope.nameFilter = null;
     $scope.sortType = 'dateUpdate';
@@ -13407,43 +13404,43 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
     $scope.detailsForm = {};
 
     $scope.newUploader = new FileUploader({
-        url: 'http://localhost:8000/app_test.php/rest/media',
-        autoUpload: true,
-        onSuccessItem: function(item, newMedia) {
+        url:           'http://localhost:8000/app_test.php/rest/media',
+        autoUpload:    true,
+        onSuccessItem: function (item, newMedia) {
             $scope.mediaInit(newMedia);
             $scope.selectMedia(newMedia);
             $scope.medias.push(newMedia);
             $scope.updateFilter();
         },
-        onErrorItem: function() {
+        onErrorItem:   function () {
             AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
         }
     });
 
     $scope.editUploader = new FileUploader({
-        autoUpload: true,
-        onSuccessItem: function(item, updatedMedia) {
+        autoUpload:         true,
+        onSuccessItem:      function (item, updatedMedia) {
             $scope.mediaInit(updatedMedia);
             updatedMedia.decachedPath = updatedMedia.path + '?' + new Date().getTime();
             angular.extend($scope.selectedMedia, updatedMedia);
         },
-        onErrorItem: function() {
+        onErrorItem:        function () {
             AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
         },
-        onBeforeUploadItem: function(item) {
+        onBeforeUploadItem: function (item) {
             item.url = 'http://localhost:8000/app_test.php/rest/media/' + $scope.selectedMedia.id + '/edits';
         }
     });
 
-    $scope.quitInsertMedia = function() {
+    $scope.quitInsertMedia = function () {
         $uibModalInstance.close($scope.selectedMedia);
     };
 
-    $scope.quitWithoutMedia = function() {
+    $scope.quitWithoutMedia = function () {
         $uibModalInstance.dismiss();
     };
 
-    $scope.mediaFilter = function(value, index, array) {
+    $scope.mediaFilter = function (value, index, array) {
         if ($scope.nameFilter) {
             if (value.fileName.toLowerCase().indexOf($scope.nameFilter.toLowerCase()) == -1) {
                 return false;
@@ -13459,39 +13456,50 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
         return true;
     };
 
-    $scope.selectMedia = function(media) {
+    $scope.selectMedia = function (media) {
         $scope.selectedMedia = media;
     };
 
-    $scope.insertCurrentMedia = function() {
-        Media.save($scope.selectedMedia, $scope.selectedMedia);
+    $scope.insertCurrentMedia = function () {
+        if ($scope.selectedMedia.category == 'image') {
+            var data = {
+                title:            $scope.selectedMedia.title,
+                alternativeTitle: $scope.selectedMedia.alternativeTitle
+            };
+        } else if ($scope.selectedMedia.category == 'pdf') {
+            var data = {
+                title: $scope.selectedMedia.title,
+            };
+        }
+
+        if (typeof data != 'undefined') {
+            Media.save({id: $scope.selectedMedia.id}, data);
+        }
         $scope.quitInsertMedia();
     };
 
-    $scope.deleteCurrentMedia = function() {
-        Media.delete($scope.selectedMedia, {},
-            function () {
-                var position = $scope.medias.indexOf($scope.selectedMedia);
-                $scope.medias.splice(position, 1);
-                $scope.selectedMedia = null;
-                $scope.updateFilter();
-            }, function() {
-                AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'));
-            }
-        );
+    $scope.deleteCurrentMedia = function () {
+        Media.delete({id: $scope.selectedMedia.id}, {}, function () {
+            var position = $scope.medias.indexOf($scope.selectedMedia);
+            $scope.medias.splice(position, 1);
+            $scope.selectedMedia = null;
+            $scope.updateFilter();
+        }, function () {
+            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'));
+        });
     };
 
-    $scope.uploadNewFile = function() {
+    $scope.uploadNewFile = function () {
         console.log('new');
         console.log($scope.newMediaFile);
     };
 
-    $scope.uploadEditFile = function() {
+    $scope.uploadEditFile = function () {
         console.log('edit');
         console.log($scope.editMediaFile);
     };
 
-    $scope.mediaInit = function(media) {
+    $scope.mediaInit = function (media) {
         media.decachedPath = media.path;
         if (typeof media.dateUpdate == 'undefined' || media.dateUpdate == null) {
             media.dateUpdate = media.dateAdd;

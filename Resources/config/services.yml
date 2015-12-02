@@ -20,10 +20,19 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
-
     chaplean_cms.form.post_type:
         class: Chaplean\Bundle\CmsBundle\Form\Type\PostType
         arguments: [%chaplean_cms.post%]
         tags:
             - { name: form.type, alias: 'chaplean_cms_post_form' }
+
+    chaplean_cms.form.media_image_type:
+        class: Chaplean\Bundle\CmsBundle\Form\Type\MediaImageType
+        tags:
+            - { name: form.type, alias: 'chaplean_cms_media_image_form' }
+
+    chaplean_cms.form.media_pdf_type:
+        class: Chaplean\Bundle\CmsBundle\Form\Type\MediaPdfType
+        tags:
+            - { name: form.type, alias: 'chaplean_cms_media_pdf_form' }
 
