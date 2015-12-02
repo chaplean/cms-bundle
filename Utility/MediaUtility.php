@@ -116,6 +116,7 @@ class MediaUtility
         } else {
             if ($this->newFileExtension instanceof FileExtensionPdf) {
                 $this->existingMedia = new MediaPdf();
+                $this->existingMedia->setTitle('');
             }
         }
 
@@ -179,8 +180,9 @@ class MediaUtility
      */
     private function setImageSize()
     {
-        $this->existingMedia->setWidth();
-        $this->existingMedia->setHeight();
+        list($width, $height) = getimagesize($this->uploadedFile->getPathname());
+        $this->existingMedia->setWidth($width);
+        $this->existingMedia->setHeight($height);
     }
 
     /**
