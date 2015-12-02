@@ -126,6 +126,8 @@ media_manager:
             label: Titre
         title_alt:
             label: Titre alternatif
+        link_name:
+            label: Texte du lien
     alert:
         delete: Une erreur est survenue lors de la suppression du média.
         save: Une erreur est survenue lors de la modification du média.
@@ -134,3 +136,5 @@ media_manager:
         label: Lien
     insert:
         label: Insérer
+    open:
+        label: Ajouter un média

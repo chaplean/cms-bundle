@@ -73,12 +73,14 @@ class MediaController extends FOSRestController
     public function deleteAction(Media $media)
     {
         if ($media) {
-            if (!unlink($media->getPath())) {
+            $mediaUtility = $this->get('chaplean_cms.media_utility');
+            $mediaUtility->setMedia($media);
+
+            if ($mediaUtility->deleteMedia()) {
+                return $this->handleView(new View());
+            } else {
                 return $this->handleView(new View('Unable to delete related file on disk', 500));
             }
-            $this->getDoctrine()->getManager()->remove($media);
-            $this->getDoctrine()->getManager()->flush();
-            return $this->handleView(new View());
         } else {
             return $this->handleView(new View('media not found', 404));
         }

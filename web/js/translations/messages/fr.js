@@ -77,4 +77,6 @@
     Translator.add("media_manager.alert.save", "Une erreur est survenue lors de la modification du m\u00e9dia.", "messages", "fr");
     Translator.add("media_manager.alert.upload", "Une erreur est survenue lors l'envoie du m\u00e9dia.", "messages", "fr");
     Translator.add("media_manager.link.label", "Lien", "messages", "fr");
+    Translator.add("media_manager.insert.label", "Ins\u00e9rer", "messages", "fr");
+    Translator.add("media_manager.open.label", "Ajouter un m\u00e9dia", "messages", "fr");
 })(Translator);

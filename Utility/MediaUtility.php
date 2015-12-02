@@ -44,10 +44,11 @@ class MediaUtility
      * @param Registry $doctrine
      * @param Logger   $logger
      */
-    public function __construct(Registry $doctrine, Logger $logger)
+    public function __construct(Registry $doctrine, Logger $logger, $rootDir)
     {
         $this->em = $doctrine->getManager();
         $this->logger = $logger;
+        $this->publicDir = $rootDir . '/../web';
     }
 
     /**
@@ -124,9 +125,9 @@ class MediaUtility
             return null;
         }
 
-        $fileDir = 'medias/';
+        $fileDir = '/medias/';
         $fileName = md5(uniqid());
-        $this->existingMedia->setPath('/' . $fileDir . $fileName);
+        $this->existingMedia->setPath($fileDir . $fileName);
         $this->existingMedia->setFileName($this->uploadedFile->getClientOriginalName());
         $this->existingMedia->setFileWeight($this->uploadedFile->getSize() / 1000);
         $this->existingMedia->setDateAdd(new \DateTime('now'));
@@ -173,6 +174,17 @@ class MediaUtility
         }
     }
 
+    public function deleteMedia()
+    {
+        if (!unlink($this->publicDir . $this->existingMedia->getPath())) {
+            return false;
+        }
+        $this->em->remove($this->existingMedia);
+        $this->em->flush();
+
+        return true;
+    }
+
     /**
      * Determine the dimension of an image
      *
@@ -197,7 +209,7 @@ class MediaUtility
     private function moveFile($fileDir, $fileName, $deleteOnFail = false)
     {
         try {
-            $this->uploadedFile->move($fileDir, $fileName);
+            $this->uploadedFile->move($this->publicDir . $fileDir, $fileName);
         } catch (FileException $e) {
             $this->logger->error(sprintf('[ERROR] %s : %s', __FUNCTION__, $e->getMessage()));
             if ($deleteOnFail) {

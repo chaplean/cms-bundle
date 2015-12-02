@@ -1,7 +1,7 @@
 services:
     chaplean_cms.media_utility:
         class: Chaplean\Bundle\CmsBundle\Utility\MediaUtility
-        arguments: [@doctrine, @logger]
+        arguments: [@doctrine, @logger, %kernel.root_dir%]
 
     form.type.textangular:
         class: Chaplean\Bundle\CmsBundle\Form\Type\TextAngularType

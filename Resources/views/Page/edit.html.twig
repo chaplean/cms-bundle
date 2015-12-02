@@ -1,7 +1,7 @@
 {% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
 
 {% block cms %}
-    {% include 'ChapleanCmsBundle:Angular:media-manager-directive.html.twig' %}
+    {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
 
     {% if pageId is not empty %}
         <input type="hidden" ng-init="pageId = {{ pageId }}" ng-model="pageId" />
@@ -120,7 +120,6 @@
             {# Content #}
             <div class="form-group col-xs-12 no-padding-lr">
                 <label id="content" for="{{ form.page.content.vars.id }}">{{ 'global.content'|trans }}</label>
-                <media-manager callback="onDismissMediaManager"></media-manager>
                 <div class="col-md-12 no-padding-lr">
                     {% form_theme form.page 'ChapleanCmsBundle:Form:form_type.html.twig' %}
                     {{ form_widget(form.page.content , {'attr': {'ng-model': 'pageRoute.page.content', 'class': 'form-control'}}) }}
