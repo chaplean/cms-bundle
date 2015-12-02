@@ -48,10 +48,10 @@
                             <h4>
                                 {{ 'media_manager.details.label' | trans }}
                                 <span class="pull-right">
-                                <input type="file" id="uploadEdit" class="hidden" ng-model="editMediaFile" ng-change="uploadEditFile()" />
-                                <label for="uploadNew"><span class="glyphicon glyphicon-edit"></span></label>
-                                <span id="delete" ng-click="deleteCurrentMedia()"><span class="glyphicon glyphicon-trash"></span></span>
-                            </span>
+                                    <input type="file" id="uploadEdit" class="hidden" nv-file-select uploader="editUploader"/>
+                                    <label for="uploadEdit"><span class="glyphicon glyphicon-edit"></span></label>
+                                    <span id="delete" ng-click="deleteCurrentMedia()"><span class="glyphicon glyphicon-trash"></span></span>
+                                </span>
                             </h4>
 
                             <form role="form" ng-submit="insertCurrentMedia()">
@@ -59,7 +59,7 @@
                                 <div>{^ selectedMedia.dateUpdate | date ^}</div>
                                 <div>{^ selectedMedia.fileWeight ^} Ko</div>
                                 <div>{^ selectedMedia.width ^} x {^ selectedMedia.height ^} Px</div>
-                                <div><a href="{^ selectedMedia.path ^}">{^ selectedMedia.path ^}</a></div>
+                                <div><a href="{^ selectedMedia.path ^}">{{ 'media_manager.link.label' | trans }}</a></div>
 
                                 <span ng-if="selectedMedia.category == 'image'">
                                     <div class="form-group">

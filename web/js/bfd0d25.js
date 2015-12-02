@@ -13235,7 +13235,7 @@ cms.factory('Validator', function() {
 
 var cms = angular.module('Cms');
 
-cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService, FileUploader) {
+cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService, FileUploader, FileItem) {
 
     $scope.updateFilter = function() {
         $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
@@ -13261,11 +13261,24 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
     $scope.editMediaFile = null;
 
     $scope.newUploader = new FileUploader({
-        url: '/rest/media/news',
-        autoUpload: true
+        url: 'http://localhost:8000/app_test.php/rest/media',
+        autoUpload: true,
+        onSuccessItem: function(item, response) {
+            var newMedia = response;
+            $scope.selectMedia(newMedia);
+            $scope.medias.push(newMedia);
+            $scope.updateFilter();
+        }
     });
 
     $scope.editUploader = new FileUploader({
+        autoUpload: true,
+        onSuccessItem: function(item, response) {
+            angular.extend($scope.selectedMedia, response);
+        },
+        onBeforeUploadItem: function(item) {
+            item.url = 'http://localhost:8000/app_test.php/rest/media/' + $scope.selectedMedia.id + '/edits';
+        }
     });
 
     $scope.quitInsertMedia = function() {
@@ -13297,7 +13310,7 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
     };
 
     $scope.insertCurrentMedia = function() {
-        $scope.selectedMedia.$save({},
+        $scope.save($scope.selectedMedia, {},
             function() {
                 $scope.quitInsertMedia();
             }, function() {
@@ -13307,7 +13320,7 @@ cms.controller('MediaManager', function($scope, $uibModalInstance, filterFilter,
     };
 
     $scope.deleteCurrentMedia = function() {
-        $scope.selectedMedia.$delete({},
+        Media.delete($scope.selectedMedia, {},
             function () {
                 var position = $scope.medias.indexOf($scope.selectedMedia);
                 $scope.medias.splice(position, 1);

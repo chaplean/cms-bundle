@@ -3,11 +3,14 @@
 namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
 use Chaplean\Bundle\CmsBundle\Entity\Media;
+use Chaplean\Bundle\CmsBundle\Utility\MediaUtility;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class MediaController.
@@ -35,7 +38,31 @@ class MediaController extends FOSRestController
 
     public function postAction(Request $request)
     {
+        if (!empty($request->files)) {
+            $files = $request->files;
 
+            /** @var UploadedFile $uploadedMedia */
+            $uploadedMedia = $files->get('file');
+
+            if (!$uploadedMedia->isValid()) {
+                return $this->handleView(new View('Invalid filename', 400));
+            }
+
+            /** @var MediaUtility $mediaUtility */
+            $mediaUtility = $this->get('chaplean_cms.media_utility');
+            $mediaUtility->setFile($uploadedMedia);
+            $media = $mediaUtility->createMedia();
+
+            if (!$media) {
+                return $this->handleView(new View('Failed to upload media', 500));
+            }
+
+            $response = $this->view($media);
+            $response->setSerializationContext(SerializationContext::create()->setGroups(array('media_all')));
+            return $this->handleView($response);
+        } else {
+            return $this->handleView(new View('Nothing to upload', 400));
+        }
     }
 
     public function putAction(Request $request, Media $mediaId)
@@ -46,11 +73,48 @@ class MediaController extends FOSRestController
     public function deleteAction(Media $media)
     {
         if ($media) {
+            if (!unlink($media->getPath())) {
+                return $this->handleView(new View('Unable to delete related file on disk', 500));
+            }
             $this->getDoctrine()->getManager()->remove($media);
             $this->getDoctrine()->getManager()->flush();
             return $this->handleView(new View());
         } else {
-            return $this->handleView(new View('nothing to return', 404));
+            return $this->handleView(new View('media not found', 404));
+        }
+    }
+
+    /**
+     * Upload a logo for a structure
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function postEditAction(Request $request, Media $media)
+    {
+        if ($media) {
+            if (!empty($request->files)) {
+                $files = $request->files;
+
+                /** @var UploadedFile $uploadedMedia */
+                $uploadedMedia = $files->get('file');
+
+                if (!$uploadedMedia->isValid()) {
+                    return $this->handleView(new View('Invalid filename', 400));
+                }
+                /** @var MediaUtility $mediaUtility */
+                $mediaUtility = $this->get('chaplean_cms.media_utility');
+                $mediaUtility->setFile($uploadedMedia);
+                $mediaUtility->setMedia($media);
+                $media = $mediaUtility->updateMedia();
+            }
+
+            $response = $this->view($media);
+            $response->setSerializationContext(SerializationContext::create()->setGroups(array('media_all')));
+            return $this->handleView($response);
+        } else {
+            return $this->handleView(new View('media not found', 404));
         }
     }
 }

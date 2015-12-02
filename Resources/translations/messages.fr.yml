@@ -129,3 +129,5 @@ media_manager:
     alert:
         delete: Une erreur est survenue lors de la suppression du média.
         save: Une erreur est survenue lors de la modification du média.
+    link:
+        label: Lien
