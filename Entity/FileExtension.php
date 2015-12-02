@@ -29,7 +29,7 @@ abstract class FileExtension
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @JMS\Groups({"file_extension_id"})
+     * @JMS\Groups({"file_extension_id", "file_extension_all", "media_all"})
      */
     protected $id;
 
@@ -38,7 +38,7 @@ abstract class FileExtension
      *
      * @ORM\Column(type="string", unique=true, length=10, nullable=false, name="extension")
      *
-     * @JMS\Groups({"file_extension_extension"})
+     * @JMS\Groups({"file_extension_extension", "file_extension_all", "media_all"})
      */
     protected $extension;
 
@@ -47,7 +47,7 @@ abstract class FileExtension
      *
      * @ORM\Column(type="string", length=50, nullable=false, name="mime_type")
      *
-     * @JMS\Groups({"file_extension_mime_type"})
+     * @JMS\Groups({"file_extension_mime_type", "file_extension_all", "media_all"})
      */
     protected $mimeType;
 

@@ -102,3 +102,42 @@ publication_status:
         published: Publié
         unpublished: Non publié
         published_unpublished: Publiés et non
+
+media_manager:
+    title:
+        label: Gestionnaire de médias
+    upload:
+        label: Ajouter
+    search:
+        label: Chercher
+    sort:
+        date:
+            label: Trier par date
+        name:
+            label: Trier par nom
+    filter:
+        type:
+            label: Tous les types de média
+        image:
+            label: Image
+        pdf:
+            label: Pdf
+    details:
+        label: Détails
+    edit:
+        title:
+            label: Titre
+        title_alt:
+            label: Titre alternatif
+        link_name:
+            label: Texte du lien
+    alert:
+        delete: Une erreur est survenue lors de la suppression du média.
+        save: Une erreur est survenue lors de la modification du média.
+        upload: Une erreur est survenue lors l'envoie du média.
+    link:
+        label: Lien
+    insert:
+        label: Insérer
+    open:
+        label: Ajouter un média

@@ -33,7 +33,7 @@ twig:
 
 # Assetic Configuration
 assetic:
-    debug:          true
+    debug:          "%use_assetic_debug%"
     use_controller: "%use_assetic_controller%"
     bundles:        ['ChapleanCmsBundle']
     ruby: %ruby.bin%
@@ -145,3 +145,4 @@ chaplean_cms:
     front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
     post: true
     page: true
+    media: true

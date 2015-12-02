@@ -122,5 +122,9 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         return pageRouteTmp;
     };
 
+    $scope.onDismissMediaManager = function() {
+
+    };
+
     $scope.loadData();
 });

@@ -25,28 +25,45 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('front_layout')->isRequired()->end()
+                ->booleanNode('page')->isRequired()->end()
+                ->variableNode('media')
+                    ->isRequired()
+                    ->validate()
+                        ->always(function($v) use ($rootNode) {
+                            if (is_bool($v)) {
+                                return $v;
+                            } else if (is_array($v)) {
+                                foreach ($v as $item) {
+                                    if (!is_string($item)) {
+                                        throw new InvalidTypeException(sprintf('Invalid configuration for media, \'%s\' is not a string', $item));
+                                    }
+                                }
+                                return $v;
+                            } else {
+                                throw new InvalidTypeException(sprintf('Invalid configuration for media, \'%s\' is not a boolean nor an array of strings', $v));
+                            }
+                        })->end()
+                    ->end()
                 ->variableNode('post')
                     ->isRequired()
                     ->validate()
-                    ->always(function($v) use ($rootNode) {
-                        if (is_bool($v)) {
-                            return $v;
-                        } elseif (is_array($v)) {
-                            $availableType = array_values(PostUtility::getAvailableInstance());
-                            foreach ($v as $item) {
-                                if (!in_array($item, $availableType)) {
-                                    throw new InvalidTypeException(sprintf('Invalid configuration for post, \'%s\' is undefined type', $item));
+                        ->always(function($v) use ($rootNode) {
+                            if (is_bool($v)) {
+                                return $v;
+                            } elseif (is_array($v)) {
+                                $availableType = array_values(PostUtility::getAvailableInstance());
+                                foreach ($v as $item) {
+                                    if (!in_array($item, $availableType)) {
+                                        throw new InvalidTypeException(sprintf('Invalid configuration for post, \'%s\' is undefined type', $item));
+                                    }
                                 }
-                            }
 
-                            return $v;
-                        } else {
-                            throw new InvalidTypeException();
-                        }
-                    })
+                                return $v;
+                            } else {
+                                throw new InvalidTypeException();
+                            }
+                        })->end()
                     ->end()
-                ->end()
-                ->booleanNode('page')->isRequired()->end()
             ->end();
 
         // Here you should define the parameters that are allowed to

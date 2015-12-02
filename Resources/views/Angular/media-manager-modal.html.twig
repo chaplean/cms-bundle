@@ -1,0 +1,99 @@
+<script type="text/ng-template" id="media-manager-modal.html">
+    <div id="media-manager">
+        <div class="modal-header">
+            <h3 class="modal-title">{{ 'media_manager.title.label' | trans }}
+                <span class="pull-right"></span>
+                <button id="quit" type="button" class="close" ng-click="quitWithoutMedia()"><span class="glyphicon glyphicon-remove"></span></button>
+            </h3>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <input type="file" id="uploadNew" class="hidden" nv-file-select uploader="newUploader"/>
+                        <label class="btn btn-default" for="uploadNew"><span class="glyphicon glyphicon-cloud-upload"></span> {{ 'media_manager.upload.label' | trans }}
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-md-6 text-right">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input class="form-control" type="text" placeholder="{{ 'media_manager.search.label' | trans }}" ng-model="nameFilter" ng-change="updateFilter()" name="media-search" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <select class="form-control" ng-model="sortType" ng-change="updateFilter()" name="media-sort">
+                                        <option value="dateUpdate">{{ 'media_manager.sort.date.label' | trans }}</option>
+                                        <option value="fileName">{{ 'media_manager.sort.name.label' | trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-6">
+                                    <select class="form-control col-xs-6" ng-model="categoryFilter" ng-change="updateFilter()" name="media-type">
+                                        <option value="">{{ 'media_manager.filter.type.label' | trans }}</option>
+                                        <option value="image">{{ 'media_manager.filter.image.label' | trans }}</option>
+                                        <option value="pdf">{{ 'media_manager.filter.pdf.label' | trans }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-sm-push-6 col-md-push-8 media-details">
+                        <div ng-show="selectedMedia">
+                            <h4>
+                                {{ 'media_manager.details.label' | trans }}
+                                <span class="pull-right">
+                                    <input type="file" id="uploadEdit" class="hidden" nv-file-select uploader="editUploader"/>
+                                    <label for="uploadEdit"><span class="glyphicon glyphicon-edit"></span></label>
+                                    <span id="delete" ng-click="deleteCurrentMedia()"><span class="glyphicon glyphicon-trash"></span></span>
+                                </span>
+                            </h4>
+
+                            <form role="form" ng-submit="insertCurrentMedia()">
+                                <div>{^ selectedMedia.fileName ^}</div>
+                                <div>{^ selectedMedia.dateUpdate | date ^}</div>
+                                <div>{^ selectedMedia.fileWeight ^} Ko</div>
+                                <div ng-if="selectedMedia.category == 'image'">{^ selectedMedia.width ^} x {^ selectedMedia.height ^} Px</div>
+                                <div><a href="{^ selectedMedia.path ^}">{{ 'media_manager.link.label' | trans }}</a></div>
+
+                                <span ng-if="selectedMedia.category == 'image'">
+                                    <div class="form-group">
+                                        <label>{{ 'media_manager.edit.title.label' | trans }}</label>
+                                        <input class="form-control" type="text" ng-model="selectedMedia.title" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'media_manager.edit.title_alt.label' | trans }}</label>
+                                        <input class="form-control" type="text" ng-model="selectedMedia.alternativeTitle" />
+                                    </div>
+                                </span>
+
+                                <span ng-if="selectedMedia.category == 'pdf'">
+                                    <div class="form-group">
+                                        <label>{{ 'media_manager.edit.link_name.label' | trans }}</label>
+                                        <input class="form-control" type="text" ng-model="selectedMedia.title" />
+                                    </div>
+                                </span>
+
+                                <button id="insert" type="submit" class="btn btn-primary" type="button" ng-click="quitInsertMedia()">{{ 'media_manager.insert.label' | trans }}</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-sm-pull-6 col-md-pull-4 media-list">
+                        <div class="media-element col-xs-12 col-md-3 text-center" dir-paginate="media in mediasFiltered | orderBy:sortType | itemsPerPage: 12" ng-class="{active: media.id == selectedMedia.id}" ng-click="selectMedia(media)">
+                            <i class="fa fa-check fa-2x"></i>
+                            <img ng-src="{^ media.decachedPath ^}" ng-if="media.category == 'image'" height="130" width="130" />
+                            <img ng-src="{{ asset('bundles/chapleancms/images/pdf.png') }}" ng-if="media.category == 'pdf'" height="130" width="130" />
+                            <p>{^ media.fileName ^}</p>
+                        </div>
+                        <dir-pagination-controls class="col-xs-12 text-center"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

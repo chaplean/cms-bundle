@@ -3,7 +3,7 @@
 var cms = angular.module('Cms', [
     'ngAnimate', 'ngResource', 'ngSanitize', 'ngBootbox', 'ui.bootstrap',
     'ui.mask', 'boxuk.translation', 'textAngular', 'smart-table',
-    'angularUtils.directives.dirPagination', 'angularMoment'
+    'angularUtils.directives.dirPagination', 'angularMoment', 'angularFileUpload'
 
 ]);
 

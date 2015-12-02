@@ -27,6 +27,7 @@
     Translator.add("global.label", "Libell\u00e9 du menu", "messages", "fr");
     Translator.add("global.meta_description", "Meta description", "messages", "fr");
     Translator.add("global.no", "Non", "messages", "fr");
+    Translator.add("global.no_results", "Aucun r\u00e9sultats", "messages", "fr");
     Translator.add("global.page", "Page", "messages", "fr");
     Translator.add("global.path", "Chemin", "messages", "fr");
     Translator.add("global.post", "Article", "messages", "fr");
@@ -38,6 +39,7 @@
     Translator.add("header.creation.page", "Cr\u00e9ation de page", "messages", "fr");
     Translator.add("header.creation.post", "Cr\u00e9ation d'article", "messages", "fr");
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
+    Translator.add("header.front.pages", "Listes des pages", "messages", "fr");
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
     Translator.add("menu.page", "Page", "messages", "fr");
@@ -62,4 +64,22 @@
     Translator.add("publication_status.status.published", "Publi\u00e9", "messages", "fr");
     Translator.add("publication_status.status.unpublished", "Non publi\u00e9", "messages", "fr");
     Translator.add("publication_status.status.published_unpublished", "Publi\u00e9s et non", "messages", "fr");
+    Translator.add("media_manager.title.label", "Gestionnaire de m\u00e9dias", "messages", "fr");
+    Translator.add("media_manager.upload.label", "Ajouter", "messages", "fr");
+    Translator.add("media_manager.search.label", "Chercher", "messages", "fr");
+    Translator.add("media_manager.sort.date.label", "Trier par date", "messages", "fr");
+    Translator.add("media_manager.sort.name.label", "Trier par nom", "messages", "fr");
+    Translator.add("media_manager.filter.type.label", "Tous les types de m\u00e9dia", "messages", "fr");
+    Translator.add("media_manager.filter.image.label", "Image", "messages", "fr");
+    Translator.add("media_manager.filter.pdf.label", "Pdf", "messages", "fr");
+    Translator.add("media_manager.details.label", "D\u00e9tails", "messages", "fr");
+    Translator.add("media_manager.edit.title.label", "Titre", "messages", "fr");
+    Translator.add("media_manager.edit.title_alt.label", "Titre alternatif", "messages", "fr");
+    Translator.add("media_manager.edit.link_name.label", "Texte du lien", "messages", "fr");
+    Translator.add("media_manager.alert.delete", "Une erreur est survenue lors de la suppression du m\u00e9dia.", "messages", "fr");
+    Translator.add("media_manager.alert.save", "Une erreur est survenue lors de la modification du m\u00e9dia.", "messages", "fr");
+    Translator.add("media_manager.alert.upload", "Une erreur est survenue lors l'envoie du m\u00e9dia.", "messages", "fr");
+    Translator.add("media_manager.link.label", "Lien", "messages", "fr");
+    Translator.add("media_manager.insert.label", "Ins\u00e9rer", "messages", "fr");
+    Translator.add("media_manager.open.label", "Ajouter un m\u00e9dia", "messages", "fr");
 })(Translator);

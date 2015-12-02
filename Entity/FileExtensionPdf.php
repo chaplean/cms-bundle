@@ -18,7 +18,7 @@ class FileExtensionPdf extends FileExtension
      * @ORM\OneToMany(targetEntity="Chaplean\Bundle\CmsBundle\Entity\MediaPdf", mappedBy="extension")
      *
      * @JMS\MaxDepth(depth=1)
-     * @JMS\Groups({"file_extension_medias"})
+     * @JMS\Groups({"file_extension_medias", "file_extension_all"})
      */
     private $medias;
 

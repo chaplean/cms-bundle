@@ -18,7 +18,7 @@ class FileExtensionImage extends FileExtension
      * @ORM\OneToMany(targetEntity="Chaplean\Bundle\CmsBundle\Entity\MediaImage", mappedBy="extension")
      *
      * @JMS\MaxDepth(depth=1)
-     * @JMS\Groups({"file_extension_images"})
+     * @JMS\Groups({"file_extension_images", "file_extension_all"})
      */
     private $images;
 

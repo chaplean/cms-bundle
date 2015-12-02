@@ -33,7 +33,7 @@ class CmsExtensionTest extends LogicalTest
     {
         parent::setUp();
 
-        $this->cmsExtension = new CmsExtension(array('front_layout' => 'foo', 'post' => true, 'page' => true));
+        $this->cmsExtension = new CmsExtension(array('front_layout' => 'foo', 'post' => true, 'page' => true, 'media' => true));
     }
 
     /**
@@ -45,6 +45,7 @@ class CmsExtensionTest extends LogicalTest
             'cms_front_layout' => 'foo',
             'post_is_activate' => true,
             'page_is_activate' => true,
+            'media_is_activate' => true,
         ));
     }
 
