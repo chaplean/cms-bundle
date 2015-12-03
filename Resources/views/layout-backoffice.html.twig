@@ -101,6 +101,13 @@
                                 </a>
                             </li>
                             {% endif %}
+                            {% if block_is_activate %}
+                            <li class="treeview">
+                                <a href="{{ path('cms_block_list') }}">
+                                    <i class="fa fa-puzzle-piece"></i> {{ 'menu.blocks' | trans }}
+                                </a>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

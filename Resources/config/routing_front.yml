@@ -31,3 +31,11 @@ cms_post_preview:
         postId: \d+
     options:
         expose: true
+
+cms_media_download:
+    path:     /media/{id}
+    defaults: { _controller: ChapleanCmsBundle:Media:download }
+    requirements:
+        id: \d+
+    options:
+        expose: true

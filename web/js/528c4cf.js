@@ -10,6 +10,9 @@
 
 (function (Translator) {
     // fr
+    Translator.add("alert.block.created", "Bloc cr\u00e9\u00e9", "messages", "fr");
+    Translator.add("alert.block.deleted", "Bloc supprim\u00e9", "messages", "fr");
+    Translator.add("alert.block.updated", "Bloc mis \u00e0 jour", "messages", "fr");
     Translator.add("alert.page.created", "Page cr\u00e9\u00e9e", "messages", "fr");
     Translator.add("alert.page.deleted", "Page supprim\u00e9e", "messages", "fr");
     Translator.add("alert.page.updated", "Page mise \u00e0 jour", "messages", "fr");
@@ -36,6 +39,7 @@
     Translator.add("global.frontend", "Frontend", "messages", "fr");
     Translator.add("global.label", "Libell\u00e9 du menu", "messages", "fr");
     Translator.add("global.meta_description", "Meta description", "messages", "fr");
+    Translator.add("global.name", "Libell\u00e9", "messages", "fr");
     Translator.add("global.no", "Non", "messages", "fr");
     Translator.add("global.no_results", "Aucun r\u00e9sultats", "messages", "fr");
     Translator.add("global.page", "Page", "messages", "fr");
@@ -46,34 +50,14 @@
     Translator.add("global.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("global.title", "Titre", "messages", "fr");
     Translator.add("global.yes", "Oui", "messages", "fr");
+    Translator.add("header.actions", "Liste d'actions", "messages", "fr");
     Translator.add("header.creation.page", "Cr\u00e9ation de page", "messages", "fr");
     Translator.add("header.creation.post", "Cr\u00e9ation d'article", "messages", "fr");
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
     Translator.add("header.front.pages", "Listes des pages", "messages", "fr");
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
-    Translator.add("menu.header", "BackOffice", "messages", "fr");
-    Translator.add("menu.page", "Page", "messages", "fr");
-    Translator.add("menu.pages", "Pages", "messages", "fr");
-    Translator.add("menu.posts", "Articles", "messages", "fr");
-    Translator.add("message.confirm.delete_page", "Confirmez-vous la suppression de la page \"%page%\"", "messages", "fr");
-    Translator.add("message.confirm.delete_post", "Confirmez-vous la suppression de l'article \"%post%\"", "messages", "fr");
-    Translator.add("message.confirm.leave_change", "Les donn\u00e9es non sauvegard\u00e9es seront perdues, continuer ?", "messages", "fr");
-    Translator.add("over.path", "Le chemin doit \u00eatre en minuscule et ne contenir ni accent, ni espace", "messages", "fr");
-    Translator.add("placeholder.menu_name", "Libell\u00e9 du menu", "messages", "fr");
-    Translator.add("placeholder.path", "chemin\/sans_espace\/ni_accent", "messages", "fr");
-    Translator.add("placeholder.rollover", "Texte au survol", "messages", "fr");
-    Translator.add("placeholder.search.global", "Recherche globale", "messages", "fr");
-    Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
-    Translator.add("placeholder.title", "Titre", "messages", "fr");
-    Translator.add("post.category.all", "Toutes", "messages", "fr");
-    Translator.add("post.category.news", "Nouvelle", "messages", "fr");
-    Translator.add("post.category.testimonial", "Testimoniale", "messages", "fr");
-    Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
-    Translator.add("post.category.zoom", "Zoom", "messages", "fr");
-    Translator.add("publication_status.status.archived", "Archiv\u00e9", "messages", "fr");
-    Translator.add("publication_status.status.published", "Publi\u00e9", "messages", "fr");
-    Translator.add("publication_status.status.unpublished", "Non publi\u00e9", "messages", "fr");
-    Translator.add("publication_status.status.published_unpublished", "Publi\u00e9s et non", "messages", "fr");
+    Translator.add("list.block.id", "Identifiant du bloc", "messages", "fr");
+    Translator.add("list.block.label", "Libell\u00e9", "messages", "fr");
     Translator.add("media_manager.title.label", "Gestionnaire de m\u00e9dias", "messages", "fr");
     Translator.add("media_manager.upload.label", "Ajouter", "messages", "fr");
     Translator.add("media_manager.search.label", "Chercher", "messages", "fr");
@@ -92,6 +76,32 @@
     Translator.add("media_manager.link.label", "Lien", "messages", "fr");
     Translator.add("media_manager.insert.label", "Ins\u00e9rer", "messages", "fr");
     Translator.add("media_manager.open.label", "Ajouter un m\u00e9dia", "messages", "fr");
+    Translator.add("menu.blocks", "Blocs", "messages", "fr");
+    Translator.add("menu.header", "BackOffice", "messages", "fr");
+    Translator.add("menu.page", "Page", "messages", "fr");
+    Translator.add("menu.pages", "Pages", "messages", "fr");
+    Translator.add("menu.posts", "Articles", "messages", "fr");
+    Translator.add("message.confirm.delete_page", "Confirmez-vous la suppression de la page \"%page%\"", "messages", "fr");
+    Translator.add("message.confirm.delete_post", "Confirmez-vous la suppression de l'article \"%post%\"", "messages", "fr");
+    Translator.add("message.confirm.delete_block", "Confirmez-vous la suppression du bloc \"%block%\"", "messages", "fr");
+    Translator.add("message.confirm.leave_change", "Les donn\u00e9es non sauvegard\u00e9es seront perdues, continuer ?", "messages", "fr");
+    Translator.add("over.path", "Le chemin doit \u00eatre en minuscule et ne contenir ni accent, ni espace", "messages", "fr");
+    Translator.add("placeholder.name", "Libell\u00e9", "messages", "fr");
+    Translator.add("placeholder.menu_name", "Libell\u00e9 du menu", "messages", "fr");
+    Translator.add("placeholder.path", "chemin\/sans_espace\/ni_accent", "messages", "fr");
+    Translator.add("placeholder.rollover", "Texte au survol", "messages", "fr");
+    Translator.add("placeholder.search.global", "Recherche globale", "messages", "fr");
+    Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
+    Translator.add("placeholder.title", "Titre", "messages", "fr");
+    Translator.add("post.category.all", "Toutes", "messages", "fr");
+    Translator.add("post.category.news", "Nouvelle", "messages", "fr");
+    Translator.add("post.category.testimonial", "Testimoniale", "messages", "fr");
+    Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
+    Translator.add("post.category.zoom", "Zoom", "messages", "fr");
+    Translator.add("publication_status.status.archived", "Archiv\u00e9", "messages", "fr");
+    Translator.add("publication_status.status.published", "Publi\u00e9", "messages", "fr");
+    Translator.add("publication_status.status.unpublished", "Non publi\u00e9", "messages", "fr");
+    Translator.add("publication_status.status.published_unpublished", "Publi\u00e9s et non", "messages", "fr");
 })(Translator);
 
 /*! jQuery v2.1.4 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
@@ -13382,6 +13392,161 @@ cms.factory('Validator', function() {
 
 var cms = angular.module('Cms');
 
+cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
+                                          Block, PublicationStatus, Validator,
+                                          TranslationService, AlertService, Datepicker) {
+
+    $scope.publicationStatuses = [];
+    $scope.block = {
+        publication: {
+            datePublicationBegin: null,
+            datePublicationEnd: null
+        }
+    };
+    $scope.datepicker = Datepicker;
+
+    $scope.loadData = function() {
+        if ($scope.blockId) {
+            Block.get({blockId: $scope.blockId}, function(block) {
+
+                $scope.block = block;
+                if ($scope.block.publication.datePublicationBegin) {
+                    $scope.block.publication.datePublicationBegin = moment($scope.block.publication.datePublicationBegin, 'YYYY-MM-DD').toDate();
+                }
+                if ($scope.block.publication.datePublicationEnd) {
+                    $scope.block.publication.datePublicationEnd = moment($scope.block.publication.datePublicationEnd, 'YYYY-MM-DD').toDate();
+                }
+            });
+        }
+
+        PublicationStatus.getAll(function (publicationStatus) {
+            $scope.publicationStatuses = publicationStatus;
+        });
+    };
+
+    $scope.saveBlock = function (blockForm, formName, quit) {
+        if (blockForm.$valid) {
+            var block = $scope.buildData($scope.block);
+
+            if ($scope.blockId) {
+                Block.update({blockId: $scope.blockId}, block,
+                    function (block) {
+                        $scope.block.dateUpdate = $filter('date')(block.dateUpdate, 'dd/MM/yyyy');
+                        AlertService.addAlert('success', TranslationService.trans('alert.block.updated'));
+
+                        if (quit) {
+                            window.location = Routing.generate('cms_block_list');
+                        }
+                    }, function (response) {
+                        if(response.status == 400) {
+                            Validator.addError(blockForm, response.data);
+                            AlertService.addAlert('warning', TranslationService.trans('error.important'));
+                        } else {
+                            AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        }
+                    });
+            } else {
+                Block.save(block, function (block) {
+                    $scope.block.dateAdd = $filter('date')(block.dateAdd, 'dd/MM/yyyy');
+                    AlertService.addAlert('success', TranslationService.trans('alert.block.created'));
+
+                    if (quit) {
+                        window.location = Routing.generate('cms_block_list');
+                    }
+                }, function (errors) {
+                    $log.error(errors);
+                    $scope.errors = errors;
+                    AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                });
+            }
+        } else {
+            console.log(blockForm.$error);
+        }
+    };
+
+    $scope.cancel = function () {
+        $ngBootbox.confirm(
+            TranslationService.trans('message.confirm.leave_change')
+        ).then(function() {
+                window.location = Routing.generate('cms_block_list');
+            }, function() {
+                return false;
+            }
+        );
+    };
+
+    $scope.isRequire = Validator.isRequire;
+    $scope.onError = Validator.onError;
+    $scope.isInvalidFieldSumitted = Validator.isInvalidFieldSumitted;
+    $scope.getInvalidError = Validator.getInvalidError;
+
+    $scope.buildData = function (block) {
+        var blockTmp = angular.copy(block);
+
+        delete blockTmp.id;
+        delete blockTmp.dateAdd;
+        delete blockTmp.dateUpdate;
+        delete blockTmp.publication.id;
+        delete blockTmp.publication.dateAdd;
+        delete blockTmp.publication.dateUpdate;
+        if (typeof blockTmp.publication.datePublicationBegin == 'string') {
+            blockTmp.publication.datePublicationBegin = moment(blockTmp.publication.datePublicationBegin, 'DD/MM/YYYY');
+        }
+        if (typeof blockTmp.publication.datePublicationEnd == 'string') {
+            blockTmp.publication.datePublicationEnd = moment(blockTmp.publication.datePublicationEnd, 'DD/MM/YYYY');
+        }
+        blockTmp.publication.status = blockTmp.publication.status.id;
+
+        return blockTmp;
+    };
+
+    $scope.loadData();
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
+cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, AlertService) {
+    $scope.search = '';
+    $scope.blocks = [];
+    $scope.blocksDisplayed = [];
+
+    $scope.loadData = function() {
+        Block.getAll({}, function(blocks) {
+                $scope.blocks = blocks;
+                $scope.blocksDisplayed = [].concat($scope.blocks);
+            }
+        );
+    };
+
+    $scope.removeBlock = function (block) {
+        $ngBootbox.confirm(
+            TranslationService.trans('message.confirm.delete_block', { 'block' : block.name })
+        ).then(function() {
+                Block.delete({
+                        blockId: block.id
+                    },
+                    function (block) {
+                        $scope.blocks.splice($scope.blocks.indexOf(block), 1);
+                        AlertService.addAlert('success', TranslationService.trans('alert.block.deleted'));
+                    }, function () {
+                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                    }
+                );
+            }, function() {
+                return false;
+            }
+        );
+    };
+
+    $scope.loadData();
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
 cms.config(function ($provide) {
     $provide.decorator('taOptions', function (taRegisterTool, $delegate, TranslationService, $uibModal) {
         taRegisterTool('mediaManager', {
@@ -13400,9 +13565,9 @@ cms.config(function ($provide) {
                 modalInstance.result.then(function (media) {
                     var text = '';
                     if (media.category == 'image') {
-                        text = '<img src="' + media.path + '" title="' + media.title + '" alt="' + media.alternativeTitle + '"/>';
+                        text = '<img src="' + Routing.generate('cms_media_download') + '/' + media.id + '" title="' + media.title + '" alt="' + media.alternativeTitle + '"/>';
                     } else {
-                        text = '<a href="' + media.path + '">' + media.title + '</a>';
+                        text = '<a href="' + Routing.generate('cms_media_download') + '/' + media.id + '">' + media.title + '</a>';
                     }
 
                     that.$editor().wrapSelection('insertHtml', text, true);
@@ -13444,7 +13609,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
     $scope.detailsForm = {};
 
     $scope.newUploader = new FileUploader({
-        url:           'http://localhost:8000/app_test.php/rest/media',
+        url:           Routing.generate('cms_rest') + 'media',
         autoUpload:    true,
         onSuccessItem: function (item, newMedia) {
             $scope.mediaInit(newMedia);
@@ -13468,7 +13633,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
             AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
         },
         onBeforeUploadItem: function (item) {
-            item.url = 'http://localhost:8000/app_test.php/rest/media/' + $scope.selectedMedia.id + '/edits';
+            item.url = Routing.generate('cms_rest') + 'media' + $scope.selectedMedia.id + '/edits';
         }
     });
 

@@ -1,4 +1,8 @@
 alert:
+    block:
+        created: Bloc créé
+        deleted: Bloc supprimé
+        updated: Bloc mis à jour
     page:
         created: Page créée
         deleted: Page supprimée
@@ -44,6 +48,7 @@ global:
     frontend: Frontend
     label: Libellé du menu
     meta_description: Meta description
+    name: Libellé
     no: Non
     no_results: Aucun résultats
     page: Page
@@ -56,6 +61,7 @@ global:
     yes: Oui
 
 header:
+    actions: Liste d'actions
     creation:
         page: Création de page
         post: Création d'article
@@ -64,44 +70,10 @@ header:
         pages: Listes des pages
     publication_setting: Paramètres de publication
 
-menu:
-    header: BackOffice
-    page: Page
-    pages: Pages
-    posts: Articles
-
-message:
-    confirm:
-        delete_page: Confirmez-vous la suppression de la page "%page%"
-        delete_post: Confirmez-vous la suppression de l'article "%post%"
-        leave_change: Les données non sauvegardées seront perdues, continuer ?
-
-over:
-    path: Le chemin doit être en minuscule et ne contenir ni accent, ni espace
-
-placeholder:
-    menu_name: Libellé du menu
-    path: chemin/sans_espace/ni_accent
-    rollover: Texte au survol
-    search:
-        global: Recherche globale
-    subtitle: Sous-titre
-    title: Titre
-
-post:
-    category:
-        all: Toutes
-        news: Nouvelle
-        testimonial: Testimoniale
-        video: Vidéo
-        zoom: Zoom
-
-publication_status:
-    status:
-        archived: Archivé
-        published: Publié
-        unpublished: Non publié
-        published_unpublished: Publiés et non
+list:
+    block:
+        id: Identifiant du bloc
+        label: Libellé
 
 media_manager:
     title:
@@ -141,3 +113,45 @@ media_manager:
         label: Insérer
     open:
         label: Ajouter un média
+
+menu:
+    blocks: Blocs
+    header: BackOffice
+    page: Page
+    pages: Pages
+    posts: Articles
+
+message:
+    confirm:
+        delete_page: Confirmez-vous la suppression de la page "%page%"
+        delete_post: Confirmez-vous la suppression de l'article "%post%"
+        delete_block: Confirmez-vous la suppression du bloc "%block%"
+        leave_change: Les données non sauvegardées seront perdues, continuer ?
+
+over:
+    path: Le chemin doit être en minuscule et ne contenir ni accent, ni espace
+
+placeholder:
+    name: Libellé
+    menu_name: Libellé du menu
+    path: chemin/sans_espace/ni_accent
+    rollover: Texte au survol
+    search:
+        global: Recherche globale
+    subtitle: Sous-titre
+    title: Titre
+
+post:
+    category:
+        all: Toutes
+        news: Nouvelle
+        testimonial: Testimoniale
+        video: Vidéo
+        zoom: Zoom
+
+publication_status:
+    status:
+        archived: Archivé
+        published: Publié
+        unpublished: Non publié
+        published_unpublished: Publiés et non

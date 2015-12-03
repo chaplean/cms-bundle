@@ -28,6 +28,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MediaController extends FOSRestController
 {
+    /**
+     * @return Response
+     */
     public function getAllAction()
     {
         $medias = $this->getDoctrine()
@@ -45,6 +48,11 @@ class MediaController extends FOSRestController
         }
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function postAction(Request $request)
     {
         $files = $request->files;
@@ -52,7 +60,6 @@ class MediaController extends FOSRestController
         $uploadedMedia = $files->get('file');
 
         if (!empty($uploadedMedia)) {
-
             if (!$uploadedMedia->isValid()) {
                 return $this->handleView(new View('Invalid filename', 400));
             }
@@ -78,10 +85,21 @@ class MediaController extends FOSRestController
         }
     }
 
+    /**
+     * @param Request $request
+     * @param Media   $mediaId
+     *
+     * @return void
+     */
     public function putAction(Request $request, Media $mediaId)
     {
     }
 
+    /**
+     * @param \Chaplean\Bundle\CmsBundle\Entity\Media $media
+     *
+     * @return Response
+     */
     public function deleteAction(Media $media)
     {
         if ($media) {
@@ -102,6 +120,7 @@ class MediaController extends FOSRestController
      * Upload a logo for a structure
      *
      * @param Request $request
+     * @param Media   $media
      *
      * @return Response
      */
@@ -127,13 +146,14 @@ class MediaController extends FOSRestController
                 }
             }
 
+            $form = null;
             if ($media instanceof MediaImage) {
                 $form = $this->createForm(new MediaImageType(), $media);
             } elseif ($media instanceof MediaPdf) {
                 $form = $this->createForm(new MediaPdfType(), $media);
             }
 
-            if ($form) {
+            if (!empty($form)) {
                 $form->submit($request->request->all());
                 if ($form->isValid()) {
                     $this->getDoctrine()->getManager()->persist($media);

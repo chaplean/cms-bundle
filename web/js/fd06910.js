@@ -1,3 +1,4 @@
+Function.prototype.bind = Function.prototype.bind || function (b) {if (typeof this !== "function") {throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");}var a = Array.prototype.slice, f = a.call(arguments, 1), e = this, c = function () {}, d  = function () {return e.apply(this instanceof c ? this : b || window, f.concat(a.call(arguments)));};c.prototype = this.prototype;d.prototype = new c();return d;};
 /*!
  * William DURAND <william.durand1@gmail.com>
  * MIT Licensed
@@ -10,9 +11,6 @@
 
 (function (Translator) {
     // fr
-    Translator.add("alert.block.created", "Bloc cr\u00e9\u00e9", "messages", "fr");
-    Translator.add("alert.block.deleted", "Bloc supprim\u00e9", "messages", "fr");
-    Translator.add("alert.block.updated", "Bloc mis \u00e0 jour", "messages", "fr");
     Translator.add("alert.page.created", "Page cr\u00e9\u00e9e", "messages", "fr");
     Translator.add("alert.page.deleted", "Page supprim\u00e9e", "messages", "fr");
     Translator.add("alert.page.updated", "Page mise \u00e0 jour", "messages", "fr");
@@ -39,9 +37,7 @@
     Translator.add("global.frontend", "Frontend", "messages", "fr");
     Translator.add("global.label", "Libell\u00e9 du menu", "messages", "fr");
     Translator.add("global.meta_description", "Meta description", "messages", "fr");
-    Translator.add("global.name", "Libell\u00e9", "messages", "fr");
     Translator.add("global.no", "Non", "messages", "fr");
-    Translator.add("global.no_results", "Aucun r\u00e9sultats", "messages", "fr");
     Translator.add("global.page", "Page", "messages", "fr");
     Translator.add("global.path", "Chemin", "messages", "fr");
     Translator.add("global.post", "Article", "messages", "fr");
@@ -50,43 +46,18 @@
     Translator.add("global.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("global.title", "Titre", "messages", "fr");
     Translator.add("global.yes", "Oui", "messages", "fr");
-    Translator.add("header.actions", "Liste d'actions", "messages", "fr");
     Translator.add("header.creation.page", "Cr\u00e9ation de page", "messages", "fr");
     Translator.add("header.creation.post", "Cr\u00e9ation d'article", "messages", "fr");
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
-    Translator.add("header.front.pages", "Listes des pages", "messages", "fr");
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
-    Translator.add("list.block.id", "Identifiant du bloc", "messages", "fr");
-    Translator.add("list.block.label", "Libell\u00e9", "messages", "fr");
-    Translator.add("media_manager.title.label", "Gestionnaire de m\u00e9dias", "messages", "fr");
-    Translator.add("media_manager.upload.label", "Ajouter", "messages", "fr");
-    Translator.add("media_manager.search.label", "Chercher", "messages", "fr");
-    Translator.add("media_manager.sort.date.label", "Trier par date", "messages", "fr");
-    Translator.add("media_manager.sort.name.label", "Trier par nom", "messages", "fr");
-    Translator.add("media_manager.filter.type.label", "Tous les types de m\u00e9dia", "messages", "fr");
-    Translator.add("media_manager.filter.image.label", "Image", "messages", "fr");
-    Translator.add("media_manager.filter.pdf.label", "Pdf", "messages", "fr");
-    Translator.add("media_manager.details.label", "D\u00e9tails", "messages", "fr");
-    Translator.add("media_manager.edit.title.label", "Titre", "messages", "fr");
-    Translator.add("media_manager.edit.title_alt.label", "Titre alternatif", "messages", "fr");
-    Translator.add("media_manager.edit.link_name.label", "Texte du lien", "messages", "fr");
-    Translator.add("media_manager.alert.delete", "Une erreur est survenue lors de la suppression du m\u00e9dia.", "messages", "fr");
-    Translator.add("media_manager.alert.save", "Une erreur est survenue lors de la modification du m\u00e9dia.", "messages", "fr");
-    Translator.add("media_manager.alert.upload", "Une erreur est survenue lors l'envoie du m\u00e9dia.", "messages", "fr");
-    Translator.add("media_manager.link.label", "Lien", "messages", "fr");
-    Translator.add("media_manager.insert.label", "Ins\u00e9rer", "messages", "fr");
-    Translator.add("media_manager.open.label", "Ajouter un m\u00e9dia", "messages", "fr");
-    Translator.add("menu.blocks", "Blocs", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
     Translator.add("menu.page", "Page", "messages", "fr");
     Translator.add("menu.pages", "Pages", "messages", "fr");
     Translator.add("menu.posts", "Articles", "messages", "fr");
     Translator.add("message.confirm.delete_page", "Confirmez-vous la suppression de la page \"%page%\"", "messages", "fr");
     Translator.add("message.confirm.delete_post", "Confirmez-vous la suppression de l'article \"%post%\"", "messages", "fr");
-    Translator.add("message.confirm.delete_block", "Confirmez-vous la suppression du bloc \"%block%\"", "messages", "fr");
     Translator.add("message.confirm.leave_change", "Les donn\u00e9es non sauvegard\u00e9es seront perdues, continuer ?", "messages", "fr");
     Translator.add("over.path", "Le chemin doit \u00eatre en minuscule et ne contenir ni accent, ni espace", "messages", "fr");
-    Translator.add("placeholder.name", "Libell\u00e9", "messages", "fr");
     Translator.add("placeholder.menu_name", "Libell\u00e9 du menu", "messages", "fr");
     Translator.add("placeholder.path", "chemin\/sans_espace\/ni_accent", "messages", "fr");
     Translator.add("placeholder.rollover", "Texte au survol", "messages", "fr");
@@ -13144,7 +13115,7 @@ llll:"ddd, D MMM YYYY HH:mm"},calendar:{sameDay:"[Hôm nay lúc] LT",nextDay:"[N
 var cms = angular.module('Cms', [
     'ngAnimate', 'ngResource', 'ngSanitize', 'ngBootbox', 'ui.bootstrap',
     'ui.mask', 'boxuk.translation', 'textAngular', 'smart-table',
-    'angularUtils.directives.dirPagination', 'angularMoment', 'angularFileUpload'
+    'angularUtils.directives.dirPagination', 'angularMoment'
 
 ]);
 
@@ -13245,19 +13216,6 @@ cms.factory('Datepicker', function() {
     };
 
     return datepicker;
-});
-
-'use strict';
-
-var cms = angular.module('Cms');
-
-cms.factory('Media', function($resource) {
-
-    return $resource(Routing.generate('cms_rest') + 'media/:id', {id: '@id'}, {
-        save: {method: 'post', url: Routing.generate('cms_rest') + 'media/:id/edits'},
-        getAll: {method: 'get', url: Routing.generate('cms_rest') + 'media/all', isArray: true}
-    });
-
 });
 
 'use strict';
@@ -13385,331 +13343,6 @@ cms.factory('Validator', function() {
 
 var cms = angular.module('Cms');
 
-cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Block, PublicationStatus, Validator,
-                                          TranslationService, AlertService, Datepicker) {
-
-    $scope.publicationStatuses = [];
-    $scope.block = {
-        publication: {
-            datePublicationBegin: null,
-            datePublicationEnd: null
-        }
-    };
-    $scope.datepicker = Datepicker;
-
-    $scope.loadData = function() {
-        if ($scope.blockId) {
-            Block.get({blockId: $scope.blockId}, function(block) {
-
-                $scope.block = block;
-                if ($scope.block.publication.datePublicationBegin) {
-                    $scope.block.publication.datePublicationBegin = moment($scope.block.publication.datePublicationBegin, 'YYYY-MM-DD').toDate();
-                }
-                if ($scope.block.publication.datePublicationEnd) {
-                    $scope.block.publication.datePublicationEnd = moment($scope.block.publication.datePublicationEnd, 'YYYY-MM-DD').toDate();
-                }
-            });
-        }
-
-        PublicationStatus.getAll(function (publicationStatus) {
-            $scope.publicationStatuses = publicationStatus;
-        });
-    };
-
-    $scope.saveBlock = function (blockForm, formName, quit) {
-        if (blockForm.$valid) {
-            var block = $scope.buildData($scope.block);
-
-            if ($scope.blockId) {
-                Block.update({blockId: $scope.blockId}, block,
-                    function (block) {
-                        $scope.block.dateUpdate = $filter('date')(block.dateUpdate, 'dd/MM/yyyy');
-                        AlertService.addAlert('success', TranslationService.trans('alert.block.updated'));
-
-                        if (quit) {
-                            window.location = Routing.generate('cms_block_list');
-                        }
-                    }, function (response) {
-                        if(response.status == 400) {
-                            Validator.addError(blockForm, response.data);
-                            AlertService.addAlert('warning', TranslationService.trans('error.important'));
-                        } else {
-                            AlertService.addAlert('danger', TranslationService.trans('error.important'))
-                        }
-                    });
-            } else {
-                Block.save(block, function (block) {
-                    $scope.block.dateAdd = $filter('date')(block.dateAdd, 'dd/MM/yyyy');
-                    AlertService.addAlert('success', TranslationService.trans('alert.block.created'));
-
-                    if (quit) {
-                        window.location = Routing.generate('cms_block_list');
-                    }
-                }, function (errors) {
-                    $log.error(errors);
-                    $scope.errors = errors;
-                    AlertService.addAlert('danger', TranslationService.trans('error.important'))
-                });
-            }
-        } else {
-            console.log(blockForm.$error);
-        }
-    };
-
-    $scope.cancel = function () {
-        $ngBootbox.confirm(
-            TranslationService.trans('message.confirm.leave_change')
-        ).then(function() {
-                window.location = Routing.generate('cms_block_list');
-            }, function() {
-                return false;
-            }
-        );
-    };
-
-    $scope.isRequire = Validator.isRequire;
-    $scope.onError = Validator.onError;
-    $scope.isInvalidFieldSumitted = Validator.isInvalidFieldSumitted;
-    $scope.getInvalidError = Validator.getInvalidError;
-
-    $scope.buildData = function (block) {
-        var blockTmp = angular.copy(block);
-
-        delete blockTmp.id;
-        delete blockTmp.dateAdd;
-        delete blockTmp.dateUpdate;
-        delete blockTmp.publication.id;
-        delete blockTmp.publication.dateAdd;
-        delete blockTmp.publication.dateUpdate;
-        if (typeof blockTmp.publication.datePublicationBegin == 'string') {
-            blockTmp.publication.datePublicationBegin = moment(blockTmp.publication.datePublicationBegin, 'DD/MM/YYYY');
-        }
-        if (typeof blockTmp.publication.datePublicationEnd == 'string') {
-            blockTmp.publication.datePublicationEnd = moment(blockTmp.publication.datePublicationEnd, 'DD/MM/YYYY');
-        }
-        blockTmp.publication.status = blockTmp.publication.status.id;
-
-        return blockTmp;
-    };
-
-    $scope.loadData();
-});
-
-'use strict';
-
-var cms = angular.module('Cms');
-
-cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, AlertService) {
-    $scope.search = '';
-    $scope.blocks = [];
-    $scope.blocksDisplayed = [];
-
-    $scope.loadData = function() {
-        Block.getAll({}, function(blocks) {
-                $scope.blocks = blocks;
-                $scope.blocksDisplayed = [].concat($scope.blocks);
-            }
-        );
-    };
-
-    $scope.removeBlock = function (block) {
-        $ngBootbox.confirm(
-            TranslationService.trans('message.confirm.delete_block', { 'block' : block.name })
-        ).then(function() {
-                Block.delete({
-                        blockId: block.id
-                    },
-                    function (block) {
-                        $scope.blocks.splice($scope.blocks.indexOf(block), 1);
-                        AlertService.addAlert('success', TranslationService.trans('alert.block.deleted'));
-                    }, function () {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
-                    }
-                );
-            }, function() {
-                return false;
-            }
-        );
-    };
-
-    $scope.loadData();
-});
-
-'use strict';
-
-var cms = angular.module('Cms');
-
-cms.config(function ($provide) {
-    $provide.decorator('taOptions', function (taRegisterTool, $delegate, TranslationService, $uibModal) {
-        taRegisterTool('mediaManager', {
-            buttontext: TranslationService.trans('media_manager.open.label'),
-            iconclass:  'fa fa-file-image-o open-media-manager',
-            action:     function () {
-
-                var that = this;
-
-                var modalInstance = $uibModal.open({
-                    animation:   true,
-                    templateUrl: 'media-manager-modal.html',
-                    controller:  'MediaManager',
-                    size:        'lg'
-                });
-                modalInstance.result.then(function (media) {
-                    var text = '';
-                    if (media.category == 'image') {
-                        text = '<img src="' + Routing.generate('cms_media_download') + '/' + media.id + '" title="' + media.title + '" alt="' + media.alternativeTitle + '"/>';
-                    } else {
-                        text = '<a href="' + Routing.generate('cms_media_download') + '/' + media.id + '">' + media.title + '</a>';
-                    }
-
-                    that.$editor().wrapSelection('insertHtml', text, true);
-                });
-            }
-        });
-
-        $delegate.toolbar[3].splice($delegate.toolbar[3].length - 2, 0, 'mediaManager');
-        return $delegate;
-    });
-});
-
-cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService, FileUploader, FileItem) {
-
-    $scope.updateFilter = function () {
-        $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
-    };
-
-    $scope.medias = Media.getAll().$promise.then(function (data) {
-        $scope.medias = data;
-        $scope.medias.forEach(function (media) {
-            $scope.mediaInit(media);
-        });
-        $scope.updateFilter();
-    }, function () {
-        $scope.medias = [];
-        $scope.updateFilter();
-    });
-
-    $scope.nameFilter = null;
-    $scope.sortType = 'dateUpdate';
-    $scope.categoryFilter = null;
-
-    $scope.selectedMedia = null;
-
-    $scope.newMediaFile = null;
-    $scope.editMediaFile = null;
-
-    $scope.detailsForm = {};
-
-    $scope.newUploader = new FileUploader({
-        url:           Routing.generate('cms_rest') + 'media',
-        autoUpload:    true,
-        onSuccessItem: function (item, newMedia) {
-            $scope.mediaInit(newMedia);
-            $scope.selectMedia(newMedia);
-            $scope.medias.push(newMedia);
-            $scope.updateFilter();
-        },
-        onErrorItem:   function () {
-            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
-        }
-    });
-
-    $scope.editUploader = new FileUploader({
-        autoUpload:         true,
-        onSuccessItem:      function (item, updatedMedia) {
-            $scope.mediaInit(updatedMedia);
-            updatedMedia.decachedPath = updatedMedia.path + '?' + new Date().getTime();
-            angular.extend($scope.selectedMedia, updatedMedia);
-        },
-        onErrorItem:        function () {
-            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
-        },
-        onBeforeUploadItem: function (item) {
-            item.url = Routing.generate('cms_rest') + 'media' + $scope.selectedMedia.id + '/edits';
-        }
-    });
-
-    $scope.quitInsertMedia = function () {
-        $uibModalInstance.close($scope.selectedMedia);
-    };
-
-    $scope.quitWithoutMedia = function () {
-        $uibModalInstance.dismiss();
-    };
-
-    $scope.mediaFilter = function (value, index, array) {
-        if ($scope.nameFilter) {
-            if (value.fileName.toLowerCase().indexOf($scope.nameFilter.toLowerCase()) == -1) {
-                return false;
-            }
-        }
-
-        if ($scope.categoryFilter) {
-            if (value.category != $scope.categoryFilter) {
-                return false;
-            }
-        }
-
-        return true;
-    };
-
-    $scope.selectMedia = function (media) {
-        $scope.selectedMedia = media;
-    };
-
-    $scope.insertCurrentMedia = function () {
-        if ($scope.selectedMedia.category == 'image') {
-            var data = {
-                title:            $scope.selectedMedia.title,
-                alternativeTitle: $scope.selectedMedia.alternativeTitle
-            };
-        } else if ($scope.selectedMedia.category == 'pdf') {
-            var data = {
-                title: $scope.selectedMedia.title,
-            };
-        }
-
-        if (typeof data != 'undefined') {
-            Media.save({id: $scope.selectedMedia.id}, data);
-        }
-        $scope.quitInsertMedia();
-    };
-
-    $scope.deleteCurrentMedia = function () {
-        Media.delete({id: $scope.selectedMedia.id}, {}, function () {
-            var position = $scope.medias.indexOf($scope.selectedMedia);
-            $scope.medias.splice(position, 1);
-            $scope.selectedMedia = null;
-            $scope.updateFilter();
-        }, function () {
-            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'));
-        });
-    };
-
-    $scope.uploadNewFile = function () {
-        console.log('new');
-        console.log($scope.newMediaFile);
-    };
-
-    $scope.uploadEditFile = function () {
-        console.log('edit');
-        console.log($scope.editMediaFile);
-    };
-
-    $scope.mediaInit = function (media) {
-        media.decachedPath = media.path;
-        if (typeof media.dateUpdate == 'undefined' || media.dateUpdate == null) {
-            media.dateUpdate = media.dateAdd;
-        }
-    };
-
-});
-
-'use strict';
-
-var cms = angular.module('Cms');
-
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Page, PublicationStatus, Validator,
                                           TranslationService, AlertService, Datepicker) {
@@ -13828,10 +13461,6 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         console.log(pageRouteTmp);
 
         return pageRouteTmp;
-    };
-
-    $scope.onDismissMediaManager = function() {
-
     };
 
     $scope.loadData();

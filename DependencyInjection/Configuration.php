@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('front_layout')->isRequired()->end()
+                ->booleanNode('block')->isRequired()->end()
                 ->booleanNode('page')->isRequired()->end()
                 ->variableNode('media')
                     ->isRequired()
@@ -32,7 +33,7 @@ class Configuration implements ConfigurationInterface
                         ->always(function($v) use ($rootNode) {
                             if (is_bool($v)) {
                                 return $v;
-                            } else if (is_array($v)) {
+                            } elseif (is_array($v)) {
                                 foreach ($v as $item) {
                                     if (!is_string($item)) {
                                         throw new InvalidTypeException(sprintf('Invalid configuration for media, \'%s\' is not a string', $item));

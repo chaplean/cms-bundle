@@ -3,7 +3,6 @@ Feature: Media Manager
   Background:
     Given I load default datafixture with "Chaplean\Bundle\CmsBundle\"
     Given I am on "/administration/page/1"
-    When I wait Ajax
     When I click on ".ta-editor div.ta-bind"
     When I click on ".open-media-manager"
 

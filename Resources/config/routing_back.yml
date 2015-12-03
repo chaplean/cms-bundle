@@ -25,3 +25,17 @@ cms_post_edit:
         postId: \d+
     options:
         expose: true
+
+cms_block_list:
+    path:     /administration/blocks
+    defaults: { _controller: ChapleanCmsBundle:Block:list }
+    options:
+        expose: true
+
+cms_block_edit:
+    path:     /administration/block/{blockId}
+    defaults: { _controller: ChapleanCmsBundle:Block:edit, blockId: null }
+    requirements:
+        postId: \d+
+    options:
+        expose: true

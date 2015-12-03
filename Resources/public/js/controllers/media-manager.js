@@ -20,9 +20,9 @@ cms.config(function ($provide) {
                 modalInstance.result.then(function (media) {
                     var text = '';
                     if (media.category == 'image') {
-                        text = '<img src="' + media.path + '" title="' + media.title + '" alt="' + media.alternativeTitle + '"/>';
+                        text = '<img src="' + Routing.generate('cms_media_download') + '/' + media.id + '" title="' + media.title + '" alt="' + media.alternativeTitle + '"/>';
                     } else {
-                        text = '<a href="' + media.path + '">' + media.title + '</a>';
+                        text = '<a href="' + Routing.generate('cms_media_download') + '/' + media.id + '">' + media.title + '</a>';
                     }
 
                     that.$editor().wrapSelection('insertHtml', text, true);
@@ -64,7 +64,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
     $scope.detailsForm = {};
 
     $scope.newUploader = new FileUploader({
-        url:           'http://localhost:8000/app_test.php/rest/media',
+        url:           Routing.generate('cms_rest') + 'media',
         autoUpload:    true,
         onSuccessItem: function (item, newMedia) {
             $scope.mediaInit(newMedia);
@@ -88,7 +88,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
             AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
         },
         onBeforeUploadItem: function (item) {
-            item.url = 'http://localhost:8000/app_test.php/rest/media/' + $scope.selectedMedia.id + '/edits';
+            item.url = Routing.generate('cms_rest') + 'media' + $scope.selectedMedia.id + '/edits';
         }
     });
 
