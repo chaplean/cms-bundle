@@ -164,7 +164,7 @@ class PostRepository extends CmsRepository
     {
         /** @var ClassMetadata $metadata */
         $metadata = $this->_em->getClassMetadata($class);
-        $query = 'INSERT INTO ' . $metadata->table['name'] . ' VALUES (' . $id . ')';
+        $query = 'INSERT INTO ' . $metadata->table['name'] . ' VALUES (' . (int) $id . ')';
         $this->_em->getConnection()->exec($query);
     }
 
@@ -178,7 +178,7 @@ class PostRepository extends CmsRepository
     {
         /** @var ClassMetadata $metadata */
         $metadata = $this->_em->getClassMetadata(get_class($class));
-        $query = 'DELETE FROM ' . $metadata->table['name'] . ' WHERE id = ' . $id;
+        $query = 'DELETE FROM ' . $metadata->table['name'] . ' WHERE id = ' . (int) $id;
         $this->_em->getConnection()->exec($query);
     }
 
@@ -191,7 +191,7 @@ class PostRepository extends CmsRepository
      */
     public function update($category, $id)
     {
-        $query = 'UPDATE cl_post SET category = \'' . $category . '\' WHERE id = ' . $id;
+        $query = 'UPDATE cl_post SET category = \'' . $category . '\' WHERE id = ' . (int) $id;
         $this->_em->getConnection()->exec($query);
     }
 }
