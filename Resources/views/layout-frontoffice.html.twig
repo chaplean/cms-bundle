@@ -25,6 +25,10 @@
         {% endstylesheets %}
     {% endblock %}
 
+    <script type="text/javascript">
+        var locale = '{{ app.request.locale }}';
+    </script>
+
     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
@@ -46,11 +50,14 @@
         'vendor/angular-utils-pagination/dirPagination.js'
         'vendor/angular-smart-table/dist/smart-table.min.js'
         'vendor/angular-ui-mask/dist/mask.min.js'
+        'vendor/angular-file-upload/dist/angular-file-upload.min.js'
         'vendor/textAngular/dist/textAngular-rangy.min.js'
         'vendor/textAngular/dist/textAngular-sanitize.min.js'
         'vendor/textAngular/dist/textAngular.min.js'
         'vendor/bootbox/bootbox.js'
         'vendor/ngBootbox/ngBootbox.js'
+        'vendor/moment/min/moment-with-locales.min.js'
+        'vendor/angular-moment/angular-moment.min.js'
         '@ChapleanCmsBundle/Resources/public/js/app.js'
         '@ChapleanCmsBundle/Resources/public/js/services/*'
         '@ChapleanCmsBundle/Resources/public/js/controllers/*'
@@ -64,7 +71,6 @@
 
     {% block head %}{% endblock %}
 </head>
-
 
 <header></header>
 

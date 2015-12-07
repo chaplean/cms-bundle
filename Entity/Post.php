@@ -2,11 +2,12 @@
 
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Chaplean\Bundle\CmsBundle\Repository\PostRepository")
  * @ORM\Table(name="cl_post")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="category", type="string")
@@ -28,7 +29,7 @@ class Post
      * @ORM\Column(type="integer", options={"unsigned":true})
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @JMS\Groups({"post_id"})
+     * @JMS\Groups({"post_id", "post_all"})
      */
     protected $id;
 
@@ -37,7 +38,7 @@ class Post
      *
      * @ORM\Column(type="datetime", nullable=false, name="date_add")
      *
-     * @JMS\Groups({"post_date_add"})
+     * @JMS\Groups({"post_date_add", "post_all"})
      */
     protected $dateAdd;
 
@@ -46,16 +47,26 @@ class Post
      *
      * @ORM\Column(type="datetime", nullable=true, name="date_update")
      *
-     * @JMS\Groups({"post_date_update"})
+     * @JMS\Groups({"post_date_update", "post_all"})
      */
     protected $dateUpdate;
+
+    /**
+     * @var Publication
+     *
+     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
+     *
+     * @JMS\Groups({"post_publication", "post_all"})
+     */
+    private $publication;
 
     /**
      * @var Page
      *
      * @ORM\Embedded(class="Page")
      *
-     * @JMS\Groups({"post_page"})
+     * @JMS\Groups({"post_page", "post_all"})
      */
     protected $page;
 
@@ -118,6 +129,30 @@ class Post
     }
 
     /**
+     * Get publication.
+     *
+     * @return Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * Set publication.
+     *
+     * @param Publication $publication
+     *
+     * @return self
+     */
+    public function setPublication($publication)
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    /**
      * Get page.
      *
      * @return Page
@@ -139,5 +174,28 @@ class Post
         $this->page = $page;
 
         return $this;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("category")
+     * @JMS\Groups({"post_category", "post_all"})
+     *
+     * @return string
+     */
+    public function getInstanceOf()
+    {
+        switch (true) {
+            case $this instanceof PostVideo:
+                return 'video';
+            case $this instanceof PostZoom:
+                return 'zoom';
+            case $this instanceof PostTestimonial:
+                return 'testimonial';
+            case $this instanceof Post:
+                return 'news';
+            default:
+                throw new UndefinedOptionsException(sprintf('Undefined subclass %s', get_class($this)));
+        }
     }
 }

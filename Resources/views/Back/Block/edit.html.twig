@@ -1,0 +1,101 @@
+{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+
+{% block cms %}
+    {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
+
+    {% if blockId is not empty %}
+        <input type="hidden" ng-init="blockId = {{ blockId }}" ng-model="blockId" />
+    {% else %}
+        <input type="hidden" ng-model="blockId" />
+    {% endif %}
+    <form id="page-form" name="blockForm" ng-controller="BlockController" ng-submit="saveBlock(blockForm, '{{ form.vars.name }}')" role="form">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-left">
+                    <div ng-show="blockId">
+                        <span class="ng-cloak">{^ 'header.edition'|trans:{'page': block.name} ^}</span>
+                        <span>
+                            <a class="frontend-link" target="_blank" href="{^ name('cms_block_view', {pagePath: pagePath}) ^}">
+                                <span class="fa fa-external-link"></span>
+                                {{ 'global.frontend' | trans }}
+                            </a>
+                        </span>
+                    </div>
+                    <div class="ng-cloak" ng-show="!blockId">
+                        <span>{{ 'header.creation.page'|trans }}</span>
+                    </div>
+                </div>
+                <div class="navbar-right"></div>
+            </div>
+        </nav>
+        <div class="panel panel-body panel-back">
+            <div class="col-sm-12 col-md-7 no-padding-lr">
+                {# Path #}
+                <div class="form-group col-xs-12 no-padding-lr">
+                    <label id="name" for="{{ form.name.vars.id }}">{{ 'global.name'|trans }}</label>
+                    <div class="col-md-12 no-padding-lr">
+                        {{ form_widget(form.name , {'attr': {'placeholder': 'placeholder.name'|trans, 'ng-model': 'block.name', 'class': 'form-control'}}) }}
+                        <span class="text-error ng-cloak" ng-if="isRequire(blockForm, '{{ form.name.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
+                    </div>
+                </div>
+                {# Content #}
+                <div class="form-group col-xs-12 no-padding-lr">
+                    <label id="content" for="{{ form.content.vars.id }}">{{ 'global.content'|trans }}</label>
+                    <div class="col-md-12 no-padding-lr">
+                        {% form_theme form 'ChapleanCmsBundle:Form:form_type.html.twig' %}
+                        {{ form_widget(form.content , {'attr': {'ng-model': 'block.content', 'class': 'form-control'}}) }}
+                        <span class="text-error ng-cloak" ng-if="isRequire(blockForm, '{{ form.content.vars.full_name }}')">{{ 'alert.field.required'|trans }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-5">
+                <div class="panel panel-body panel-back">
+                    <div class="form-group col-xs-12 text-center">
+                        <h4>{{ 'header.publication_setting'|trans }}</h4>
+                        <hr>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="{{ form.publication.status.vars.id }}" class="col-xs-4 control-label align-label text-right">{{ 'global.status'|trans }}</label>
+                        <div class="col-xs-8">
+                            <select id="{{ form.publication.status.vars.id }}" name="{{ form.publication.status.vars.full_name }}" class="form-control" ng-options="('publication_status.status.' + publicationStatus.keyname)|trans for publicationStatus in publicationStatuses track by publicationStatus.id" ng-model="block.publication.status"></select>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12" ng-show="block.publication.status.keyname == 'published'">
+                        <label for="{{ form.publication.datePublicationBegin.vars.id }}" class="col-xs-4 control-label align-label text-right">{{ 'form.publication.date_publication_begin'|trans }}</label>
+                        <div class="col-xs-8">
+                            <input id="{{ form.publication.datePublicationBegin.vars.id }}" name="{{ form.publication.datePublicationBegin.vars.full_name }}" class="form-control" ng-focus="datepicker.open($event, 1)" datepicker-options="datepicker.options" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" is-open="datepicker.open1" ng-model="block.publication.datePublicationBegin" max-date="post.publication.datePublicationEnd" type="text" maxlength="10" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12" ng-show="block.publication.status.keyname == 'published'">
+                        <label for="{{ form.publication.datePublicationEnd.vars.id }}" class="col-xs-4 control-label align-label text-right">{{ 'form.publication.date_publication_end'|trans }}</label>
+                        <div class="col-xs-8">
+                            <input id="{{ form.publication.datePublicationEnd.vars.id }}" name="{{ form.publication.datePublicationEnd.vars.full_name }}" class="form-control" ng-focus="datepicker.open($event, 2)" datepicker-options="datepicker.options" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" is-open="datepicker.open2" ng-model="block.publication.datePublicationEnd" min-date="post.publication.datePublicationBegin" type="text" maxlength="10" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label class="col-xs-4 control-label align-label text-right">{{ 'form.publication.date_add'|trans }}</label>
+                        <div class="col-xs-8 align-span">
+                            <span ng-cloak>{^ block.dateAdd | date:'dd/MM/yyyy' ^}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label class="col-xs-4 control-label align-label text-right">{{ 'form.publication.date_update'|trans }}</label>
+                        <div class="col-xs-8 align-span">
+                            <span ng-cloak>{^ block.dateUpdate | date:'dd/MM/yyyy' ^}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <hr>
+            </div>
+            <div class="form-group col-xs-12 no-padding-lr">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary save">{{ 'button.save.global'|trans }}</button>
+                    <button ng-click="saveBlock(blockForm, '{{ form.vars.name }}', true)" type="button" class="btn btn-success save-and-quit">{{ 'button.save_quit.global'|trans }}</button>
+                    <a ng-click="cancel()" class="btn btn-default cancel">{{ 'button.cancel.global'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </form>
+{%  endblock %}

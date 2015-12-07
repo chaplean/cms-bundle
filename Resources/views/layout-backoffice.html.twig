@@ -25,6 +25,10 @@
         {% endstylesheets %}
     {% endblock %}
 
+    <script type="text/javascript">
+        var locale = '{{ app.request.locale }}';
+    </script>
+
     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
@@ -46,11 +50,14 @@
         'vendor/angular-utils-pagination/dirPagination.js'
         'vendor/angular-smart-table/dist/smart-table.min.js'
         'vendor/angular-ui-mask/dist/mask.min.js'
+        'vendor/angular-file-upload/dist/angular-file-upload.min.js'
         'vendor/textAngular/dist/textAngular-rangy.min.js'
         'vendor/textAngular/dist/textAngular-sanitize.min.js'
         'vendor/textAngular/dist/textAngular.min.js'
         'vendor/bootbox/bootbox.js'
         'vendor/ngBootbox/ngBootbox.js'
+        'vendor/moment/min/moment-with-locales.min.js'
+        'vendor/angular-moment/angular-moment.min.js'
         '@ChapleanCmsBundle/Resources/public/js/app.js'
         '@ChapleanCmsBundle/Resources/public/js/services/*'
         '@ChapleanCmsBundle/Resources/public/js/controllers/*'
@@ -67,23 +74,40 @@
 
 {% block body_with_tag %}
     <body>
-        <uib-alert ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top ng-cloak" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>
-        <div class="container-fluid">
+        <uib-alert ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>
+        <div class="container-fluid" {% block controller %}{% endblock %}>
             <div class="row">
                 <div class="col-xs-4 col-sm-3 col-lg-2 sidebar">
                     <div class="sidebar-header">
-                        {% block logo %}{% endblock %}
+                        {% block logo %}
+                            <div class="default-logo"></div>
+                        {% endblock %}
                         <span>{{ 'menu.header' | trans }}</span>
                     </div>
                     <div>
                         <hr>
                         <ul class="sidebar-menu">
+                            {% if post_is_activate %}
                             <li class="treeview">
-                                <a href="{{ path('cms_page_list') }}">
-                                    <span class="fa fa-file"></span>
-                                    <span>{{ 'menu.pages' | trans }}</span>
+                                <a href="{{ path('cms_post_list') }}">
+                                    <i class="fa fa-hand-o-right"></i> {{ 'menu.posts' | trans }}
                                 </a>
                             </li>
+                            {% endif %}
+                            {% if page_is_activate %}
+                            <li class="treeview">
+                                <a href="{{ path('cms_page_list') }}">
+                                    <i class="fa fa-file-text-o"></i> {{ 'menu.pages' | trans }}
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if block_is_activate %}
+                            <li class="treeview">
+                                <a href="{{ path('cms_block_list') }}">
+                                    <i class="fa fa-puzzle-piece"></i> {{ 'menu.blocks' | trans }}
+                                </a>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

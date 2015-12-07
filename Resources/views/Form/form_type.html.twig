@@ -1,5 +1,5 @@
 {% block textAngular_widget %}
     {% spaceless %}
-        <text-angular ng-model="pageRoute.page.content"></text-angular>
+        <text-angular id="{{ id }}" name="{{ full_name }}" ng-model="{{ attr['ng-model'] }}"></text-angular>
     {% endspaceless %}
 {% endblock textAngular_widget %}

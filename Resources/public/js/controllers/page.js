@@ -2,64 +2,80 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, Page, TranslationService, AlertService) {
+cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
+                                          Page, PublicationStatus, Validator,
+                                          TranslationService, CmsAlertService, Datepicker) {
+
+    $scope.publicationStatuses = [];
+    $scope.pageRoute = {
+        publication: {
+            datePublicationBegin: null,
+            datePublicationEnd: null
+        }
+    };
+    $scope.pagePath = '';
+    $scope.datepicker = Datepicker;
+
     $scope.loadData = function() {
         if ($scope.pageId) {
-            Page.get(
-                {
-                    pageId: $scope.pageId
-                }, function(response) {
-                    $scope.pageRoute = response.page;
+            Page.get({pageId: $scope.pageId},
+                function(page) {
+                    $scope.pageRoute = page;
+                    if ($scope.pageRoute.publication.datePublicationBegin) {
+                        $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                    }
+                    if ($scope.pageRoute.publication.datePublicationEnd) {
+                        $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                    }
                     $scope.pagePath = $scope.pageRoute.path;
-                }
-            );
+                });
         }
+
+        PublicationStatus.getAll(function (publicationStatus) {
+            $scope.publicationStatuses = publicationStatus;
+        });
     };
 
     $scope.savePage = function (pageForm, formName, quit) {
         if (pageForm.$valid) {
-            var page = {
-                title: $scope.pageRoute.page.title,
-                subtitle: $scope.pageRoute.page.subtitle,
-                content: $scope.pageRoute.page.content,
-                metaDescription: $scope.pageRoute.page.metaDescription,
-                path: $scope.pageRoute.path,
-                menuName: $scope.pageRoute.menuName,
-                rollover: $scope.pageRoute.rollover
-            };
+            var pageRoute = $scope.buildData($scope.pageRoute);
 
             if ($scope.pageId) {
                 Page.update({
                     pageId: $scope.pageId
                 },
-                page,
-                function (response) {
-                    $scope.pagePath = response.page.path;
-                    AlertService.addAlert('success', TranslationService.trans('alert.page.updated'));
+                pageRoute,
+                function (pageRoute) {
+                    $scope.pagePath = pageRoute.path;
+                    $scope.pageRoute.dateUpdate = $filter('date')(pageRoute.dateUpdate, 'dd/MM/yyyy');
+                    CmsAlertService.addAlert('success', TranslationService.trans('alert.page.updated'), 1.5);
 
                     if (quit) {
-                        window.location = Routing.generate('chaplean_cms_list');
+                        window.location = Routing.generate('cms_page_list');
                     }
                 }, function (response) {
                     if(response.data.error) {
-                        AlertService.addAlert('warning', response.data.error);
+                        CmsAlertService.addAlert('warning', response.data.error, 1.5);
                     } else {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     }
                 });
             } else {
                 Page.save(
-                    page,
-                    function (response) {
-                        $scope.pagePath = response.page.path;
-                        AlertService.addAlert('success', TranslationService.trans('alert.page.created'));
+                    pageRoute,
+                    function (pageRoute) {
+                        $scope.pageRoute = pageRoute;
+                        $scope.pageId = pageRoute.id;
+                        $scope.pagePath = pageRoute.path;
+                        $scope.pageRoute.dateAdd = $filter('date')(pageRoute.dateAdd, 'dd/MM/yyyy');
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.page.created'), 1.5);
 
                         if (quit) {
-                            window.location = Routing.generate('chaplean_cms_list');
+                            window.location = Routing.generate('cms_page_list');
                         }
                     }, function (errors) {
                         $log.error(errors);
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     });
             }
         } else {
@@ -71,17 +87,44 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.leave_change')
         ).then(function() {
-                window.location = Routing.generate('chaplean_cms_list');
+                window.location = Routing.generate('cms_page_list');
             }, function() {
                 return false;
             }
         );
     };
 
-    $scope.isRequire = function (form, name) {
-        return form.$invalid && form[name] && form[name].$touched && form[name].$error.required;
+    $scope.isRequire = Validator.isRequire;
+
+    $scope.translateStatus = function (key) {
+        return TranslationService.trans('publication_status.status.' + key);
     };
 
+    $scope.buildData = function (pageRoute) {
+        var pageRouteTmp = angular.copy(pageRoute);
+
+        delete pageRouteTmp.id;
+        delete pageRouteTmp.dateAdd;
+        delete pageRouteTmp.dateUpdate;
+        delete pageRouteTmp.page.id;
+        delete pageRouteTmp.publication.id;
+        delete pageRouteTmp.publication.dateAdd;
+        delete pageRouteTmp.publication.dateUpdate;
+        if (typeof pageRouteTmp.publication.datePublicationBegin == 'string') {
+            pageRouteTmp.publication.datePublicationBegin = moment(pageRouteTmp.publication.datePublicationBegin, 'DD/MM/YYYY');
+        }
+        if (typeof pageRouteTmp.publication.datePublicationEnd == 'string') {
+            pageRouteTmp.publication.datePublicationEnd = moment(pageRouteTmp.publication.datePublicationEnd, 'DD/MM/YYYY');
+        }
+        pageRouteTmp.publication.status = pageRouteTmp.publication.status.id;
+        console.log(pageRouteTmp);
+
+        return pageRouteTmp;
+    };
+
+    $scope.onDismissMediaManager = function() {
+
+    };
 
     $scope.loadData();
 });

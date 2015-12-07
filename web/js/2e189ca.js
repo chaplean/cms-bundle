@@ -35,6 +35,7 @@
     Translator.add("global.rollover", "Texte en rollover", "messages", "fr");
     Translator.add("global.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("global.title", "Titre", "messages", "fr");
+    Translator.add("global.status", "Status", "messages", "fr");
     Translator.add("header.creation", "Cr\u00e9ation de page", "messages", "fr");
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
@@ -49,6 +50,8 @@
     Translator.add("placeholder.search.global", "Recherche globale", "messages", "fr");
     Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
+    Translator.add("publication_status.status.published", "Publi\u00e9", "messages", "fr");
+    Translator.add("publication_status.status.unpublished", "Non publi\u00e9", "messages", "fr");
 })(Translator);
 
 /*! jQuery v2.1.4 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
@@ -13009,12 +13012,16 @@ angular.module('ngBootbox', [])
 var cms = angular.module('Cms', [
     'ngAnimate', 'ngResource', 'ngSanitize', 'ngBootbox', 'ui.bootstrap',
     'ui.mask', 'boxuk.translation', 'textAngular', 'smart-table',
-    'angularUtils.directives.dirPagination'
+    'angularUtils.directives.dirPagination', 'angularMoment'
 
 ]);
 
 cms.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{^').endSymbol('^}');
+});
+
+cms.run(function(amMoment) {
+    amMoment.changeLocale(locale);
 });
 
 cms.controller('MainController', function($scope, $rootScope, AlertService) {
@@ -13073,14 +13080,14 @@ cms.factory('AlertService', function($timeout) {
 
 var cms = angular.module('Cms');
 
-cms.factory('Page', function($resource) {
+cms.service('Block', function($resource) {
 
-    return $resource(Routing.generate('cms_rest') + 'pages', {}, {
-        delete: {method: 'delete', url: Routing.generate('cms_rest') + 'pages/:pageId'},
-        get: {method: 'get', url: Routing.generate('cms_rest') + 'pages/:pageId'},
-        getAll: {method: 'get', url: Routing.generate('cms_rest') + 'page/all'},
-        save: {method: 'post', url: Routing.generate('cms_rest') + 'pages'},
-        update: {method: 'put', url: Routing.generate('cms_rest') + 'pages/:pageId'}
+    return $resource(Routing.generate('cms_rest') + 'blocks', {}, {
+        delete: {method: 'delete', url: Routing.generate('cms_rest') + 'blocks/:blockId'},
+        get:    {method: 'get'   , url: Routing.generate('cms_rest') + 'blocks/:blockId'},
+        getAll: {method: 'get'   , url: Routing.generate('cms_rest') + 'block/all'      },
+        save:   {method: 'post'  , url: Routing.generate('cms_rest') + 'blocks'         },
+        update: {method: 'put'   , url: Routing.generate('cms_rest') + 'blocks/:blockId'}
     });
 
 });
@@ -13089,43 +13096,131 @@ cms.factory('Page', function($resource) {
 
 var cms = angular.module('Cms');
 
-cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, Page, TranslationService, AlertService) {
+cms.factory('Datepicker', function() {
+
+    var datepicker = {};
+
+    datepicker.options = {
+        startingDay: 1
+    };
+
+    datepicker.open = function ($event, ind) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        datepicker['open' + ind] = true;
+    };
+
+    return datepicker;
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
+cms.service('Page', function($resource) {
+
+    return $resource(Routing.generate('cms_rest') + 'pages', {}, {
+        delete: {method: 'delete', url: Routing.generate('cms_rest') + 'pages/:pageId'},
+        get:    {method: 'get'   , url: Routing.generate('cms_rest') + 'pages/:pageId'},
+        getAll: {method: 'get'   , url: Routing.generate('cms_rest') + 'page/all'     },
+        save:   {method: 'post'  , url: Routing.generate('cms_rest') + 'pages'        },
+        update: {method: 'put'   , url: Routing.generate('cms_rest') + 'pages/:pageId'}
+    });
+
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
+cms.service('Post', function($resource) {
+
+    return $resource(Routing.generate('cms_rest') + 'posts', {}, {
+        delete:        {method: 'delete', url: Routing.generate('cms_rest') + 'posts/:postId'},
+        get:           {method: 'get'   , url: Routing.generate('cms_rest') + 'posts/:postId'},
+        getAll:        {method: 'get'   , url: Routing.generate('cms_rest') + 'post/all'},
+        getByCategory: {method: 'get'   , url: Routing.generate('cms_rest') + 'post/:category/category'},
+        save:          {method: 'post'  , url: Routing.generate('cms_rest') + 'posts'},
+        update:        {method: 'put'   , url: Routing.generate('cms_rest') + 'posts/:postId'}
+    });
+
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
+cms.service('PublicationStatus', function ($resource) {
+
+    return $resource(Routing.generate('cms_rest') + 'publicationstatuses', {}, {
+        get:    {
+            method: 'get',
+            url:    Routing.generate('cms_rest') + 'publicationstatuses/:publicationStatusId'
+        },
+        getAll: {
+            method: 'get',
+            url:    Routing.generate('cms_rest') + 'publicationstatus/all'
+        }
+    });
+
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
+cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
+                                          Page, PublicationStatus,
+                                          TranslationService, AlertService, Datepicker) {
+
+    $scope.publicationStatuses = [];
+    $scope.pageRoute = {
+        publication: {
+            datePublicationBegin: null,
+            datePublicationEnd: null
+        }
+    };
+    $scope.pagePath = '';
+    $scope.datepicker = Datepicker;
+
     $scope.loadData = function() {
         if ($scope.pageId) {
-            Page.get(
-                {
-                    pageId: $scope.pageId
-                }, function(response) {
+            Page.get({pageId: $scope.pageId},
+                function(response) {
                     $scope.pageRoute = response.page;
+                    if ($scope.pageRoute.publication.datePublicationBegin) {
+                        $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                    }
+                    if ($scope.pageRoute.publication.datePublicationEnd) {
+                        $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                    }
                     $scope.pagePath = $scope.pageRoute.path;
-                }
-            );
+                });
         }
+
+        PublicationStatus.getAll(function (response) {
+            /** @namespace response.publicationStatus */
+            $scope.publicationStatuses = response.publicationStatus;
+        });
     };
 
     $scope.savePage = function (pageForm, formName, quit) {
         if (pageForm.$valid) {
-            var page = {
-                title: $scope.pageRoute.page.title,
-                subtitle: $scope.pageRoute.page.subtitle,
-                content: $scope.pageRoute.page.content,
-                metaDescription: $scope.pageRoute.page.metaDescription,
-                path: $scope.pageRoute.path,
-                menuName: $scope.pageRoute.menuName,
-                rollover: $scope.pageRoute.rollover
-            };
+            var pageRoute = $scope.buildData($scope.pageRoute);
 
             if ($scope.pageId) {
                 Page.update({
                     pageId: $scope.pageId
                 },
-                page,
+                pageRoute,
                 function (response) {
-                    $scope.pagePath = response.page.path;
+                    $scope.pagePath = response.pageRoute.path;
+                    $scope.pageRoute.dateUpdate = $filter('date')(response.pageRoute.dateUpdate, 'dd/MM/yyyy');
                     AlertService.addAlert('success', TranslationService.trans('alert.page.updated'));
 
                     if (quit) {
-                        window.location = Routing.generate('chaplean_cms_list');
+                        window.location = Routing.generate('cms_page_list');
                     }
                 }, function (response) {
                     if(response.data.error) {
@@ -13136,13 +13231,14 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                 });
             } else {
                 Page.save(
-                    page,
+                    pageRoute,
                     function (response) {
-                        $scope.pagePath = response.page.path;
+                        $scope.pagePath = response.pageRoute.path;
+                        $scope.pageRoute.dateAdd = $filter('date')(response.pageRoute.dateAdd, 'dd/MM/yyyy');
                         AlertService.addAlert('success', TranslationService.trans('alert.page.created'));
 
                         if (quit) {
-                            window.location = Routing.generate('chaplean_cms_list');
+                            window.location = Routing.generate('cms_page_list');
                         }
                     }, function (errors) {
                         $log.error(errors);
@@ -13158,7 +13254,7 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.leave_change')
         ).then(function() {
-                window.location = Routing.generate('chaplean_cms_list');
+                window.location = Routing.generate('cms_page_list');
             }, function() {
                 return false;
             }
@@ -13169,6 +13265,31 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         return form.$invalid && form[name] && form[name].$touched && form[name].$error.required;
     };
 
+    $scope.translateStatus = function (key) {
+        return TranslationService.trans('publication_status.status.' + key);
+    };
+
+    $scope.buildData = function (pageRoute) {
+        var pageRouteTmp = angular.copy(pageRoute);
+
+        delete pageRouteTmp.id;
+        delete pageRouteTmp.dateAdd;
+        delete pageRouteTmp.dateUpdate;
+        delete pageRouteTmp.page.id;
+        delete pageRouteTmp.publication.id;
+        delete pageRouteTmp.publication.dateAdd;
+        delete pageRouteTmp.publication.dateUpdate;
+        if (typeof pageRouteTmp.publication.datePublicationBegin == 'string') {
+            pageRouteTmp.publication.datePublicationBegin = moment(pageRouteTmp.publication.datePublicationBegin, 'DD/MM/YYYY');
+        }
+        if (typeof pageRouteTmp.publication.datePublicationEnd == 'string') {
+            pageRouteTmp.publication.datePublicationEnd = moment(pageRouteTmp.publication.datePublicationEnd, 'DD/MM/YYYY');
+        }
+        pageRouteTmp.publication.status = pageRouteTmp.publication.status.id;
+        console.log(pageRouteTmp);
+
+        return pageRouteTmp;
+    };
 
     $scope.loadData();
 });
@@ -13234,10 +13355,11 @@ cms.filter('pageFilter', function() {
             return items;
         }
         search = search.toLowerCase();
+
         return items.filter(function (e) {
             return (e.path.toLowerCase().indexOf(search) !== -1)
-                || (e.pageContent.title.toLowerCase().indexOf(search) !== -1)
-                || (e.pageContent.metaDescription.toLowerCase().indexOf(search) !== -1);
+                || (e.page.title.toLowerCase().indexOf(search) !== -1)
+                || (e.page.metaDescription.toLowerCase().indexOf(search) !== -1);
         });
     }
 });

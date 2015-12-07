@@ -1,0 +1,27 @@
+{% extends cms_front_layout %}
+
+{% block title %}
+{{ pageRoute.page.title }}
+{% endblock %}
+
+{% block description %}
+{{ pageRoute.page.metaDescription }}
+{% endblock %}
+
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="header-post col-xs-12">
+                <h3 class="text-center">{{ pageRoute.page.title }}</h3>
+                <h5 class="text-center">{{ pageRoute.page.subtitle }}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <article class="panel panel-body block-content-info">
+                <div class="page-content">
+                    {{ pageRoute.page.content|raw }}
+                </div>
+            </article>
+        </div>
+    </section>
+{% endblock %}

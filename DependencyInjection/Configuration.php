@@ -2,8 +2,10 @@
 
 namespace Chaplean\Bundle\CmsBundle\DependencyInjection;
 
+use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -13,12 +15,57 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritdoc}
+     * @return TreeBuilder
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('chaplean_cms');
+
+        $rootNode
+            ->children()
+                ->scalarNode('front_layout')->isRequired()->end()
+                ->booleanNode('block')->isRequired()->end()
+                ->booleanNode('page')->isRequired()->end()
+                ->variableNode('media')
+                    ->isRequired()
+                    ->validate()
+                        ->always(function($v) use ($rootNode) {
+                            if (is_bool($v)) {
+                                return $v;
+                            } elseif (is_array($v)) {
+                                foreach ($v as $item) {
+                                    if (!is_string($item)) {
+                                        throw new InvalidTypeException(sprintf('Invalid configuration for media, \'%s\' is not a string', $item));
+                                    }
+                                }
+                                return $v;
+                            } else {
+                                throw new InvalidTypeException(sprintf('Invalid configuration for media, \'%s\' is not a boolean nor an array of strings', $v));
+                            }
+                        })->end()
+                    ->end()
+                ->variableNode('post')
+                    ->isRequired()
+                    ->validate()
+                        ->always(function($v) use ($rootNode) {
+                            if (is_bool($v)) {
+                                return $v;
+                            } elseif (is_array($v)) {
+                                $availableType = array_values(PostUtility::getAvailableInstance());
+                                foreach ($v as $item) {
+                                    if (!in_array($item, $availableType)) {
+                                        throw new InvalidTypeException(sprintf('Invalid configuration for post, \'%s\' is undefined type', $item));
+                                    }
+                                }
+
+                                return $v;
+                            } else {
+                                throw new InvalidTypeException();
+                            }
+                        })->end()
+                    ->end()
+            ->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

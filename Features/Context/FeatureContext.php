@@ -67,4 +67,26 @@ class FeatureContext extends ChapleanContext
             throw new ExpectationException('Select option field with value|text "'.$option.'" is not selected in the select "'.$select.'"', $this->getSession());
         }
     }
+
+    /**
+     * @Then /^I should see "(?P<text>(?:[^"]|\\")*)" in input "(?P<input>(?:[^"]|\\")*)"$/
+     *
+     * @param string $text
+     * @param string $input
+     *
+     * @return void
+     * @throws ExpectationException
+     */
+    public function iShouldSeeInInput($text, $input)
+    {
+        $inputSelect = $this->getSession()->getPage()->find('css', $input);
+
+        if ($inputSelect->getTagName() != 'input') {
+            throw new ExpectationException('"'. $input . '" is not an input field !', $this->getSession()->getDriver());
+        }
+
+        if ($inputSelect->getValue() != $text) {
+            throw new ExpectationException('The text "' . $text . '" was not found in the input.', $this->getSession()->getDriver());
+        }
+    }
 }

@@ -3,7 +3,7 @@
 var cms = angular.module('Cms', [
     'ngAnimate', 'ngResource', 'ngSanitize', 'ngBootbox', 'ui.bootstrap',
     'ui.mask', 'boxuk.translation', 'textAngular', 'smart-table',
-    'angularUtils.directives.dirPagination'
+    'angularUtils.directives.dirPagination', 'angularMoment', 'angularFileUpload'
 
 ]);
 
@@ -11,14 +11,19 @@ cms.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{^').endSymbol('^}');
 });
 
-cms.controller('MainController', function($scope, $rootScope, AlertService) {
+cms.run(function(amMoment) {
+    amMoment.changeLocale(locale);
+});
+
+cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService) {
+
     $rootScope.path = function (url, options) {
         return Routing.generate(url, options);
     };
 
-    $scope.alerts = AlertService.alerts;
+    $scope.alerts = CmsAlertService.alerts;
 
     $scope.closeAlert = function (index) {
-        AlertService.closeAlert(index);
+        CmsAlertService.closeAlert(index);
     };
 });

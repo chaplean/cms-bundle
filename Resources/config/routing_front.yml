@@ -1,0 +1,41 @@
+cms_page_view:
+    path:     /page/{pagePath}
+    defaults: { _controller: ChapleanCmsBundle:Page:view }
+    options:
+        expose: true
+
+cms_page_index:
+    path:     /pages
+    defaults: { _controller: ChapleanCmsBundle:Page:index }
+    options:
+        expose: true
+
+cms_post_index:
+    path:     /posts
+    defaults: { _controller: ChapleanCmsBundle:Post:index }
+    options:
+        expose: true
+
+cms_post_view:
+    path:     /post/{postId}
+    defaults: { _controller: ChapleanCmsBundle:Post:view }
+    requirements:
+        postId: \d+
+    options:
+        expose: true
+
+cms_post_preview:
+    path:     /preview/post/{postId}
+    defaults: { _controller: ChapleanCmsBundle:Post:preview }
+    requirements:
+        postId: \d+
+    options:
+        expose: true
+
+cms_media_download:
+    path:     /media/{id}
+    defaults: { _controller: ChapleanCmsBundle:Media:download }
+    requirements:
+        id: \d+
+    options:
+        expose: true

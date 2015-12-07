@@ -1,0 +1,41 @@
+cms_page_list:
+    path:     /administration/pages
+    defaults: { _controller: ChapleanCmsBundle:Page:list }
+    options:
+        expose: true
+
+cms_page_edit:
+    path:     /administration/page/{pageId}
+    defaults: { _controller: ChapleanCmsBundle:Page:edit, pageId: null }
+    requirements:
+        pageId: \d+
+    options:
+        expose: true
+
+cms_post_list:
+    path:     /administration/posts
+    defaults: { _controller: ChapleanCmsBundle:Post:list }
+    options:
+        expose: true
+
+cms_post_edit:
+    path:     /administration/post/{postId}
+    defaults: { _controller: ChapleanCmsBundle:Post:edit, postId: null }
+    requirements:
+        postId: \d+
+    options:
+        expose: true
+
+cms_block_list:
+    path:     /administration/blocks
+    defaults: { _controller: ChapleanCmsBundle:Block:list }
+    options:
+        expose: true
+
+cms_block_edit:
+    path:     /administration/block/{blockId}
+    defaults: { _controller: ChapleanCmsBundle:Block:edit, blockId: null }
+    requirements:
+        postId: \d+
+    options:
+        expose: true

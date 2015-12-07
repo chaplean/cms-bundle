@@ -1,6 +1,6 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Test\Utility;
+namespace Chaplean\Bundle\CmsBundle\Tests\Utility;
 
 use Chaplean\Bundle\CmsBundle\Utility\Tools;
 use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
@@ -18,6 +18,13 @@ class ToolsTest extends LogicalTest
     /**
      * @return void
      */
+    public static function setUpBeforeClass()
+    {
+    }
+
+    /**
+     * @return void
+     */
     public function testSlugify()
     {
         $this->assertEquals('sensio', Tools::slugify('Sensio'));
@@ -26,6 +33,7 @@ class ToolsTest extends LogicalTest
         $this->assertEquals('paris-france', Tools::slugify('paris,france'));
         $this->assertEquals('sensio', Tools::slugify('     sensio'));
         $this->assertEquals('sensio', Tools::slugify('sensio   '));
+        $this->assertEquals('n-a', Tools::slugify('     '));
     }
 
     /**

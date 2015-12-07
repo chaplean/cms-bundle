@@ -1,5 +1,38 @@
 services:
-  form.type.textangular:
-    class: Chaplean\Bundle\CmsBundle\Form\Type\TextAngularType
-    tags:
-      - { name: form.type, alias: textAngular }
+    chaplean_cms.media_utility:
+        class: Chaplean\Bundle\CmsBundle\Utility\MediaUtility
+        arguments: [@doctrine, @logger, %kernel.root_dir%, %chaplean_cms.media%]
+
+    form.type.textangular:
+        class: Chaplean\Bundle\CmsBundle\Form\Type\TextAngularType
+        tags:
+            - { name: form.type, alias: textAngular }
+
+    chaplean_cms.cms_extension:
+        class: Chaplean\Bundle\CmsBundle\Twig\Extension\CmsExtension
+        arguments: [%chaplean_cms%]
+        tags:
+            - { name: 'twig.extension' }
+
+    app.tokens.action_listener:
+        class: Chaplean\Bundle\CmsBundle\Utility\ConfigListener
+        arguments: [%chaplean_cms%]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    chaplean_cms.form.post_type:
+        class: Chaplean\Bundle\CmsBundle\Form\Type\PostType
+        arguments: [%chaplean_cms.post%]
+        tags:
+            - { name: form.type, alias: 'chaplean_cms_post_form' }
+
+    chaplean_cms.form.media_image_type:
+        class: Chaplean\Bundle\CmsBundle\Form\Type\MediaImageType
+        tags:
+            - { name: form.type, alias: 'chaplean_cms_media_image_form' }
+
+    chaplean_cms.form.media_pdf_type:
+        class: Chaplean\Bundle\CmsBundle\Form\Type\MediaPdfType
+        tags:
+            - { name: form.type, alias: 'chaplean_cms_media_pdf_form' }
+

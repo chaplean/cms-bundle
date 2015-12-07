@@ -2,7 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -16,7 +16,7 @@ class Page
      *
      * @ORM\Column(type="string", length=250, nullable=false, name="title")
      *
-     * @JMS\Groups({"page_title"})
+     * @JMS\Groups({"page_title", "page_all"})
      */
     private $title;
 
@@ -25,7 +25,7 @@ class Page
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="subtitle")
      *
-     * @JMS\Groups({"page_subtitle"})
+     * @JMS\Groups({"page_subtitle", "page_all"})
      */
     private $subtitle;
 
@@ -34,7 +34,7 @@ class Page
      *
      * @ORM\Column(type="text", nullable=true, name="content")
      *
-     * @JMS\Groups({"page_content"})
+     * @JMS\Groups({"page_content", "page_all"})
      */
     private $content;
 
@@ -43,19 +43,9 @@ class Page
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="meta_description")
      *
-     * @JMS\Groups({"page_meta_description"})
+     * @JMS\Groups({"page_meta_description", "page_all"})
      */
     private $metaDescription;
-
-    /**
-     * @var Publication
-     *
-     * @ORM\OneToOne(targetEntity="Publication")
-     * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
-     *
-     * @JMS\Groups({"page_publication"})
-     */
-    private $publication;
 
     /**
      * Get title.
@@ -149,30 +139,6 @@ class Page
     public function setMetaDescription($metaDescription)
     {
         $this->metaDescription = $metaDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get publication.
-     *
-     * @return Publication
-     */
-    public function getPublication()
-    {
-        return $this->publication;
-    }
-
-    /**
-     * Set publication.
-     *
-     * @param Publication $publication
-     *
-     * @return self
-     */
-    public function setPublication($publication)
-    {
-        $this->publication = $publication;
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -16,7 +16,7 @@ class MediaPdf extends Media
      *
      * @ORM\Column(type="string", length=250, nullable=true, name="title")
      *
-     * @JMS\Groups({"media_pdf_title"})
+     * @JMS\Groups({"media_pdf_title", "media_all"})
      */
     private $title;
 
@@ -26,7 +26,7 @@ class MediaPdf extends Media
      * @ORM\ManyToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\FileExtensionPdf", inversedBy="medias")
      * @ORM\JoinColumn(name="extension", referencedColumnName="id", nullable=false)
      *
-     * @JMS\Groups({"media_pdf_extension"})
+     * @JMS\Groups({"media_pdf_extension", "media_all"})
      */
     private $extension;
 

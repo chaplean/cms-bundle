@@ -7,10 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class PageType.
+ * PageType.php.
  *
- * @package   Chaplean\Bundle\CmsBundle\Form\Type
- * @author    Benoit - Chaplean <benoit@chaplean.com>
+ * @author    Valentin - Chaplean <valentin@chaplean.com>
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
@@ -24,56 +23,23 @@ class PageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'title',
-            'text',
-            array(
+        $options = null;
+        $builder
+            ->add('title', 'text', array(
                 'required' => true,
-                'mapped' => false
-            )
-        )->add(
-            'subtitle',
-            'text',
-            array(
+            ))
+            ->add('subtitle', 'text', array(
                 'required' => false,
-                'mapped' => false
-            )
-        )->add(
-            'path',
-            'text',
-            array(
-                'required' => true
-            )
-        )->add(
-            'menuName',
-            'text',
-            array(
-                'required' => true
-            )
-        )->add(
-            'rollover',
-            'text',
-            array(
-                'required' => false
-            )
-        )->add(
-            'metaDescription',
-            'textarea',
-            array(
+            ))
+            ->add('metaDescription', 'textarea', array(
                 'required' => false,
-                'mapped' => false,
                 'attr' => array(
                     'rows' => 5
                 )
-            )
-        )->add(
-            'content',
-            'textAngular',
-            array(
+            ))
+            ->add('content', 'textAngular', array(
                 'required' => false,
-                'mapped' => false
-            )
-        );
+            ));
     }
 
     /**
@@ -84,7 +50,7 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\PageRoute',
+            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\Page',
             'translation_domain' => 'messages',
             'csrf_protection' => false,
         ));
@@ -95,6 +61,6 @@ class PageType extends AbstractType
      */
     public function getName()
     {
-        return 'cms_page';
+        return 'chaplean_cms_page_form';
     }
 }

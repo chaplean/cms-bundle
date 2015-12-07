@@ -3,7 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -17,7 +17,8 @@ class FileExtensionImage extends FileExtension
      *
      * @ORM\OneToMany(targetEntity="Chaplean\Bundle\CmsBundle\Entity\MediaImage", mappedBy="extension")
      *
-     * @JMS\Groups({"file_extension_images"})
+     * @JMS\MaxDepth(depth=1)
+     * @JMS\Groups({"file_extension_images", "file_extension_all"})
      */
     private $images;
 

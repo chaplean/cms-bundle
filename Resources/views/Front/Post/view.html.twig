@@ -1,0 +1,28 @@
+{% extends cms_front_layout %}
+
+{% block title %}
+{{ post.page.title }}
+{% endblock %}
+
+{% block description %}
+{{ post.page.metaDescription }}
+{% endblock %}
+
+{% block body %}
+<section class="container">
+    <div class="row">
+        <div class="header-post col-xs-12">
+            <h3 class="text-center">{{ ('post.category.' ~ post.instanceOf)|trans }}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <article class="panel panel-body block-content-info">
+            <h4>{{ post.page.title }}</h4>
+            <h5>{{ post.page.subtitle }}</h5>
+            <div class="page-content">
+                {{ post.page.content|raw }}
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}

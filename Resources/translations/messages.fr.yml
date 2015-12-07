@@ -1,14 +1,19 @@
 alert:
+    block:
+        created: Bloc créé
+        deleted: Bloc supprimé
+        updated: Bloc mis à jour
     page:
         created: Page créée
         deleted: Page supprimée
         updated: Page mise à jour
     post:
-        created: Post créé
-        deleted: Post supprimé
-        updated: Post mis à jour
+        created: Article créé
+        deleted: Article supprimé
+        updated: Article mis à jour
     field:
-        required: Ce champ est obligatoire.
+        required: Ce champ est obligatoire
+        date: Cette date n'est pas valide
 
 button:
     add:
@@ -28,37 +33,112 @@ error:
     important: Une erreur importante est survenue
     not_found: La page demandée n'existe pas
 
+form:
+    post:
+        category: Catégorie
+    publication:
+        date_publication_begin: Date de publication
+        date_publication_end: Date de fin
+        date_add: Création
+        date_update: Modification
+        is_highlighted: Afficher sur la home
 
 global:
     content: Contenu
     frontend: Frontend
     label: Libellé du menu
     meta_description: Meta description
+    name: Libellé
+    no: Non
+    no_results: Aucun résultat
     page: Page
     path: Chemin
-    post: Post
+    post: Article
     rollover: Texte en rollover
+    status: Statut
     subtitle: Sous-titre
     title: Titre
+    yes: Oui
 
 header:
-    creation: Création de page
+    actions: Liste d'actions
+    creation:
+        page: Création de page
+        post: Création d'article
     edition: Edition de "%page%"
+    front:
+        pages: Liste des pages
+    publication_setting: Paramètres de publication
+
+list:
+    block:
+        id: Identifiant du bloc
+        label: Libellé
+        delete: Supprimer ce bloc
+    page:
+        delete: Supprimer cette page
+    post:
+        category: Catégorie
+        delete: Supprimer cet article
+
+media_manager:
+    title:
+        label: Gestionnaire de médias
+    upload:
+        label: Ajouter
+    search:
+        label: Chercher
+    sort:
+        date:
+            label: Trier par date
+        name:
+            label: Trier par nom
+    filter:
+        type:
+            label: Tous les types de média
+        image:
+            label: Image
+        pdf:
+            label: Pdf
+    details:
+        label: Détails
+    edit:
+        title:
+            label: Titre
+        title_alt:
+            label: Titre alternatif
+        link_name:
+            label: Texte du lien
+    alert:
+        delete: Une erreur est survenue lors de la suppression du média
+        save: Une erreur est survenue lors de la modification du média
+        upload: Une erreur est survenue lors l'envoi du média
+    link:
+        label: Lien
+    insert:
+        label: Insérer
+    open:
+        label: Ajouter un média
 
 menu:
+    blocks: Blocs
     header: BackOffice
     page: Page
     pages: Pages
+    posts: Articles
 
 message:
     confirm:
-        delete_page: Confirmez-vous la suppression de la page "%page%"
+        delete_page: Confirmez-vous la suppression de la page "%page%" ?
+        delete_post: Confirmez-vous la suppression de l'article "%post%" ?
+        delete_block: Confirmez-vous la suppression du bloc "%block%" ?
         leave_change: Les données non sauvegardées seront perdues, continuer ?
 
 over:
     path: Le chemin doit être en minuscule et ne contenir ni accent, ni espace
 
 placeholder:
+    name: Libellé
     menu_name: Libellé du menu
     path: chemin/sans_espace/ni_accent
     rollover: Texte au survol
@@ -66,3 +146,18 @@ placeholder:
         global: Recherche globale
     subtitle: Sous-titre
     title: Titre
+
+post:
+    category:
+        all: Toutes
+        news: Nouveauté
+        testimonial: Témoignage
+        video: Vidéo
+        zoom: Zoom
+
+publication_status:
+    status:
+        archived: Archivé
+        published: Publié
+        unpublished: Non publié
+        published_unpublished: Publié et non publié

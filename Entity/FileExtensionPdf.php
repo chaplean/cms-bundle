@@ -3,7 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -17,7 +17,8 @@ class FileExtensionPdf extends FileExtension
      *
      * @ORM\OneToMany(targetEntity="Chaplean\Bundle\CmsBundle\Entity\MediaPdf", mappedBy="extension")
      *
-     * @JMS\Groups({"file_extension_medias"})
+     * @JMS\MaxDepth(depth=1)
+     * @JMS\Groups({"file_extension_medias", "file_extension_all"})
      */
     private $medias;
 
