@@ -12,8 +12,8 @@ alert:
         deleted: Article supprimé
         updated: Article mis à jour
     field:
-        required: Ce champ est obligatoire.
-        date: Cette n'est pas valide
+        required: Ce champ est obligatoire
+        date: Cette date n'est pas valide
 
 button:
     add:
@@ -35,13 +35,13 @@ error:
 
 form:
     post:
-        category: Categorie
+        category: Catégorie
     publication:
         date_publication_begin: Date de publication
         date_publication_end: Date de fin
         date_add: Création
         date_update: Modification
-        is_highlighted: Affiché sur la home
+        is_highlighted: Afficher sur la home
 
 global:
     content: Contenu
@@ -50,12 +50,12 @@ global:
     meta_description: Meta description
     name: Libellé
     no: Non
-    no_results: Aucun résultats
+    no_results: Aucun résultat
     page: Page
     path: Chemin
     post: Article
     rollover: Texte en rollover
-    status: Status
+    status: Statut
     subtitle: Sous-titre
     title: Titre
     yes: Oui
@@ -67,19 +67,19 @@ header:
         post: Création d'article
     edition: Edition de "%page%"
     front:
-        pages: Listes des pages
+        pages: Liste des pages
     publication_setting: Paramètres de publication
 
 list:
     block:
         id: Identifiant du bloc
         label: Libellé
-        delete: Supprimmer ce bloc
+        delete: Supprimer ce bloc
     page:
-        delete: Supprimmer cette page
+        delete: Supprimer cette page
     post:
         category: Catégorie
-        delete: Supprimmer cette article
+        delete: Supprimer cet article
 
 media_manager:
     title:
@@ -110,9 +110,9 @@ media_manager:
         link_name:
             label: Texte du lien
     alert:
-        delete: Une erreur est survenue lors de la suppression du média.
-        save: Une erreur est survenue lors de la modification du média.
-        upload: Une erreur est survenue lors l'envoie du média.
+        delete: Une erreur est survenue lors de la suppression du média
+        save: Une erreur est survenue lors de la modification du média
+        upload: Une erreur est survenue lors l'envoi du média
     link:
         label: Lien
     insert:
@@ -129,9 +129,9 @@ menu:
 
 message:
     confirm:
-        delete_page: Confirmez-vous la suppression de la page "%page%"
-        delete_post: Confirmez-vous la suppression de l'article "%post%"
-        delete_block: Confirmez-vous la suppression du bloc "%block%"
+        delete_page: Confirmez-vous la suppression de la page "%page%" ?
+        delete_post: Confirmez-vous la suppression de l'article "%post%" ?
+        delete_block: Confirmez-vous la suppression du bloc "%block%" ?
         leave_change: Les données non sauvegardées seront perdues, continuer ?
 
 over:
@@ -160,4 +160,4 @@ publication_status:
         archived: Archivé
         published: Publié
         unpublished: Non publié
-        published_unpublished: Publiés et non
+        published_unpublished: Publié et non publié
