@@ -48,6 +48,10 @@
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
     Translator.add("list.block.id", "Identifiant du bloc", "messages", "fr");
     Translator.add("list.block.label", "Libell\u00e9", "messages", "fr");
+    Translator.add("list.block.delete", "Supprimmer ce bloc", "messages", "fr");
+    Translator.add("list.page.delete", "Supprimmer cette page", "messages", "fr");
+    Translator.add("list.post.category", "Cat\u00e9gorie", "messages", "fr");
+    Translator.add("list.post.delete", "Supprimmer cette article", "messages", "fr");
     Translator.add("media_manager.title.label", "Gestionnaire de m\u00e9dias", "messages", "fr");
     Translator.add("media_manager.upload.label", "Ajouter", "messages", "fr");
     Translator.add("media_manager.search.label", "Chercher", "messages", "fr");
@@ -84,8 +88,8 @@
     Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
     Translator.add("post.category.all", "Toutes", "messages", "fr");
-    Translator.add("post.category.news", "Nouvelle", "messages", "fr");
-    Translator.add("post.category.testimonial", "Testimoniale", "messages", "fr");
+    Translator.add("post.category.news", "Nouveaut\u00e9", "messages", "fr");
+    Translator.add("post.category.testimonial", "T\u00e9moignage", "messages", "fr");
     Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
     Translator.add("post.category.zoom", "Zoom", "messages", "fr");
     Translator.add("publication_status.status.archived", "Archiv\u00e9", "messages", "fr");
