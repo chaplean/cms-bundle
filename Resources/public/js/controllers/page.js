@@ -4,7 +4,7 @@ var cms = angular.module('Cms');
 
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Page, PublicationStatus, Validator,
-                                          TranslationService, AlertService, Datepicker) {
+                                          TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
     $scope.pageRoute = {
@@ -48,16 +48,16 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                 function (pageRoute) {
                     $scope.pagePath = pageRoute.path;
                     $scope.pageRoute.dateUpdate = $filter('date')(pageRoute.dateUpdate, 'dd/MM/yyyy');
-                    AlertService.addAlert('success', TranslationService.trans('alert.page.updated'));
+                    CmsAlertService.addAlert('success', TranslationService.trans('alert.page.updated'), 1.5);
 
                     if (quit) {
                         window.location = Routing.generate('cms_page_list');
                     }
                 }, function (response) {
                     if(response.data.error) {
-                        AlertService.addAlert('warning', response.data.error);
+                        CmsAlertService.addAlert('warning', response.data.error, 1.5);
                     } else {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     }
                 });
             } else {
@@ -68,14 +68,14 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                         $scope.pageId = pageRoute.id;
                         $scope.pagePath = pageRoute.path;
                         $scope.pageRoute.dateAdd = $filter('date')(pageRoute.dateAdd, 'dd/MM/yyyy');
-                        AlertService.addAlert('success', TranslationService.trans('alert.page.created'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.page.created'), 1.5);
 
                         if (quit) {
                             window.location = Routing.generate('cms_page_list');
                         }
                     }, function (errors) {
                         $log.error(errors);
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     });
             }
         } else {

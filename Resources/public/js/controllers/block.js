@@ -4,7 +4,7 @@ var cms = angular.module('Cms');
 
 cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Block, PublicationStatus, Validator,
-                                          TranslationService, AlertService, Datepicker) {
+                                          TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
     $scope.block = {
@@ -42,7 +42,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                 Block.update({blockId: $scope.blockId}, block,
                     function (block) {
                         $scope.block.dateUpdate = $filter('date')(block.dateUpdate, 'dd/MM/yyyy');
-                        AlertService.addAlert('success', TranslationService.trans('alert.block.updated'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.block.updated'), 1.5);
 
                         if (quit) {
                             window.location = Routing.generate('cms_block_list');
@@ -50,15 +50,15 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                     }, function (response) {
                         if(response.status == 400) {
                             Validator.addError(blockForm, response.data);
-                            AlertService.addAlert('warning', TranslationService.trans('error.important'));
+                            CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
-                            AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                            CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                         }
                     });
             } else {
                 Block.save(block, function (block) {
                     $scope.block.dateAdd = $filter('date')(block.dateAdd, 'dd/MM/yyyy');
-                    AlertService.addAlert('success', TranslationService.trans('alert.block.created'));
+                    CmsAlertService.addAlert('success', TranslationService.trans('alert.block.created'), 1.5);
 
                     if (quit) {
                         window.location = Routing.generate('cms_block_list');
@@ -66,7 +66,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                 }, function (errors) {
                     $log.error(errors);
                     $scope.errors = errors;
-                    AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                    CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                 });
             }
         } else {

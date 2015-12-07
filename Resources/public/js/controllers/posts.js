@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, PublicationStatus, TranslationService, AlertService) {
+cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, PublicationStatus, TranslationService, CmsAlertService) {
 
     $scope.search = '';
     $scope.post = {
@@ -79,9 +79,9 @@ cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbo
                     },
                     function (post) {
                         $scope.posts.splice($scope.posts.indexOf(post), 1);
-                        AlertService.addAlert('success', TranslationService.trans('alert.post.deleted'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.deleted'), 1.5);
                     }, function () {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     }
                 );
             }, function() {

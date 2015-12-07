@@ -60,16 +60,16 @@
                             <select id="{{ form.publication.status.vars.id }}" name="{{ form.publication.status.vars.full_name }}" class="form-control" ng-options="('publication_status.status.' + publicationStatus.keyname)|trans for publicationStatus in publicationStatuses track by publicationStatus.id" ng-model="block.publication.status"></select>
                         </div>
                     </div>
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-12" ng-show="block.publication.status.keyname == 'published'">
                         <label for="{{ form.publication.datePublicationBegin.vars.id }}" class="col-xs-4 control-label align-label text-right">{{ 'form.publication.date_publication_begin'|trans }}</label>
                         <div class="col-xs-8">
-                            <input id="{{ form.publication.datePublicationBegin.vars.id }}" name="{{ form.publication.datePublicationBegin.vars.full_name }}" class="form-control" ng-focus="datepicker.open($event, 1)" datepicker-options="datepicker.options" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" is-open="datepicker.open1" ng-model="block.publication.datePublicationBegin" type="text" maxlength="10" autocomplete="off">
+                            <input id="{{ form.publication.datePublicationBegin.vars.id }}" name="{{ form.publication.datePublicationBegin.vars.full_name }}" class="form-control" ng-focus="datepicker.open($event, 1)" datepicker-options="datepicker.options" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" is-open="datepicker.open1" ng-model="block.publication.datePublicationBegin" max-date="post.publication.datePublicationEnd" type="text" maxlength="10" autocomplete="off">
                         </div>
                     </div>
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-12" ng-show="block.publication.status.keyname == 'published'">
                         <label for="{{ form.publication.datePublicationEnd.vars.id }}" class="col-xs-4 control-label align-label text-right">{{ 'form.publication.date_publication_end'|trans }}</label>
                         <div class="col-xs-8">
-                            <input id="{{ form.publication.datePublicationEnd.vars.id }}" name="{{ form.publication.datePublicationEnd.vars.full_name }}" class="form-control" ng-focus="datepicker.open($event, 2)" datepicker-options="datepicker.options" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" is-open="datepicker.open2" ng-model="block.publication.datePublicationEnd" type="text" maxlength="10" autocomplete="off">
+                            <input id="{{ form.publication.datePublicationEnd.vars.id }}" name="{{ form.publication.datePublicationEnd.vars.full_name }}" class="form-control" ng-focus="datepicker.open($event, 2)" datepicker-options="datepicker.options" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" is-open="datepicker.open2" ng-model="block.publication.datePublicationEnd" min-date="post.publication.datePublicationBegin" type="text" maxlength="10" autocomplete="off">
                         </div>
                     </div>
                     <div class="form-group col-xs-12">

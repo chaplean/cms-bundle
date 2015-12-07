@@ -4,7 +4,7 @@ var cms = angular.module('Cms');
 
 cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Post, PublicationStatus, Validator,
-                                          TranslationService, AlertService, Datepicker) {
+                                          TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
     $scope.post = {
@@ -46,7 +46,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
                         $scope.post.dateUpdate = $filter('date')(post.dateUpdate, 'dd/MM/yyyy');
                         $scope.title = $scope.post.page.title;
-                        AlertService.addAlert('success', TranslationService.trans('alert.post.updated'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.updated'), 1.5);
 
                         if (quit) {
                             window.location = Routing.generate('cms_post_list');
@@ -54,16 +54,16 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                     }, function (response) {
                         if(response.status == 400) {
                             Validator.addError(postForm, response.data);
-                            AlertService.addAlert('warning', TranslationService.trans('error.important'));
+                            CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
-                            AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                            CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                         }
                     });
             } else {
                 Post.save(post, function (post) {
                         $scope.post.dateAdd = $filter('date')(post.dateAdd, 'dd/MM/yyyy');
                         $scope.title = $scope.post.page.title;
-                        AlertService.addAlert('success', TranslationService.trans('alert.post.created'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.created'), 1.5);
 
                         if (quit) {
                             window.location = Routing.generate('cms_post_list');
@@ -71,7 +71,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                     }, function (errors) {
                         $log.error(errors);
                         $scope.errors = errors;
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     });
             }
         } else {

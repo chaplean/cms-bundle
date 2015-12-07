@@ -40,7 +40,7 @@
                 <td><a href="{^ path('cms_block_edit', {blockId: block.id}) ^}">{^ block.id ^}</a></td>
                 <td class="center"><a href="{^ path('cms_block_edit', {blockId: block.id}) ^}">{^ block.name ^}</a></td>
                 <td>
-                    <button type="button" ng-click="removeBlock(block)" class="btn btn-sm btn-danger">
+                    <button type="button" ng-click="removeBlock(block)" title="{{ 'list.block.delete'|trans }}" class="btn btn-sm btn-danger">
                         <i class="fa fa-minus-circle"></i>
                     </button>
                 </td>

@@ -13163,16 +13163,16 @@ cms.run(function(amMoment) {
     amMoment.changeLocale(locale);
 });
 
-cms.controller('MainController', function($scope, $rootScope, Post, AlertService) {
+cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService) {
 
     $rootScope.path = function (url, options) {
         return Routing.generate(url, options);
     };
 
-    $scope.alerts = AlertService.alerts;
+    $scope.alerts = CmsAlertService.alerts;
 
     $scope.closeAlert = function (index) {
-        AlertService.closeAlert(index);
+        CmsAlertService.closeAlert(index);
     };
 });
 
@@ -13180,7 +13180,7 @@ cms.controller('MainController', function($scope, $rootScope, Post, AlertService
 
 var cms = angular.module('Cms');
 
-cms.factory('AlertService', function($timeout) {
+cms.factory('CmsAlertService', function($timeout) {
 
     var alerts = [];
 
@@ -13394,7 +13394,7 @@ var cms = angular.module('Cms');
 
 cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Block, PublicationStatus, Validator,
-                                          TranslationService, AlertService, Datepicker) {
+                                          TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
     $scope.block = {
@@ -13432,7 +13432,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                 Block.update({blockId: $scope.blockId}, block,
                     function (block) {
                         $scope.block.dateUpdate = $filter('date')(block.dateUpdate, 'dd/MM/yyyy');
-                        AlertService.addAlert('success', TranslationService.trans('alert.block.updated'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.block.updated'), 1.5);
 
                         if (quit) {
                             window.location = Routing.generate('cms_block_list');
@@ -13440,15 +13440,15 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                     }, function (response) {
                         if(response.status == 400) {
                             Validator.addError(blockForm, response.data);
-                            AlertService.addAlert('warning', TranslationService.trans('error.important'));
+                            CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
-                            AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                            CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                         }
                     });
             } else {
                 Block.save(block, function (block) {
                     $scope.block.dateAdd = $filter('date')(block.dateAdd, 'dd/MM/yyyy');
-                    AlertService.addAlert('success', TranslationService.trans('alert.block.created'));
+                    CmsAlertService.addAlert('success', TranslationService.trans('alert.block.created'), 1.5);
 
                     if (quit) {
                         window.location = Routing.generate('cms_block_list');
@@ -13456,7 +13456,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                 }, function (errors) {
                     $log.error(errors);
                     $scope.errors = errors;
-                    AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                    CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                 });
             }
         } else {
@@ -13507,7 +13507,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
 
 var cms = angular.module('Cms');
 
-cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, AlertService) {
+cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, CmsAlertService) {
     $scope.search = '';
     $scope.blocks = [];
     $scope.blocksDisplayed = [];
@@ -13529,9 +13529,9 @@ cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox
                     },
                     function (block) {
                         $scope.blocks.splice($scope.blocks.indexOf(block), 1);
-                        AlertService.addAlert('success', TranslationService.trans('alert.block.deleted'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.block.deleted'), 1.5);
                     }, function () {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     }
                 );
             }, function() {
@@ -13580,7 +13580,7 @@ cms.config(function ($provide) {
     });
 });
 
-cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter, Media, AlertService, TranslationService, FileUploader, FileItem) {
+cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter, Media, CmsAlertService, TranslationService, FileUploader, FileItem) {
 
     $scope.updateFilter = function () {
         $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
@@ -13618,7 +13618,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
             $scope.updateFilter();
         },
         onErrorItem:   function () {
-            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
+            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'), 1.5);
         }
     });
 
@@ -13630,7 +13630,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
             angular.extend($scope.selectedMedia, updatedMedia);
         },
         onErrorItem:        function () {
-            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'));
+            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'), 1.5);
         },
         onBeforeUploadItem: function (item) {
             item.url = Routing.generate('cms_rest') + 'media' + $scope.selectedMedia.id + '/edits';
@@ -13690,7 +13690,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
             $scope.selectedMedia = null;
             $scope.updateFilter();
         }, function () {
-            AlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'));
+            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'), 1.5);
         });
     };
 
@@ -13719,7 +13719,7 @@ var cms = angular.module('Cms');
 
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Page, PublicationStatus, Validator,
-                                          TranslationService, AlertService, Datepicker) {
+                                          TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
     $scope.pageRoute = {
@@ -13763,16 +13763,16 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                 function (pageRoute) {
                     $scope.pagePath = pageRoute.path;
                     $scope.pageRoute.dateUpdate = $filter('date')(pageRoute.dateUpdate, 'dd/MM/yyyy');
-                    AlertService.addAlert('success', TranslationService.trans('alert.page.updated'));
+                    CmsAlertService.addAlert('success', TranslationService.trans('alert.page.updated'), 1.5);
 
                     if (quit) {
                         window.location = Routing.generate('cms_page_list');
                     }
                 }, function (response) {
                     if(response.data.error) {
-                        AlertService.addAlert('warning', response.data.error);
+                        CmsAlertService.addAlert('warning', response.data.error, 1.5);
                     } else {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     }
                 });
             } else {
@@ -13783,14 +13783,14 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                         $scope.pageId = pageRoute.id;
                         $scope.pagePath = pageRoute.path;
                         $scope.pageRoute.dateAdd = $filter('date')(pageRoute.dateAdd, 'dd/MM/yyyy');
-                        AlertService.addAlert('success', TranslationService.trans('alert.page.created'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.page.created'), 1.5);
 
                         if (quit) {
                             window.location = Routing.generate('cms_page_list');
                         }
                     }, function (errors) {
                         $log.error(errors);
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     });
             }
         } else {
@@ -13878,7 +13878,7 @@ cms.controller('PagesListController', function ($scope, $filter, Page, CmsRouter
 
 var cms = angular.module('Cms');
 
-cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox, Page, TranslationService, AlertService) {
+cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService) {
     $scope.search = '';
 
     $scope.loadData = function() {
@@ -13907,9 +13907,9 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
                     },
                     function (page) {
                         $scope.pages.splice($scope.pages.indexOf(page), 1);
-                        AlertService.addAlert('success', TranslationService.trans('alert.page.deleted'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.page.deleted'), 1.5);
                     }, function () {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     }
                 );
             }, function() {
@@ -13927,7 +13927,7 @@ var cms = angular.module('Cms');
 
 cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Post, PublicationStatus, Validator,
-                                          TranslationService, AlertService, Datepicker) {
+                                          TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
     $scope.post = {
@@ -13969,7 +13969,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
                         $scope.post.dateUpdate = $filter('date')(post.dateUpdate, 'dd/MM/yyyy');
                         $scope.title = $scope.post.page.title;
-                        AlertService.addAlert('success', TranslationService.trans('alert.post.updated'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.updated'), 1.5);
 
                         if (quit) {
                             window.location = Routing.generate('cms_post_list');
@@ -13977,16 +13977,16 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                     }, function (response) {
                         if(response.status == 400) {
                             Validator.addError(postForm, response.data);
-                            AlertService.addAlert('warning', TranslationService.trans('error.important'));
+                            CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
-                            AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                            CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                         }
                     });
             } else {
                 Post.save(post, function (post) {
                         $scope.post.dateAdd = $filter('date')(post.dateAdd, 'dd/MM/yyyy');
                         $scope.title = $scope.post.page.title;
-                        AlertService.addAlert('success', TranslationService.trans('alert.post.created'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.created'), 1.5);
 
                         if (quit) {
                             window.location = Routing.generate('cms_post_list');
@@ -13994,7 +13994,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                     }, function (errors) {
                         $log.error(errors);
                         $scope.errors = errors;
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     });
             }
         } else {
@@ -14105,7 +14105,7 @@ cms.controller('PostsListController', function ($scope, $filter, Post, CmsRouter
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, PublicationStatus, TranslationService, AlertService) {
+cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, PublicationStatus, TranslationService, CmsAlertService) {
 
     $scope.search = '';
     $scope.post = {
@@ -14182,9 +14182,9 @@ cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbo
                     },
                     function (post) {
                         $scope.posts.splice($scope.posts.indexOf(post), 1);
-                        AlertService.addAlert('success', TranslationService.trans('alert.post.deleted'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.deleted'), 1.5);
                     }, function () {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     }
                 );
             }, function() {

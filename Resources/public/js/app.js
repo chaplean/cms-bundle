@@ -15,15 +15,15 @@ cms.run(function(amMoment) {
     amMoment.changeLocale(locale);
 });
 
-cms.controller('MainController', function($scope, $rootScope, Post, AlertService) {
+cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService) {
 
     $rootScope.path = function (url, options) {
         return Routing.generate(url, options);
     };
 
-    $scope.alerts = AlertService.alerts;
+    $scope.alerts = CmsAlertService.alerts;
 
     $scope.closeAlert = function (index) {
-        AlertService.closeAlert(index);
+        CmsAlertService.closeAlert(index);
     };
 });

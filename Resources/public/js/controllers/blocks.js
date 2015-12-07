@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, AlertService) {
+cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, CmsAlertService) {
     $scope.search = '';
     $scope.blocks = [];
     $scope.blocksDisplayed = [];
@@ -24,9 +24,9 @@ cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox
                     },
                     function (block) {
                         $scope.blocks.splice($scope.blocks.indexOf(block), 1);
-                        AlertService.addAlert('success', TranslationService.trans('alert.block.deleted'));
+                        CmsAlertService.addAlert('success', TranslationService.trans('alert.block.deleted'), 1.5);
                     }, function () {
-                        AlertService.addAlert('danger', TranslationService.trans('error.important'))
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                     }
                 );
             }, function() {

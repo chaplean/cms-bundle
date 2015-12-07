@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.factory('AlertService', function($timeout) {
+cms.factory('CmsAlertService', function($timeout) {
 
     var alerts = [];
 

@@ -74,6 +74,12 @@ list:
     block:
         id: Identifiant du bloc
         label: Libellé
+        delete: Supprimmer ce bloc
+    page:
+        delete: Supprimmer cette page
+    post:
+        category: Catégorie
+        delete: Supprimmer cette article
 
 media_manager:
     title:
@@ -144,8 +150,8 @@ placeholder:
 post:
     category:
         all: Toutes
-        news: Nouvelle
-        testimonial: Testimoniale
+        news: Nouveauté
+        testimonial: Témoignage
         video: Vidéo
         zoom: Zoom
 
