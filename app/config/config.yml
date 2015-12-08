@@ -107,7 +107,11 @@ doctrine:
             enum: string
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
+        default_entity_manager: cms
+        entity_managers:
+            cms:
+                mappings:
+                    ChapleanCmsBundle: ~
 
 bazinga_js_translation:
     locale_fallback:      fr
