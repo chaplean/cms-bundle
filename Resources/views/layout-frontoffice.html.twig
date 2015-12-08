@@ -37,7 +37,6 @@
         'bundles/bazingajstranslation/js/translator.min.js'
         'js/translations/config.js'
         'js/translations/messages/*.js'
-        'js/translations/navigation/*.js'
         '@ChapleanCmsBundle/Resources/public/libs/jquery/dist/jquery.min.js'
         '@ChapleanCmsBundle/Resources/public/libs/bootstrap-sass-official/assets/javascripts/bootstrap.js'
         '@ChapleanCmsBundle/Resources/public/libs/angular/angular.min.js'
@@ -65,7 +64,7 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
-        <script type="text/ng-template" src="{{ asset('@ChapleanCmsBundle/Resources/public/libs/angular-utils-pagination/dirPagination.tpl.html') }}"></script>
+        <script type="text/ng-template" src="{{ asset('bundles/chapleancms/libs/angular-utils-pagination/dirPagination.tpl.html') }}"></script>
     {% endblock %}
 
     {% block head %}{% endblock %}
