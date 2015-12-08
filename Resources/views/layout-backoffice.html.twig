@@ -12,9 +12,9 @@
 
     {% block stylesheets %}
         {% stylesheets
-        'vendor/angular/angular-csp.css'
-        'vendor/font-awesome/css/font-awesome.min.css'
-        'vendor/textAngular/dist/textAngular.css'
+        '@ChapleanCmsBundle/Resources/public/libs/angular/angular-csp.css'
+        '@ChapleanCmsBundle/Resources/public/libs/components-font-awesome/css/font-awesome.min.css'
+        '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular.css'
         %}
         <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
         {% endstylesheets %}
@@ -37,36 +37,34 @@
         'bundles/bazingajstranslation/js/translator.min.js'
         'js/translations/config.js'
         'js/translations/messages/*.js'
-        'js/translations/navigation/*.js'
-        'vendor/jquery/dist/jquery.min.js'
-        'vendor/bootstrap-sass-official/assets/javascripts/bootstrap.js'
-        'vendor/angular/angular.min.js'
-        'vendor/angular-resource/angular-resource.min.js'
-        'vendor/angular-animate/angular-animate.min.js'
-        'vendor/angular-sanitize/angular-sanitize.min.js'
-        'vendor/angular-cookies/angular-cookies.min.js'
-        'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
-        'vendor/angular-symfony-translation/dist/angular-symfony-translation.js'
-        'vendor/angular-utils-pagination/dirPagination.js'
-        'vendor/angular-smart-table/dist/smart-table.min.js'
-        'vendor/angular-ui-mask/dist/mask.min.js'
-        'vendor/angular-file-upload/dist/angular-file-upload.min.js'
-        'vendor/textAngular/dist/textAngular-rangy.min.js'
-        'vendor/textAngular/dist/textAngular-sanitize.min.js'
-        'vendor/textAngular/dist/textAngular.min.js'
-        'vendor/bootbox/bootbox.js'
-        'vendor/ngBootbox/ngBootbox.js'
-        'vendor/moment/min/moment-with-locales.min.js'
-        'vendor/angular-moment/angular-moment.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/jquery/dist/jquery.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/bootstrap-sass-official/assets/javascripts/bootstrap.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular/angular.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-resource/angular-resource.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-animate/angular-animate.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-sanitize/angular-sanitize.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-cookies/angular-cookies.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-bootstrap/ui-bootstrap-tpls.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-symfony-translation/dist/angular-symfony-translation.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-utils-pagination/dirPagination.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-smart-table/dist/smart-table.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-ui-mask/dist/mask.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-file-upload/dist/angular-file-upload.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular-rangy.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular-sanitize.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/bootbox/bootbox.js'
+        '@ChapleanCmsBundle/Resources/public/libs/ngBootbox/ngBootbox.js'
+        '@ChapleanCmsBundle/Resources/public/libs/moment/min/moment-with-locales.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-moment/angular-moment.min.js'
         '@ChapleanCmsBundle/Resources/public/js/app.js'
         '@ChapleanCmsBundle/Resources/public/js/services/*'
         '@ChapleanCmsBundle/Resources/public/js/controllers/*'
-        '@ChapleanCmsBundle/Resources/public/js/filters/*'
-        '@ChapleanCmsBundle/Resources/public/js/directives/*' %}
+        '@ChapleanCmsBundle/Resources/public/js/filters/*' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
-        <script type="text/ng-template" src="{{ asset('vendor/angular-utils-pagination/dirPagination.tpl.html') }}"></script>
+        <script type="text/ng-template" src="{{ asset('bundles/chapleancms/libs/angular-utils-pagination/dirPagination.tpl.html') }}"></script>
     {% endblock %}
 
     {% block head %}{% endblock %}

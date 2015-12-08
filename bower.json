@@ -33,7 +33,8 @@
     "ngBootbox": "~0.1.1",
     "requirejs": "2.1.*",
     "requirejs-domready": "~2.0.1",
-    "textAngular": "~1.4.3"
+    "textAngular": "~1.4.3",
+    "components-font-awesome": "~4.5.0"
   },
   "resolutions": {
     "angular": "1.3.*"
