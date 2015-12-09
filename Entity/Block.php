@@ -34,7 +34,7 @@ class Block
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, name="content")
      *
      * @JMS\Groups({"block_content", "block_all"})
      */
@@ -43,7 +43,7 @@ class Block
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false, name="date_add")
      *
      * @JMS\Groups({"block_date_add", "block_all"})
      */
@@ -52,7 +52,7 @@ class Block
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="date_update")
      *
      * @JMS\Groups({"block_date_update", "block_all"})
      */
