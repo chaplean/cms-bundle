@@ -29,8 +29,24 @@ class ChapleanCmsExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('chaplean_cms', $config);
+        $this->setParameters($container, 'chaplean_cms', $config);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param string           $name
+     * @param array            $config
+     *
+     * @return void
+     */
+    public function setParameters($container, $name, $config)
+    {
         foreach ($config as $key => $parameter) {
-            $container->setParameter('chaplean_cms.' . $key, $parameter);
+            $container->setParameter($name . '.' . $key, $parameter);
+
+            if (is_array($parameter)) {
+                $this->setParameters($container, $name . '.' . $key, $parameter);
+            }
         }
     }
 }
