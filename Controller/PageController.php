@@ -62,7 +62,8 @@ class PageController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('ChapleanCmsBundle:Front/Page:index.html.twig');
+        $template = $this->getParameter('chaplean_cms.template.page_index');
+        return $this->render($template);
     }
 
     /**
@@ -108,9 +109,9 @@ class PageController extends Controller
             );
         }
 
-        // redirect to the correct page
+        $template = $this->getParameter('chaplean_cms.template.page_view');
         return $this->render(
-            'ChapleanCmsBundle:Front/Page:view.html.twig',
+            $template,
             array(
                 'pageRoute' => $pageRoute
             )

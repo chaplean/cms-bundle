@@ -62,7 +62,8 @@ class PostController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('ChapleanCmsBundle:Front/Post:index.html.twig');
+        $template = $this->getParameter('chaplean_cms.template.post_index');
+        return $this->render($template);
     }
 
     /**
@@ -82,7 +83,8 @@ class PostController extends Controller
             throw new NotFoundHttpException;
         }
 
-        return $this->render('ChapleanCmsBundle:Front/Post:view.html.twig', array(
+        $template = $this->getParameter('chaplean_cms.template.post_view');
+        return $this->render($template, array(
             'post' => $post,
         ));
     }
@@ -100,7 +102,8 @@ class PostController extends Controller
             throw new NotFoundHttpException;
         }
 
-        return $this->render('ChapleanCmsBundle:Front/Post:view.html.twig', array(
+        $template = $this->getParameter('chaplean_cms.template.post_view');
+        return $this->render($template, array(
             'post' => $post,
         ));
     }

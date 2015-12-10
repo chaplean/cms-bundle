@@ -24,7 +24,15 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('front_layout')->isRequired()->end()
+                ->arrayNode('template')
+                    ->children()
+                        ->scalarNode('front_layout')->isRequired()->end()
+                        ->scalarNode('page_index')->defaultValue('ChapleanCmsBundle:Front/Page:index.html.twig')->end()
+                        ->scalarNode('page_view')->defaultValue('ChapleanCmsBundle:Front/Page:view.html.twig')->end()
+                        ->scalarNode('post_index')->defaultValue('ChapleanCmsBundle:Front/Post:index.html.twig')->end()
+                        ->scalarNode('post_view')->defaultValue('ChapleanCmsBundle:Front/Post:view.html.twig')->end()
+                    ->end()
+                ->end()
                 ->booleanNode('block')->isRequired()->end()
                 ->booleanNode('page')->isRequired()->end()
                 ->variableNode('media')
