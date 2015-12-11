@@ -1,6 +1,10 @@
 imports:
     - { resource: config.yml }
 
+assetic:
+    debug:          true
+    use_controller: false
+
 # Doctrine Configuration
 doctrine:
     dbal:

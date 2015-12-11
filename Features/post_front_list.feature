@@ -2,6 +2,7 @@ Feature: List posts front
 
   Background:
     Given I load default datafixture with "Chaplean\Bundle\CmsBundle\"
+    Given I load database
     Given I am on "/posts"
 
   Scenario: I can see list

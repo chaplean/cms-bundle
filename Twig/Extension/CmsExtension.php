@@ -32,7 +32,7 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
     public function getGlobals()
     {
         return array(
-            'cms_front_layout' => $this->getParameters('front_layout'),
+            'cms_front_layout' => $this->getParameters('template', 'front_layout'),
             'block_is_activate' => $this->getParameters('block'),
             'post_is_activate' => is_bool($this->getParameters('post')) ? $this->getParameters('post') : true,
             'page_is_activate' => $this->getParameters('page'),
@@ -47,7 +47,18 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
      */
     public function getParameters($key)
     {
-        return $this->parametersCms[$key];
+        $args = func_get_args();
+
+        $key = array_shift($args);
+        if (count($args) > 0) {
+            $value = $this->parametersCms[$key];
+            foreach ($args as $arg) {
+                $value = $value[$arg];
+            }
+            return $value;
+        } else {
+            return is_array($this->parametersCms[$key]) ? $this->parametersCms[$key] : $this->parametersCms[$key];
+        }
     }
 
     /**

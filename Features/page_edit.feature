@@ -2,6 +2,7 @@ Feature: Edit pages
 
   Background:
     Given I load default datafixture with "Chaplean\Bundle\CmsBundle\"
+    Given I load database
 
   Scenario: I can see fields
     Given I am on "/administration/page/1"
