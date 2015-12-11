@@ -2,6 +2,7 @@ Feature: Create page
 
   Background:
     Given I load default datafixture with "Chaplean\Bundle\CmsBundle\"
+    Given I load database
 
   Scenario: I can click to add page
     Given I am on "/administration/pages"

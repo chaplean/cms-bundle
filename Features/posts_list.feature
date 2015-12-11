@@ -2,6 +2,7 @@ Feature: List pages
 
   Background:
     Given I load default datafixture with "Chaplean\Bundle\CmsBundle\"
+    Given I load database
     Given I am on "/administration/posts"
 
   Scenario: I see list pages
