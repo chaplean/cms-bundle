@@ -94,7 +94,7 @@ class PageController extends ChapleanRestController
         $em = $this->getDoctrine()->getManager();
 
         // create form and get params
-        $formPage = $this->createForm(new PageRouteType());
+        $formPage = $this->createForm(PageRouteType::class);
 
         // bind data in form
         $formPage->submit($request->request->all());
@@ -152,7 +152,7 @@ class PageController extends ChapleanRestController
         }
 
         // create form and get params
-        $formPage = $this->createForm(new PageRouteType(), $pageRoute);
+        $formPage = $this->createForm(PageRouteType::class, $pageRoute);
 
         // bind data in form
         $formPage->submit($request->request->all());

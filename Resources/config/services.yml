@@ -24,15 +24,15 @@ services:
         class: Chaplean\Bundle\CmsBundle\Form\Type\PostType
         arguments: [%chaplean_cms.post%]
         tags:
-            - { name: form.type, alias: 'chaplean_cms_post_form' }
+            - { name: form.type }
 
     chaplean_cms.form.media_image_type:
         class: Chaplean\Bundle\CmsBundle\Form\Type\MediaImageType
         tags:
-            - { name: form.type, alias: 'chaplean_cms_media_image_form' }
+            - { name: form.type }
 
     chaplean_cms.form.media_pdf_type:
         class: Chaplean\Bundle\CmsBundle\Form\Type\MediaPdfType
         tags:
-            - { name: form.type, alias: 'chaplean_cms_media_pdf_form' }
+            - { name: form.type }
 

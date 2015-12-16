@@ -3,6 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,10 +26,10 @@ class MediaImageType extends AbstractType
     {
         $options = null;
         $builder
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'required' => false,
             ))
-            ->add('alternativeTitle', 'text', array(
+            ->add('alternativeTitle', TextType::class, array(
                 'required' => false,
             ));
     }
@@ -50,7 +51,7 @@ class MediaImageType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'chaplean_cms_media_image_form';
     }
