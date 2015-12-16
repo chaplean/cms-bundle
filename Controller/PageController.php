@@ -42,7 +42,7 @@ class PageController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $form = $this->createForm(new PageRouteType());
+        $form = $this->createForm(PageRouteType::class);
         $translator = $this->get('translator');
 
         return $this->render(

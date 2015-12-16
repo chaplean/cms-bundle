@@ -79,7 +79,7 @@ class BlockController extends ChapleanRestController
         $em = $this->getDoctrine()->getManager();
 
         // create form and get params
-        $formBlock = $this->createForm(new BlockType());
+        $formBlock = $this->createForm(BlockType::class);
 
         // bind data in form
         $formBlock->submit($request->request->all());
@@ -134,7 +134,7 @@ class BlockController extends ChapleanRestController
         }
 
         // create form and get params
-        $formBlock = $this->createForm(new BlockType(), $block);
+        $formBlock = $this->createForm(BlockType::class, $block);
 
         // bind data in form
         $formBlock->submit($request->request->all());

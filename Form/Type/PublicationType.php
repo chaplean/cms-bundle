@@ -1,7 +1,10 @@
 <?php
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,15 +28,15 @@ class PublicationType extends AbstractType
     {
         $options = null;
         $builder
-            ->add('datePublicationBegin', 'datetime', array(
+            ->add('datePublicationBegin', DateTimeType::class, array(
                 'required' => false,
                 'widget'   => 'single_text',
             ))
-            ->add('datePublicationEnd', 'datetime', array(
+            ->add('datePublicationEnd', DateTimeType::class, array(
                 'required' => false,
                 'widget'   => 'single_text',
             ))
-            ->add('isHighlighted', 'choice', array(
+            ->add('isHighlighted', ChoiceType::class, array(
                 'choices' => array(
                     '0' => 'no',
                     '1' => 'yes',
@@ -43,9 +46,9 @@ class PublicationType extends AbstractType
                 'required' => false,
                 'empty_data' => '0',
             ))
-            ->add('status', 'entity', array(
+            ->add('status', EntityType::class, array(
                 'class'    => 'Chaplean\Bundle\CmsBundle\Entity\PublicationStatus',
-                'property' => 'id',
+                'choice_label' => 'id',
                 'required' => true,
             ));
     }
@@ -69,7 +72,7 @@ class PublicationType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'chaplean_cms_publication_form';
     }

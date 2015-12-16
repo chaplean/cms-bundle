@@ -2,6 +2,7 @@
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,10 +25,10 @@ class BlockType extends AbstractType
     {
         $options = null;
         $builder
-            ->add('name', 'text', array(
+            ->add('name', TextType::class, array(
                 'required' => true
             ))
-            ->add('content', 'textAngular')
+            ->add('content', TextAngularType::class)
             ->add('publication', new PublicationType());
     }
 
@@ -48,7 +49,7 @@ class BlockType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'chaplean_cms_block_form';
     }

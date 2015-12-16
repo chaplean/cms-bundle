@@ -41,7 +41,7 @@ class BlockController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $form = $this->createForm(new BlockType());
+        $form = $this->createForm(BlockType::class);
 
         return $this->render(
             'ChapleanCmsBundle:Back/Block:edit.html.twig',

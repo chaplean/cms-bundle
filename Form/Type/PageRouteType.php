@@ -3,6 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,13 +27,13 @@ class PageRouteType extends AbstractType
     {
         $options = null;
         $builder
-            ->add('path', 'text', array(
+            ->add('path', TextType::class, array(
                 'required' => true
             ))
-            ->add('menuName', 'text', array(
+            ->add('menuName', TextType::class, array(
                 'required' => true
             ))
-            ->add('rollover', 'text', array(
+            ->add('rollover', TextType::class, array(
                 'required' => false
             ))
             ->add('page', new PageType())
@@ -56,7 +57,7 @@ class PageRouteType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'chaplean_cms_page_route_form';
     }

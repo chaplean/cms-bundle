@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsListController', function ($scope, $filter, Post, CmsRouter) {
+cms.controller('PostsListController', function ($scope, $location, $filter, Post, CmsRouter) {
 
     $scope.search = '';
     $scope.post = {
@@ -32,6 +32,12 @@ cms.controller('PostsListController', function ($scope, $filter, Post, CmsRouter
             } else {
                 $scope.categories.push('all');
             }
+
+            var parameter = $location.search();
+            if (parameter.hasOwnProperty('category') && parameter.category && $scope.categories.indexOf(parameter.category) !== -1) {
+                $scope.category = parameter.category;
+            }
+
             $scope.updateFilter();
         });
     };

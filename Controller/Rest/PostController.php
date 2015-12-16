@@ -4,6 +4,7 @@ namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
 use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\Publication;
+use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
 use Chaplean\Bundle\CmsBundle\Utility\ErrorFormUtility;
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
 use Doctrine\ORM\EntityManager;
@@ -127,7 +128,7 @@ class PostController extends ChapleanRestController
         $em = $this->getDoctrine()->getManager();
 
         // create form and get params
-        $formPost = $this->createForm('chaplean_cms_post_form');
+        $formPost = $this->createForm(PostType::class);
 
         // bind data in form
         $formPost->submit($request->request->all());
@@ -193,7 +194,7 @@ class PostController extends ChapleanRestController
         unset($parameters['category']);
 
         // create form and get params
-        $formPost = $this->createForm('chaplean_cms_post_form', $post);
+        $formPost = $this->createForm(PostType::class, $post);
 
         // bind data in form
         $formPost->submit($request->request->all());

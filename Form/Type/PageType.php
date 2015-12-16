@@ -3,6 +3,8 @@
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,19 +27,19 @@ class PageType extends AbstractType
     {
         $options = null;
         $builder
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'required' => true,
             ))
-            ->add('subtitle', 'text', array(
+            ->add('subtitle', TextType::class, array(
                 'required' => false,
             ))
-            ->add('metaDescription', 'textarea', array(
+            ->add('metaDescription', TextareaType::class, array(
                 'required' => false,
                 'attr' => array(
                     'rows' => 5
                 )
             ))
-            ->add('content', 'textAngular', array(
+            ->add('content', TextAngularType::class, array(
                 'required' => false,
             ));
     }
@@ -59,7 +61,7 @@ class PageType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'chaplean_cms_page_form';
     }

@@ -148,9 +148,9 @@ class MediaController extends FOSRestController
 
             $form = null;
             if ($media instanceof MediaImage) {
-                $form = $this->createForm(new MediaImageType(), $media);
+                $form = $this->createForm(MediaImageType::class, $media);
             } elseif ($media instanceof MediaPdf) {
-                $form = $this->createForm(new MediaPdfType(), $media);
+                $form = $this->createForm(MediaPdfType::class, $media);
             }
 
             if (!empty($form)) {

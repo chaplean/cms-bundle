@@ -4,6 +4,7 @@ namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -59,7 +60,7 @@ class PostType extends AbstractType
     {
         $options = null;
         $builder
-            ->add('category', 'choice', array(
+            ->add('category', ChoiceType::class, array(
                 'mapped' => false,
                 'choices' => $this->categories,
                 'empty_data' => 'news',
@@ -88,7 +89,7 @@ class PostType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'chaplean_cms_post_form';
     }
