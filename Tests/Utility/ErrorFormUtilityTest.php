@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Tests\Utility;
 
+use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
 use Chaplean\Bundle\CmsBundle\Utility\ErrorFormUtility;
 use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
 use Symfony\Component\Form\FormError;
@@ -28,7 +29,7 @@ class ErrorFormUtilityTest extends LogicalTest
     public function testGetErrorsForm()
     {
         $formFactory = $this->getContainer()->get('form.factory');
-        $form = $formFactory->create('chaplean_cms_post_form');
+        $form = $formFactory->create(PostType::class);
 
         $error = new FormError('Ce champs est requis');
         $error->setOrigin($form->get('category'));
