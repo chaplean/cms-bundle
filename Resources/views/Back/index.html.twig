@@ -1,0 +1,29 @@
+{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+
+{% block cms %}
+    <div class="row">
+        <section class="col-xs-12">
+            {% if post_is_activate %}
+                <a href="{{ path('cms_post_list') }}">
+                    <div class="col-xs-12 col-sm-4 panel panel-body text-center">
+                        <i class="fa fa-5x fa-hand-o-right"></i>
+                    </div>
+                </a>
+            {% endif %}
+            {% if page_is_activate %}
+                <a href="{{ path('cms_page_list') }}">
+                    <div class="col-xs-12 col-sm-4 panel panel-body text-center">
+                        <i class="fa fa-5x fa-file-text-o"></i>
+                    </div>
+                </a>
+            {% endif %}
+            {% if block_is_activate %}
+                <a href="{{ path('cms_block_list') }}">
+                    <div class="col-xs-12 col-sm-4 panel panel-body text-center">
+                        <i class="fa fa-5x fa-puzzle-piece"></i>
+                    </div>
+                </a>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

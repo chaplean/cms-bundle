@@ -149,7 +149,7 @@ placeholder:
 
 post:
     category:
-        all: Toutes
+        all: Toutes les catégories
         news: Nouveauté
         testimonial: Témoignage
         video: Vidéo
@@ -157,7 +157,7 @@ post:
 
 publication_status:
     status:
-        archived: Archivé
-        published: Publié
-        unpublished: Non publié
-        published_unpublished: Publié et non publié
+        archived: Archivés
+        published: Publiés
+        unpublished: Non publiés
+        published_unpublished: Publiés et non publiés

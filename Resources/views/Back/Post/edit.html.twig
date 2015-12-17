@@ -36,6 +36,7 @@
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.category , {'attr': {'ng-model': 'post.category', 'class': 'form-control', 'required': ''}}) }}
                         <span class="text-error ng-cloak" ng-if="isInvalidFieldSumitted('{{ form.category.vars.full_name }}')"><i class="fa fa-times"></i> {^ getInvalidError('{{ form.category.vars.full_name }}') ^}</span>
+                        <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.category.vars.full_name }}')"><i class="fa fa-times"></i> {{ 'alert.field.required'|trans }}</span>
                     </div>
                 </div>
                  {# MetaDescription #}

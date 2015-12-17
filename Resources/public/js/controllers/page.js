@@ -3,7 +3,7 @@
 var cms = angular.module('Cms');
 
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Page, PublicationStatus, Validator,
+                                          Page, PublicationStatus, Validator, BackofficeEditFactory,
                                           TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
@@ -17,22 +17,24 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
     $scope.datepicker = Datepicker;
 
     $scope.loadData = function() {
-        if ($scope.pageId) {
-            Page.get({pageId: $scope.pageId},
-                function(page) {
-                    $scope.pageRoute = page;
-                    if ($scope.pageRoute.publication.datePublicationBegin) {
-                        $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
-                    }
-                    if ($scope.pageRoute.publication.datePublicationEnd) {
-                        $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
-                    }
-                    $scope.pagePath = $scope.pageRoute.path;
-                });
-        }
+        BackofficeEditFactory.ready(function () {
+            $scope.publicationStatuses = BackofficeEditFactory.publicationStatuses;
 
-        PublicationStatus.getAll(function (publicationStatus) {
-            $scope.publicationStatuses = publicationStatus;
+            if ($scope.pageId) {
+                Page.get({pageId: $scope.pageId},
+                    function(page) {
+                        $scope.pageRoute = page;
+                        if ($scope.pageRoute.publication.datePublicationBegin) {
+                            $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        }
+                        if ($scope.pageRoute.publication.datePublicationEnd) {
+                            $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        }
+                        $scope.pagePath = $scope.pageRoute.path;
+                    });
+            } else {
+                $scope.pageRoute.publication.status = $scope.publicationStatuses[0];
+            }
         });
     };
 

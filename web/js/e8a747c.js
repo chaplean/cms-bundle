@@ -13247,6 +13247,56 @@ cms.factory('CmsAlertService', function($timeout) {
 
 var cms = angular.module('Cms');
 
+cms.factory('BackofficeEditFactory', function (PublicationStatus) {
+    var backofficeFactory = {};
+
+    backofficeFactory.publicationStatuses = [];
+
+    backofficeFactory.ready = function (success, err) {
+        PublicationStatus.getAll(function (publicationStatus) {
+            backofficeFactory.publicationStatuses = publicationStatus;
+
+            success();
+        }, function (error) {
+            err(error);
+        });
+    };
+
+    return backofficeFactory;
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
+cms.factory('BackofficeListFactory', function (PublicationStatus) {
+    var backofficeFactory = {};
+
+    backofficeFactory.publicationStatuses = [];
+    backofficeFactory.status = {
+        id:       0,
+        position: 0,
+        keyname:  'published_unpublished'
+    };
+
+    backofficeFactory.ready = function (success, err) {
+        PublicationStatus.getAll(function (publicationStatus) {
+            var publicationStatuses = [backofficeFactory.status];
+            backofficeFactory.publicationStatuses = publicationStatuses.concat(publicationStatus);
+
+            success();
+        }, function (error) {
+            err(error);
+        });
+    };
+
+    return backofficeFactory;
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
 cms.service('Block', function($resource) {
 
     return $resource(Routing.generate('cms_rest') + 'blocks', {}, {
@@ -13782,7 +13832,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
 var cms = angular.module('Cms');
 
 cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Page, PublicationStatus, Validator,
+                                          Page, PublicationStatus, Validator, BackofficeEditFactory,
                                           TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
@@ -13796,22 +13846,24 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
     $scope.datepicker = Datepicker;
 
     $scope.loadData = function() {
-        if ($scope.pageId) {
-            Page.get({pageId: $scope.pageId},
-                function(page) {
-                    $scope.pageRoute = page;
-                    if ($scope.pageRoute.publication.datePublicationBegin) {
-                        $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
-                    }
-                    if ($scope.pageRoute.publication.datePublicationEnd) {
-                        $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
-                    }
-                    $scope.pagePath = $scope.pageRoute.path;
-                });
-        }
+        BackofficeEditFactory.ready(function () {
+            $scope.publicationStatuses = BackofficeEditFactory.publicationStatuses;
 
-        PublicationStatus.getAll(function (publicationStatus) {
-            $scope.publicationStatuses = publicationStatus;
+            if ($scope.pageId) {
+                Page.get({pageId: $scope.pageId},
+                    function(page) {
+                        $scope.pageRoute = page;
+                        if ($scope.pageRoute.publication.datePublicationBegin) {
+                            $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        }
+                        if ($scope.pageRoute.publication.datePublicationEnd) {
+                            $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        }
+                        $scope.pagePath = $scope.pageRoute.path;
+                    });
+            } else {
+                $scope.pageRoute.publication.status = $scope.publicationStatuses[0];
+            }
         });
     };
 
@@ -13990,7 +14042,7 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
 var cms = angular.module('Cms');
 
 cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Post, PublicationStatus, Validator,
+                                          Post, PublicationStatus, Validator, BackofficeEditFactory,
                                           TranslationService, CmsAlertService, Datepicker) {
 
     $scope.publicationStatuses = [];
@@ -14004,8 +14056,13 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
     $scope.title = '';
 
     $scope.loadData = function() {
-        if ($scope.postId) {
-            Post.get({postId: $scope.postId}, function(post) {
+        BackofficeEditFactory.ready(function () {
+            $scope.publicationStatuses = BackofficeEditFactory.publicationStatuses;
+            $scope.post.publication.status = $scope.publicationStatuses[0];
+            $scope.post.publication.isHighlighted = '0';
+
+            if ($scope.postId) {
+                Post.get({postId: $scope.postId}, function(post) {
 
                     $scope.post = post;
                     $scope.title = $scope.post.page.title;
@@ -14016,10 +14073,9 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                         $scope.post.publication.datePublicationEnd = moment($scope.post.publication.datePublicationEnd, 'YYYY-MM-DD').toDate();
                     }
                 });
-        }
-
-        PublicationStatus.getAll(function (publicationStatus) {
-            $scope.publicationStatuses = publicationStatus;
+            }
+        }, function (err) {
+            $log.error(err);
         });
     };
 
@@ -14047,8 +14103,10 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                         }
                     });
             } else {
-                Post.save(post, function (post) {
+                Post.save(post,
+                    function (post) {
                         $scope.post.dateAdd = $filter('date')(post.dateAdd, 'dd/MM/yyyy');
+                        $scope.postId = post.id;
                         $scope.title = $scope.post.page.title;
                         CmsAlertService.addAlert('success', TranslationService.trans('alert.post.created'), 1.5);
 
@@ -14062,7 +14120,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                     });
             }
         } else {
-            console.log(postForm.$error);
+            console.log(postForm);
         }
     };
 
@@ -14127,29 +14185,32 @@ cms.controller('PostsListController', function ($scope, $location, $filter, Post
     $scope.category = null;
     $scope.pageSize = 10;
     $scope.currentPage = 1;
+    $scope.loading = true;
 
     $scope.loadData = function () {
         Post.getAllActive({}, function (posts) {
             $scope.posts = [].concat(posts);
             $scope.postsFiltered = [].concat(posts);
-        });
 
-        Post.getAvailableCategories(function (categories) {
-            var parameters = clCmsQueryFactory.getParams();
-            $scope.categories = categories;
+            Post.getAvailableCategories(function (categories) {
+                var parameters = clCmsQueryFactory.getParams();
+                $scope.categories = categories;
 
-            if (parameters.category && $scope.categories.indexOf(parameters.category) != -1) {
-                $scope.category = parameters.category;
-                $scope.updateFilter();
-            } else {
-                $scope.category = 'all';
-            }
+                if (parameters.category && $scope.categories.indexOf(parameters.category) != -1) {
+                    $scope.category = parameters.category;
+                    $scope.updateFilter();
+                } else {
+                    $scope.category = 'all';
+                }
 
-            if ($scope.categories.length == 1 && $scope.category == null) {
-                $scope.category = $scope.categories[0];
-            } else {
-                $scope.categories.push('all');
-            }
+                if ($scope.categories.length == 1 && $scope.category == null) {
+                    $scope.category = $scope.categories[0];
+                } else {
+                    $scope.categories.push('all');
+                }
+
+                $scope.loading = false;
+            });
         });
     };
 
@@ -14177,46 +14238,41 @@ cms.controller('PostsListController', function ($scope, $location, $filter, Post
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, PublicationStatus, TranslationService, CmsAlertService) {
+cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, TranslationService, CmsAlertService, BackofficeListFactory) {
 
     $scope.search = '';
     $scope.post = {
         category: null
     };
-    $scope.publicationStatuses = [];
+
     $scope.categories = [];
     $scope.category = 'all';
 
+    $scope.status = {};
+    $scope.publicationStatuses = [];
+
+
     $scope.loadData = function() {
-        Post.getAll(
-            {},
-            function(posts) {
-                $scope.posts = [].concat(posts);
-                $scope.postsFiltered = [].concat(posts);
-            }
-        );
+        BackofficeListFactory.ready(function () {
+            $scope.publicationStatuses = BackofficeListFactory.publicationStatuses;
+            $scope.status = BackofficeListFactory.status;
 
-        PublicationStatus.getAll(function (publicationStatus) {
-            $scope.publicationStatuses = [
-                {
-                    id: 0,
-                    position: 0,
-                    keyname: 'published_unpublished'
+            Post.getAll({},
+                function(posts) {
+                    $scope.posts = [].concat(posts);
+                    $scope.postsFiltered = [].concat(posts);
                 }
-            ];
-            $scope.publicationStatuses = $scope.publicationStatuses.concat(publicationStatus);
-            $scope.status = $scope.publicationStatuses[0];
-            $scope.updateFilter();
-        });
+            );
 
-        Post.getAvailableCategories(function (categories) {
-            $scope.categories = categories;
-            if ($scope.categories.length == 1) {
-                $scope.category = $scope.categories[0];
-            } else {
-                $scope.categories.push('all');
-            }
-            $scope.updateFilter();
+            Post.getAvailableCategories(function (categories) {
+                $scope.categories = categories;
+                if ($scope.categories.length == 1) {
+                    $scope.category = $scope.categories[0];
+                } else {
+                    $scope.categories.push('all');
+                }
+                $scope.updateFilter();
+            });
         });
     };
 
