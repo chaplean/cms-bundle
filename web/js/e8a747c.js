@@ -23,6 +23,7 @@
     Translator.add("alert.field.date", "Cette date n'est pas valide", "messages", "fr");
     Translator.add("button.add.global", "Ajouter", "messages", "fr");
     Translator.add("button.back.site", "Retour au site", "messages", "fr");
+    Translator.add("button.confirm.global", "Valider", "messages", "fr");
     Translator.add("button.cancel.global", "Annuler", "messages", "fr");
     Translator.add("button.save.global", "Enregistrer", "messages", "fr");
     Translator.add("button.save_quit.global", "Enregistrer & Fermer", "messages", "fr");
@@ -97,15 +98,15 @@
     Translator.add("placeholder.search.global", "Recherche globale", "messages", "fr");
     Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
-    Translator.add("post.category.all", "Toutes", "messages", "fr");
+    Translator.add("post.category.all", "Toutes les cat\u00e9gories", "messages", "fr");
     Translator.add("post.category.news", "Nouveaut\u00e9", "messages", "fr");
     Translator.add("post.category.testimonial", "T\u00e9moignage", "messages", "fr");
     Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
     Translator.add("post.category.zoom", "Zoom", "messages", "fr");
-    Translator.add("publication_status.status.archived", "Archiv\u00e9", "messages", "fr");
-    Translator.add("publication_status.status.published", "Publi\u00e9", "messages", "fr");
-    Translator.add("publication_status.status.unpublished", "Non publi\u00e9", "messages", "fr");
-    Translator.add("publication_status.status.published_unpublished", "Publi\u00e9 et non publi\u00e9", "messages", "fr");
+    Translator.add("publication_status.status.archived", "Archiv\u00e9s", "messages", "fr");
+    Translator.add("publication_status.status.published", "Publi\u00e9s", "messages", "fr");
+    Translator.add("publication_status.status.unpublished", "Non publi\u00e9s", "messages", "fr");
+    Translator.add("publication_status.status.published_unpublished", "Publi\u00e9s et non publi\u00e9s", "messages", "fr");
 })(Translator);
 
 /*! jQuery v2.1.4 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
@@ -13191,6 +13192,13 @@ cms.run(function(amMoment) {
 });
 
 cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService) {
+
+    $ngBootbox.addLocale('fr', {
+        OK:      TranslationService.trans('button.validate.global'),
+        CANCEL:  TranslationService.trans('button.cancel.global'),
+        CONFIRM: TranslationService.trans('button.confirm.global')
+    });
+    $ngBootbox.setLocale(locale);
 
     $rootScope.path = function (url, options) {
         return Routing.generate(url, options);

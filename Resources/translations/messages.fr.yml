@@ -20,6 +20,8 @@ button:
         global: Ajouter
     back:
         site: Retour au site
+    confirm:
+        global: Valider
     cancel:
         global: Annuler
     save:

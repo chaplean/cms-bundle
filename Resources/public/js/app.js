@@ -17,6 +17,13 @@ cms.run(function(amMoment) {
 
 cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService) {
 
+    $ngBootbox.addLocale('fr', {
+        OK:      TranslationService.trans('button.validate.global'),
+        CANCEL:  TranslationService.trans('button.cancel.global'),
+        CONFIRM: TranslationService.trans('button.confirm.global')
+    });
+    $ngBootbox.setLocale(locale);
+
     $rootScope.path = function (url, options) {
         return Routing.generate(url, options);
     };
