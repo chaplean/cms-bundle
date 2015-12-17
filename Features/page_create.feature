@@ -22,5 +22,6 @@ Feature: Create page
 #    When I fill in "chaplean_cms_page_route_form_publication_datePublicationEnd" with "20/11/2015"
 #    When I fill in "chaplean_cms_page_route_form_page_content" with "This is a super content of super menu"
     When I click on ".save"
+    When I wait Ajax
 #    When take a screenshot
     Then I should see "Page créée"
