@@ -21,6 +21,7 @@ Feature: Edit posts
     Given I am on "/administration/post/1"
     When I fill in "chaplean_cms_post_form_page_title" with "post-update-1"
     When I click on ".save"
+    When I wait Ajax
     Then I should see "Article mis à jour"
 
   Scenario: I see update post
