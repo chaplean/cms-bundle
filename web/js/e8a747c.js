@@ -13344,6 +13344,43 @@ cms.service('PublicationStatus', function ($resource) {
 
 'use strict';
 
+var app = angular.module('Cms');
+
+app.factory('clCmsQueryFactory', function($window) {
+    return {
+        buildParam: function (object) {
+            var params = '?';
+
+            angular.forEach(object, function (value, key) {
+                if (value != null) {
+                    if (typeof value == 'object') {
+                        value = value.id
+                    }
+
+                    params += (params != '?' ? '&' : '') + key + '=' + value
+                }
+            });
+
+            return params;
+        },
+        getParams: function () {
+            var params = $window.location.search;
+            params = params.match(/[\?&]([^\?&]\w+=[^&]*)/g);
+
+            var object = {};
+            angular.forEach(params, function (value) {
+                var matches = value.replace(/[\?&#]/, '').match(/(\w+)=(.*)/);
+
+                object[matches[1]] = decodeURIComponent(matches[2]);
+            });
+
+            return object;
+        }
+    };
+});
+
+'use strict';
+
 var cms = angular.module('Cms');
 
 cms.factory('CmsRouter', function ($window) {
@@ -14074,7 +14111,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsListController', function ($scope, $location, $filter, Post, CmsRouter) {
+cms.controller('PostsListController', function ($scope, $location, $filter, Post, CmsRouter, clCmsQueryFactory) {
 
     $scope.search = '';
     $scope.post = {
@@ -14087,7 +14124,7 @@ cms.controller('PostsListController', function ($scope, $location, $filter, Post
     };
     $scope.publicationStatuses = [];
     $scope.categories = [];
-    $scope.category = 'all';
+    $scope.category = null;
     $scope.pageSize = 10;
     $scope.currentPage = 1;
 
@@ -14098,19 +14135,21 @@ cms.controller('PostsListController', function ($scope, $location, $filter, Post
         });
 
         Post.getAvailableCategories(function (categories) {
+            var parameters = clCmsQueryFactory.getParams();
             $scope.categories = categories;
-            if ($scope.categories.length == 1) {
+
+            if (parameters.category && $scope.categories.indexOf(parameters.category) != -1) {
+                $scope.category = parameters.category;
+                $scope.updateFilter();
+            } else {
+                $scope.category = 'all';
+            }
+
+            if ($scope.categories.length == 1 && $scope.category == null) {
                 $scope.category = $scope.categories[0];
             } else {
                 $scope.categories.push('all');
             }
-
-            var parameter = $location.search();
-            if (parameter.hasOwnProperty('category') && parameter.category && $scope.categories.indexOf(parameter.category) !== -1) {
-                $scope.category = parameter.category;
-            }
-
-            $scope.updateFilter();
         });
     };
 

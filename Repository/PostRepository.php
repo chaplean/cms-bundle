@@ -62,13 +62,13 @@ class PostRepository extends CmsRepository
         $qb = $this->buildQueryGetAll();
 
         $qb->where('p.id = :postId');
-        $qb->andWhere('ps.id = :published');
+        $qb->andWhere('ps.keyname = :published');
         $qb->andWhere('pu.datePublicationBegin IS NULL OR pu.datePublicationBegin <= :now');
         $qb->andWhere('pu.datePublicationEnd IS NULL OR pu.datePublicationEnd >= :now');
         $qb->setParameters(
             array(
                 'postId'    => $postId,
-                'published' => 1,
+                'published' => 'published',
                 'now'       => $now
             )
         );
@@ -93,12 +93,12 @@ class PostRepository extends CmsRepository
 
         $qb = $this->buildQueryGetAll();
         $qb = $this->buildParam($qb, $limit, $sort, $order);
-        $qb->where('ps.id = :published');
+        $qb->where('ps.keyname = :published');
         $qb->andWhere('pu.datePublicationBegin IS NULL OR pu.datePublicationBegin <= :now');
         $qb->andWhere('pu.datePublicationEnd IS NULL OR pu.datePublicationEnd >= :now');
         $qb->setParameters(
             array(
-                'published' => 1,
+                'published' => 'published',
                 'now'       => $now
             )
         );

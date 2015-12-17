@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsListController', function ($scope, $location, $filter, Post, CmsRouter) {
+cms.controller('PostsListController', function ($scope, $location, $filter, Post, CmsRouter, clCmsQueryFactory) {
 
     $scope.search = '';
     $scope.post = {
@@ -15,7 +15,7 @@ cms.controller('PostsListController', function ($scope, $location, $filter, Post
     };
     $scope.publicationStatuses = [];
     $scope.categories = [];
-    $scope.category = 'all';
+    $scope.category = null;
     $scope.pageSize = 10;
     $scope.currentPage = 1;
 
@@ -26,19 +26,21 @@ cms.controller('PostsListController', function ($scope, $location, $filter, Post
         });
 
         Post.getAvailableCategories(function (categories) {
+            var parameters = clCmsQueryFactory.getParams();
             $scope.categories = categories;
-            if ($scope.categories.length == 1) {
+
+            if (parameters.category && $scope.categories.indexOf(parameters.category) != -1) {
+                $scope.category = parameters.category;
+                $scope.updateFilter();
+            } else {
+                $scope.category = 'all';
+            }
+
+            if ($scope.categories.length == 1 && $scope.category == null) {
                 $scope.category = $scope.categories[0];
             } else {
                 $scope.categories.push('all');
             }
-
-            var parameter = $location.search();
-            if (parameter.hasOwnProperty('category') && parameter.category && $scope.categories.indexOf(parameter.category) !== -1) {
-                $scope.category = parameter.category;
-            }
-
-            $scope.updateFilter();
         });
     };
 
