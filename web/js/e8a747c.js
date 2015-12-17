@@ -13191,7 +13191,7 @@ cms.run(function(amMoment) {
     amMoment.changeLocale(locale);
 });
 
-cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService) {
+cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService, $ngBootbox, TranslationService) {
 
     $ngBootbox.addLocale('fr', {
         OK:      TranslationService.trans('button.validate.global'),
