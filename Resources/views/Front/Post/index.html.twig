@@ -1,10 +1,10 @@
 {% extends cms_front_layout %}
 
 {% block body %}
-    <section class="container" ng-controller="PostsListController">
+    <section class="container" ng-controller="PostsListController" ng-cloak>
         <div class="row">
             <div class="header-post col-xs-12">
-                <h3 class="text-center">{^ ('post.category.' + category)|trans ^}</h3>
+                <h3 class="text-center" ng-show="category">{^ ('post.category.' + category)|trans ^}</h3>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown sonata-actions">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
