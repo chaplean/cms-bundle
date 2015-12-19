@@ -57,6 +57,7 @@ body {
     background-color: #EEE;
 
     .sidebar {
+        padding: 0;
         background-color: #333;
         color: #D9D9D9;
         height: 100%;
@@ -66,7 +67,6 @@ body {
             color: #D9D9D9;
 
             &:hover, &:focus {
-                color: #FFF;
                 text-decoration: none;
             }
         }
@@ -74,6 +74,23 @@ body {
         ul {
             padding: 0;
             list-style: none;
+
+            li.treeview {
+                cursor: pointer;
+                padding: 15px 0 15px 15px;
+                border-left: 5px solid transparent;
+                margin-top: 0;
+                margin-bottom: 0;
+
+                &:hover, &.active {
+                    background-color: #444;
+                    border-left: 5px solid;
+                }
+
+                a {
+                    padding: 15px 0 15px 0px;
+                }
+            }
         }
 
         .custom-search-form {
@@ -307,4 +324,69 @@ div.alert-fix-top {
 
 textarea {
     resize: vertical;
+}
+
+.form-group, .checkbox-error {
+    span.text-error {
+        font-size: 13px;
+        font-weight: 100;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-box, .register-box {
+        margin-top: 20px;
+        margin-right: 0;
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+
+.login-box-footer {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.checkbox-error {
+    margin-top: -10px;
+}
+
+span.form-icon {
+    padding-top: 9px;
+}
+
+.icheck {
+    label > div.remember-me > div.label {
+        color: #666;
+        font-weight: 100;
+        font-size: 13px;
+    }
+}
+
+div.checkbox {
+    margin-top: 6px;
+
+    + div.label {
+        padding: 0 .6em 0.5em;
+    }
+}
+
+.no-padding {
+    &-right {
+        padding-right: 0 !important;
+    }
+
+    &-left {
+        padding-left: 0 !important;
+    }
+
+    &-lr {
+        @extend .no-padding-left;
+        @extend .no-padding-right;
+    }
+}
+
+.text-error {
+    color: #a94442;
 }

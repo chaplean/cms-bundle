@@ -13191,7 +13191,7 @@ cms.run(function(amMoment) {
     amMoment.changeLocale(locale);
 });
 
-cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService, $ngBootbox, TranslationService) {
+cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService, $ngBootbox, TranslationService, CmsRouter) {
 
     $ngBootbox.addLocale('fr', {
         OK:      TranslationService.trans('button.validate.global'),
@@ -13209,6 +13209,15 @@ cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertServ
     $scope.closeAlert = function (index) {
         CmsAlertService.closeAlert(index);
     };
+
+    $scope.CmsRouter = CmsRouter;
+    $scope.menu = {
+        active: ''
+    };
+
+    $scope.activeMenu = function (menu) {
+        $scope.menu.active = menu;
+    }
 });
 
 'use strict';
@@ -13630,6 +13639,8 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
 var cms = angular.module('Cms');
 
 cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, CmsAlertService) {
+
+    $scope.$parent.menu.active = 'block';
     $scope.search = '';
     $scope.blocks = [];
     $scope.blocksDisplayed = [];
@@ -14003,8 +14014,10 @@ cms.controller('PagesListController', function ($scope, $filter, Page, CmsRouter
 var cms = angular.module('Cms');
 
 cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService) {
-    $scope.search = '';
 
+    $scope.$parent.menu.active = 'page';
+
+    $scope.search = '';
     $scope.loadData = function() {
         Page.getAll({}, function(pages) {
                 $scope.pages = pages;
@@ -14246,12 +14259,20 @@ cms.controller('PostsListController', function ($scope, $location, $filter, Post
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbox, Post, TranslationService, CmsAlertService, BackofficeListFactory) {
+cms.controller('PostsController', function($scope, $log, $uibModal, $filter, $ngBootbox, Post, TranslationService, CmsAlertService, BackofficeListFactory) {
 
+    if ($scope.$parent.hasOwnProperty('activeMenu')) {
+        $scope.$parent.activeMenu('post');
+    } else {
+        $log.error($scope.$parent.toString());
+    }
     $scope.search = '';
     $scope.post = {
         category: null
     };
+    $scope.posts = [];
+    $scope.postsFiltered = [];
+    $scope.postsDisplayed = [];
 
     $scope.categories = [];
     $scope.category = 'all';
@@ -14294,39 +14315,37 @@ cms.controller('PostsController', function($scope, $uibModal, $filter, $ngBootbo
         $scope.postsFiltered = [].concat($scope.posts);
 
         if ($scope.status.id != 0) {
-            $scope.postsFiltered = $filter('filter')($scope.postsFiltered, {publication: {status: {id: $scope.status.id}}});
+            $scope.postsFiltered = $filter('filter')($scope.postsFiltered, {publication: {status: {id: $scope.status.id}}}, true);
         } else {
             $scope.postsFiltered = [].concat(
-                $filter('filter')($scope.postsFiltered, {publication: {status: {id: 1}}}),
-                $filter('filter')($scope.postsFiltered, {publication: {status: {id: 2}}})
+                $filter('filter')($scope.postsFiltered, {publication: {status: {keyname: 'published'}}}, true),
+                $filter('filter')($scope.postsFiltered, {publication: {status: {keyname: 'unpublished'}}}, true)
             );
         }
 
         if ($scope.category != 'all') {
-            $scope.postsFiltered = $filter('filter')($scope.postsFiltered, {category: $scope.category});
+            $scope.postsFiltered = $filter('filter')($scope.postsFiltered, {category: $scope.category}, true);
         } else {
             $scope.postsFiltered = [].concat($scope.postsFiltered);
         }
     };
 
-    $scope.removePost = function (post) {
+    $scope.removePost = function (post, index) {
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.delete_post', { 'post' : post.page.title })
         ).then(function() {
-            Post.delete({
-                    postId: post.id
-                    },
-                    function (post) {
-                        $scope.posts.splice($scope.posts.indexOf(post), 1);
-                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.deleted'), 1.5);
-                    }, function () {
-                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
-                    }
-                );
-            }, function() {
-                return false;
-            }
-        );
+            Post.delete(
+                {postId: post.id},
+                function (post) {
+                    $scope.posts.splice($scope.posts.indexOf(post), 1);
+                    CmsAlertService.addAlert('success', TranslationService.trans('alert.post.deleted'), 1.5);
+                }, function () {
+                    CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
+                }
+            );
+        }, function() {
+            return false;
+        });
     };
 
     $scope.loadData();

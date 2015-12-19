@@ -3,6 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -18,6 +19,14 @@ class DefaultController extends Controller
      * @return Response
      */
     public function indexAction()
+    {
+        return new RedirectResponse($this->generateUrl('cms_back_home'));
+    }
+
+    /**
+     * @return Response
+     */
+    public function homeAction()
     {
         return $this->render('ChapleanCmsBundle:Back:index.html.twig');
     }

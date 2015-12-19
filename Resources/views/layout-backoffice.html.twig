@@ -14,8 +14,7 @@
         {% stylesheets
         '@ChapleanCmsBundle/Resources/public/libs/angular/angular-csp.css'
         '@ChapleanCmsBundle/Resources/public/libs/components-font-awesome/css/font-awesome.min.css'
-        '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular.css'
-        %}
+        '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular.css' %}
         <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
         {% endstylesheets %}
 
@@ -72,7 +71,9 @@
 
 {% block body_with_tag %}
     <body>
-        <uib-alert ng-cloak ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>
+    <uib-alert ng-cloak ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>
+
+    {% if app.user.id is defined or access_debug %}
         <div class="container-fluid" {% block controller %}{% endblock %}>
             <div class="row">
                 <div class="col-xs-4 col-sm-3 col-lg-2 sidebar">
@@ -86,30 +87,23 @@
                         <hr>
                         <ul class="sidebar-menu">
                             {% if post_is_activate %}
-                            <li class="treeview">
-                                <a href="{{ path('cms_post_list') }}">
+                                <li class="treeview" ng-click="CmsRouter.go('cms_post_list')" ng-class="{'active': menu.active == 'post'}">
                                     <i class="fa fa-hand-o-right"></i> {{ 'menu.posts' | trans }}
-                                </a>
-                            </li>
+                                </li>
                             {% endif %}
                             {% if page_is_activate %}
-                            <li class="treeview">
-                                <a href="{{ path('cms_page_list') }}">
+                                <li class="treeview" ng-click="CmsRouter.go('cms_page_list')" ng-class="{'active': menu.active == 'page'}">
                                     <i class="fa fa-file-text-o"></i> {{ 'menu.pages' | trans }}
-                                </a>
-                            </li>
+                                </li>
                             {% endif %}
                             {% if block_is_activate %}
-                            <li class="treeview">
-                                <a href="{{ path('cms_block_list') }}">
+                                <li class="treeview" ng-click="CmsRouter.go('cms_block_list')" ng-class="{'active': menu.active == 'block'}">
                                     <i class="fa fa-puzzle-piece"></i> {{ 'menu.blocks' | trans }}
-                                </a>
-                            </li>
+                                </li>
                             {% endif %}
                         </ul>
                     </div>
                 </div>
-
                 <div class="col-xs-8 col-xs-push-4 col-sm-9 col-sm-push-3 col-lg-10 col-lg-push-2">
                     <section class="content-header">
                         <span>
@@ -136,6 +130,11 @@
                 </div>
             </div>
         </div>
+    {% else %}
+        {% block login %}
+            {% include 'ChapleanCmsBundle:Back/Security:login.html.twig' %}
+        {% endblock %}
+    {% endif %}
     </body>
 {% endblock %}
 </html>

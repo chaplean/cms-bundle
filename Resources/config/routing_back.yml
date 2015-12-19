@@ -4,6 +4,12 @@ cms_back_index:
     options:
         expose: true
 
+cms_back_home:
+    path:     /administration/home
+    defaults: { _controller: ChapleanCmsBundle:Default:home }
+    options:
+        expose: true
+
 cms_page_list:
     path:     /administration/pages
     defaults: { _controller: ChapleanCmsBundle:Page:list }

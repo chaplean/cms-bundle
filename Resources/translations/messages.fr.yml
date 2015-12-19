@@ -62,6 +62,11 @@ global:
     title: Titre
     yes: Oui
 
+settings:
+    posts: Administrer les articles
+    pages: Administrer les pages
+    blocks: Administrer les blocs
+
 header:
     actions: Liste d'actions
     creation:

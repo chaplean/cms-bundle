@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+            ->booleanNode('access_debug')->defaultValue('false')->end()
                 ->arrayNode('template')
                     ->children()
                         ->scalarNode('front_layout')->isRequired()->end()
