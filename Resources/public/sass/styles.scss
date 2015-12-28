@@ -322,6 +322,15 @@ div.alert-fix-top {
     }
 }
 
+.media-element {
+    p {
+        width: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
 textarea {
     resize: vertical;
 }

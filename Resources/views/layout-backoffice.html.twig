@@ -114,6 +114,11 @@
                                 {% endfor %}
                             {% endif %}
                         </span>
+                        {% if app.user.id is defined %}
+                        {#<div class="pull-right logout">#}
+                            {#<span><i class="fa fa-logout"></i> {{ 'Se déconnecter'|trans }}</span>#}
+                        {#</div>#}
+                        {% endif %}
                     </section>
 
                     <section class="content-action">

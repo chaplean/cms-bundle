@@ -6506,5 +6506,11 @@ div.alert-fix-top {
 #media-manager .media-element.active img {
   box-shadow: 0 0 10px #424242; }
 
+.media-element p {
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 textarea {
   resize: vertical; }
