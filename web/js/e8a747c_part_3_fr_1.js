@@ -8,6 +8,7 @@
     Translator.add("alert.page.updated", "Page mise \u00e0 jour", "messages", "fr");
     Translator.add("alert.post.created", "Article cr\u00e9\u00e9", "messages", "fr");
     Translator.add("alert.post.deleted", "Article supprim\u00e9", "messages", "fr");
+    Translator.add("alert.post.duplicated", "Article dupliqu\u00e9", "messages", "fr");
     Translator.add("alert.post.updated", "Article mis \u00e0 jour", "messages", "fr");
     Translator.add("alert.field.required", "Ce champ est obligatoire", "messages", "fr");
     Translator.add("alert.field.date", "Cette date n'est pas valide", "messages", "fr");
@@ -16,6 +17,7 @@
     Translator.add("button.confirm.global", "Valider", "messages", "fr");
     Translator.add("button.cancel.global", "Annuler", "messages", "fr");
     Translator.add("button.save.global", "Enregistrer", "messages", "fr");
+    Translator.add("button.save_duplicate.global", "Enregistrer & Dupliquer", "messages", "fr");
     Translator.add("button.save_quit.global", "Enregistrer & Fermer", "messages", "fr");
     Translator.add("button.search.global", "Rechercher", "messages", "fr");
     Translator.add("error.important", "Une erreur importante est survenue", "messages", "fr");
@@ -41,6 +43,9 @@
     Translator.add("global.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("global.title", "Titre", "messages", "fr");
     Translator.add("global.yes", "Oui", "messages", "fr");
+    Translator.add("settings.posts", "Administrer les articles", "messages", "fr");
+    Translator.add("settings.pages", "Administrer les pages", "messages", "fr");
+    Translator.add("settings.blocks", "Administrer les blocs", "messages", "fr");
     Translator.add("header.actions", "Liste d'actions", "messages", "fr");
     Translator.add("header.creation.page", "Cr\u00e9ation de page", "messages", "fr");
     Translator.add("header.creation.post", "Cr\u00e9ation d'article", "messages", "fr");

@@ -144,6 +144,10 @@ class PostController extends ChapleanRestController
 
                 /** @var Publication $publication */
                 $publication = $post->getPublication();
+                if (empty($publication->isIsHighlighted())) {
+                    $publication->setIsHighlighted(false);
+                }
+
                 $publication->setDateAdd(new \DateTime());
                 $em->persist($publication);
                 $em->flush();

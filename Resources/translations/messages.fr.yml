@@ -10,6 +10,7 @@ alert:
     post:
         created: Article créé
         deleted: Article supprimé
+        duplicated: Article dupliqué
         updated: Article mis à jour
     field:
         required: Ce champ est obligatoire
@@ -26,6 +27,8 @@ button:
         global: Annuler
     save:
         global: Enregistrer
+    save_duplicate:
+        global: Enregistrer & Dupliquer
     save_quit:
         global: Enregistrer & Fermer
     search:

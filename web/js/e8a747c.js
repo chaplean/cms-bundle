@@ -18,6 +18,7 @@
     Translator.add("alert.page.updated", "Page mise \u00e0 jour", "messages", "fr");
     Translator.add("alert.post.created", "Article cr\u00e9\u00e9", "messages", "fr");
     Translator.add("alert.post.deleted", "Article supprim\u00e9", "messages", "fr");
+    Translator.add("alert.post.duplicated", "Article dupliqu\u00e9", "messages", "fr");
     Translator.add("alert.post.updated", "Article mis \u00e0 jour", "messages", "fr");
     Translator.add("alert.field.required", "Ce champ est obligatoire", "messages", "fr");
     Translator.add("alert.field.date", "Cette date n'est pas valide", "messages", "fr");
@@ -26,6 +27,7 @@
     Translator.add("button.confirm.global", "Valider", "messages", "fr");
     Translator.add("button.cancel.global", "Annuler", "messages", "fr");
     Translator.add("button.save.global", "Enregistrer", "messages", "fr");
+    Translator.add("button.save_duplicate.global", "Enregistrer & Dupliquer", "messages", "fr");
     Translator.add("button.save_quit.global", "Enregistrer & Fermer", "messages", "fr");
     Translator.add("button.search.global", "Rechercher", "messages", "fr");
     Translator.add("error.important", "Une erreur importante est survenue", "messages", "fr");
@@ -51,6 +53,9 @@
     Translator.add("global.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("global.title", "Titre", "messages", "fr");
     Translator.add("global.yes", "Oui", "messages", "fr");
+    Translator.add("settings.posts", "Administrer les articles", "messages", "fr");
+    Translator.add("settings.pages", "Administrer les pages", "messages", "fr");
+    Translator.add("settings.blocks", "Administrer les blocs", "messages", "fr");
     Translator.add("header.actions", "Liste d'actions", "messages", "fr");
     Translator.add("header.creation.page", "Cr\u00e9ation de page", "messages", "fr");
     Translator.add("header.creation.post", "Cr\u00e9ation d'article", "messages", "fr");
@@ -14100,20 +14105,24 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
         });
     };
 
-    $scope.savePost = function (postForm, formName, quit) {
+    $scope.savePost = function (postForm, formName, quit, duplicate, duplication) {
         if (postForm.$valid) {
             var post = $scope.buildData($scope.post);
 
-            if ($scope.postId) {
+            if ($scope.postId && !duplication) {
                 Post.update({postId: $scope.postId}, post,
                     function (post) {
 
                         $scope.post.dateUpdate = $filter('date')(post.dateUpdate, 'dd/MM/yyyy');
                         $scope.title = $scope.post.page.title;
-                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.updated'), 1.5);
+                        if (duplicate) {
+                            $scope.savePost(postForm, formName, quit, false, true);
+                        } else {
+                            CmsAlertService.addAlert('success', TranslationService.trans('alert.post.updated'), 1.5);
 
-                        if (quit) {
-                            window.location = Routing.generate('cms_post_list');
+                            if (quit) {
+                                window.location = Routing.generate('cms_post_list');
+                            }
                         }
                     }, function (response) {
                         if(response.status == 400) {
@@ -14129,10 +14138,22 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                         $scope.post.dateAdd = $filter('date')(post.dateAdd, 'dd/MM/yyyy');
                         $scope.postId = post.id;
                         $scope.title = $scope.post.page.title;
-                        CmsAlertService.addAlert('success', TranslationService.trans('alert.post.created'), 1.5);
 
-                        if (quit) {
-                            window.location = Routing.generate('cms_post_list');
+                        if (duplicate) {
+                            $scope.savePost(postForm, formName, quit, false, true);
+                        } else {
+                            if (duplication) {
+                                CmsAlertService.addAlert('success', TranslationService.trans('alert.post.duplicated'), 1.5);
+                            } else {
+                                CmsAlertService.addAlert('success', TranslationService.trans('alert.post.created'), 1.5);
+                            }
+
+                            setTimeout(function () {
+
+                                if (quit) {
+                                    window.location = Routing.generate('cms_post_list');
+                                }
+                            }, 500);
                         }
                     }, function (errors) {
                         $log.error(errors);
@@ -14176,6 +14197,9 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
         }
         if (typeof postTmp.publication.datePublicationEnd == 'string') {
             postTmp.publication.datePublicationEnd = moment(postTmp.publication.datePublicationEnd, 'DD/MM/YYYY');
+        }
+        if (!postTmp.publication.isHighlighted && postTmp.publication.isHighlighted !== false) {
+            postTmp.publication.isHighlighted = false;
         }
         postTmp.publication.status = postTmp.publication.status.id;
         console.log(postTmp);

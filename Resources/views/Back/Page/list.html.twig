@@ -4,19 +4,19 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-left"></div>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown sonata-actions">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Liste d'actions <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a class="sonata-action-element" href="{{ path('cms_page_edit') }}">
-                                <i class="fa fa-plus-circle"></i>
-                                {{ 'button.add.global' | trans }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            {#<ul class="nav navbar-nav navbar-right">#}
+                {#<li class="dropdown sonata-actions">#}
+                    {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">Liste d'actions <b class="caret"></b></a>#}
+                    {#<ul class="dropdown-menu" role="menu">#}
+                        {#<li>#}
+                            {#<a class="sonata-action-element" href="{{ path('cms_page_edit') }}">#}
+                                {#<i class="fa fa-plus-circle"></i>#}
+                                {#{{ 'button.add.global' | trans }}#}
+                            {#</a>#}
+                        {#</li>#}
+                    {#</ul>#}
+                {#</li>#}
+            {#</ul>#}
         </div>
     </nav>
 {% endblock %}
