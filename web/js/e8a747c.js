@@ -13442,7 +13442,7 @@ cms.service('Post', function($resource) {
         getAvailableCategories: {method: 'get'   , url: Routing.generate('cms_rest') + 'post/available/categories', isArray: true},
         getAll:                 {method: 'get'   , url: Routing.generate('cms_rest') + 'post/all', isArray: true},
         getAllActive:           {method: 'get'   , url: Routing.generate('cms_rest') + 'post/all/active', isArray: true},
-        getByCategory:          {method: 'get'   , url: Routing.generate('cms_rest') + 'post/:category/category'},
+        getByCategory:          {method: 'get'   , url: Routing.generate('cms_rest') + 'posts/:category/category', isArray: true},
         save:                   {method: 'post'  , url: Routing.generate('cms_rest') + 'posts'},
         update:                 {method: 'put'   , url: Routing.generate('cms_rest') + 'posts/:postId'}
     });
