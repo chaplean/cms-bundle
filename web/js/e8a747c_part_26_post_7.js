@@ -15,6 +15,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
     };
     $scope.datepicker = Datepicker;
     $scope.title = '';
+    //$scope.postFactory = new clCmsObjectFactory('post', Post, 'postId');
 
     $scope.loadData = function() {
         BackofficeEditFactory.ready(function () {
@@ -42,8 +43,12 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
     $scope.savePost = function (postForm, formName, quit, duplicate, duplication) {
         if (postForm.$valid) {
-            var post = $scope.buildData($scope.post);
+            //var post = $scope.buildData($scope.post);
 
+            //$scope.postFactory.submit($scope.buildData, $scope.post, quit, duplicate, duplication)
+            //    .then(function (post) {
+            //        $scope.post = post;
+            //});
             if ($scope.postId && !duplication) {
                 Post.update({postId: $scope.postId}, post,
                     function (post) {

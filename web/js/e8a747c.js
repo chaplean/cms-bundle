@@ -13368,6 +13368,54 @@ cms.factory('Media', function($resource) {
 
 'use strict';
 
+var app = angular.module('Cms');
+
+app.factory('clCmsObjectFactory', function($q, $filter) {
+    return function (transalationKey, reference, updateKey) {
+        var objectFactory = {
+            transalationKey: transalationKey,
+            reference: reference,
+            updateKey: updateKey,
+            /**
+             * @param {function} buildParam
+             * @param object
+             * @param quit
+             * @param duplicate
+             * @param duplication
+             */
+            submit: function (buildParam, object, quit, duplicate, duplication) {
+                var deffered = $q.defer();
+                var objectToSubmit = buildParam(object);
+
+                if(object.id && !duplication) {
+                    var param = {};
+                    param[objectFactory.updateKey] = object.id;
+                    /** @namespace reference.entity */
+                    objectFactory.reference.update(param, objectToSubmit, function (objectSubmitted) {
+                        objectSubmitted.dateUpdate = $filter('date')(objectSubmitted.dateUpdate, 'dd/MM/yyyy');
+                        deffered.resolve(objectSubmitted);
+                    }, function (err) {
+                        deffered.reject(err);
+                    });
+                } else {
+                    /** @namespace reference.entity */
+                    objectFactory.reference.save(objectToSubmit, function (objectSubmitted) {
+                        objectSubmitted.dateAdd = $filter('date')(objectSubmitted.dateAdd, 'dd/MM/yyyy');
+                        deffered.resolve(objectSubmitted);
+                    }, function (err) {
+                        deffered.reject(err);
+                    });
+                }
+
+                return deffered.promise;
+            }
+        };
+        return objectFactory;
+    };
+});
+
+'use strict';
+
 var cms = angular.module('Cms');
 
 cms.service('Page', function($resource) {
@@ -14080,6 +14128,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
     };
     $scope.datepicker = Datepicker;
     $scope.title = '';
+    //$scope.postFactory = new clCmsObjectFactory('post', Post, 'postId');
 
     $scope.loadData = function() {
         BackofficeEditFactory.ready(function () {
@@ -14107,8 +14156,12 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
     $scope.savePost = function (postForm, formName, quit, duplicate, duplication) {
         if (postForm.$valid) {
-            var post = $scope.buildData($scope.post);
+            //var post = $scope.buildData($scope.post);
 
+            //$scope.postFactory.submit($scope.buildData, $scope.post, quit, duplicate, duplication)
+            //    .then(function (post) {
+            //        $scope.post = post;
+            //});
             if ($scope.postId && !duplication) {
                 Post.update({postId: $scope.postId}, post,
                     function (post) {
