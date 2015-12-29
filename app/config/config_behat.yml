@@ -8,4 +8,4 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        dbname:   test_behat_database
+        dbname:   test_database_intergros_behat

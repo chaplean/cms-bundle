@@ -14156,7 +14156,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
     $scope.savePost = function (postForm, formName, quit, duplicate, duplication) {
         if (postForm.$valid) {
-            //var post = $scope.buildData($scope.post);
+            var post = $scope.buildData($scope.post);
 
             //$scope.postFactory.submit($scope.buildData, $scope.post, quit, duplicate, duplication)
             //    .then(function (post) {
