@@ -123,12 +123,14 @@ media_manager:
         delete: Une erreur est survenue lors de la suppression du média
         save: Une erreur est survenue lors de la modification du média
         upload: Une erreur est survenue lors l'envoi du média
+        invalid_extension: Ce type de fichier n'est pas autorisé
     link:
         label: Lien
     insert:
         label: Insérer
     open:
         label: Ajouter un média
+    not_found: Le fichier n'existe plus !
 
 menu:
     blocks: Blocs

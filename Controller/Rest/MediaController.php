@@ -109,7 +109,7 @@ class MediaController extends FOSRestController
             if ($mediaUtility->deleteMedia()) {
                 return $this->handleView(new View());
             } else {
-                return $this->handleView(new View('Unable to delete related file on disk', 500));
+                return $this->handleView(new View('', 500));
             }
         } else {
             return $this->handleView(new View('media not found', 404));

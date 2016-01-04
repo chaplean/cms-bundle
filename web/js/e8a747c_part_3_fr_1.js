@@ -73,9 +73,12 @@
     Translator.add("media_manager.alert.delete", "Une erreur est survenue lors de la suppression du m\u00e9dia", "messages", "fr");
     Translator.add("media_manager.alert.save", "Une erreur est survenue lors de la modification du m\u00e9dia", "messages", "fr");
     Translator.add("media_manager.alert.upload", "Une erreur est survenue lors l'envoi du m\u00e9dia", "messages", "fr");
+    Translator.add("media_manager.alert.invalid_extension", "Ce type de fichier n'est pas autoris\u00e9", "messages", "fr");
     Translator.add("media_manager.link.label", "Lien", "messages", "fr");
     Translator.add("media_manager.insert.label", "Ins\u00e9rer", "messages", "fr");
     Translator.add("media_manager.open.label", "Ajouter un m\u00e9dia", "messages", "fr");
+    Translator.add("media_manager.not_found", "Le fichier n'existe plus !", "messages", "fr");
+    Translator.add("media_manager.delete_not_found", "Le fichier a bien \u00e9t\u00e9 supprim\u00e9 de la base", "messages", "fr");
     Translator.add("menu.blocks", "Blocs", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
     Translator.add("menu.page", "Page", "messages", "fr");

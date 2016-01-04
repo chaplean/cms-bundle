@@ -77,6 +77,7 @@
     Translator.add("An empty file is not allowed.", "Arquivo vazio n\u00e3o \u00e9 permitido.", "validators", "pt_BR");
     Translator.add("The host could not be resolved.", "O host n\u00e3o p\u00f4de ser resolvido.", "validators", "pt_BR");
     Translator.add("This value does not match the expected {{ charset }} charset.", "Este valor n\u00e3o corresponde ao charset {{ charset }} esperado.", "validators", "pt_BR");
+    Translator.add("This is not a valid Business Identifier Code (BIC).", "Este n\u00e3o \u00e9 um C\u00f3digo Identificador Banc\u00e1rio (BIC) v\u00e1lido.", "validators", "pt_BR");
     Translator.add("This form should not contain extra fields.", "Este formul\u00e1rio n\u00e3o deve conter campos adicionais.", "validators", "pt_BR");
     Translator.add("The uploaded file was too large. Please try to upload a smaller file.", "O arquivo enviado \u00e9 muito grande. Por favor, tente enviar um arquivo menor.", "validators", "pt_BR");
     Translator.add("The CSRF token is invalid. Please try to resubmit the form.", "O token CSRF \u00e9 inv\u00e1lido. Por favor, tente reenviar o formul\u00e1rio.", "validators", "pt_BR");
