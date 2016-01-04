@@ -36,6 +36,7 @@
                     <div class="col-md-12 no-padding-lr">
                         {{ form_widget(form.category , {'attr': {'ng-model': 'post.category', 'class': 'form-control', 'required': ''}}) }}
                         <span class="text-error ng-cloak" ng-if="isInvalidFieldSumitted('{{ form.category.vars.full_name }}')"><i class="fa fa-times"></i> {^ getInvalidError('{{ form.category.vars.full_name }}') ^}</span>
+                        <span class="text-error ng-cloak" ng-if="isRequire(postForm, '{{ form.category.vars.full_name }}')"><i class="fa fa-times"></i> {{ 'alert.field.required'|trans }}</span>
                     </div>
                 </div>
                  {# MetaDescription #}
@@ -126,7 +127,8 @@
             <div class="form-group col-xs-12 no-padding-lr">
                 <div class="pull-right">
                     <button type="submit" class="btn btn-primary save">{{ 'button.save.global'|trans }}</button>
-                    <button ng-click="savePost(postForm, '{{ form.vars.name }}', true)" type="button" class="btn btn-success save-and-quit">{{ 'button.save_quit.global'|trans }}</button>
+                    <button type="button" ng-click="savePost(postForm, '{{ form.vars.name }}', true, true)" class="btn btn-primary save">{{ 'button.save_duplicate.global'|trans }}</button>
+                    <button type="button" ng-click="savePost(postForm, '{{ form.vars.name }}', true)" class="btn btn-success save-and-quit">{{ 'button.save_quit.global'|trans }}</button>
                     <a ng-click="cancel()" class="btn btn-default cancel">{{ 'button.cancel.global'|trans }}</a>
                 </div>
             </div>

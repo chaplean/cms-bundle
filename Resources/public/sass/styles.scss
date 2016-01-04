@@ -57,6 +57,7 @@ body {
     background-color: #EEE;
 
     .sidebar {
+        padding: 0;
         background-color: #333;
         color: #D9D9D9;
         height: 100%;
@@ -66,7 +67,6 @@ body {
             color: #D9D9D9;
 
             &:hover, &:focus {
-                color: #FFF;
                 text-decoration: none;
             }
         }
@@ -74,6 +74,23 @@ body {
         ul {
             padding: 0;
             list-style: none;
+
+            li.treeview {
+                cursor: pointer;
+                padding: 15px 0 15px 15px;
+                border-left: 5px solid transparent;
+                margin-top: 0;
+                margin-bottom: 0;
+
+                &:hover, &.active {
+                    background-color: #444;
+                    border-left: 5px solid;
+                }
+
+                a {
+                    padding: 15px 0 15px 0px;
+                }
+            }
         }
 
         .custom-search-form {
@@ -305,6 +322,19 @@ div.alert-fix-top {
     }
 }
 
+.media-element {
+    p {
+        width: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
 textarea {
     resize: vertical;
+}
+
+.warning {
+    color: #f0ad4e;
 }

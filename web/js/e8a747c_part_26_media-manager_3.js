@@ -35,7 +35,7 @@ cms.config(function ($provide) {
     });
 });
 
-cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter, Media, CmsAlertService, TranslationService, FileUploader, FileItem) {
+cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, filterFilter, Media, CmsAlertService, TranslationService, FileUploader, FileItem) {
 
     $scope.updateFilter = function () {
         $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
@@ -72,8 +72,12 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
             $scope.medias.push(newMedia);
             $scope.updateFilter();
         },
-        onErrorItem:   function () {
-            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'), 1.5);
+        onErrorItem:   function (xhr, msg, status) {
+            if (status == 400) {
+                CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.invalid_extension'), 5);
+            } else {
+                CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'), 5);
+            }
         }
     });
 
@@ -85,7 +89,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
             angular.extend($scope.selectedMedia, updatedMedia);
         },
         onErrorItem:        function () {
-            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'), 1.5);
+            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'), 5);
         },
         onBeforeUploadItem: function (item) {
             item.url = Routing.generate('cms_rest') + 'media' + $scope.selectedMedia.id + '/edits';
@@ -118,6 +122,11 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
 
     $scope.selectMedia = function (media) {
         $scope.selectedMedia = media;
+
+        $http.get(media.decachedPath)
+            .error(function () {
+                $scope.selectedMedia.notFound = true;
+            });
     };
 
     $scope.insertCurrentMedia = function () {
@@ -128,7 +137,7 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
             };
         } else if ($scope.selectedMedia.category == 'pdf') {
             var data = {
-                title: $scope.selectedMedia.title,
+                title: $scope.selectedMedia.title
             };
         }
 
@@ -139,13 +148,13 @@ cms.controller('MediaManager', function ($scope, $uibModalInstance, filterFilter
     };
 
     $scope.deleteCurrentMedia = function () {
-        Media.delete({id: $scope.selectedMedia.id}, {}, function () {
+        Media.delete({id: $scope.selectedMedia.id}, {}, function (data) {
             var position = $scope.medias.indexOf($scope.selectedMedia);
             $scope.medias.splice(position, 1);
             $scope.selectedMedia = null;
             $scope.updateFilter();
         }, function () {
-            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'), 1.5);
+            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'), 5);
         });
     };
 

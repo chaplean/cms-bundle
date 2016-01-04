@@ -146,6 +146,7 @@ fos_rest:
         serialize_null: true
 
 chaplean_cms:
+    access_debug: true
     template:
         front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
     block: true

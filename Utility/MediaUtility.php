@@ -184,15 +184,21 @@ class MediaUtility
         }
     }
 
+    /**
+     * @return integer
+     */
     public function deleteMedia()
     {
-        if (!unlink($this->publicDir . $this->existingMedia->getPath())) {
+        $result = true;
+        if (!file_exists($this->publicDir . $this->existingMedia->getPath())) {
+            $result = true;
+        } elseif (!unlink($this->publicDir . $this->existingMedia->getPath())) {
             return false;
         }
         $this->em->remove($this->existingMedia);
         $this->em->flush();
 
-        return true;
+        return $result;
     }
 
     /**

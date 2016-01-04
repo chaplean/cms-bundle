@@ -77,6 +77,7 @@
     Translator.add("An empty file is not allowed.", "\u00dcres f\u00e1jl nem megengedett.", "validators", "hu");
     Translator.add("The host could not be resolved.", "Az \u00e1llom\u00e1snevet nem lehet feloldani.", "validators", "hu");
     Translator.add("This value does not match the expected {{ charset }} charset.", "Ez az \u00e9rt\u00e9k nem az elv\u00e1rt {{ charset }} karakterk\u00f3dol\u00e1st haszn\u00e1lja.", "validators", "hu");
+    Translator.add("This is not a valid Business Identifier Code (BIC).", "\u00c9rv\u00e9nytelen nemzetk\u00f6zi bankazonos\u00edt\u00f3 k\u00f3d (BIC\/SWIFT).", "validators", "hu");
     Translator.add("This form should not contain extra fields.", "Ez a mez\u0151csoport nem tartalmazhat extra mez\u0151ket.", "validators", "hu");
     Translator.add("The uploaded file was too large. Please try to upload a smaller file.", "A felt\u00f6lt\u00f6tt f\u00e1jl t\u00fal nagy. K\u00e9rem, pr\u00f3b\u00e1ljon egy kisebb f\u00e1jlt felt\u00f6lteni.", "validators", "hu");
     Translator.add("The CSRF token is invalid. Please try to resubmit the form.", "\u00c9rv\u00e9nytelen CSRF token. K\u00e9rem, pr\u00f3b\u00e1lja \u00fajra elk\u00fcldeni az \u0171rlapot.", "validators", "hu");

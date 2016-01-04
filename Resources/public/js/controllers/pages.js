@@ -3,8 +3,10 @@
 var cms = angular.module('Cms');
 
 cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService) {
-    $scope.search = '';
 
+    $scope.$parent.menu.active = 'page';
+
+    $scope.search = '';
     $scope.loadData = function() {
         Page.getAll({}, function(pages) {
                 $scope.pages = pages;

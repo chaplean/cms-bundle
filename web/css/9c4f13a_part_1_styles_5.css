@@ -6300,6 +6300,7 @@ body {
   background-color: #EEE; }
 
 body .sidebar {
+  padding: 0;
   background-color: #333;
   color: #D9D9D9;
   height: 100%;
@@ -6309,12 +6310,25 @@ body .sidebar a {
   color: #D9D9D9; }
 
 body .sidebar a:hover, body .sidebar a:focus {
-  color: #FFF;
   text-decoration: none; }
 
 body .sidebar ul {
   padding: 0;
   list-style: none; }
+
+body .sidebar ul li.treeview {
+  cursor: pointer;
+  padding: 15px 0 15px 15px;
+  border-left: 5px solid transparent;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+body .sidebar ul li.treeview:hover, body .sidebar ul li.treeview.active {
+  background-color: #444;
+  border-left: 5px solid; }
+
+body .sidebar ul li.treeview a {
+  padding: 15px 0 15px 0px; }
 
 body .sidebar .custom-search-form input[type="text"], body .sidebar .custom-search-form button, body .sidebar .custom-search-form button:hover, body .sidebar .custom-search-form button:focus {
   box-shadow: none;
@@ -6479,5 +6493,14 @@ div.alert-fix-top {
 #media-manager .media-element.active img {
   box-shadow: 0 0 10px #424242; }
 
+.media-element p {
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 textarea {
   resize: vertical; }
+
+.warning {
+  color: #f0ad4e; }

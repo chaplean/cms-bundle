@@ -77,6 +77,7 @@
     Translator.add("An empty file is not allowed.", "Prazna datoteka ni dovoljena.", "validators", "sl");
     Translator.add("The host could not be resolved.", "Gostitelja ni bilo mogo\u010de prepoznati.", "validators", "sl");
     Translator.add("This value does not match the expected {{ charset }} charset.", "Ta vrednost se ne ujema s pri\u010dakovanim naborom znakov {{ charset }}.", "validators", "sl");
+    Translator.add("This is not a valid Business Identifier Code (BIC).", "To ni veljavna identifikacijska koda podjetja (BIC).", "validators", "sl");
     Translator.add("This form should not contain extra fields.", "Ta obrazec ne sme vsebovati dodatnih polj.", "validators", "sl");
     Translator.add("The uploaded file was too large. Please try to upload a smaller file.", "Nalo\u017eena datoteka je prevelika. Prosimo, poizkusite nalo\u017eiti manj\u0161o.", "validators", "sl");
     Translator.add("The CSRF token is invalid. Please try to resubmit the form.", "CSRF vrednost je napa\u010dna. Prosimo, ponovno po\u0161ljite obrazec.", "validators", "sl");

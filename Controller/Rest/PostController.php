@@ -126,12 +126,16 @@ class PostController extends ChapleanRestController
         $logger = $this->get('logger');
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $postRepository = $em->getRepository('ChapleanCmsBundle:Post');
+
+        $parameters = $request->request->all();
+        $category = $parameters['category'];
 
         // create form and get params
         $formPost = $this->createForm(PostType::class);
 
         // bind data in form
-        $formPost->submit($request->request->all());
+        $formPost->submit($parameters);
 
         if ($formPost->isValid()) {
             $post = null;
@@ -144,6 +148,10 @@ class PostController extends ChapleanRestController
 
                 /** @var Publication $publication */
                 $publication = $post->getPublication();
+                if (empty($publication->isIsHighlighted())) {
+                    $publication->setIsHighlighted(false);
+                }
+
                 $publication->setDateAdd(new \DateTime());
                 $em->persist($publication);
                 $em->flush();
@@ -153,6 +161,7 @@ class PostController extends ChapleanRestController
                 $em->flush();
 
                 $em->commit();
+                $postRepository->castPostTo($post, $category);
             } catch (\Exception $e) {
                 $em->rollback();
 

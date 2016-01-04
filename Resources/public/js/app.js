@@ -15,7 +15,14 @@ cms.run(function(amMoment) {
     amMoment.changeLocale(locale);
 });
 
-cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService) {
+cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService, $ngBootbox, TranslationService, CmsRouter) {
+
+    $ngBootbox.addLocale('fr', {
+        OK:      TranslationService.trans('button.validate.global'),
+        CANCEL:  TranslationService.trans('button.cancel.global'),
+        CONFIRM: TranslationService.trans('button.confirm.global')
+    });
+    $ngBootbox.setLocale(locale);
 
     $rootScope.path = function (url, options) {
         return Routing.generate(url, options);
@@ -26,4 +33,13 @@ cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertServ
     $scope.closeAlert = function (index) {
         CmsAlertService.closeAlert(index);
     };
+
+    $scope.CmsRouter = CmsRouter;
+    $scope.menu = {
+        active: ''
+    };
+
+    $scope.activeMenu = function (menu) {
+        $scope.menu.active = menu;
+    }
 });

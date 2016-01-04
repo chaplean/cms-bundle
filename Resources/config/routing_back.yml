@@ -1,3 +1,15 @@
+cms_back_index:
+    path:     /administration
+    defaults: { _controller: ChapleanCmsBundle:Default:index }
+    options:
+        expose: true
+
+cms_back_home:
+    path:     /administration/home
+    defaults: { _controller: ChapleanCmsBundle:Default:home }
+    options:
+        expose: true
+
 cms_page_list:
     path:     /administration/pages
     defaults: { _controller: ChapleanCmsBundle:Page:list }

@@ -6,6 +6,11 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                                           Block, PublicationStatus, Validator,
                                           TranslationService, CmsAlertService, Datepicker) {
 
+    if ($scope.$parent.hasOwnProperty('activeMenu')) {
+        $scope.$parent.activeMenu('block');
+    } else {
+        $log.error($scope.$parent.toString());
+    }
     $scope.publicationStatuses = [];
     $scope.block = {
         publication: {

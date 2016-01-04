@@ -3,7 +3,7 @@
         <div class="modal-header">
             <h3 class="modal-title">{{ 'media_manager.title.label' | trans }}
                 <span class="pull-right"></span>
-                <button id="quit" type="button" class="close" ng-click="quitWithoutMedia()"><span class="glyphicon glyphicon-remove"></span></button>
+                <button id="quit" type="button" class="close" ng-click="quitWithoutMedia()"><span class="fa fa-times"></span></button>
             </h3>
         </div>
         <div class="modal-body">
@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                         <input type="file" id="uploadNew" class="hidden" nv-file-select uploader="newUploader"/>
-                        <label class="btn btn-default" for="uploadNew"><span class="glyphicon glyphicon-cloud-upload"></span> {{ 'media_manager.upload.label' | trans }}
+                        <label class="btn btn-default" for="uploadNew"><span class="fa fa-upload"></span> {{ 'media_manager.upload.label' | trans }}
                         </label>
                     </div>
                     <div class="col-xs-12 col-md-6 text-right">
@@ -46,11 +46,11 @@
                     <div class="col-xs-12 col-sm-6 col-md-4 col-sm-push-6 col-md-push-8 media-details">
                         <div ng-show="selectedMedia">
                             <h4>
-                                {{ 'media_manager.details.label' | trans }}
+                                <span ng-if="selectedMedia.notFound" class="warning" uib-tooltip="{{ 'media_manager.not_found'|trans }}"><i class="fa fa-warning"></i></span> {{ 'media_manager.details.label' | trans }}
                                 <span class="pull-right">
                                     <input type="file" id="uploadEdit" class="hidden" nv-file-select uploader="editUploader"/>
-                                    <label for="uploadEdit"><span class="glyphicon glyphicon-edit"></span></label>
-                                    <span id="delete" ng-click="deleteCurrentMedia()"><span class="glyphicon glyphicon-trash"></span></span>
+                                    <label ng-if="!selectedMedia.notFound" for="uploadEdit"><span class="fa fa-edit"></span></label>
+                                    <span id="delete" ng-click="deleteCurrentMedia()"><span class="fa fa-trash"></span></span>
                                 </span>
                             </h4>
 
@@ -88,7 +88,7 @@
                             <i class="fa fa-check fa-2x"></i>
                             <img ng-src="{^ media.decachedPath ^}" ng-if="media.category == 'image'" height="130" width="130" />
                             <img ng-src="{{ asset('bundles/chapleancms/images/pdf.png') }}" ng-if="media.category == 'pdf'" height="130" width="130" />
-                            <p>{^ media.fileName ^}</p>
+                            <p title="{^ media.fileName ^}">{^ media.fileName ^}</p>
                         </div>
                         <dir-pagination-controls class="col-xs-12 text-center"></dir-pagination-controls>
                     </div>

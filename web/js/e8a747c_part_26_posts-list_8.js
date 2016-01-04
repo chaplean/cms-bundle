@@ -18,29 +18,32 @@ cms.controller('PostsListController', function ($scope, $location, $filter, Post
     $scope.category = null;
     $scope.pageSize = 10;
     $scope.currentPage = 1;
+    $scope.loading = true;
 
     $scope.loadData = function () {
         Post.getAllActive({}, function (posts) {
             $scope.posts = [].concat(posts);
             $scope.postsFiltered = [].concat(posts);
-        });
 
-        Post.getAvailableCategories(function (categories) {
-            var parameters = clCmsQueryFactory.getParams();
-            $scope.categories = categories;
+            Post.getAvailableCategories(function (categories) {
+                var parameters = clCmsQueryFactory.getParams();
+                $scope.categories = categories;
 
-            if (parameters.category && $scope.categories.indexOf(parameters.category) != -1) {
-                $scope.category = parameters.category;
-                $scope.updateFilter();
-            } else {
-                $scope.category = 'all';
-            }
+                if (parameters.category && $scope.categories.indexOf(parameters.category) != -1) {
+                    $scope.category = parameters.category;
+                    $scope.updateFilter();
+                } else {
+                    $scope.category = 'all';
+                }
 
-            if ($scope.categories.length == 1 && $scope.category == null) {
-                $scope.category = $scope.categories[0];
-            } else {
-                $scope.categories.push('all');
-            }
+                if ($scope.categories.length == 1 && $scope.category == null) {
+                    $scope.category = $scope.categories[0];
+                } else {
+                    $scope.categories.push('all');
+                }
+
+                $scope.loading = false;
+            });
         });
     };
 

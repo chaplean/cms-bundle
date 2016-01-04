@@ -33,7 +33,16 @@ class CmsExtensionTest extends LogicalTest
     {
         parent::setUp();
 
-        $this->cmsExtension = new CmsExtension(array('template' => array('front_layout' => 'foo'), 'block' => true, 'post' => true, 'page' => true, 'media' => true));
+        $this->cmsExtension = new CmsExtension(
+            array(
+                'access_debug' => true,
+                'template'     => array('front_layout' => 'foo'),
+                'block'        => true,
+                'post'         => true,
+                'page'         => true,
+                'media'        => true
+            )
+        );
     }
 
     /**
@@ -41,13 +50,17 @@ class CmsExtensionTest extends LogicalTest
      */
     public function testGetGlobals()
     {
-        $this->assertEquals($this->cmsExtension->getGlobals(), array(
-            'cms_front_layout'  => 'foo',
-            'block_is_activate' => true,
-            'post_is_activate'  => true,
-            'page_is_activate'  => true,
-            'media_is_activate' => true,
-        ));
+        $this->assertEquals(
+            $this->cmsExtension->getGlobals(),
+            array(
+                'access_debug'      => true,
+                'cms_front_layout'  => 'foo',
+                'block_is_activate' => true,
+                'post_is_activate'  => true,
+                'page_is_activate'  => true,
+                'media_is_activate' => true,
+            )
+        );
     }
 
     /**

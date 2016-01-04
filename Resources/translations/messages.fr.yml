@@ -10,6 +10,7 @@ alert:
     post:
         created: Article créé
         deleted: Article supprimé
+        duplicated: Article dupliqué
         updated: Article mis à jour
     field:
         required: Ce champ est obligatoire
@@ -20,10 +21,14 @@ button:
         global: Ajouter
     back:
         site: Retour au site
+    confirm:
+        global: Valider
     cancel:
         global: Annuler
     save:
         global: Enregistrer
+    save_duplicate:
+        global: Enregistrer & Dupliquer
     save_quit:
         global: Enregistrer & Fermer
     search:
@@ -59,6 +64,11 @@ global:
     subtitle: Sous-titre
     title: Titre
     yes: Oui
+
+settings:
+    posts: Administrer les articles
+    pages: Administrer les pages
+    blocks: Administrer les blocs
 
 header:
     actions: Liste d'actions
@@ -113,12 +123,14 @@ media_manager:
         delete: Une erreur est survenue lors de la suppression du média
         save: Une erreur est survenue lors de la modification du média
         upload: Une erreur est survenue lors l'envoi du média
+        invalid_extension: Ce type de fichier n'est pas autorisé
     link:
         label: Lien
     insert:
         label: Insérer
     open:
         label: Ajouter un média
+    not_found: Le fichier n'existe plus !
 
 menu:
     blocks: Blocs
@@ -149,7 +161,7 @@ placeholder:
 
 post:
     category:
-        all: Toutes
+        all: Toutes les catégories
         news: Nouveauté
         testimonial: Témoignage
         video: Vidéo
@@ -157,7 +169,7 @@ post:
 
 publication_status:
     status:
-        archived: Archivé
-        published: Publié
-        unpublished: Non publié
-        published_unpublished: Publié et non publié
+        archived: Archivés
+        published: Publiés
+        unpublished: Non publiés
+        published_unpublished: Publiés et non publiés

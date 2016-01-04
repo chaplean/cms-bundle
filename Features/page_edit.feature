@@ -24,6 +24,7 @@ Feature: Edit pages
     Given I am on "/administration/page/1"
     When I fill in "chaplean_cms_page_route_form_menuName" with "page-update-1"
     When I click on ".save"
+    When I wait Ajax
     Then I should see "Page mise à jour"
 
   Scenario: I see update page

@@ -3,6 +3,8 @@
 var cms = angular.module('Cms');
 
 cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, CmsAlertService) {
+
+    $scope.$parent.menu.active = 'block';
     $scope.search = '';
     $scope.blocks = [];
     $scope.blocksDisplayed = [];
