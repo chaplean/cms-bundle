@@ -13580,6 +13580,11 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                                           Block, PublicationStatus, Validator,
                                           TranslationService, CmsAlertService, Datepicker) {
 
+    if ($scope.$parent.hasOwnProperty('activeMenu')) {
+        $scope.$parent.activeMenu('block');
+    } else {
+        $log.error($scope.$parent.toString());
+    }
     $scope.publicationStatuses = [];
     $scope.block = {
         publication: {
@@ -13907,6 +13912,11 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                                           Page, PublicationStatus, Validator, BackofficeEditFactory,
                                           TranslationService, CmsAlertService, Datepicker) {
 
+    if ($scope.$parent.hasOwnProperty('activeMenu')) {
+        $scope.$parent.activeMenu('page');
+    } else {
+        $log.error($scope.$parent.toString());
+    }
     $scope.publicationStatuses = [];
     $scope.pageRoute = {
         publication: {
@@ -14119,6 +14129,11 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                                           Post, PublicationStatus, Validator, BackofficeEditFactory,
                                           TranslationService, CmsAlertService, Datepicker) {
 
+    if ($scope.$parent.hasOwnProperty('activeMenu')) {
+        $scope.$parent.activeMenu('post');
+    } else {
+        $log.error($scope.$parent.toString());
+    }
     $scope.publicationStatuses = [];
     $scope.post = {
         publication: {

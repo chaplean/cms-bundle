@@ -6,6 +6,11 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                                           Post, PublicationStatus, Validator, BackofficeEditFactory,
                                           TranslationService, CmsAlertService, Datepicker) {
 
+    if ($scope.$parent.hasOwnProperty('activeMenu')) {
+        $scope.$parent.activeMenu('post');
+    } else {
+        $log.error($scope.$parent.toString());
+    }
     $scope.publicationStatuses = [];
     $scope.post = {
         publication: {

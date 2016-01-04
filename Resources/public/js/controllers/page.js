@@ -6,6 +6,11 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
                                           Page, PublicationStatus, Validator, BackofficeEditFactory,
                                           TranslationService, CmsAlertService, Datepicker) {
 
+    if ($scope.$parent.hasOwnProperty('activeMenu')) {
+        $scope.$parent.activeMenu('page');
+    } else {
+        $log.error($scope.$parent.toString());
+    }
     $scope.publicationStatuses = [];
     $scope.pageRoute = {
         publication: {
