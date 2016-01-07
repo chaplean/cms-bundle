@@ -33,18 +33,18 @@ cms.controller('PostsController', function($scope, $log, $uibModal, $filter, $ng
                 function(posts) {
                     $scope.posts = [].concat(posts);
                     $scope.postsFiltered = [].concat(posts);
+
+                    Post.getAvailableCategories(function (categories) {
+                        $scope.categories = categories;
+                        if ($scope.categories.length == 1) {
+                            $scope.category = $scope.categories[0];
+                        } else {
+                            $scope.categories.push('all');
+                        }
+                        $scope.updateFilter();
+                    });
                 }
             );
-
-            Post.getAvailableCategories(function (categories) {
-                $scope.categories = categories;
-                if ($scope.categories.length == 1) {
-                    $scope.category = $scope.categories[0];
-                } else {
-                    $scope.categories.push('all');
-                }
-                $scope.updateFilter();
-            });
         });
     };
 
