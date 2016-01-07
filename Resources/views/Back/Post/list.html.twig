@@ -46,7 +46,7 @@
         <thead>
         <tr>
             <th class="no-padding-lr" colspan="5">
-                <input id="filter-post" st-search="" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
+                <input id="filter-post" ng-model="search" ng-change="updateFilter()" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
             </th>
         </tr>
         <tr>
@@ -60,7 +60,7 @@
             <td><a href="{^ path('cms_post_edit', {postId: post.id}) ^}">{^ ('post.category.' + post.category)|trans ^}</a></td>
             <td class="center"><a href="{^ path('cms_post_edit', {postId: post.id}) ^}">{^ post.page.title ^}</a></td>
             <td>
-                <button type="button" ng-click="removePost(post, $index)" title="{{ 'list.post.delete'|trans }}" class="btn btn-sm btn-danger">
+                <button type="button" ng-click="removePost(post)" title="{{ 'list.post.delete'|trans }}" class="btn btn-sm btn-danger">
                     <i class="fa fa-minus-circle"></i>
                 </button>
             </td>

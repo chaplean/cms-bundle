@@ -25,6 +25,7 @@ cms.factory('Validator', function() {
     };
 
     validator.isInvalidFieldSumitted = function (name) {
+        //console.log(validator.errors, name);
         return typeof validator.errors[name] != 'undefined';
     };
 

@@ -132,6 +132,12 @@ class BlockController extends ChapleanRestController
         if (empty($block)) {
             return $this->handleView($this->view('Block not found', 404));
         }
+//
+//        $blockExist = $em->getRepository('ChapleanCmsBundle:Block')->findOneBy(array('name' => $request->request->get('name')));
+//
+//        if (!empty($blockExist) && $blockExist->getId() != $block->getId()) {
+//            return $this->handleView($this->view('Block not found', 409));
+//        }
 
         // create form and get params
         $formBlock = $this->createForm(BlockType::class, $block);

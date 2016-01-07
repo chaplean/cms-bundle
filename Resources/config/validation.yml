@@ -29,3 +29,11 @@ Chaplean\Bundle\CmsBundle\Entity\Publication:
         status:
             - NotBlank:
                 message: general.not_blank
+
+Chaplean\Bundle\CmsBundle\Entity\Block:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+    properties:
+        name:
+            - NotBlank:
+                message: general.not_blank

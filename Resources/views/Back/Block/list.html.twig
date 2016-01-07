@@ -26,7 +26,7 @@
         <thead>
             <tr>
                 <th colspan="5">
-                    <input id="filter-page" st-search="" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
+                    <input id="filter-page" ng-model="search" ng-change="updateFilter()" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
                 </th>
             </tr>
             <tr>

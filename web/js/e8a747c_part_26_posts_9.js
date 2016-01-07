@@ -71,16 +71,27 @@ cms.controller('PostsController', function($scope, $log, $uibModal, $filter, $ng
         } else {
             $scope.postsFiltered = [].concat($scope.postsFiltered);
         }
+
+        $scope.postsFiltered = $filter('postFilter')($scope.postsFiltered, $scope.search);
     };
 
-    $scope.removePost = function (post, index) {
+    $scope.removePost = function (post) {
+
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.delete_post', { 'post' : post.page.title })
         ).then(function() {
             Post.delete(
                 {postId: post.id},
-                function (post) {
-                    $scope.posts.splice($scope.posts.indexOf(post), 1);
+                function () {
+                    var indexSplice = -1;
+                    angular.forEach($scope.posts, function (value, index) {
+                        if (indexSplice == -1 && value.id == post.id) {
+                            indexSplice = index;
+                        }
+                    });
+                    console.log(indexSplice, post.id);
+                    $scope.posts.splice(indexSplice, 1);
+                    $scope.updateFilter();
                     CmsAlertService.addAlert('success', TranslationService.trans('alert.post.deleted'), 1.5);
                 }, function () {
                     CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)

@@ -13565,6 +13565,7 @@ cms.factory('Validator', function() {
     };
 
     validator.isInvalidFieldSumitted = function (name) {
+        //console.log(validator.errors, name);
         return typeof validator.errors[name] != 'undefined';
     };
 
@@ -13620,6 +13621,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
         if (blockForm.$valid) {
             var block = $scope.buildData($scope.block);
 
+            Validator.errors = {};
             if ($scope.blockId) {
                 Block.update({blockId: $scope.blockId}, block,
                     function (block) {
@@ -13632,23 +13634,28 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                     }, function (response) {
                         if(response.status == 400) {
                             Validator.addError(blockForm, response.data);
-                            CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
+                            //CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
                             CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                         }
                     });
             } else {
                 Block.save(block, function (block) {
+                    $scope.blockId = block.id;
                     $scope.block.dateAdd = $filter('date')(block.dateAdd, 'dd/MM/yyyy');
                     CmsAlertService.addAlert('success', TranslationService.trans('alert.block.created'), 1.5);
 
                     if (quit) {
                         window.location = Routing.generate('cms_block_list');
                     }
-                }, function (errors) {
-                    $log.error(errors);
-                    $scope.errors = errors;
-                    CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
+                }, function (error) {
+                    //$log.error(error);
+                    if (error.status == 400) {
+                        Validator.addError(blockForm, error.data);
+                        //CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
+                    } else {
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
+                    }
                 });
             }
         } else {
@@ -13699,7 +13706,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
 
 var cms = angular.module('Cms');
 
-cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, CmsAlertService) {
+cms.controller('BlocksController', function($scope, $filter, $uibModal, $http, $ngBootbox, Block, TranslationService, CmsAlertService) {
 
     $scope.$parent.menu.active = 'block';
     $scope.search = '';
@@ -13714,6 +13721,11 @@ cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox
         );
     };
 
+    $scope.updateFilter = function () {
+        $scope.blocksDisplayed = [].concat($scope.blocks);
+        $scope.blocksDisplayed = $filter('blockFilter')($scope.blocksDisplayed, $scope.search);
+    };
+
     $scope.removeBlock = function (block) {
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.delete_block', { 'block' : block.name })
@@ -13721,8 +13733,15 @@ cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox
                 Block.delete({
                         blockId: block.id
                     },
-                    function (block) {
-                        $scope.blocks.splice($scope.blocks.indexOf(block), 1);
+                    function () {
+                        var indexSplice = -1;
+                        angular.forEach($scope.blocks, function (value, index) {
+                            if (value.id == block.id) {
+                                indexSplice = index;
+                            }
+                        });
+                        $scope.blocks.splice(indexSplice, 1);
+                        $scope.updateFilter();
                         CmsAlertService.addAlert('success', TranslationService.trans('alert.block.deleted'), 1.5);
                     }, function () {
                         CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
@@ -14088,7 +14107,7 @@ cms.controller('PagesListController', function ($scope, $filter, Page, CmsRouter
 
 var cms = angular.module('Cms');
 
-cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService) {
+cms.controller('PagesController', function($scope, $filter, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService) {
 
     $scope.$parent.menu.active = 'page';
 
@@ -14110,6 +14129,11 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
         }
     };
 
+    $scope.updateFilter = function () {
+        $scope.pagesDisplayed = [].concat($scope.pages);
+        $scope.pagesDisplayed = $filter('pageFilter')($scope.pagesDisplayed, $scope.search);
+    };
+
     $scope.removePage = function (pageRoute) {
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.delete_page', { 'page' : pageRoute.page.title })
@@ -14117,8 +14141,15 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
                 Page.delete({
                         pageId: pageRoute.id
                     },
-                    function (page) {
-                        $scope.pages.splice($scope.pages.indexOf(page), 1);
+                    function () {
+                        var indexSplice = -1;
+                        angular.forEach($scope.pages, function (value, index) {
+                            if (value.id == pageRoute.id) {
+                                indexSplice = index;
+                            }
+                        });
+                        $scope.pages.splice(indexSplice, 1);
+                        $scope.updateFilter();
                         CmsAlertService.addAlert('success', TranslationService.trans('alert.page.deleted'), 1.5);
                     }, function () {
                         CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
@@ -14432,16 +14463,27 @@ cms.controller('PostsController', function($scope, $log, $uibModal, $filter, $ng
         } else {
             $scope.postsFiltered = [].concat($scope.postsFiltered);
         }
+
+        $scope.postsFiltered = $filter('postFilter')($scope.postsFiltered, $scope.search);
     };
 
-    $scope.removePost = function (post, index) {
+    $scope.removePost = function (post) {
+
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.delete_post', { 'post' : post.page.title })
         ).then(function() {
             Post.delete(
                 {postId: post.id},
-                function (post) {
-                    $scope.posts.splice($scope.posts.indexOf(post), 1);
+                function () {
+                    var indexSplice = -1;
+                    angular.forEach($scope.posts, function (value, index) {
+                        if (indexSplice == -1 && value.id == post.id) {
+                            indexSplice = index;
+                        }
+                    });
+                    console.log(indexSplice, post.id);
+                    $scope.posts.splice(indexSplice, 1);
+                    $scope.updateFilter();
                     CmsAlertService.addAlert('success', TranslationService.trans('alert.post.deleted'), 1.5);
                 }, function () {
                     CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
@@ -14459,6 +14501,23 @@ cms.controller('PostsController', function($scope, $log, $uibModal, $filter, $ng
 
 var cms = angular.module('Cms');
 
+cms.filter('blockFilter', function() {
+    return function (items, search) {
+        if (!search) {
+            return items;
+        }
+        search = search.toLowerCase();
+
+        return items.filter(function (e) {
+            return String(e.id).toLowerCase().indexOf(search) !== -1 || e.name.toLowerCase().indexOf(search) !== -1;
+        });
+    }
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
 cms.filter('pageFilter', function() {
     return function (items, search) {
         if (!search) {
@@ -14469,7 +14528,25 @@ cms.filter('pageFilter', function() {
         return items.filter(function (e) {
             return (e.path.toLowerCase().indexOf(search) !== -1)
                 || (e.page.title.toLowerCase().indexOf(search) !== -1)
-                || (e.page.metaDescription.toLowerCase().indexOf(search) !== -1);
+                || (e.page.metaDescription != null ? e.page.metaDescription.toLowerCase().indexOf(search) !== -1 : false);
+        });
+    }
+});
+
+'use strict';
+
+var cms = angular.module('Cms');
+
+cms.filter('postFilter', function(TranslationService) {
+    return function (items, search) {
+        if (!search) {
+            return items;
+        }
+        search = search.toLowerCase();
+
+        return items.filter(function (e) {
+            return (TranslationService.trans('post.category.' + e.category).toLowerCase()).indexOf(search) !== -1
+                || (e.page.title.toLowerCase()).indexOf(search) !== -1;
         });
     }
 });
