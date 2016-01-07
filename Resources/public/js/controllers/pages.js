@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService) {
+cms.controller('PagesController', function($scope, $filter, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService) {
 
     $scope.$parent.menu.active = 'page';
 
@@ -24,6 +24,11 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
         }
     };
 
+    $scope.updateFilter = function () {
+        $scope.pagesDisplayed = [].concat($scope.pages);
+        $scope.pagesDisplayed = $filter('pageFilter')($scope.pagesDisplayed, $scope.search);
+    };
+
     $scope.removePage = function (pageRoute) {
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.delete_page', { 'page' : pageRoute.page.title })
@@ -31,8 +36,15 @@ cms.controller('PagesController', function($scope, $uibModal, $http, $ngBootbox,
                 Page.delete({
                         pageId: pageRoute.id
                     },
-                    function (page) {
-                        $scope.pages.splice($scope.pages.indexOf(page), 1);
+                    function () {
+                        var indexSplice = -1;
+                        angular.forEach($scope.pages, function (value, index) {
+                            if (value.id == pageRoute.id) {
+                                indexSplice = index;
+                            }
+                        });
+                        $scope.pages.splice(indexSplice, 1);
+                        $scope.updateFilter();
                         CmsAlertService.addAlert('success', TranslationService.trans('alert.page.deleted'), 1.5);
                     }, function () {
                         CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)

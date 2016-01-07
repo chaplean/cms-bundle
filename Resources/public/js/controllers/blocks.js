@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox, Block, TranslationService, CmsAlertService) {
+cms.controller('BlocksController', function($scope, $filter, $uibModal, $http, $ngBootbox, Block, TranslationService, CmsAlertService) {
 
     $scope.$parent.menu.active = 'block';
     $scope.search = '';
@@ -17,6 +17,11 @@ cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox
         );
     };
 
+    $scope.updateFilter = function () {
+        $scope.blocksDisplayed = [].concat($scope.blocks);
+        $scope.blocksDisplayed = $filter('blockFilter')($scope.blocksDisplayed, $scope.search);
+    };
+
     $scope.removeBlock = function (block) {
         $ngBootbox.confirm(
             TranslationService.trans('message.confirm.delete_block', { 'block' : block.name })
@@ -24,8 +29,15 @@ cms.controller('BlocksController', function($scope, $uibModal, $http, $ngBootbox
                 Block.delete({
                         blockId: block.id
                     },
-                    function (block) {
-                        $scope.blocks.splice($scope.blocks.indexOf(block), 1);
+                    function () {
+                        var indexSplice = -1;
+                        angular.forEach($scope.blocks, function (value, index) {
+                            if (value.id == block.id) {
+                                indexSplice = index;
+                            }
+                        });
+                        $scope.blocks.splice(indexSplice, 1);
+                        $scope.updateFilter();
                         CmsAlertService.addAlert('success', TranslationService.trans('alert.block.deleted'), 1.5);
                     }, function () {
                         CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)

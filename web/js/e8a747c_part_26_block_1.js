@@ -43,6 +43,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
         if (blockForm.$valid) {
             var block = $scope.buildData($scope.block);
 
+            Validator.errors = {};
             if ($scope.blockId) {
                 Block.update({blockId: $scope.blockId}, block,
                     function (block) {
@@ -55,23 +56,28 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                     }, function (response) {
                         if(response.status == 400) {
                             Validator.addError(blockForm, response.data);
-                            CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
+                            //CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
                             CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                         }
                     });
             } else {
                 Block.save(block, function (block) {
+                    $scope.blockId = block.id;
                     $scope.block.dateAdd = $filter('date')(block.dateAdd, 'dd/MM/yyyy');
                     CmsAlertService.addAlert('success', TranslationService.trans('alert.block.created'), 1.5);
 
                     if (quit) {
                         window.location = Routing.generate('cms_block_list');
                     }
-                }, function (errors) {
-                    $log.error(errors);
-                    $scope.errors = errors;
-                    CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
+                }, function (error) {
+                    //$log.error(error);
+                    if (error.status == 400) {
+                        Validator.addError(blockForm, error.data);
+                        //CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
+                    } else {
+                        CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
+                    }
                 });
             }
         } else {
