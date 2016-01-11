@@ -14,12 +14,12 @@
                 <div class="navbar-left">
                     <div ng-show="blockId">
                         <span class="ng-cloak">{^ 'header.edition'|trans:{'page': block.name} ^}</span>
-                        <span>
-                            <a class="frontend-link" target="_blank" href="{^ name('cms_block_view', {pagePath: pagePath}) ^}">
-                                <span class="fa fa-external-link"></span>
-                                {{ 'global.frontend' | trans }}
-                            </a>
-                        </span>
+                        {#<span>#}
+                            {#<a class="frontend-link" target="_blank" href="{^ name('cms_block_view', {pagePath: pagePath}) ^}">#}
+                                {#<span class="fa fa-external-link"></span>#}
+                                {#{{ 'global.frontend' | trans }}#}
+                            {#</a>#}
+                        {#</span>#}
                     </div>
                     <div class="ng-cloak" ng-show="!blockId">
                         <span>{{ 'header.creation.page'|trans }}</span>
