@@ -69,7 +69,7 @@ class PostRepository extends CmsRepository
             array(
                 'postId'    => $postId,
                 'published' => 'published',
-                'now'       => $now
+                'now'       => $now->format('Y-m-d'),
             )
         );
 
@@ -99,7 +99,7 @@ class PostRepository extends CmsRepository
         $qb->setParameters(
             array(
                 'published' => 'published',
-                'now'       => $now
+                'now'       => $now->format('Y-m-d'),
             )
         );
 
