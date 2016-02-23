@@ -25,7 +25,7 @@ class Block
     /**
      * @var string
      *
-     * @ORM\Column(type="string", unique=true, length=50, nullable=false)
+     * @ORM\Column(type="string", unique=true, length=50, nullable=false, name="name")
      *
      * @JMS\Groups({"block_name", "block_all"})
      */
@@ -61,7 +61,7 @@ class Block
     /**
      * @var Publication
      *
-     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\OneToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\Publication")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
      *
      * @JMS\Groups({"block_publication", "block_all"})

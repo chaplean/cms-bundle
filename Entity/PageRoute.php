@@ -70,7 +70,7 @@ class PageRoute
     /**
      * @var Publication
      *
-     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\OneToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\Publication")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
      *
      * @JMS\Groups({"page_route_publication", "page_route_all"})
@@ -80,7 +80,7 @@ class PageRoute
     /**
      * @var Page
      *
-     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", columnPrefix = false)
+     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", useColumnPrefix=false)
      *
      * @JMS\Groups({"page_route_page", "page_route_all"})
      */

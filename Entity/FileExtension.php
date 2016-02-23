@@ -13,12 +13,10 @@ use JMS\Serializer\Annotation as JMS;
  * )
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap(
- *     {
+ * @ORM\DiscriminatorMap({
  *     "image"="Chaplean\Bundle\CmsBundle\Entity\FileExtensionImage",
  *     "pdf"="Chaplean\Bundle\CmsBundle\Entity\FileExtensionPdf"
- * }
- * )
+ * })
  */
 abstract class FileExtension
 {
