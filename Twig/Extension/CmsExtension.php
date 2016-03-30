@@ -34,6 +34,7 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
         return array(
             'access_debug'      => $this->getParameters('access_debug'),
             'cms_front_layout'  => $this->getParameters('template', 'front_layout'),
+            'cms_logo_path'     => $this->getParameters('template', 'logo_path'),
             'block_is_activate' => $this->getParameters('block'),
             'post_is_activate'  => is_bool($this->getParameters('post')) ? $this->getParameters('post') : true,
             'page_is_activate'  => $this->getParameters('page'),

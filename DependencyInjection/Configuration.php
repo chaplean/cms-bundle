@@ -28,6 +28,8 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('template')
                     ->children()
                         ->scalarNode('front_layout')->isRequired()->end()
+                        ->scalarNode('front_route')->defaultValue('app_front')->end()
+                        ->scalarNode('logo_path')->defaultValue('')->end()
                         ->scalarNode('page_index')->defaultValue('ChapleanCmsBundle:Front/Page:index.html.twig')->end()
                         ->scalarNode('page_view')->defaultValue('ChapleanCmsBundle:Front/Page:view.html.twig')->end()
                         ->scalarNode('post_index')->defaultValue('ChapleanCmsBundle:Front/Post:index.html.twig')->end()

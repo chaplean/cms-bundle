@@ -70,7 +70,7 @@ class MediaController extends FOSRestController
             $media = $mediaUtility->createMedia();
 
             if (!$media) {
-                return $this->handleView(new View('Failed to upload media', 500));
+                return $this->handleView(new View('Failed to upload media', 400));
             }
 
             $response = $this->view($media);

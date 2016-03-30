@@ -162,6 +162,7 @@ placeholder:
 post:
     category:
         all: Toutes les catégories
+        choose: Choisissez une catégorie...
         news: Nouveauté
         testimonial: Témoignage
         video: Vidéo

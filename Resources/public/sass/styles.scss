@@ -228,7 +228,9 @@ div.alert-fix-top {
 }
 
 .default-logo {
-    height: 130px;
+    img {
+        max-width: 100%;
+    }
 }
 
 .dropdown-menu {
