@@ -62,7 +62,7 @@ class Post
     /**
      * @var Page
      *
-     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page")
+     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", columnPrefix=false)
      *
      * @JMS\Groups({"post_page", "post_all"})
      */
