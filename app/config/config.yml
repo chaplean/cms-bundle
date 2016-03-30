@@ -149,6 +149,7 @@ chaplean_cms:
     access_debug: true
     template:
         front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
+        front_route: 'cms_back_index'
     block: true
     post: true
     page: true
