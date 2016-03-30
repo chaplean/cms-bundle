@@ -36,7 +36,7 @@ class CmsExtensionTest extends LogicalTest
         $this->cmsExtension = new CmsExtension(
             array(
                 'access_debug' => true,
-                'template'     => array('front_layout' => 'foo', 'logo_path' => 'a'),
+                'template'     => array('front_layout' => 'foo', 'front_route' => 'bar', 'logo_path' => 'a'),
                 'block'        => true,
                 'post'         => true,
                 'page'         => true,
@@ -55,6 +55,7 @@ class CmsExtensionTest extends LogicalTest
             array(
                 'access_debug'      => true,
                 'cms_front_layout'  => 'foo',
+                'cms_front_route'   => 'bar',
                 'cms_logo_path'     => 'a',
                 'block_is_activate' => true,
                 'post_is_activate'  => true,

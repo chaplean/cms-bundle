@@ -6425,8 +6425,8 @@ div.alert-fix-top {
 .align-choices {
   padding-top: 5px; }
 
-.default-logo {
-  height: 130px; }
+.default-logo img {
+  max-width: 100%; }
 
 .dropdown-menu > li.active > a {
   text-decoration: none;
