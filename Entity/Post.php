@@ -11,14 +11,12 @@ use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
  * @ORM\Table(name="cl_post")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="category", type="string")
- * @ORM\DiscriminatorMap(
- *     {
+ * @ORM\DiscriminatorMap({
  *     "news"="Chaplean\Bundle\CmsBundle\Entity\Post",
  *     "video"="Chaplean\Bundle\CmsBundle\Entity\PostVideo",
  *     "testimonial"="Chaplean\Bundle\CmsBundle\Entity\PostTestimonial",
  *     "zoom"="Chaplean\Bundle\CmsBundle\Entity\PostZoom"
- * }
- * )
+ * })
  */
 class Post
 {
@@ -54,7 +52,7 @@ class Post
     /**
      * @var Publication
      *
-     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\OneToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\Publication")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
      *
      * @JMS\Groups({"post_publication", "post_all"})
@@ -64,7 +62,7 @@ class Post
     /**
      * @var Page
      *
-     * @ORM\Embedded(class="Page")
+     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page")
      *
      * @JMS\Groups({"post_page", "post_all"})
      */
