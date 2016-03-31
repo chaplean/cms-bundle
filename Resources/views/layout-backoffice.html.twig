@@ -73,7 +73,6 @@
     <body>
     <uib-alert ng-cloak ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>
 
-    {% if app.request.user is not null or access_debug %}
         <div class="container-fluid" {% block controller %}{% endblock %}>
             <div class="row">
                 <div class="col-xs-4 col-sm-3 col-lg-2 sidebar">
@@ -141,10 +140,7 @@
                 </div>
             </div>
         </div>
-    {% else %}
-        {% block login %}
-        {% endblock %}
-    {% endif %}
+
     </body>
 {% endblock %}
 </html>
