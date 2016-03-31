@@ -27,8 +27,8 @@ class PostRepository extends CmsRepository
         $qb->from('ChapleanCmsBundle:Post', 'p');
         $qb->join('p.publication', 'pu');
         $qb->join('pu.status', 'ps');
-        $qb->where('p INSTANCE OF :category');
-        $qb->setParameter('category', array('news', 'video', 'testimonial', 'zoom'));
+//        $qb->where('p INSTANCE OF :category');
+//        $qb->setParameter('category', array('news', 'video', 'testimonial', 'zoom'));
 
         return $qb;
     }
