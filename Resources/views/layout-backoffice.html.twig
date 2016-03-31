@@ -68,7 +68,7 @@
 
     {% block head %}{% endblock %}
 </head>
-Pos
+
 {% block body_with_tag %}
     <body>
     <uib-alert ng-cloak ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>

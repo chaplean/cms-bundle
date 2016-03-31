@@ -27,6 +27,8 @@ class PostRepository extends CmsRepository
         $qb->from('ChapleanCmsBundle:Post', 'p');
         $qb->join('p.publication', 'pu');
         $qb->join('pu.status', 'ps');
+//        $qb->where('p INSTANCE OF :category');
+//        $qb->setParameter('category', array('news', 'video', 'testimonial', 'zoom'));
 
         return $qb;
     }
@@ -61,7 +63,7 @@ class PostRepository extends CmsRepository
         $now = new \DateTime();
         $qb = $this->buildQueryGetAll();
 
-        $qb->where('p.id = :postId');
+        $qb->andWhere('p.id = :postId');
         $qb->andWhere('ps.keyname = :published');
         $qb->andWhere('pu.datePublicationBegin IS NULL OR pu.datePublicationBegin <= :now');
         $qb->andWhere('pu.datePublicationEnd IS NULL OR pu.datePublicationEnd >= :now');
@@ -93,7 +95,7 @@ class PostRepository extends CmsRepository
 
         $qb = $this->buildQueryGetAll();
         $qb = $this->buildParam($qb, $limit, $sort, $order);
-        $qb->where('ps.keyname = :published');
+        $qb->andWhere('ps.keyname = :published');
         $qb->andWhere('pu.datePublicationBegin IS NULL OR pu.datePublicationBegin <= :now');
         $qb->andWhere('pu.datePublicationEnd IS NULL OR pu.datePublicationEnd >= :now');
         $qb->setParameters(

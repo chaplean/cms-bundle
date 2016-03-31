@@ -41,7 +41,7 @@ class Page
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=250, nullable=true, name="meta_description")
+     * @ORM\Column(type="text", nullable=true, name="meta_description")
      *
      * @JMS\Groups({"page_meta_description", "page_all"})
      */
