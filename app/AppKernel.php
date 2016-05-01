@@ -23,26 +23,24 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Liip\FunctionalTestBundle\LiipFunctionalTestBundle(),
+            new Chaplean\Bundle\UnitBundle\ChapleanUnitBundle(),
             new Chaplean\Bundle\CmsBundle\ChapleanCmsBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-            new Chaplean\Bundle\UnitBundle\ChapleanUnitBundle(),
-            new Liip\FunctionalTestBundle\LiipFunctionalTestBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         );
     }
 
     /**
-     * @param LoaderInterface $loader
-     *
-     * @return void
+     * @return string
      */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function getRootDir()
     {
-        $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() .'.yml');
+        return __DIR__;
     }
 
     /**
@@ -50,12 +48,7 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-        $cacheDir = sys_get_temp_dir() . '/cache/' . $this->getEnvironment();
-        if (!is_dir($cacheDir)) {
-            mkdir($cacheDir, 0777, true);
-        }
-
-        return $cacheDir;
+        return dirname(__DIR__) . '/var/cache/' . $this->getEnvironment();
     }
 
     /**
@@ -63,11 +56,16 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {
-        $logDir = sys_get_temp_dir() . '/logs/' . $this->getEnvironment();
-        if (!is_dir($logDir)) {
-            mkdir($logDir, 0777, true);
-        }
+        return dirname(__DIR__) . '/var/logs';
+    }
 
-        return $logDir;
+    /**
+     * @param LoaderInterface $loader Resource loader.
+     *
+     * @return void
+     */
+    public function registerContainerConfiguration(LoaderInterface $loader)
+    {
+        $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
 }
