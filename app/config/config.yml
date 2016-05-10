@@ -100,7 +100,7 @@ doctrine:
         port:     3306
         dbname:   test_database
         user:     root
-        password: %database_password%
+        password: '%database_password%'
         charset:  UTF8
         server_version: 5.5
         mapping_types:
@@ -145,12 +145,21 @@ fos_rest:
     serializer:
         serialize_null: true
 
+#chaplean_cms:
+#    access_debug: true
+#    action:
+#        block: ~
+#        page: []
+#        post: ~
+#    template:
+#        front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
+#        front_route: 'cms_back_index'
+#    block: true
+#    post: true
+#    page: true
+#    media: true
+
+
 chaplean_cms:
-    access_debug: true
-    template:
-        front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
-        front_route: 'cms_back_index'
-    block: true
-    post: true
-    page: true
-    media: true
+    modules:
+        page: true

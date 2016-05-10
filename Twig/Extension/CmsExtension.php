@@ -40,6 +40,7 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
             'post_is_activate'  => is_bool($this->getParameters('post')) ? $this->getParameters('post') : true,
             'page_is_activate'  => $this->getParameters('page'),
             'media_is_activate' => $this->getParameters('media'),
+            'cms_action'        => $this->getParameters('action'),
         );
     }
 

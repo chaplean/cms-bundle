@@ -30,9 +30,17 @@ cms_post_list:
     options:
         expose: true
 
+cms_post_new:
+    path:     /administration/post
+    defaults: { _controller: ChapleanCmsBundle:Post:edit, postId: null }
+    requirements:
+        postId: \d+
+    options:
+        expose: true
+
 cms_post_edit:
     path:     /administration/post/{postId}
-    defaults: { _controller: ChapleanCmsBundle:Post:edit, postId: null }
+    defaults: { _controller: ChapleanCmsBundle:Post:edit }
     requirements:
         postId: \d+
     options:

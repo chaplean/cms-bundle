@@ -12,6 +12,9 @@ class ConfigListener
      */
     private $configCms;
 
+    /**
+     * @var array
+     */
     private $controllerToFeature = array(
         'Chaplean\Bundle\CmsBundle\Controller\Rest\MediaController' => 'media',
         'Chaplean\Bundle\CmsBundle\Controller\Rest\BlockController' => 'block',
@@ -38,13 +41,17 @@ class ConfigListener
      */
     public function onKernelController(FilterControllerEvent $event)
     {
+        /** @var array $controller */
         $controller = $event->getController();
+        $request = $event->getRequest();
 
         if (is_array($this->configCms)) {
-            $controllerName = get_class($controller[0]);
+            $controllerName = get_class(array_shift($controller));
 
             if (isset($this->controllerToFeature[$controllerName])) {
                 $featureName = $this->controllerToFeature[$controllerName];
+
+                
 
                 if (isset($this->configCms[$featureName])) {
                     $featureValue = $this->configCms[$featureName];
