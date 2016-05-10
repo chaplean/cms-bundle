@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="cl_media", uniqueConstraints={@ORM\UniqueConstraint(name="path_UNIQUE", columns={"path"})})
+ * @ORM\Table(name="cl_media", uniqueConstraints={@ORM\UniqueConstraint(name="media_path_UNIQUE", columns={"path"})})
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"image"="Chaplean\Bundle\CmsBundle\Entity\MediaImage","pdf"="Chaplean\Bundle\CmsBundle\Entity\MediaPdf"})
