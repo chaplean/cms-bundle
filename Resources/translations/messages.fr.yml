@@ -50,6 +50,7 @@ form:
 
 global:
     content: Contenu
+    duplicate: (Copie)
     frontend: Frontend
     label: Libellé du menu
     meta_description: Meta description
@@ -81,6 +82,7 @@ header:
     publication_setting: Paramètres de publication
 
 list:
+    id: Identifiant
     block:
         id: Identifiant du bloc
         label: Libellé
