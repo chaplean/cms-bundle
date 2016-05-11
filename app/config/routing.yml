@@ -1,15 +1,15 @@
 chaplean_cms:
-    resource: "@ChapleanCmsBundle/Resources/config/routing.yml"
+    resource: '@ChapleanCmsBundle/Resources/config/routing.yml'
     prefix:   /
 
 chaplean_cms_rest:
     type: rest
-    resource: "@ChapleanCmsBundle/Resources/config/routing_rest.yml"
+    resource: '@ChapleanCmsBundle/Resources/config/routing_rest.yml'
     prefix:   /rest/
 
 fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    resource: '@FOSJsRoutingBundle/Resources/config/routing/routing.xml'
 
 _bazinga_jstranslation:
-    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+    resource: '@BazingaJsTranslationBundle/Resources/config/routing/routing.yml'
 

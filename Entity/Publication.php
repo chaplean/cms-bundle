@@ -10,10 +10,10 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(
  *     name="cl_publication",
  *     indexes={
- *         @ORM\Index(name="date_publication_begin_INDEX", columns={"date_publication_begin"}),
- *         @ORM\Index(name="date_publication_end_INDEX", columns={"date_publication_end"}),
- *         @ORM\Index(name="status_INDEX", columns={"status"}),
- *         @ORM\Index(name="is_highlighted_INDEX", columns={"is_highlighted"})
+ *         @ORM\Index(name="publication_date_publication_begin_INDEX", columns={"date_publication_begin"}),
+ *         @ORM\Index(name="publication_date_publication_end_INDEX", columns={"date_publication_end"}),
+ *         @ORM\Index(name="publication_status_INDEX", columns={"status"}),
+ *         @ORM\Index(name="publication_is_highlighted_INDEX", columns={"is_highlighted"})
  *     }
  * )
  */

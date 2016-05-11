@@ -1,37 +1,40 @@
 {
     "name": "chaplean/cms-bundle",
-    "description": "The Bundle base to fork",
-    "type": "symfony-bundle",
     "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "The Bundle base to fork",
     "authors": [
         {
             "name": "Chaplean",
-            "homepage": "http://chaplean.com/"
+            "homepage": "http://www.chaplean.com"
         }
     ],
     "autoload": {
-        "psr-4": {
-            "Chaplean\\Bundle\\CmsBundle\\": ""
+        "psr-0": {
+            "Chaplean\\Bundle\\CmsBundle": ""
         },
-        "classmap": ["app/AppKernel.php"]
+        "classmap": [
+            "app/AppKernel.php"
+        ]
     },
+    "target-dir" : "Chaplean/Bundle/CmsBundle",
     "repositories": [
         {
             "type": "composer",
-            "url": "http://satis.chaplean.com"
+            "url": "https://satis.chaplean.com"
         }
     ],
     "require": {
         "php": ">=5.5.9",
         "symfony/symfony": "2.8.*",
-        "doctrine/orm": "^2.5.1",
-        "doctrine/doctrine-bundle": "~1.5",
-        "symfony/assetic-bundle": "~2.7",
+        "doctrine/orm": "^2.4.8",
+        "doctrine/doctrine-bundle": "~1.4",
+        "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.8",
+        "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~5.0",
-        "sensio/framework-extra-bundle": "^3.0.10",
-        "incenteev/composer-parameter-handler": "~2.1",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "friendsofsymfony/rest-bundle": "~1.7",
         "willdurand/js-translation-bundle": "2.2.*",
@@ -39,8 +42,9 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
-        "chaplean/unit-bundle": "^2.0",
-        "chaplean/coding-standard": "1.1.*"
+        "chaplean/coding-standard": "1.1.*",
+        "chaplean/unit-bundle": "~2.0",
+        "satooshi/php-coveralls": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [
@@ -60,7 +64,10 @@
     },
     "config": {
         "bin-dir": "bin",
-        "discard-changes": true
+        "discard-changes": true,
+        "platform": {
+            "php": "5.5.9"
+        }
     },
     "extra": {
         "symfony-app-dir": "app",
@@ -69,11 +76,7 @@
         "symfony-web-dir": "web",
         "symfony-assets-install": "symlink",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml",
-            "keep-outdated": true
-        },
-        "branch-alias": {
-            "dev-master": "2.8-dev"
+            "file": "app/config/parameters.yml"
         }
     }
 }

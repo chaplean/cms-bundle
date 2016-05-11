@@ -11,8 +11,8 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(
  *     name="cl_publication_status",
  *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="keyname_UNIQUE", columns={"keyname"}),
- *         @ORM\UniqueConstraint(name="position_UNIQUE", columns={"position"})
+ *         @ORM\UniqueConstraint(name="publication_status_keyname_UNIQUE", columns={"keyname"}),
+ *         @ORM\UniqueConstraint(name="publication_status_position_UNIQUE", columns={"position"})
  *     }
  * )
  */
