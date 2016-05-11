@@ -39,6 +39,7 @@
     Translator.add("form.publication.date_update", "Modification", "messages", "fr");
     Translator.add("form.publication.is_highlighted", "Afficher sur la home", "messages", "fr");
     Translator.add("global.content", "Contenu", "messages", "fr");
+    Translator.add("global.duplicate", "(Copie)", "messages", "fr");
     Translator.add("global.frontend", "Frontend", "messages", "fr");
     Translator.add("global.label", "Libell\u00e9 du menu", "messages", "fr");
     Translator.add("global.meta_description", "Meta description", "messages", "fr");
@@ -62,6 +63,7 @@
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
     Translator.add("header.front.pages", "Liste des pages", "messages", "fr");
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
+    Translator.add("list.id", "Identifiant", "messages", "fr");
     Translator.add("list.block.id", "Identifiant du bloc", "messages", "fr");
     Translator.add("list.block.label", "Libell\u00e9", "messages", "fr");
     Translator.add("list.block.delete", "Supprimer ce bloc", "messages", "fr");
@@ -88,7 +90,6 @@
     Translator.add("media_manager.insert.label", "Ins\u00e9rer", "messages", "fr");
     Translator.add("media_manager.open.label", "Ajouter un m\u00e9dia", "messages", "fr");
     Translator.add("media_manager.not_found", "Le fichier n'existe plus !", "messages", "fr");
-    Translator.add("media_manager.delete_not_found", "Le fichier a bien \u00e9t\u00e9 supprim\u00e9 de la base", "messages", "fr");
     Translator.add("menu.blocks", "Blocs", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
     Translator.add("menu.page", "Page", "messages", "fr");
@@ -107,6 +108,7 @@
     Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
     Translator.add("post.category.all", "Toutes les cat\u00e9gories", "messages", "fr");
+    Translator.add("post.category.choose", "Choisissez une cat\u00e9gorie...", "messages", "fr");
     Translator.add("post.category.news", "Nouveaut\u00e9", "messages", "fr");
     Translator.add("post.category.testimonial", "T\u00e9moignage", "messages", "fr");
     Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
@@ -14170,7 +14172,7 @@ var cms = angular.module('Cms');
 
 cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
                                           Post, PublicationStatus, Validator, BackofficeEditFactory,
-                                          TranslationService, CmsAlertService, Datepicker) {
+                                          TranslationService, CmsAlertService, Datepicker, CmsRouter) {
 
     if ($scope.$parent.hasOwnProperty('activeMenu')) {
         $scope.$parent.activeMenu('post');
@@ -14184,6 +14186,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
             datePublicationEnd: null
         }
     };
+    $scope.onSave = false;
     $scope.datepicker = Datepicker;
     $scope.title = '';
     //$scope.postFactory = new clCmsObjectFactory('post', Post, 'postId');
@@ -14196,12 +14199,12 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
             if ($scope.postId) {
                 Post.get({postId: $scope.postId}, function(post) {
-
                     $scope.post = post;
                     $scope.title = $scope.post.page.title;
                     if ($scope.post.publication.datePublicationBegin) {
                         $scope.post.publication.datePublicationBegin = moment($scope.post.publication.datePublicationBegin, 'YYYY-MM-DD').toDate();
                     }
+
                     if ($scope.post.publication.datePublicationEnd) {
                         $scope.post.publication.datePublicationEnd = moment($scope.post.publication.datePublicationEnd, 'YYYY-MM-DD').toDate();
                     }
@@ -14213,13 +14216,14 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
     };
 
     $scope.savePost = function (postForm, formName, quit, duplicate, duplication) {
-        if (postForm.$valid) {
+        if (postForm.$valid && ((!$scope.onSave && !duplication) || ($scope.onSave && duplication))) {
             var post = $scope.buildData($scope.post);
 
             //$scope.postFactory.submit($scope.buildData, $scope.post, quit, duplicate, duplication)
             //    .then(function (post) {
             //        $scope.post = post;
             //});
+            $scope.onSave = true;
             if ($scope.postId && !duplication) {
                 Post.update({postId: $scope.postId}, post,
                     function (post) {
@@ -14227,6 +14231,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                         $scope.post.dateUpdate = $filter('date')(post.dateUpdate, 'dd/MM/yyyy');
                         $scope.title = $scope.post.page.title;
                         if (duplicate) {
+                            $scope.post.page.title += (' ' + TranslationService.trans('global.duplicate'));
                             $scope.savePost(postForm, formName, quit, false, true);
                         } else {
                             CmsAlertService.addAlert('success', TranslationService.trans('alert.post.updated'), 1.5);
@@ -14244,13 +14249,13 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                         }
                     });
             } else {
-                Post.save(post,
-                    function (post) {
+                Post.save(post, function (post) {
                         $scope.post.dateAdd = $filter('date')(post.dateAdd, 'dd/MM/yyyy');
                         $scope.postId = post.id;
                         $scope.title = $scope.post.page.title;
 
                         if (duplicate) {
+                            $scope.post.page.title += (' ' + TranslationService.trans('global.duplicate'));
                             $scope.savePost(postForm, formName, quit, false, true);
                         } else {
                             if (duplication) {
@@ -14260,9 +14265,10 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                             }
 
                             setTimeout(function () {
-
                                 if (quit) {
                                     window.location = Routing.generate('cms_post_list');
+                                } else {
+                                    CmsRouter.go('cms_post_edit', {postId: $scope.postId});
                                 }
                             }, 500);
                         }

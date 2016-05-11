@@ -11,7 +11,7 @@ Debug::enable();
 
 $request = Request::createFromGlobals();
 
-$kernel = new AppKernel('behat', true);
+$kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
 
 $response = $kernel->handle($request);

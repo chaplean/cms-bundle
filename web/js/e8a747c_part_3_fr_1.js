@@ -29,6 +29,7 @@
     Translator.add("form.publication.date_update", "Modification", "messages", "fr");
     Translator.add("form.publication.is_highlighted", "Afficher sur la home", "messages", "fr");
     Translator.add("global.content", "Contenu", "messages", "fr");
+    Translator.add("global.duplicate", "(Copie)", "messages", "fr");
     Translator.add("global.frontend", "Frontend", "messages", "fr");
     Translator.add("global.label", "Libell\u00e9 du menu", "messages", "fr");
     Translator.add("global.meta_description", "Meta description", "messages", "fr");
@@ -52,6 +53,7 @@
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
     Translator.add("header.front.pages", "Liste des pages", "messages", "fr");
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
+    Translator.add("list.id", "Identifiant", "messages", "fr");
     Translator.add("list.block.id", "Identifiant du bloc", "messages", "fr");
     Translator.add("list.block.label", "Libell\u00e9", "messages", "fr");
     Translator.add("list.block.delete", "Supprimer ce bloc", "messages", "fr");
@@ -78,7 +80,6 @@
     Translator.add("media_manager.insert.label", "Ins\u00e9rer", "messages", "fr");
     Translator.add("media_manager.open.label", "Ajouter un m\u00e9dia", "messages", "fr");
     Translator.add("media_manager.not_found", "Le fichier n'existe plus !", "messages", "fr");
-    Translator.add("media_manager.delete_not_found", "Le fichier a bien \u00e9t\u00e9 supprim\u00e9 de la base", "messages", "fr");
     Translator.add("menu.blocks", "Blocs", "messages", "fr");
     Translator.add("menu.header", "BackOffice", "messages", "fr");
     Translator.add("menu.page", "Page", "messages", "fr");
@@ -97,6 +98,7 @@
     Translator.add("placeholder.subtitle", "Sous-titre", "messages", "fr");
     Translator.add("placeholder.title", "Titre", "messages", "fr");
     Translator.add("post.category.all", "Toutes les cat\u00e9gories", "messages", "fr");
+    Translator.add("post.category.choose", "Choisissez une cat\u00e9gorie...", "messages", "fr");
     Translator.add("post.category.news", "Nouveaut\u00e9", "messages", "fr");
     Translator.add("post.category.testimonial", "T\u00e9moignage", "messages", "fr");
     Translator.add("post.category.video", "Vid\u00e9o", "messages", "fr");
