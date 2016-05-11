@@ -23,12 +23,13 @@
                             ng-options="('publication_status.status.' + publicationStatus.keyname)|trans for publicationStatus in publicationStatuses|orderBy:position track by publicationStatus.id">
                     </select>
                 </div>
+                {% if 'add' in cms_action.post %}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown sonata-actions">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Liste d'actions <b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a class="sonata-action-element" href="{{ path('cms_post_edit') }}">
+                                <a class="sonata-action-element" href="{{ path('cms_post_new') }}">
                                     <i class="fa fa-plus-circle"></i>
                                     {{ 'button.add.global' | trans }}
                                 </a>
@@ -36,16 +37,22 @@
                         </ul>
                     </li>
                 </ul>
+                {% endif %}
             {#</div>#}
         </div>
     </nav>
 {% endblock %}
 
 {% block cms %}
+    {% if 'remove' in cms_action.post %}
+        {% set colspan = 5 %}
+    {% else %}
+        {% set colspan = 4 %}
+    {% endif %}
     <table id="posts-list" st-table="postsDisplayed" st-safe-src="postsFiltered" class="table table-striped">
         <thead>
         <tr>
-            <th class="no-padding-lr" colspan="5">
+            <th class="no-padding-lr" colspan="{{ colspan }}">
                 <input id="filter-post" ng-model="search" ng-change="updateFilter()" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
             </th>
         </tr>
@@ -53,7 +60,9 @@
             <th st-sort="'id'" class="sortable">{{ 'list.id' | trans }}</th>
             <th st-sort="'category'" class="sortable">{{ 'list.post.category' | trans }}</th>
             <th st-sort="getters.title" class="center sortable">{{ 'global.title' | trans }}</th>
-            <th class="center"></th>
+            {% if 'remove' in cms_action.post %}
+                <th class="center"></th>
+            {% endif %}
         </tr>
         </thead>
         <tbody class="ng-cloak">
@@ -61,16 +70,18 @@
             <td>{^ post.id ^}</td>
             <td><a href="{^ path('cms_post_edit', {postId: post.id}) ^}">{^ ('post.category.' + post.category)|trans ^}</a></td>
             <td class="center"><a href="{^ path('cms_post_edit', {postId: post.id}) ^}">{^ post.page.title ^}</a></td>
+            {% if 'remove' in cms_action.post %}
             <td>
                 <button type="button" ng-click="removePost(post)" title="{{ 'list.post.delete'|trans }}" class="btn btn-sm btn-danger">
                     <i class="fa fa-minus-circle"></i>
                 </button>
             </td>
+            {% endif %}
         </tr>
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="4" class="text-center">
+            <td colspan="{{ colspan }}" class="text-center">
                 <div class="pull-right">
                     {^ postsFiltered.length ^}
                 </div>

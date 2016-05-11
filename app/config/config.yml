@@ -98,9 +98,9 @@ doctrine:
         driver:   pdo_mysql
         host:     127.0.0.1
         port:     3306
-        dbname:   test_database
+        dbname:   test_localhost
         user:     root
-        password: %database_password%
+        password: '%database_password%'
         charset:  UTF8
         server_version: 5.5
         mapping_types:
@@ -146,11 +146,18 @@ fos_rest:
         serialize_null: true
 
 chaplean_cms:
-    access_debug: true
+    modules:
+        block: true
+        page: true
+        media: true
+        post:
+            category: ['news', 'testimonial', 'video', 'zoom']
+            action: false
     template:
-        front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
+        front_layout: 'ChapleanCmsBundle::layout-frontoffice.html.twig'
         front_route: 'cms_back_index'
-    block: true
-    post: true
-    page: true
-    media: true
+        logo_path:
+        page_index:
+        page_view:
+        post_index:
+        post_view:

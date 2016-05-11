@@ -1,10 +1,18 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Utility;
+namespace Chaplean\Bundle\CmsBundle\Listener;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class ConfigListener.
+ *
+ * @package   Chaplean\Bundle\CmsBundle\Listener
+ * @author    Valentin - Chaplean <valentin@chaplean.com>
+ * @copyright 2014 - 2016 Chaplean (http://www.chaplean.com)
+ * @since     1.0.0
+ */
 class ConfigListener
 {
     /**
@@ -12,6 +20,9 @@ class ConfigListener
      */
     private $configCms;
 
+    /**
+     * @var array
+     */
     private $controllerToFeature = array(
         'Chaplean\Bundle\CmsBundle\Controller\Rest\MediaController' => 'media',
         'Chaplean\Bundle\CmsBundle\Controller\Rest\BlockController' => 'block',
@@ -38,16 +49,19 @@ class ConfigListener
      */
     public function onKernelController(FilterControllerEvent $event)
     {
+        /** @var array $controller */
         $controller = $event->getController();
+        $request = $event->getRequest();
 
         if (is_array($this->configCms)) {
-            $controllerName = get_class($controller[0]);
+            $classController = get_class(array_shift($controller));
+            $action = $request->attributes->get('_route');
 
-            if (isset($this->controllerToFeature[$controllerName])) {
-                $featureName = $this->controllerToFeature[$controllerName];
+            if (isset($this->controllerToFeature[$classController])) {
+                $featureName = $this->controllerToFeature[$classController];
 
-                if (isset($this->configCms[$featureName])) {
-                    $featureValue = $this->configCms[$featureName];
+                if (isset($this->configCms['modules'][$featureName])) {
+                    $featureValue = $this->configCms['modules'][$featureName];
 
                     if (!is_array($featureValue) && !$featureValue) {
                         throw new NotFoundHttpException;

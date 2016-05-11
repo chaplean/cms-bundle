@@ -1,6 +1,6 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Tests\Entity;
+namespace Tests\Chaplean\Bundle\CmsBundle\Entity;
 
 use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
