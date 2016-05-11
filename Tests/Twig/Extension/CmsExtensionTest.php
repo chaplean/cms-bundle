@@ -1,6 +1,6 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Tests\Twig\Extension;
+namespace Tests\Chaplean\Bundle\CmsBundle\Twig\Extension;
 
 use Chaplean\Bundle\CmsBundle\Twig\Extension\CmsExtension;
 use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
