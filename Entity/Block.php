@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="Chaplean\Bundle\CmsBundle\Repository\BlockRepository")
- * @ORM\Table(name="cl_block", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"})})
+ * @ORM\Table(name="cl_block", uniqueConstraints={@ORM\UniqueConstraint(name="block_name_UNIQUE", columns={"name"})})
  */
 class Block
 {
