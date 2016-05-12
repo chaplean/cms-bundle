@@ -7,7 +7,10 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="Chaplean\Bundle\CmsBundle\Repository\PageRouteRepository")
- * @ORM\Table(name="cl_page_route", uniqueConstraints={@ORM\UniqueConstraint(name="path_UNIQUE", columns={"path"})})
+ * @ORM\Table(
+ *     name="cl_page_route",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="page_route_path_UNIQUE", columns={"path"})}
+ * )
  */
 class PageRoute
 {

@@ -69,7 +69,7 @@ class Configuration implements ConfigurationInterface
                 ->isRequired()
                 ->validate()
                 ->always(function($v) use ($type) {
-                    if (is_bool($v)) {
+                    if (is_bool($v) && (bool) $v) {
                         return Configuration::availableAction($type);
                     } elseif (is_array($v)) {
                         foreach ($v as $item) {
@@ -120,7 +120,7 @@ class Configuration implements ConfigurationInterface
             ->isRequired()
             ->validate()
             ->always(function($v) {
-                if (is_bool($v)) {
+                if (is_bool($v) && (bool) $v) {
                     return Configuration::availableAction('post');
                 } elseif (is_array($v)) {
                     foreach ($v as $item) {

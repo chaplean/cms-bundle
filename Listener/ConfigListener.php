@@ -26,6 +26,7 @@ class ConfigListener
     private $controllerToFeature = array(
         'Chaplean\Bundle\CmsBundle\Controller\Rest\MediaController' => 'media',
         'Chaplean\Bundle\CmsBundle\Controller\Rest\BlockController' => 'block',
+        'Chaplean\Bundle\CmsBundle\Controller\BlockController'      => 'block',
         'Chaplean\Bundle\CmsBundle\Controller\Rest\PostController'  => 'post',
         'Chaplean\Bundle\CmsBundle\Controller\PostController'       => 'post',
         'Chaplean\Bundle\CmsBundle\Controller\Rest\PageController'  => 'page',
@@ -61,10 +62,20 @@ class ConfigListener
                 $featureName = $this->controllerToFeature[$classController];
 
                 if (isset($this->configCms['modules'][$featureName])) {
-                    $featureValue = $this->configCms['modules'][$featureName];
+                    if (isset($this->configCms['modules'][$featureName]['action'])) {
+                        $featureValue = $this->configCms['modules'][$featureName]['action'];
+                    } else {
+                        $featureValue = $this->configCms['modules'][$featureName];
+                    }
 
                     if (!is_array($featureValue) && !$featureValue) {
                         throw new NotFoundHttpException;
+                    } else {
+                        if (preg_match('/_new/', $action) && !in_array('add', $featureValue)) {
+                            throw new NotFoundHttpException;
+                        } elseif (preg_match('/_delete/', $action) && !in_array('remove', $featureValue)) {
+                            throw new NotFoundHttpException;
+                        }
                     }
                 } else {
                     throw new NotFoundHttpException;
