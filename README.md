@@ -28,6 +28,8 @@ Add bundle in `AppKernel.php`
 ```
 
 ### Configuration:
+
+1. config.yml
 ```yaml
 chaplean_cms:
     modules:
@@ -45,5 +47,11 @@ chaplean_cms:
         page_view: # Optional (default: 'ChapleanCmsBundle:Front/Page:view.html.twig'), Custom frontend page
         post_index: # Optional (default: 'ChapleanCmsBundle:Front/Post:index.html.twig'), Custom frontend post list
         post_view: # Optional (default: 'ChapleanCmsBundle:Front/Post:view.html.twig'), Custom frontend post
+```
+
+2. routing.yml
+```yaml
+chaplean_cms_bundle:
+    resource: '@ChapleanCmsBundle/Resources/config/routing.yml'
 ```
 

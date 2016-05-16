@@ -17,7 +17,7 @@
     "tag": "1.4.7",
     "commit": "f3b5265695cfa8c1878c42818bfb5359e545acd5"
   },
-  "_source": "git://github.com/angular-ui/ui-mask.git",
+  "_source": "https://github.com/angular-ui/ui-mask.git",
   "_target": "~1.4.1",
   "_originalSource": "angular-ui-mask"
 }
