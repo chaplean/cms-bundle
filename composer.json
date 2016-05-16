@@ -37,7 +37,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "friendsofsymfony/rest-bundle": "~1.7",
-        "willdurand/js-translation-bundle": "2.2.*",
+        "willdurand/js-translation-bundle": "^2.2",
         "jms/serializer-bundle": "~1.1"
     },
     "require-dev": {
