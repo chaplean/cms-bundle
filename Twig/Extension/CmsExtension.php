@@ -2,6 +2,8 @@
 
 namespace Chaplean\Bundle\CmsBundle\Twig\Extension;
 
+use Chaplean\Bundle\CmsBundle\DependencyInjection\Configuration;
+
 /**
  * CmsExtension.php.
  *
@@ -36,10 +38,11 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
             'cms_front_layout'  => $this->getParameters('template', 'front_layout'),
             'cms_front_route'   => $this->getParameters('template', 'front_route'),
             'cms_logo_path'     => $this->getParameters('template', 'logo_path'),
-            'block_is_activate' => $this->getParameters('block'),
-            'post_is_activate'  => is_bool($this->getParameters('post')) ? $this->getParameters('post') : true,
-            'page_is_activate'  => $this->getParameters('page'),
-            'media_is_activate' => $this->getParameters('media'),
+            'block_is_activate' => $this->moduleIsActived('block'),
+            'post_is_activate'  => $this->moduleIsActived('post'),
+            'page_is_activate'  => $this->moduleIsActived('page'),
+            'media_is_activate' => $this->moduleIsActived('media'),
+            'cms_action'        => $this->getActionModule(),
         );
     }
 
@@ -61,6 +64,54 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
             return $value;
         } else {
             return is_array($this->parametersCms[$key]) ? $this->parametersCms[$key] : $this->parametersCms[$key];
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getActionModule()
+    {
+        $actionsByModules = array(
+            'block' => array(),
+            'page'  => array(),
+            'post'  => array(),
+        );
+
+        if (is_bool($this->parametersCms['modules']['block']) && $this->parametersCms['modules']['block']) {
+            $actionsByModules['block'] = Configuration::availableAction('block');
+        } elseif (is_array($this->parametersCms['modules']['block'])) {
+            $actionsByModules['block'] = $this->parametersCms['modules']['block'];
+        }
+
+        if (is_bool($this->parametersCms['modules']['page']) && $this->parametersCms['modules']['page']) {
+            $actionsByModules['page'] = Configuration::availableAction('page');
+        } elseif (is_array($this->parametersCms['modules']['page'])) {
+            $actionsByModules['page'] = $this->parametersCms['modules']['page'];
+        }
+
+        if (is_bool($this->parametersCms['modules']['post']['action']) && (bool) $this->parametersCms['modules']['post']['action']) {
+            $actionsByModules['post'] = Configuration::availableAction('post');
+        } elseif (is_array($this->parametersCms['modules']['post']['action'])) {
+            $actionsByModules['post'] = $this->parametersCms['modules']['post']['action'];
+        }
+
+        return $actionsByModules;
+    }
+
+    /**
+     * @param string $module
+     *
+     * @return mixed
+     */
+    public function moduleIsActived($module)
+    {
+        if ($module == 'post') {
+            return (is_bool($this->parametersCms['modules'][$module]['action']) && $this->parametersCms['modules'][$module]['action'])
+            || is_array($this->parametersCms['modules'][$module]['action']);
+        } else {
+            return (is_bool($this->parametersCms['modules'][$module]) && $this->parametersCms['modules'][$module])
+            || is_array($this->parametersCms['modules'][$module]);
         }
     }
 

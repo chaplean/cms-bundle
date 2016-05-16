@@ -33,16 +33,7 @@ class CmsExtensionTest extends LogicalTest
     {
         parent::setUp();
 
-        $this->cmsExtension = new CmsExtension(
-            array(
-                'access_debug' => true,
-                'template'     => array('front_layout' => 'foo', 'front_route' => 'bar', 'logo_path' => 'a'),
-                'block'        => true,
-                'post'         => true,
-                'page'         => true,
-                'media'        => true
-            )
-        );
+        $this->cmsExtension = $this->getContainer()->get('chaplean_cms.cms_extension');
     }
 
     /**
@@ -53,14 +44,19 @@ class CmsExtensionTest extends LogicalTest
         $this->assertEquals(
             $this->cmsExtension->getGlobals(),
             array(
-                'access_debug'      => true,
-                'cms_front_layout'  => 'foo',
-                'cms_front_route'   => 'bar',
-                'cms_logo_path'     => 'a',
+                'access_debug'      => false,
+                'cms_front_layout'  => 'ChapleanCmsBundle::layout-frontoffice.html.twig',
+                'cms_front_route'   => 'cms_back_index',
+                'cms_logo_path'     => null,
                 'block_is_activate' => true,
                 'post_is_activate'  => true,
                 'page_is_activate'  => true,
                 'media_is_activate' => true,
+                'cms_action'        => array(
+                    'block' => array('add', 'remove'),
+                    'page'  => array('add', 'remove'),
+                    'post'  => array('add', 'duplicate', 'remove'),
+                )
             )
         );
     }

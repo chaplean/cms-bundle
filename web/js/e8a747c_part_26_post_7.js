@@ -18,6 +18,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
             datePublicationEnd: null
         }
     };
+    $scope.onDuplication = false;
     $scope.onSave = false;
     $scope.datepicker = Datepicker;
     $scope.title = '';

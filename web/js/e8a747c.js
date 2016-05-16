@@ -63,7 +63,6 @@
     Translator.add("header.edition", "Edition de \"%page%\"", "messages", "fr");
     Translator.add("header.front.pages", "Liste des pages", "messages", "fr");
     Translator.add("header.publication_setting", "Param\u00e8tres de publication", "messages", "fr");
-    Translator.add("list.id", "Identifiant", "messages", "fr");
     Translator.add("list.block.id", "Identifiant du bloc", "messages", "fr");
     Translator.add("list.block.label", "Libell\u00e9", "messages", "fr");
     Translator.add("list.block.delete", "Supprimer ce bloc", "messages", "fr");
@@ -14186,6 +14185,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
             datePublicationEnd: null
         }
     };
+    $scope.onDuplication = false;
     $scope.onSave = false;
     $scope.datepicker = Datepicker;
     $scope.title = '';
