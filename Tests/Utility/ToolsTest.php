@@ -33,6 +33,7 @@ class ToolsTest extends LogicalTest
         $this->assertEquals('paris-france', Tools::slugify('paris,france'));
         $this->assertEquals('sensio', Tools::slugify('     sensio'));
         $this->assertEquals('sensio', Tools::slugify('sensio   '));
+        
         $this->assertEquals('n-a', Tools::slugify('     '));
     }
 

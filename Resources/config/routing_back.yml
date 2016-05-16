@@ -1,53 +1,49 @@
 cms_back_index:
     path:     /administration
-    defaults: { _controller: ChapleanCmsBundle:Default:index }
-    options:
-        expose: true
+    defaults: { _controller: 'ChapleanCmsBundle:Default:index' }
 
 cms_back_home:
     path:     /administration/home
-    defaults: { _controller: ChapleanCmsBundle:Default:home }
-    options:
-        expose: true
+    defaults: { _controller: 'ChapleanCmsBundle:Default:home' }
 
 cms_page_list:
     path:     /administration/pages
-    defaults: { _controller: ChapleanCmsBundle:Page:list }
-    options:
-        expose: true
+    defaults: { _controller: 'ChapleanCmsBundle:Page:list' }
+
+cms_page_new:
+    path:     /administration/page
+    defaults: { _controller: 'ChapleanCmsBundle:Page:edit', pageId: null }
 
 cms_page_edit:
     path:     /administration/page/{pageId}
-    defaults: { _controller: ChapleanCmsBundle:Page:edit, pageId: null }
+    defaults: { _controller: 'ChapleanCmsBundle:Page:edit' }
     requirements:
         pageId: \d+
-    options:
-        expose: true
 
 cms_post_list:
     path:     /administration/posts
-    defaults: { _controller: ChapleanCmsBundle:Post:list }
-    options:
-        expose: true
+    defaults: { _controller: 'ChapleanCmsBundle:Post:list' }
+
+cms_post_new:
+    path:     /administration/post
+    defaults: { _controller: 'ChapleanCmsBundle:Post:edit', postId: null }
 
 cms_post_edit:
     path:     /administration/post/{postId}
-    defaults: { _controller: ChapleanCmsBundle:Post:edit, postId: null }
+    defaults: { _controller: 'ChapleanCmsBundle:Post:edit' }
     requirements:
         postId: \d+
-    options:
-        expose: true
 
 cms_block_list:
     path:     /administration/blocks
-    defaults: { _controller: ChapleanCmsBundle:Block:list }
-    options:
-        expose: true
+    defaults: { _controller: 'ChapleanCmsBundle:Block:list' }
+
+cms_block_new:
+    path:     /administration/block
+    defaults: { _controller: 'ChapleanCmsBundle:Block:edit', blockId: null }
 
 cms_block_edit:
     path:     /administration/block/{blockId}
-    defaults: { _controller: ChapleanCmsBundle:Block:edit, blockId: null }
+    defaults: { _controller: 'ChapleanCmsBundle:Block:edit' }
     requirements:
         postId: \d+
-    options:
-        expose: true

@@ -55,7 +55,7 @@ class PostController extends ChapleanRestController
      */
     public function getAvailableCategoriesAction()
     {
-        $categories = $this->getParameter('chaplean_cms.post');
+        $categories = $this->getParameter('chaplean_cms.modules.post.category');
 
         if (is_bool($categories) && $categories) {
             $categories = array_values(PostUtility::getAvailableInstance());

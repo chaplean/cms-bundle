@@ -1,5 +1,7 @@
 chaplean_cms_back:
     resource: "@ChapleanCmsBundle/Resources/config/routing_back.yml"
+    options:
+        expose: true
 
 chaplean_cms_front:
     resource: "@ChapleanCmsBundle/Resources/config/routing_front.yml"
