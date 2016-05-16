@@ -37,7 +37,7 @@
     "tag": "v0.8.4",
     "commit": "79513cd31132bf04ae5305acf21a97550d609b03"
   },
-  "_source": "git://github.com/michaelbromley/angularUtils-pagination.git",
+  "_source": "https://github.com/michaelbromley/angularUtils-pagination.git",
   "_target": "~0.8.3",
   "_originalSource": "angular-utils-pagination"
 }
