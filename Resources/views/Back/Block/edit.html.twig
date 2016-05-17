@@ -1,7 +1,6 @@
 {% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
 
 {% block cms %}
-    {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
 
     {% if blockId is not empty %}
         <input type="hidden" ng-init="blockId = {{ blockId }}" ng-model="blockId" />
