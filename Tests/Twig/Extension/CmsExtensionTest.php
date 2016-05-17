@@ -47,7 +47,7 @@ class CmsExtensionTest extends LogicalTest
                 'access_debug'      => false,
                 'cms_front_layout'  => 'ChapleanCmsBundle::layout-frontoffice.html.twig',
                 'cms_front_route'   => 'cms_back_index',
-                'cms_logo_path'     => null,
+                'cms_logo_path'     => '',
                 'block_is_activate' => true,
                 'post_is_activate'  => true,
                 'page_is_activate'  => true,
