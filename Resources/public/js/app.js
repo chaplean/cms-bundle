@@ -15,7 +15,25 @@ cms.run(function(amMoment) {
     amMoment.changeLocale(locale);
 });
 
-cms.controller('MainController', function($scope, $rootScope, Post, CmsAlertService, $ngBootbox, TranslationService, CmsRouter) {
+cms.controller('MainController', function($scope, $rootScope, $window, Post, CmsAlertService, $ngBootbox, TranslationService, CmsRouter) {
+
+    angular.element($window).bind('scroll', function() {
+        var offsetToolbar = angular.element('text-angular').offset().top;
+        $rootScope.textAngularToolbarTopFixed = this.pageYOffset >= offsetToolbar && this.pageYOffset < offsetToolbar + angular.element('text-angular .ta-scroll-window').height();
+
+        $scope.safeApply();
+    });
+
+    $scope.safeApply = function(fn) {
+        var phase = this.$root.$$phase;
+        if(phase == '$apply' || phase == '$digest') {
+            if(fn && (typeof(fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
 
     $ngBootbox.addLocale('fr', {
         OK:      TranslationService.trans('button.validate.global'),
