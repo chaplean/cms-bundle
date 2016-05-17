@@ -149,15 +149,10 @@ chaplean_cms:
     modules:
         block: true
         page: true
-        media: true
+        media: false
         post:
             category: ['news', 'testimonial', 'video', 'zoom']
             action: true
     template:
         front_layout: 'ChapleanCmsBundle::layout-frontoffice.html.twig'
         front_route: 'cms_back_index'
-        logo_path:
-        page_index:
-        page_view:
-        post_index:
-        post_view:
