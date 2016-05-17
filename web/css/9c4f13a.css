@@ -6517,3 +6517,8 @@ textarea {
 
 .warning {
   color: #f0ad4e; }
+
+text-angular.text-angular-toolbar-top-fixed > div[text-angular-toolbar] {
+  position: fixed;
+  top: 0;
+  z-index: 1000; }
