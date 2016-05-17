@@ -63,6 +63,10 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
+        {% if media_is_activate %}
+        <script type="text/javascript" src="{{ asset('bundles/chapleancms/js/config/media-manager.js') }}"></script>
+        {% endif %}
+
         <script type="text/ng-template" src="{{ asset('bundles/chapleancms/libs/angular-utils-pagination/dirPagination.tpl.html') }}"></script>
     {% endblock %}
 
@@ -71,6 +75,9 @@
 
 {% block body_with_tag %}
     <body>
+    {% if media_is_activate %}
+        {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
+    {% endif %}
     <uib-alert ng-cloak ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>
 
         <div class="container-fluid" {% block controller %}{% endblock %}>
