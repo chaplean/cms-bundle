@@ -149,7 +149,7 @@ chaplean_cms:
     modules:
         block: true
         page: true
-        media: false
+        media: true
         post:
             category: ['news', 'testimonial', 'video', 'zoom']
             action: true
