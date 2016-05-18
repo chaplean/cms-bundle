@@ -2,9 +2,8 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PagesController', function($scope, $filter, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService) {
-
-    $scope.$parent.menu.active = 'page';
+cms.controller('clCmsPagesController', function($scope, $filter, $uibModal, $http, $ngBootbox, Page, TranslationService, CmsAlertService, clCmsMenu) {
+    clCmsMenu.setActive('page');
 
     $scope.search = '';
     $scope.loadData = function() {

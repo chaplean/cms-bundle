@@ -45,6 +45,7 @@ class CmsExtensionTest extends LogicalTest
             $this->cmsExtension->getGlobals(),
             array(
                 'access_debug'      => false,
+                'cms_back_layout'   => 'ChapleanCmsBundle::layout-backoffice.html.twig',
                 'cms_front_layout'  => 'ChapleanCmsBundle::layout-frontoffice.html.twig',
                 'cms_front_route'   => 'cms_back_index',
                 'cms_logo_path'     => '',

@@ -2,13 +2,9 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsController', function($scope, $log, $uibModal, $filter, $ngBootbox, Post, TranslationService, CmsAlertService, BackofficeListFactory) {
-
-    if ($scope.$parent.hasOwnProperty('activeMenu')) {
-        $scope.$parent.activeMenu('post');
-    } else {
-        $log.error($scope.$parent.toString());
-    }
+cms.controller('clCmsPostsController', function($scope, $log, $uibModal, $filter, $ngBootbox, Post, TranslationService, CmsAlertService, BackofficeListFactory, clCmsMenu) {
+    
+    clCmsMenu.setActive('post');
     $scope.search = '';
     $scope.post = {
         category: null

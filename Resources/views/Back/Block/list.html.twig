@@ -1,4 +1,4 @@
-{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+{% extends cms_back_layout %}
 
 {% block cms_action_top %}
     <nav class="navbar navbar-default" role="navigation">
@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block cms %}
-    <table id="blocks-list" st-table="blocksDisplayed" st-safe-src="blocks" class="table table-striped" ng-controller="BlocksController">
+    <table id="blocks-list" st-table="blocksDisplayed" st-safe-src="blocks" class="table table-striped" ng-controller="clCmsBlocksController">
         <thead>
             <tr>
                 <th colspan="5">
