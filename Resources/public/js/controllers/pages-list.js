@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PagesListController', function ($scope, $filter, Page, CmsRouter) {
+cms.controller('clCmsPagesListController', function ($scope, $filter, Page, CmsRouter) {
 
     $scope.search = '';
     $scope.pages = [];

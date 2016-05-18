@@ -2,15 +2,11 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Post, PublicationStatus, Validator, BackofficeEditFactory,
-                                          TranslationService, CmsAlertService, Datepicker, CmsRouter) {
+cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
+                                          Post, PublicationStatus, clCmsValidator, BackofficeEditFactory,
+                                          TranslationService, CmsAlertService, clCmsDatepicker, CmsRouter, clCmsMenu) {
 
-    if ($scope.$parent.hasOwnProperty('activeMenu')) {
-        $scope.$parent.activeMenu('post');
-    } else {
-        $log.error($scope.$parent.toString());
-    }
+    clCmsMenu.setActive('post');
     $scope.publicationStatuses = [];
     $scope.post = {
         publication: {
@@ -19,7 +15,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
         }
     };
     $scope.onSave = false;
-    $scope.datepicker = Datepicker;
+    $scope.datepicker = clCmsDatepicker;
     $scope.title = '';
     //$scope.postFactory = new clCmsObjectFactory('post', Post, 'postId');
 
@@ -74,7 +70,7 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                         }
                     }, function (response) {
                         if(response.status == 400) {
-                            Validator.addError(postForm, response.data);
+                            clCmsValidator.addError(postForm, response.data);
                             CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
                             CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
@@ -126,10 +122,10 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
         );
     };
 
-    $scope.isRequire = Validator.isRequire;
-    $scope.onError = Validator.onError;
-    $scope.isInvalidFieldSumitted = Validator.isInvalidFieldSumitted;
-    $scope.getInvalidError = Validator.getInvalidError;
+    $scope.isRequire = clCmsValidator.isRequire;
+    $scope.onError = clCmsValidator.onError;
+    $scope.isInvalidFieldSumitted = clCmsValidator.isInvalidFieldSumitted;
+    $scope.getInvalidError = clCmsValidator.getInvalidError;
 
     $scope.buildData = function (post) {
         var postTmp = angular.copy(post);

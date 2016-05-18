@@ -15,25 +15,16 @@ cms.run(function(amMoment) {
     amMoment.changeLocale(locale);
 });
 
-cms.controller('MainController', function($scope, $rootScope, $window, Post, CmsAlertService, $ngBootbox, TranslationService, CmsRouter) {
+cms.controller('clCmsMainController', function($scope, $rootScope, $window, Post, CmsAlertService, $ngBootbox, TranslationService, CmsRouter, clCmsMenu) {
 
     angular.element($window).bind('scroll', function() {
-        var offsetToolbar = angular.element('text-angular').offset().top;
-        $rootScope.textAngularToolbarTopFixed = this.pageYOffset >= offsetToolbar && this.pageYOffset < offsetToolbar + angular.element('text-angular .ta-scroll-window').height();
+        var elTextAngular = angular.element('text-angular');
 
-        $scope.safeApply();
-    });
-
-    $scope.safeApply = function(fn) {
-        var phase = this.$root.$$phase;
-        if(phase == '$apply' || phase == '$digest') {
-            if(fn && (typeof(fn) === 'function')) {
-                fn();
-            }
-        } else {
-            this.$apply(fn);
+        if (elTextAngular) {
+            var offsetToolbar = elTextAngular.offset().top;
+            $rootScope.textAngularToolbarTopFixed = this.pageYOffset >= offsetToolbar && this.pageYOffset < offsetToolbar + angular.element('text-angular .ta-scroll-window').height();
         }
-    };
+    });
 
     $ngBootbox.addLocale('fr', {
         OK:      TranslationService.trans('button.validate.global'),
@@ -53,11 +44,5 @@ cms.controller('MainController', function($scope, $rootScope, $window, Post, Cms
     };
 
     $scope.CmsRouter = CmsRouter;
-    $scope.menu = {
-        active: ''
-    };
-
-    $scope.activeMenu = function (menu) {
-        $scope.menu.active = menu;
-    }
+    $scope.menu = clCmsMenu;
 });

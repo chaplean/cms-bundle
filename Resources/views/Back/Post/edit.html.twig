@@ -1,4 +1,4 @@
-{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+{% extends cms_back_layout %}
 
 {% block cms %}
 
@@ -7,7 +7,7 @@
     {% else %}
         <input type="hidden" ng-model="postId" />
     {% endif %}
-    <form id="page-form" name="postForm" ng-controller="PostController" ng-submit="savePost(postForm, '{{ form.vars.name }}')" role="form">
+    <form id="page-form" name="postForm" ng-controller="clCmsPostController" ng-submit="savePost(postForm, '{{ form.vars.name }}')" role="form">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-left">

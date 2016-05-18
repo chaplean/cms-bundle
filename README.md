@@ -41,6 +41,7 @@ chaplean_cms:
             action: boolean|array # Required, action available: ['add', 'duplicate', 'remove']
         media: boolean # Required
     template:
+        back_layout: # Optional (default: 'ChapleanCmsBundle::layout-backoffice.html.twig'), for override default back layout (add a menu in sidebar for example)
         front_layout: # Required view extended by page/post view (example: 'ChapleanCmsBundle::layout-frontoffice.html.twig')
         front_route: # Optional (default: 'app_front'), route name for return to main site
         logo_path: # Optional (default: ''), path of logo top left

@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('template')
                     ->children()
+                        ->scalarNode('back_layout')->defaultValue('ChapleanCmsBundle::layout-backoffice.html.twig')->end()
                         ->scalarNode('front_layout')->isRequired()->end()
                         ->scalarNode('front_route')->defaultValue('app_front')->end()
                         ->scalarNode('logo_path')->defaultValue('')->end()
