@@ -2,15 +2,11 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Page, PublicationStatus, Validator, BackofficeEditFactory,
-                                          TranslationService, CmsAlertService, Datepicker) {
+cms.controller('clCmsPageController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
+                                          Page, PublicationStatus, clCmsValidator, BackofficeEditFactory,
+                                          TranslationService, CmsAlertService, clCmsDatepicker, clCmsMenu) {
 
-    if ($scope.$parent.hasOwnProperty('activeMenu')) {
-        $scope.$parent.activeMenu('page');
-    } else {
-        $log.error($scope.$parent.toString());
-    }
+    clCmsMenu.setActive('page');
     $scope.publicationStatuses = [];
     $scope.pageRoute = {
         publication: {
@@ -19,7 +15,7 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         }
     };
     $scope.pagePath = '';
-    $scope.datepicker = Datepicker;
+    $scope.datepicker = clCmsDatepicker;
 
     $scope.loadData = function() {
         BackofficeEditFactory.ready(function () {
@@ -101,7 +97,7 @@ cms.controller('PageController', function($scope, $uibModal, $http, $log, $ngBoo
         );
     };
 
-    $scope.isRequire = Validator.isRequire;
+    $scope.isRequire = clCmsValidator.isRequire;
 
     $scope.translateStatus = function (key) {
         return TranslationService.trans('publication_status.status.' + key);

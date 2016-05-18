@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.factory('Datepicker', function() {
+cms.factory('clCmsDatepicker', function() {
 
     var datepicker = {};
 

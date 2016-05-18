@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PostsListController', function ($scope, $location, $filter, Post, CmsRouter, clCmsQueryFactory) {
+cms.controller('clCmsPostsListController', function ($scope, $location, $filter, Post, CmsRouter, clCmsQueryFactory) {
 
     $scope.search = '';
     $scope.post = {

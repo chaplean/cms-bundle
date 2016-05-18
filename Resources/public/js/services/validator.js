@@ -2,7 +2,7 @@
 
 var cms = angular.module('Cms');
 
-cms.factory('Validator', function() {
+cms.factory('clCmsValidator', function() {
 
     var validator = {
         errors: {}
