@@ -20,11 +20,24 @@ cms.controller('clCmsMainController', function($scope, $rootScope, $window, Post
     angular.element($window).bind('scroll', function() {
         var elTextAngular = angular.element('text-angular');
 
-        if (elTextAngular) {
+        if (elTextAngular && elTextAngular.offset()) {
             var offsetToolbar = elTextAngular.offset().top;
             $rootScope.textAngularToolbarTopFixed = this.pageYOffset >= offsetToolbar && this.pageYOffset < offsetToolbar + angular.element('text-angular .ta-scroll-window').height();
         }
+
+        $scope.safeApply();
     });
+
+    $scope.safeApply = function(fn) {
+        var phase = this.$root.$$phase;
+        if(phase == '$apply' || phase == '$digest') {
+            if(fn && (typeof(fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
 
     $ngBootbox.addLocale('fr', {
         OK:      TranslationService.trans('button.validate.global'),

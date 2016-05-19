@@ -3,7 +3,7 @@
 namespace Chaplean\Bundle\CmsBundle\DataFixtures\ORM;
 
 use Chaplean\Bundle\CmsBundle\Entity\FileExtensionImage;
-use Chaplean\Bundle\UnitBundle\Utility\AbstractFixture;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
