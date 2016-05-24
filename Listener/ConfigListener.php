@@ -68,8 +68,10 @@ class ConfigListener
                         $featureValue = $this->configCms['modules'][$featureName];
                     }
 
-                    if (!is_array($featureValue) && !$featureValue) {
-                        throw new NotFoundHttpException;
+                    if (!is_array($featureValue)){
+                        if (!$featureValue) {
+                            throw new NotFoundHttpException;
+                        }
                     } else {
                         if (preg_match('/_new/', $action) && !in_array('add', $featureValue)) {
                             throw new NotFoundHttpException;
