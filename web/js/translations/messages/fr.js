@@ -89,6 +89,7 @@
     Translator.add("message.confirm.delete_post", "Confirmez-vous la suppression de l'article \"%post%\" ?", "messages", "fr");
     Translator.add("message.confirm.delete_block", "Confirmez-vous la suppression du bloc \"%block%\" ?", "messages", "fr");
     Translator.add("message.confirm.leave_change", "Les donn\u00e9es non sauvegard\u00e9es seront perdues, continuer ?", "messages", "fr");
+    Translator.add("message.confirm.delete_media", "Confirmez-vous la suppression du m\u00e9dia ?", "messages", "fr");
     Translator.add("over.path", "Le chemin doit \u00eatre en minuscule et ne contenir ni accent, ni espace", "messages", "fr");
     Translator.add("placeholder.name", "Libell\u00e9", "messages", "fr");
     Translator.add("placeholder.menu_name", "Libell\u00e9 du menu", "messages", "fr");
