@@ -60,6 +60,7 @@ cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $
                         $scope.title = $scope.post.page.title;
                         if (duplicate) {
                             $scope.post.page.title += (' ' + TranslationService.trans('global.duplicate'));
+                            $scope.post.publication.status = $scope.publicationStatuses[1];
                             $scope.savePost(postForm, formName, quit, false, true);
                         } else {
                             CmsAlertService.addAlert('success', TranslationService.trans('alert.post.updated'), 1.5);
