@@ -346,3 +346,10 @@ text-angular.text-angular-toolbar-top-fixed > div[text-angular-toolbar] {
     top: 0;
     z-index: 1000;
 }
+
+td.meta-description {
+    max-width: 250px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+}

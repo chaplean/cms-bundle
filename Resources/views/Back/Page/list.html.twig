@@ -49,7 +49,7 @@
             <tr ng-repeat="pageRoute in pagesDisplayed">
                 <td><a href="{^ path('cms_page_edit', {pageId: pageRoute.id}) ^}">{^ pageRoute.path ^}</a></td>
                 <td class="center"><a href="{^ path('cms_page_edit', {pageId: pageRoute.id}) ^}">{^ pageRoute.page.title ^}</a></td>
-                <td class="center">{^ pageRoute.page.metaDescription ^}</td>
+                <td class="center meta-description" title="{^ pageRoute.page.metaDescription ^}">{^ pageRoute.page.metaDescription ^}</td>
                 {% if 'remove' in cms_action.page %}
                 <td>
                     <button type="button" ng-click="removePage(pageRoute)" title="{{ 'list.page.delete'|trans }}" class="btn btn-sm btn-danger">
