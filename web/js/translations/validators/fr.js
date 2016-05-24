@@ -77,7 +77,6 @@
     Translator.add("An empty file is not allowed.", "Un fichier vide n'est pas autoris\u00e9.", "validators", "fr");
     Translator.add("The host could not be resolved.", "Le nom de domaine n'a pas pu \u00eatre r\u00e9solu.", "validators", "fr");
     Translator.add("This value does not match the expected {{ charset }} charset.", "Cette valeur ne correspond pas au jeu de caract\u00e8res {{ charset }} attendu.", "validators", "fr");
-    Translator.add("This is not a valid Business Identifier Code (BIC).", "Ce n'est pas un code universel d'identification des banques (BIC) valide.", "validators", "fr");
     Translator.add("This form should not contain extra fields.", "Ce formulaire ne doit pas contenir des champs suppl\u00e9mentaires.", "validators", "fr");
     Translator.add("The uploaded file was too large. Please try to upload a smaller file.", "Le fichier t\u00e9l\u00e9charg\u00e9 est trop volumineux. Merci d'essayer d'envoyer un fichier plus petit.", "validators", "fr");
     Translator.add("The CSRF token is invalid. Please try to resubmit the form.", "Le jeton CSRF est invalide. Veuillez renvoyer le formulaire.", "validators", "fr");

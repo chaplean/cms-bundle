@@ -35,7 +35,7 @@ cms.config(function ($provide) {
     });
 });
 
-cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, filterFilter, Media, CmsAlertService, TranslationService, FileUploader, FileItem) {
+cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, $ngBootbox, filterFilter, Media, CmsAlertService, TranslationService, FileUploader, FileItem) {
 
     $scope.updateFilter = function () {
         $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
@@ -148,14 +148,21 @@ cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, filte
     };
 
     $scope.deleteCurrentMedia = function () {
-        Media.delete({id: $scope.selectedMedia.id}, {}, function (data) {
-            var position = $scope.medias.indexOf($scope.selectedMedia);
-            $scope.medias.splice(position, 1);
-            $scope.selectedMedia = null;
-            $scope.updateFilter();
-        }, function () {
-            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'), 5);
-        });
+        $ngBootbox.confirm(
+            TranslationService.trans('message.confirm.delete_media')
+        ).then(function() {
+                Media.delete({id: $scope.selectedMedia.id}, {}, function (data) {
+                    var position = $scope.medias.indexOf($scope.selectedMedia);
+                    $scope.medias.splice(position, 1);
+                    $scope.selectedMedia = null;
+                    $scope.updateFilter();
+                }, function () {
+                    CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'), 5);
+                });
+            }, function() {
+                return false;
+            }
+        );
     };
 
     $scope.uploadNewFile = function () {
