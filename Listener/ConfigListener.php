@@ -58,7 +58,7 @@ class ConfigListener
             $classController = get_class(array_shift($controller));
             $action = $request->attributes->get('_route');
 
-            if (isset($this->controllerToFeature[$classController])) {
+            if (array_key_exists($classController, $this->controllerToFeature)) {
                 $featureName = $this->controllerToFeature[$classController];
 
                 if (isset($this->configCms['modules'][$featureName])) {
