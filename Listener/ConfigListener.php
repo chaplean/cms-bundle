@@ -54,11 +54,11 @@ class ConfigListener
         $controller = $event->getController();
         $request = $event->getRequest();
 
-        if (is_array($this->configCms)) {
+        if (is_array($this->configCms) && is_array($controller)) {
             $classController = get_class(array_shift($controller));
             $action = $request->attributes->get('_route');
 
-            if (isset($this->controllerToFeature[$classController])) {
+            if (array_key_exists($classController, $this->controllerToFeature)) {
                 $featureName = $this->controllerToFeature[$classController];
 
                 if (isset($this->configCms['modules'][$featureName])) {
@@ -68,7 +68,7 @@ class ConfigListener
                         $featureValue = $this->configCms['modules'][$featureName];
                     }
 
-                    if (!is_array($featureValue)){
+                    if (!is_array($featureValue)) {
                         if (!$featureValue) {
                             throw new NotFoundHttpException;
                         }
