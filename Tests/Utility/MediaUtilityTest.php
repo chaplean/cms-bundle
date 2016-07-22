@@ -4,7 +4,7 @@ namespace Tests\Chaplean\Bundle\CmsBundle\Utility;
 
 use Chaplean\Bundle\CmsBundle\Entity\Media;
 use Chaplean\Bundle\CmsBundle\Utility\MediaUtility;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     3.3.0
  */
-class MediaUtilityTest extends LogicalTest
+class MediaUtilityTest extends LogicalTestCase
 {
     /**
      * @return void

@@ -3,7 +3,7 @@
 namespace Tests\Chaplean\Bundle\CmsBundle\Repository;
 
 use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class PageRouteRepositoryTest extends LogicalTest
+class PageRouteRepositoryTest extends LogicalTestCase
 {
     /**
      * @return void

@@ -7,7 +7,7 @@ use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
 use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
 use Chaplean\Bundle\CmsBundle\Entity\PostZoom;
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 
 /**
@@ -17,7 +17,7 @@ use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class PostUtilityTest extends LogicalTest
+class PostUtilityTest extends LogicalTestCase
 {
     /**
      * @return void

@@ -27,8 +27,6 @@ class PostRepository extends CmsRepository
         $qb->from('ChapleanCmsBundle:Post', 'p');
         $qb->join('p.publication', 'pu');
         $qb->join('pu.status', 'ps');
-//        $qb->where('p INSTANCE OF :category');
-//        $qb->setParameter('category', array('news', 'video', 'testimonial', 'zoom'));
 
         return $qb;
     }
@@ -135,7 +133,7 @@ class PostRepository extends CmsRepository
      *
      * @return void
      */
-    public function castPostTo($post, $to)
+    public function castPostTo(Post $post, $to)
     {
         $class = PostUtility::getClassByInstance($to);
         if (get_class($post) == $class) {

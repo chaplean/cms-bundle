@@ -173,7 +173,7 @@ class MediaImage extends Media
      *
      * @return self
      */
-    public function setExtension($extension)
+    public function setExtension(FileExtensionImage $extension)
     {
         $this->extension = $extension;
 

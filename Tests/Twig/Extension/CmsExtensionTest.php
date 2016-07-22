@@ -3,7 +3,7 @@
 namespace Tests\Chaplean\Bundle\CmsBundle\Twig\Extension;
 
 use Chaplean\Bundle\CmsBundle\Twig\Extension\CmsExtension;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 
 /**
  * CmsExtensionTest.php.
@@ -12,19 +12,12 @@ use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class CmsExtensionTest extends LogicalTest
+class CmsExtensionTest extends LogicalTestCase
 {
     /**
      * @var CmsExtension
      */
     private $cmsExtension;
-
-    /**
-     * @return void
-     */
-    public static function setUpBeforeClass()
-    {
-    }
 
     /**
      * @return void

@@ -169,7 +169,7 @@ abstract class Media
      *
      * @return self
      */
-    public function setDateAdd($dateAdd)
+    public function setDateAdd(\DateTime $dateAdd)
     {
         $this->dateAdd = $dateAdd;
 
@@ -193,7 +193,7 @@ abstract class Media
      *
      * @return self
      */
-    public function setDateUpdated($dateUpdated)
+    public function setDateUpdated(\DateTime $dateUpdated)
     {
         $this->dateUpdated = $dateUpdated;
 
@@ -205,7 +205,7 @@ abstract class Media
      * @JMS\SerializedName("category")
      * @JMS\Groups({"media_category", "media_all"})
      *
-     * @return string
+     * @return string|null
      */
     public function getInstanceOf()
     {
@@ -215,12 +215,14 @@ abstract class Media
             case $this instanceof MediaPdf:
                 return 'pdf';
         }
+
+        return null;
     }
 
     /**
      * @param string $media
      *
-     * @return string
+     * @return string|null
      */
     public static function getClassByInstance($media)
     {
@@ -230,5 +232,7 @@ abstract class Media
             case 'pdf':
                 return MediaPdf::class;
         }
+
+        return null;
     }
 }

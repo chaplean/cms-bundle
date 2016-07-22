@@ -50,7 +50,7 @@ class MediaUtility
      * @param Registry $doctrine
      * @param Logger   $logger
      * @param string   $rootDir
-     * @param string   $chapleanCms
+     * @param string   $mediaConfig
      */
     public function __construct(Registry $doctrine, Logger $logger, $rootDir, $mediaConfig)
     {
@@ -98,7 +98,7 @@ class MediaUtility
         $mime = $this->uploadedFile->getMimeType();
         /** @var FileExtension $fileExtension */
         $this->newFileExtension = $this->em->getRepository('ChapleanCmsBundle:FileExtension')
-                                           ->findOneBy(array('mimeType' => $mime));
+            ->findOneBy(array('mimeType' => $mime));
         if (!$this->newFileExtension) {
             return null;
         }
@@ -216,9 +216,9 @@ class MediaUtility
     /**
      * Move the uploaded file on the server
      *
-     * @param $fileDir
-     * @param $fileName
-     * @param $deleteOnFail
+     * @param string  $fileDir
+     * @param string  $fileName
+     * @param boolean $deleteOnFail
      *
      * @return Media|null
      */

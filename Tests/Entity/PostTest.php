@@ -6,7 +6,7 @@ use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
 use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
 use Chaplean\Bundle\CmsBundle\Entity\PostZoom;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 
 /**
  * PostTest.php.
@@ -15,15 +15,8 @@ use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class PostTest extends LogicalTest
+class PostTest extends LogicalTestCase
 {
-    /**
-     * @return void
-     */
-    public static function setUpBeforeClass()
-    {
-    }
-
     /**
      * @return void
      */

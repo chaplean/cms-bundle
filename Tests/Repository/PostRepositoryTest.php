@@ -6,7 +6,7 @@ use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
 use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
 use Chaplean\Bundle\CmsBundle\Repository\PostRepository;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class PostRepositoryTest extends LogicalTest
+class PostRepositoryTest extends LogicalTestCase
 {
     /**
      * @var PostRepository
@@ -135,7 +135,7 @@ class PostRepositoryTest extends LogicalTest
     public function testCastPostToVideo()
     {
         /** @var Post $post */
-        $post = $this->getRealEntity('post-news-13');
+        $post = $this->getReference('post-news-13');
 
         $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
         $this->assertCount(4, $posts);
@@ -152,7 +152,7 @@ class PostRepositoryTest extends LogicalTest
     public function testCastPostToTestimonial()
     {
         /** @var Post $post */
-        $post = $this->getRealEntity('post-news-13');
+        $post = $this->getReference('post-news-13');
 
         $posts = $this->em->getRepository('ChapleanCmsBundle:PostTestimonial')->findAll();
         $this->assertCount(4, $posts);
@@ -169,7 +169,7 @@ class PostRepositoryTest extends LogicalTest
     public function testCastPostToZoom()
     {
         /** @var Post $post */
-        $post = $this->getRealEntity('post-news-13');
+        $post = $this->getReference('post-news-13');
 
         $posts = $this->em->getRepository('ChapleanCmsBundle:PostZoom')->findAll();
         $this->assertCount(4, $posts);
@@ -186,7 +186,7 @@ class PostRepositoryTest extends LogicalTest
     public function testCastPostZoomToVideo()
     {
         /** @var Post $post */
-        $post = $this->getRealEntity('post-zoom-5');
+        $post = $this->getReference('post-zoom-5');
 
         $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
         $this->assertCount(4, $posts);
@@ -203,7 +203,7 @@ class PostRepositoryTest extends LogicalTest
     public function testCastPostVideoToPost()
     {
         /** @var Post $post */
-        $post = $this->getRealEntity('post-video-1');
+        $post = $this->getReference('post-video-1');
 
         $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
         $this->assertCount(4, $posts);
@@ -220,7 +220,7 @@ class PostRepositoryTest extends LogicalTest
     public function testCastPostVideoToPostVideo()
     {
         /** @var Post $post */
-        $post = $this->getRealEntity('post-video-1');
+        $post = $this->getReference('post-video-1');
 
         $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
         $this->assertCount(4, $posts);
