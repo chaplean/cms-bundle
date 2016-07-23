@@ -35,6 +35,8 @@ class LoadPublicationData extends AbstractFixture implements DependentFixtureInt
         $lastMonth->modify('-1 month');
         $nextMonth = clone $now;
         $nextMonth->modify('+1 month');
+        $twoMonthsLater = clone $now;
+        $twoMonthsLater->modify('+2 months');
 
         /* Passed publication */
         $publication = new Publication();
@@ -164,7 +166,7 @@ class LoadPublicationData extends AbstractFixture implements DependentFixtureInt
 
         $publication = new Publication();
         $publication->setDatePublicationBegin($tomorrow);
-        $publication->setDatePublicationEnd($nextMonth);
+        $publication->setDatePublicationEnd($twoMonthsLater);
         $publication->setIsHighlighted(false);
         $publication->setDateAdd($yesterday);
         $publication->setStatus($this->getReference('publication-status-published'));
@@ -197,7 +199,7 @@ class LoadPublicationData extends AbstractFixture implements DependentFixtureInt
     }
 
     /**
-     * @return int
+     * @return array
      */
     public function getDependencies()
     {

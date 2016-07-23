@@ -2,15 +2,11 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Post, PublicationStatus, Validator, BackofficeEditFactory,
-                                          TranslationService, CmsAlertService, Datepicker) {
+cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
+                                          Post, PublicationStatus, clCmsValidator, BackofficeEditFactory,
+                                          TranslationService, CmsAlertService, clCmsDatepicker, CmsRouter, clCmsMenu) {
 
-    if ($scope.$parent.hasOwnProperty('activeMenu')) {
-        $scope.$parent.activeMenu('post');
-    } else {
-        $log.error($scope.$parent.toString());
-    }
+    clCmsMenu.setActive('post');
     $scope.publicationStatuses = [];
     $scope.post = {
         publication: {
@@ -18,7 +14,8 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
             datePublicationEnd: null
         }
     };
-    $scope.datepicker = Datepicker;
+    $scope.onSave = false;
+    $scope.datepicker = clCmsDatepicker;
     $scope.title = '';
     //$scope.postFactory = new clCmsObjectFactory('post', Post, 'postId');
 
@@ -30,12 +27,12 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
 
             if ($scope.postId) {
                 Post.get({postId: $scope.postId}, function(post) {
-
                     $scope.post = post;
                     $scope.title = $scope.post.page.title;
                     if ($scope.post.publication.datePublicationBegin) {
                         $scope.post.publication.datePublicationBegin = moment($scope.post.publication.datePublicationBegin, 'YYYY-MM-DD').toDate();
                     }
+
                     if ($scope.post.publication.datePublicationEnd) {
                         $scope.post.publication.datePublicationEnd = moment($scope.post.publication.datePublicationEnd, 'YYYY-MM-DD').toDate();
                     }
@@ -47,13 +44,14 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
     };
 
     $scope.savePost = function (postForm, formName, quit, duplicate, duplication) {
-        if (postForm.$valid) {
+        if (postForm.$valid && ((!$scope.onSave && !duplication) || ($scope.onSave && duplication))) {
             var post = $scope.buildData($scope.post);
 
             //$scope.postFactory.submit($scope.buildData, $scope.post, quit, duplicate, duplication)
             //    .then(function (post) {
             //        $scope.post = post;
             //});
+            $scope.onSave = true;
             if ($scope.postId && !duplication) {
                 Post.update({postId: $scope.postId}, post,
                     function (post) {
@@ -61,6 +59,8 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                         $scope.post.dateUpdate = $filter('date')(post.dateUpdate, 'dd/MM/yyyy');
                         $scope.title = $scope.post.page.title;
                         if (duplicate) {
+                            $scope.post.page.title += (' ' + TranslationService.trans('global.duplicate'));
+                            $scope.post.publication.status = $scope.publicationStatuses[1];
                             $scope.savePost(postForm, formName, quit, false, true);
                         } else {
                             CmsAlertService.addAlert('success', TranslationService.trans('alert.post.updated'), 1.5);
@@ -71,20 +71,20 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                         }
                     }, function (response) {
                         if(response.status == 400) {
-                            Validator.addError(postForm, response.data);
+                            clCmsValidator.addError(postForm, response.data);
                             CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
                             CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
                         }
                     });
             } else {
-                Post.save(post,
-                    function (post) {
+                Post.save(post, function (post) {
                         $scope.post.dateAdd = $filter('date')(post.dateAdd, 'dd/MM/yyyy');
                         $scope.postId = post.id;
                         $scope.title = $scope.post.page.title;
 
                         if (duplicate) {
+                            $scope.post.page.title += (' ' + TranslationService.trans('global.duplicate'));
                             $scope.savePost(postForm, formName, quit, false, true);
                         } else {
                             if (duplication) {
@@ -94,9 +94,10 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
                             }
 
                             setTimeout(function () {
-
                                 if (quit) {
                                     window.location = Routing.generate('cms_post_list');
+                                } else {
+                                    CmsRouter.go('cms_post_edit', {postId: $scope.postId});
                                 }
                             }, 500);
                         }
@@ -122,10 +123,10 @@ cms.controller('PostController', function($scope, $uibModal, $http, $log, $ngBoo
         );
     };
 
-    $scope.isRequire = Validator.isRequire;
-    $scope.onError = Validator.onError;
-    $scope.isInvalidFieldSumitted = Validator.isInvalidFieldSumitted;
-    $scope.getInvalidError = Validator.getInvalidError;
+    $scope.isRequire = clCmsValidator.isRequire;
+    $scope.onError = clCmsValidator.onError;
+    $scope.isInvalidFieldSumitted = clCmsValidator.isInvalidFieldSumitted;
+    $scope.getInvalidError = clCmsValidator.getInvalidError;
 
     $scope.buildData = function (post) {
         var postTmp = angular.copy(post);

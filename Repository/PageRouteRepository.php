@@ -2,8 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Repository;
 
-use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
-use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * PageRouteRepository.php.

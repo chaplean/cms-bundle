@@ -1,10 +1,10 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Tests\Utility;
+namespace Tests\Chaplean\Bundle\CmsBundle\Utility;
 
 use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
 use Chaplean\Bundle\CmsBundle\Utility\ErrorFormUtility;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 use Symfony\Component\Form\FormError;
 
 /**
@@ -14,15 +14,8 @@ use Symfony\Component\Form\FormError;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
  * @since     1.0.0
  */
-class ErrorFormUtilityTest extends LogicalTest
+class ErrorFormUtilityTest extends LogicalTestCase
 {
-    /**
-     * @return void
-     */
-    public static function setUpBeforeClass()
-    {
-    }
-
     /**
      * @return void
      */

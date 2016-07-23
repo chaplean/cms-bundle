@@ -1,19 +1,20 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: security.yml }
 
 framework:
-    translator:      { fallback: "%locale%" }
-    secret:          "S€cR3t"
+    test: ~
+    translator:      { fallback: '%locale%' }
+    secret:          '%secret%'
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: '%kernel.root_dir%/config/routing.yml'
         strict_requirements: true
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        #assets_version: SomeVersionScheme
-    default_locale:  "%locale%"
+    default_locale:  '%locale%'
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
@@ -28,22 +29,22 @@ framework:
 
 # Twig Configuration
 twig:
-    debug:            "%kernel.debug%"
-    strict_variables: "%kernel.debug%"
+    debug:            '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
 
 # Assetic Configuration
 assetic:
-    debug:          "%use_assetic_debug%"
-    use_controller: "%use_assetic_controller%"
+    debug:          '%use_assetic_debug%'
+    use_controller: '%use_assetic_controller%'
     bundles:        ['ChapleanCmsBundle']
-    ruby: %ruby.bin%
+    ruby: '%ruby.bin%'
     filters:
         cssrewrite: ~
         sass:
-            bin: %sass.bin%
-            apply_to: "\.scss"
+            bin: '%sass.bin%'
+            apply_to: '\.scss'
         compass:
-            bin: %compass.bin%
+            bin: '%compass.bin%'
             no_line_comments: true
     assets:
         bootstrap_fonts_woff:
@@ -84,29 +85,34 @@ assetic:
 monolog:
     handlers:
         main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
             type:   stream
-            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            path:   '%kernel.logs_dir%/%kernel.environment%.log'
             level:  info
         console:
             type:   console
-            bubble: false
-
 
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
-        host:     127.0.0.1
-        port:     3306
-        dbname:   test_database
-        user:     root
-        password: %database_password%
-        charset:  UTF8
-        server_version: 5.5
-        mapping_types:
-            enum: string
+        default_connection: default
+        connections:
+            default:
+                driver:   '%database_driver%'
+                host:     '%database_host%'
+                port:     '%database_port%'
+                dbname:   '%database_name%'
+                user:     '%database_user%'
+                password: '%database_password%'
+                charset:  UTF8
+                server_version: 5.6
+            logging: null
+            profiling: null
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_generate_proxy_classes: '%kernel.debug%'
         default_entity_manager: cms
         entity_managers:
             cms:
@@ -146,10 +152,13 @@ fos_rest:
         serialize_null: true
 
 chaplean_cms:
-    access_debug: true
+    modules:
+        block: true
+        page: true
+        media: true
+        post:
+            category: ['news', 'testimonial', 'video', 'zoom']
+            action: true
     template:
-        front_layout: "ChapleanCmsBundle::layout-frontoffice.html.twig"
-    block: true
-    post: true
-    page: true
-    media: true
+        front_layout: 'ChapleanCmsBundle::layout-frontoffice.html.twig'
+        front_route: 'cms_back_index'

@@ -9,16 +9,14 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity
  * @ORM\Table(
  *     name="cl_file_extension",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="extension_UNIQUE", columns={"extension"})}
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="file_extension_extension_UNIQUE", columns={"extension"})}
  * )
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap(
- *     {
+ * @ORM\DiscriminatorMap({
  *     "image"="Chaplean\Bundle\CmsBundle\Entity\FileExtensionImage",
  *     "pdf"="Chaplean\Bundle\CmsBundle\Entity\FileExtensionPdf"
- * }
- * )
+ * })
  */
 abstract class FileExtension
 {

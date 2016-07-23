@@ -41,7 +41,7 @@ abstract class CmsRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    protected function buildParam($qb, $limit = null, $sort = null, $order = null)
+    protected function buildParam(QueryBuilder $qb, $limit = null, $sort = null, $order = null)
     {
         if (!empty($limit)) {
             $qb->setMaxResults($limit);

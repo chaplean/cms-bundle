@@ -7,7 +7,10 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="Chaplean\Bundle\CmsBundle\Repository\PageRouteRepository")
- * @ORM\Table(name="cl_page_route", uniqueConstraints={@ORM\UniqueConstraint(name="path_UNIQUE", columns={"path"})})
+ * @ORM\Table(
+ *     name="cl_page_route",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="page_route_path_UNIQUE", columns={"path"})}
+ * )
  */
 class PageRoute
 {
@@ -70,7 +73,7 @@ class PageRoute
     /**
      * @var Publication
      *
-     * @ORM\OneToOne(targetEntity="Publication")
+     * @ORM\OneToOne(targetEntity="Chaplean\Bundle\CmsBundle\Entity\Publication")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="id", nullable=false, unique=true)
      *
      * @JMS\Groups({"page_route_publication", "page_route_all"})
@@ -80,7 +83,7 @@ class PageRoute
     /**
      * @var Page
      *
-     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", columnPrefix = false)
+     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", columnPrefix=false)
      *
      * @JMS\Groups({"page_route_page", "page_route_all"})
      */

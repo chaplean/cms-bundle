@@ -1,5 +1,3 @@
 {
-  "directory": "Resources/public/libs",
-  "json": "bower.json"
+    "directory": "Resources/public/libs"
 }
-

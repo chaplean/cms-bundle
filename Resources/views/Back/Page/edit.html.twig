@@ -1,14 +1,13 @@
-{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+{% extends cms_back_layout %}
 
 {% block cms %}
-    {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
 
     {% if pageId is not empty %}
         <input type="hidden" ng-init="pageId = {{ pageId }}" ng-model="pageId" />
     {% else %}
         <input type="hidden" ng-model="pageId" />
     {% endif %}
-    <form id="page-form" name="pageForm" ng-controller="PageController" ng-submit="savePage(pageForm, '{{ form.vars.name }}')" role="form">
+    <form id="page-form" name="pageForm" ng-controller="clCmsPageController" ng-submit="savePage(pageForm, '{{ form.vars.name }}')" role="form">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-left">

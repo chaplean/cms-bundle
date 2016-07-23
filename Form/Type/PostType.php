@@ -61,10 +61,11 @@ class PostType extends AbstractType
         $options = null;
         $builder
             ->add('category', ChoiceType::class, array(
-                'mapped' => false,
-                'choices' => $this->categories,
-                'empty_data' => 'news',
-                'required' => true
+                'mapped'      => false,
+                'choices'     => $this->categories,
+                'empty_data'  => 'news',
+                'required'    => true,
+                'placeholder' => 'post.category.choose'
             ))
             ->add('page', new PageType())
             ->add('publication', new PublicationType());

@@ -23,9 +23,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class MediaUtility
 {
-    /** @var FileExtension $newFileExtension */
-    private $newFileExtension;
-
     /** @var  UploadedFile $uploadedFile */
     private $uploadedFile;
 
@@ -50,7 +47,7 @@ class MediaUtility
      * @param Registry $doctrine
      * @param Logger   $logger
      * @param string   $rootDir
-     * @param string   $chapleanCms
+     * @param string   $mediaConfig
      */
     public function __construct(Registry $doctrine, Logger $logger, $rootDir, $mediaConfig)
     {
@@ -96,14 +93,12 @@ class MediaUtility
     public function getUploadedFileExtension()
     {
         $mime = $this->uploadedFile->getMimeType();
-        /** @var FileExtension $fileExtension */
-        $this->newFileExtension = $this->em->getRepository('ChapleanCmsBundle:FileExtension')
-                                           ->findOneBy(array('mimeType' => $mime));
-        if (!$this->newFileExtension) {
-            return null;
-        }
 
-        return $this->newFileExtension;
+        /** @var FileExtension $fileExtension */
+        $fileExtension = $this->em->getRepository('ChapleanCmsBundle:FileExtension')
+            ->findOneBy(array('mimeType' => $mime));
+
+        return $fileExtension;
     }
 
     /**
@@ -113,36 +108,34 @@ class MediaUtility
      */
     public function createMedia()
     {
-        if (!$this->newFileExtension) {
-            $this->getUploadedFileExtension();
-        }
+        $fileExtension = $this->getUploadedFileExtension();
 
         $this->existingMedia = null;
-        $type = '';
-        if ($this->newFileExtension instanceof FileExtensionImage) {
-            $type = 'image';
+
+        if ($fileExtension instanceof FileExtensionImage) {
             $this->existingMedia = new MediaImage();
             $this->existingMedia->setTitle('');
             $this->existingMedia->setAlternativeTitle('');
-            $this->setImageSize();
-        } elseif ($this->newFileExtension instanceof FileExtensionPdf) {
-            $type = 'pdf';
+
+            $this->determineImageSize();
+        } elseif ($fileExtension instanceof FileExtensionPdf) {
             $this->existingMedia = new MediaPdf();
             $this->existingMedia->setTitle('');
         }
 
-        if (!$this->existingMedia || (is_array($this->mediaConfig) && !in_array($type, $this->mediaConfig))) {
+        if ($this->existingMedia === null || is_array($this->mediaConfig)) {
             return null;
         }
 
         $fileDir = '/medias/';
         $fileName = md5(uniqid());
+
         $this->existingMedia->setPath($fileDir . $fileName);
         $this->existingMedia->setFileName($this->uploadedFile->getClientOriginalName());
         $this->existingMedia->setFileWeight($this->uploadedFile->getSize() / 1000);
         $this->existingMedia->setDateAdd(new \DateTime('now'));
         $this->existingMedia->setDateUpdated(new \DateTime('now'));
-        $this->existingMedia->setExtension($this->newFileExtension);
+        $this->existingMedia->setExtension($fileExtension);
 
         $this->em->persist($this->existingMedia);
         $this->em->flush();
@@ -157,19 +150,18 @@ class MediaUtility
      */
     public function updateMedia()
     {
-        if (!$this->newFileExtension) {
-            $this->getUploadedFileExtension();
-        }
+        $fileExtension = $this->getUploadedFileExtension();
+        
+        $var = get_class($fileExtension);
 
-        $var = get_class($this->newFileExtension);
         if ($this->existingMedia->getExtension() instanceof $var) {
             if ($this->existingMedia instanceof MediaImage) {
-                $this->setImageSize();
+                $this->determineImageSize();
             }
 
             $this->existingMedia->setFileName($this->uploadedFile->getClientOriginalName());
             $this->existingMedia->setDateUpdated(new \DateTime('now'));
-            $this->existingMedia->setExtension($this->newFileExtension);
+            $this->existingMedia->setExtension($fileExtension);
 
             $this->em->persist($this->existingMedia);
             $this->em->flush();
@@ -190,11 +182,13 @@ class MediaUtility
     public function deleteMedia()
     {
         $result = true;
+
         if (!file_exists($this->publicDir . $this->existingMedia->getPath())) {
             $result = true;
         } elseif (!unlink($this->publicDir . $this->existingMedia->getPath())) {
             return false;
         }
+
         $this->em->remove($this->existingMedia);
         $this->em->flush();
 
@@ -204,21 +198,27 @@ class MediaUtility
     /**
      * Determine the dimension of an image
      *
+     * @throws \Exception
      * @return void
      */
-    private function setImageSize()
+    private function determineImageSize()
     {
-        list($width, $height) = getimagesize($this->uploadedFile->getPathname());
-        $this->existingMedia->setWidth($width);
-        $this->existingMedia->setHeight($height);
+        $imageSize = getimagesize($this->uploadedFile->getPathname());
+
+        if (!$imageSize) {
+            throw new FileException(sprintf('Impossible to get image size for %s', $this->uploadedFile->getPathname()));
+        }
+
+        $this->existingMedia->setWidth($imageSize[0]);
+        $this->existingMedia->setHeight($imageSize[1]);
     }
 
     /**
      * Move the uploaded file on the server
      *
-     * @param $fileDir
-     * @param $fileName
-     * @param $deleteOnFail
+     * @param string  $fileDir
+     * @param string  $fileName
+     * @param boolean $deleteOnFail
      *
      * @return Media|null
      */

@@ -39,7 +39,7 @@ class FileExtensionImage extends FileExtension
      *
      * @return self
      */
-    public function setImages($images)
+    public function setImages(ArrayCollection $images)
     {
         $this->images = $images;
 

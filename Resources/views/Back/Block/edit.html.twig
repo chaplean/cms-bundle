@@ -1,14 +1,13 @@
-{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+{% extends cms_back_layout %}
 
 {% block cms %}
-    {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
 
     {% if blockId is not empty %}
         <input type="hidden" ng-init="blockId = {{ blockId }}" ng-model="blockId" />
     {% else %}
         <input type="hidden" ng-model="blockId" />
     {% endif %}
-    <form id="page-form" name="blockForm" ng-controller="BlockController" ng-submit="saveBlock(blockForm, '{{ form.vars.name }}')" role="form">
+    <form id="page-form" name="blockForm" ng-controller="clCmsBlockController" ng-submit="saveBlock(blockForm, '{{ form.vars.name }}')" role="form">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-left">

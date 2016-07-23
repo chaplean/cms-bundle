@@ -7,12 +7,10 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="cl_media", uniqueConstraints={@ORM\UniqueConstraint(name="path_UNIQUE", columns={"path"})})
+ * @ORM\Table(name="cl_media", uniqueConstraints={@ORM\UniqueConstraint(name="media_path_UNIQUE", columns={"path"})})
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap(
- *     {"image"="Chaplean\Bundle\CmsBundle\Entity\MediaImage","pdf"="Chaplean\Bundle\CmsBundle\Entity\MediaPdf"}
- * )
+ * @ORM\DiscriminatorMap({"image"="Chaplean\Bundle\CmsBundle\Entity\MediaImage","pdf"="Chaplean\Bundle\CmsBundle\Entity\MediaPdf"})
  */
 abstract class Media
 {
@@ -171,7 +169,7 @@ abstract class Media
      *
      * @return self
      */
-    public function setDateAdd($dateAdd)
+    public function setDateAdd(\DateTime $dateAdd)
     {
         $this->dateAdd = $dateAdd;
 
@@ -195,7 +193,7 @@ abstract class Media
      *
      * @return self
      */
-    public function setDateUpdated($dateUpdated)
+    public function setDateUpdated(\DateTime $dateUpdated)
     {
         $this->dateUpdated = $dateUpdated;
 
@@ -207,7 +205,7 @@ abstract class Media
      * @JMS\SerializedName("category")
      * @JMS\Groups({"media_category", "media_all"})
      *
-     * @return string
+     * @return string|null
      */
     public function getInstanceOf()
     {
@@ -217,12 +215,14 @@ abstract class Media
             case $this instanceof MediaPdf:
                 return 'pdf';
         }
+
+        return null;
     }
 
     /**
      * @param string $media
      *
-     * @return string
+     * @return string|null
      */
     public static function getClassByInstance($media)
     {
@@ -232,5 +232,7 @@ abstract class Media
             case 'pdf':
                 return MediaPdf::class;
         }
+
+        return null;
     }
 }

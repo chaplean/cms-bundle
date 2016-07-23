@@ -2,15 +2,12 @@
 
 var cms = angular.module('Cms');
 
-cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
-                                          Block, PublicationStatus, Validator,
-                                          TranslationService, CmsAlertService, Datepicker) {
+cms.controller('clCmsBlockController', function($scope, $uibModal, $http, $log, $ngBootbox, $filter,
+                                          Block, PublicationStatus, clCmsValidator,
+                                          TranslationService, CmsAlertService, clCmsDatepicker,
+                                          clCmsMenu) {
 
-    if ($scope.$parent.hasOwnProperty('activeMenu')) {
-        $scope.$parent.activeMenu('block');
-    } else {
-        $log.error($scope.$parent.toString());
-    }
+    clCmsMenu.setActive('block');
     $scope.publicationStatuses = [];
     $scope.block = {
         publication: {
@@ -18,7 +15,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
             datePublicationEnd: null
         }
     };
-    $scope.datepicker = Datepicker;
+    $scope.datepicker = clCmsDatepicker;
 
     $scope.loadData = function() {
         if ($scope.blockId) {
@@ -43,7 +40,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
         if (blockForm.$valid) {
             var block = $scope.buildData($scope.block);
 
-            Validator.errors = {};
+            clCmsValidator.errors = {};
             if ($scope.blockId) {
                 Block.update({blockId: $scope.blockId}, block,
                     function (block) {
@@ -55,7 +52,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                         }
                     }, function (response) {
                         if(response.status == 400) {
-                            Validator.addError(blockForm, response.data);
+                            clCmsValidator.addError(blockForm, response.data);
                             //CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                         } else {
                             CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
@@ -73,7 +70,7 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
                 }, function (error) {
                     //$log.error(error);
                     if (error.status == 400) {
-                        Validator.addError(blockForm, error.data);
+                        clCmsValidator.addError(blockForm, error.data);
                         //CmsAlertService.addAlert('warning', TranslationService.trans('error.important'), 1.5);
                     } else {
                         CmsAlertService.addAlert('danger', TranslationService.trans('error.important'), 1.5)
@@ -96,10 +93,10 @@ cms.controller('BlockController', function($scope, $uibModal, $http, $log, $ngBo
         );
     };
 
-    $scope.isRequire = Validator.isRequire;
-    $scope.onError = Validator.onError;
-    $scope.isInvalidFieldSumitted = Validator.isInvalidFieldSumitted;
-    $scope.getInvalidError = Validator.getInvalidError;
+    $scope.isRequire = clCmsValidator.isRequire;
+    $scope.onError = clCmsValidator.onError;
+    $scope.isInvalidFieldSumitted = clCmsValidator.isInvalidFieldSumitted;
+    $scope.getInvalidError = clCmsValidator.getInvalidError;
 
     $scope.buildData = function (block) {
         var blockTmp = angular.copy(block);

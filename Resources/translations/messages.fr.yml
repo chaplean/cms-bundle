@@ -50,6 +50,7 @@ form:
 
 global:
     content: Contenu
+    duplicate: (Copie)
     frontend: Frontend
     label: Libellé du menu
     meta_description: Meta description
@@ -81,6 +82,7 @@ header:
     publication_setting: Paramètres de publication
 
 list:
+    id: Identifiant
     block:
         id: Identifiant du bloc
         label: Libellé
@@ -145,6 +147,7 @@ message:
         delete_post: Confirmez-vous la suppression de l'article "%post%" ?
         delete_block: Confirmez-vous la suppression du bloc "%block%" ?
         leave_change: Les données non sauvegardées seront perdues, continuer ?
+        delete_media: Confirmez-vous la suppression du média ?
 
 over:
     path: Le chemin doit être en minuscule et ne contenir ni accent, ni espace
@@ -162,6 +165,7 @@ placeholder:
 post:
     category:
         all: Toutes les catégories
+        choose: Choisissez une catégorie...
         news: Nouveauté
         testimonial: Témoignage
         video: Vidéo

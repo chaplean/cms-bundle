@@ -2,7 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Repository;
 
-use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * BlockRepository.php.
@@ -13,7 +13,6 @@ use Doctrine\DBAL\Query\QueryBuilder;
  */
 class BlockRepository extends CmsRepository
 {
-
     /**
      * @return QueryBuilder
      */

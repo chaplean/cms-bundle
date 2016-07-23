@@ -228,7 +228,9 @@ div.alert-fix-top {
 }
 
 .default-logo {
-    height: 130px;
+    img {
+        max-width: 100%;
+    }
 }
 
 .dropdown-menu {
@@ -337,4 +339,17 @@ textarea {
 
 .warning {
     color: #f0ad4e;
+}
+
+text-angular.text-angular-toolbar-top-fixed > div[text-angular-toolbar] {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+td.meta-description {
+    max-width: 250px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
 }

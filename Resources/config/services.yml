@@ -1,7 +1,7 @@
 services:
     chaplean_cms.media_utility:
         class: Chaplean\Bundle\CmsBundle\Utility\MediaUtility
-        arguments: [@doctrine, @logger, %kernel.root_dir%, %chaplean_cms.media%]
+        arguments: ['@doctrine', '@logger', '%kernel.root_dir%', '%chaplean_cms.modules.media%']
 
     form.type.textangular:
         class: Chaplean\Bundle\CmsBundle\Form\Type\TextAngularType
@@ -10,19 +10,19 @@ services:
 
     chaplean_cms.cms_extension:
         class: Chaplean\Bundle\CmsBundle\Twig\Extension\CmsExtension
-        arguments: [%chaplean_cms%]
+        arguments: ['%chaplean_cms%']
         tags:
             - { name: 'twig.extension' }
 
     app.tokens.action_listener:
-        class: Chaplean\Bundle\CmsBundle\Utility\ConfigListener
-        arguments: [%chaplean_cms%]
+        class: Chaplean\Bundle\CmsBundle\Listener\ConfigListener
+        arguments: ['%chaplean_cms%']
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     chaplean_cms.form.post_type:
         class: Chaplean\Bundle\CmsBundle\Form\Type\PostType
-        arguments: [%chaplean_cms.post%]
+        arguments: ['%chaplean_cms.modules.post.category%']
         tags:
             - { name: form.type }
 

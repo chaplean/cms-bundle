@@ -43,7 +43,7 @@ class PostUtility
         if ($class !== false) {
             return $class;
         } else {
-                throw new InvalidArgumentException(sprintf('Not defined %s type for post.', $post));
+            throw new InvalidArgumentException(sprintf('Not defined %s type for post.', $post));
         }
     }
 }

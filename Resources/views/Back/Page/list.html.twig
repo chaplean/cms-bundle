@@ -1,31 +1,38 @@
-{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+{% extends cms_back_layout %}
 
 {% block cms_action_top %}
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-left"></div>
-            {#<ul class="nav navbar-nav navbar-right">#}
-                {#<li class="dropdown sonata-actions">#}
-                    {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">Liste d'actions <b class="caret"></b></a>#}
-                    {#<ul class="dropdown-menu" role="menu">#}
-                        {#<li>#}
-                            {#<a class="sonata-action-element" href="{{ path('cms_page_edit') }}">#}
-                                {#<i class="fa fa-plus-circle"></i>#}
-                                {#{{ 'button.add.global' | trans }}#}
-                            {#</a>#}
-                        {#</li>#}
-                    {#</ul>#}
-                {#</li>#}
-            {#</ul>#}
+            {% if 'add' in cms_action.page %}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown sonata-actions">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Liste d'actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a class="sonata-action-element" href="{{ path('cms_page_new') }}">
+                                <i class="fa fa-plus-circle"></i>
+                                {{ 'button.add.global' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            {% endif %}
         </div>
     </nav>
 {% endblock %}
 
 {% block cms %}
-    <table id="pages-list" st-table="pagesDisplayed" st-safe-src="pages" class="table table-striped" ng-controller="PagesController">
+    {% if 'remove' in cms_action.page %}
+        {% set colspan = 5 %}
+    {% else %}
+        {% set colspan = 4 %}
+    {% endif %}
+    <table id="pages-list" st-table="pagesDisplayed" st-safe-src="pages" class="table table-striped" ng-controller="clCmsPagesController">
         <thead>
             <tr>
-                <th colspan="5">
+                <th colspan="{{ colspan }}">
                     <input id="filter-page" ng-model="search" ng-change="updateFilter()" class="form-control" type="search" placeholder="{{ 'placeholder.search.global' | trans }}"/>
                 </th>
             </tr>
@@ -33,24 +40,28 @@
                 <th st-sort="'path'" class="sortable">{{ 'global.path' | trans }}</th>
                 <th st-sort="getters.title" class="center sortable">{{ 'global.title' | trans }}</th>
                 <th st-sort="getters.metaDescription" class="center sortable">{{ 'global.meta_description' | trans }}</th>
-                <th class="center"></th>
+                {% if 'remove' in cms_action.page %}
+                    <th class="center"></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody class="ng-cloak">
             <tr ng-repeat="pageRoute in pagesDisplayed">
                 <td><a href="{^ path('cms_page_edit', {pageId: pageRoute.id}) ^}">{^ pageRoute.path ^}</a></td>
                 <td class="center"><a href="{^ path('cms_page_edit', {pageId: pageRoute.id}) ^}">{^ pageRoute.page.title ^}</a></td>
-                <td class="center">{^ pageRoute.page.metaDescription ^}</td>
+                <td class="center meta-description" title="{^ pageRoute.page.metaDescription ^}">{^ pageRoute.page.metaDescription ^}</td>
+                {% if 'remove' in cms_action.page %}
                 <td>
                     <button type="button" ng-click="removePage(pageRoute)" title="{{ 'list.page.delete'|trans }}" class="btn btn-sm btn-danger">
-                        <i class="fa fa-minus-circle"></i>
+                        <i class="fa fa-trash"></i>
                     </button>
                 </td>
+                {% endif %}
             </tr>
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="5" class="text-center">
+            <td colspan="{{ colspan }}" class="text-center">
                 <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
             </td>
         </tr>

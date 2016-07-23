@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="Cms" ng-controller="MainController" lang="{{ app.request.locale }}" xmlns="http://www.w3.org/1999/html">
+<html lang="{{ app.request.locale }}" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>{% block title %}{% endblock %}</title>
 
@@ -24,14 +24,14 @@
         {% endstylesheets %}
     {% endblock %}
 
-    <script type="text/javascript">
-        var locale = '{{ app.request.locale }}';
-    </script>
-
-    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-
     {% block javascripts %}
+        <script type="text/javascript">
+            var locale = '{{ app.request.locale }}';
+        </script>
+
+        <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
         {% javascripts
         'bundles/bazingajstranslation/js/translator.min.js'
         'js/translations/config.js'
@@ -63,6 +63,10 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
+        {% if media_is_activate %}
+        <script type="text/javascript" src="{{ asset('bundles/chapleancms/js/config/media-manager.js') }}"></script>
+        {% endif %}
+
         <script type="text/ng-template" src="{{ asset('bundles/chapleancms/libs/angular-utils-pagination/dirPagination.tpl.html') }}"></script>
     {% endblock %}
 
@@ -70,55 +74,59 @@
 </head>
 
 {% block body_with_tag %}
-    <body>
+    <body {% block angular_app %}ng-app="Cms" ng-controller="clCmsMainController"{% endblock %}>
+    {% if media_is_activate %}
+        {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
+    {% endif %}
     <uib-alert ng-cloak ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>
 
-    {% if app.user.id is defined or access_debug %}
         <div class="container-fluid" {% block controller %}{% endblock %}>
             <div class="row">
                 <div class="col-xs-4 col-sm-3 col-lg-2 sidebar">
                     <div class="sidebar-header">
                         {% block logo %}
-                            <div class="default-logo"></div>
+                            <a href="{{ path(cms_front_route) }}" class="default-logo">
+                                {% if cms_logo_path is not empty %}
+                                    <img src="{{ asset(cms_logo_path) }}" alt="">
+                                {% else %}
+                                    <i class="fa fa-5x fa-home"></i><br>
+                                {% endif %}
+                            </a>
                         {% endblock %}
-                        <span>{{ 'menu.header' | trans }}</span>
+                        <span><a href="{{ path('cms_back_home') }}">{{ 'menu.header' | trans }}</a></span>
                     </div>
                     <div>
                         <hr>
                         <ul class="sidebar-menu">
-                            {% if post_is_activate %}
-                                <li class="treeview" ng-click="CmsRouter.go('cms_post_list')" ng-class="{'active': menu.active == 'post'}">
-                                    <i class="fa fa-hand-o-right"></i> {{ 'menu.posts' | trans }}
-                                </li>
-                            {% endif %}
-                            {% if page_is_activate %}
-                                <li class="treeview" ng-click="CmsRouter.go('cms_page_list')" ng-class="{'active': menu.active == 'page'}">
-                                    <i class="fa fa-file-text-o"></i> {{ 'menu.pages' | trans }}
-                                </li>
-                            {% endif %}
-                            {% if block_is_activate %}
-                                <li class="treeview" ng-click="CmsRouter.go('cms_block_list')" ng-class="{'active': menu.active == 'block'}">
-                                    <i class="fa fa-puzzle-piece"></i> {{ 'menu.blocks' | trans }}
-                                </li>
-                            {% endif %}
+                            {% block sidebar %}
+                                {% if post_is_activate %}
+                                    <li class="treeview" ng-click="CmsRouter.go('cms_post_list')" ng-class="{'active': menu.isActive('post')}">
+                                        <i class="fa fa-hand-o-right"></i> {{ 'menu.posts' | trans }}
+                                    </li>
+                                {% endif %}
+                                {% if page_is_activate %}
+                                    <li class="treeview" ng-click="CmsRouter.go('cms_page_list')" ng-class="{'active': menu.isActive('page')}">
+                                        <i class="fa fa-file-text-o"></i> {{ 'menu.pages' | trans }}
+                                    </li>
+                                {% endif %}
+                                {% if block_is_activate %}
+                                    <li class="treeview" ng-click="CmsRouter.go('cms_block_list')" ng-class="{'active': menu.isActive('block')}">
+                                        <i class="fa fa-puzzle-piece"></i> {{ 'menu.blocks' | trans }}
+                                    </li>
+                                {% endif %}
+                            {% endblock %}
                         </ul>
                     </div>
                 </div>
                 <div class="col-xs-8 col-xs-push-4 col-sm-9 col-sm-push-3 col-lg-10 col-lg-push-2">
                     <section class="content-header">
                         <span>
-                            <i class="fa  fa-bars"></i>
                             {% if path is defined %}
                                 {% for step in path %}
                                     &nbsp;/&nbsp;{{ step }}
                                 {% endfor %}
                             {% endif %}
                         </span>
-                        {% if app.user.id is defined %}
-                        {#<div class="pull-right logout">#}
-                            {#<span><i class="fa fa-logout"></i> {{ 'Se déconnecter'|trans }}</span>#}
-                        {#</div>#}
-                        {% endif %}
                     </section>
 
                     <section class="content-action">
@@ -135,10 +143,7 @@
                 </div>
             </div>
         </div>
-    {% else %}
-        {% block login %}
-        {% endblock %}
-    {% endif %}
+
     </body>
 {% endblock %}
 </html>

@@ -1,28 +1,30 @@
-{% extends 'ChapleanCmsBundle::layout-backoffice.html.twig' %}
+{% extends cms_back_layout %}
 
 {% block cms_action_top %}
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-left"></div>
-            {#<ul class="nav navbar-nav navbar-right">#}
-                {#<li class="dropdown sonata-actions">#}
-                    {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'header.actions'|trans }} <b class="caret"></b></a>#}
-                    {#<ul class="dropdown-menu" role="menu">#}
-                        {#<li>#}
-                            {#<a class="sonata-action-element" href="{{ path('cms_block_edit') }}">#}
-                                {#<i class="fa fa-plus-circle"></i>#}
-                                {#{{ 'button.add.global' | trans }}#}
-                            {#</a>#}
-                        {#</li>#}
-                    {#</ul>#}
-                {#</li>#}
-            {#</ul>#}
+            {% if 'add' in cms_action.block %}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown sonata-actions">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'header.actions'|trans }} <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a class="sonata-action-element" href="{{ path('cms_block_new') }}">
+                                <i class="fa fa-plus-circle"></i>
+                                {{ 'button.add.global' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            {% endif %}
         </div>
     </nav>
 {% endblock %}
 
 {% block cms %}
-    <table id="blocks-list" st-table="blocksDisplayed" st-safe-src="blocks" class="table table-striped" ng-controller="BlocksController">
+    <table id="blocks-list" st-table="blocksDisplayed" st-safe-src="blocks" class="table table-striped" ng-controller="clCmsBlocksController">
         <thead>
             <tr>
                 <th colspan="5">
@@ -32,18 +34,22 @@
             <tr>
                 <th st-sort="'id'" class="sortable">{{ 'list.block.id' | trans }}</th>
                 <th st-sort="'name'" class="center sortable">{{ 'list.block.label' | trans }}</th>
-                <th class="center"></th>
+                {% if 'remove' in cms_action.block %}
+                    <th class="center"></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody class="ng-cloak">
             <tr ng-repeat="block in blocksDisplayed">
                 <td><a href="{^ path('cms_block_edit', {blockId: block.id}) ^}">{^ block.id ^}</a></td>
                 <td class="center"><a href="{^ path('cms_block_edit', {blockId: block.id}) ^}">{^ block.name ^}</a></td>
-                <td>
-                    <button type="button" ng-click="removeBlock(block)" title="{{ 'list.block.delete'|trans }}" class="btn btn-sm btn-danger">
-                        <i class="fa fa-minus-circle"></i>
-                    </button>
-                </td>
+                {% if 'remove' in cms_action.block %}
+                    <td>
+                        <button type="button" ng-click="removeBlock(block)" title="{{ 'list.block.delete'|trans }}" class="btn btn-sm btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                {% endif %}
             </tr>
         </tbody>
         <tfoot>
