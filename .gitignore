@@ -47,3 +47,6 @@ codeship.aes
 
 # Database
 /.db
+
+# For this bundle only
+Tests/Resources/test-*

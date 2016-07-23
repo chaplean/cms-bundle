@@ -41,24 +41,25 @@ class LoadPostData extends AbstractFixture implements DependentFixtureInterface
         $nextMonth->modify('+1 month');
 
         $datas = array(
-            '1'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-published-highlighted'),
-            '2'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-published-not-highlighted'),
-            '3'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-unpublished-highlighted'),
-            '4'  => array('video'      , new PostVideo()      , $lastMonth, 'publication-passed-unpublished-not-highlighted'),
-            '5'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-published-highlighted'),
-            '6'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-published-not-highlighted'),
-            '7'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-unpublished-highlighted'),
-            '8'  => array('zoom'       , new PostZoom()       , $yesterday, 'publication-current-unpublished-not-highlighted'),
+            '1'  => array('video', new PostVideo(), $lastMonth, 'publication-passed-published-highlighted'),
+            '2'  => array('video', new PostVideo(), $lastMonth, 'publication-passed-published-not-highlighted'),
+            '3'  => array('video', new PostVideo(), $lastMonth, 'publication-passed-unpublished-highlighted'),
+            '4'  => array('video', new PostVideo(), $lastMonth, 'publication-passed-unpublished-not-highlighted'),
+            '5'  => array('zoom', new PostZoom(), $yesterday, 'publication-current-published-highlighted'),
+            '6'  => array('zoom', new PostZoom(), $yesterday, 'publication-current-published-not-highlighted'),
+            '7'  => array('zoom', new PostZoom(), $yesterday, 'publication-current-unpublished-highlighted'),
+            '8'  => array('zoom', new PostZoom(), $yesterday, 'publication-current-unpublished-not-highlighted'),
             '9'  => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-published-highlighted'),
             '10' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-published-not-highlighted'),
             '11' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-unpublished-highlighted'),
             '12' => array('testimonial', new PostTestimonial(), $yesterday, 'publication-incoming-unpublished-not-highlighted'),
-            '13' => array('news'       , new Post()           , $yesterday, 'publication-incoming-published-not-highlighted-1'),
-            '14' => array('news'       , new Post()           , $yesterday, 'publication-incoming-unpublished-highlighted-1'),
-            '15' => array('news'       , new Post()           , $yesterday, 'publication-incoming-unpublished-not-highlighted-1'),
+            '13' => array('news', new Post(), $yesterday, 'publication-incoming-published-not-highlighted-1'),
+            '14' => array('news', new Post(), $yesterday, 'publication-incoming-unpublished-highlighted-1'),
+            '15' => array('news', new Post(), $yesterday, 'publication-incoming-unpublished-not-highlighted-1'),
         );
 
         foreach ($datas as $key => $data) {
+            // Page is embeddable, so it should stay here !
             $page = new Page();
             $page->setTitle('Page-' . $data[0] . '-' . $key);
             $page->setContent('Page-' . $data[0] . '-' . $key . '-content');
@@ -75,9 +76,11 @@ class LoadPostData extends AbstractFixture implements DependentFixtureInterface
 
             $this->persist($post, $manager);
             $this->setReference('post-' . $data[0] . '-' . $key, $post);
-        }
+            $this->setReference('post-' . $key, $post);
 
-        $manager->flush();
+            // We flush on each turn because if we dont the order of datas in database is random
+            $manager->flush();
+        }
     }
 
     /**

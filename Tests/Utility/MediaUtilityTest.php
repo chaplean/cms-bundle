@@ -89,6 +89,7 @@ class MediaUtilityTest extends LogicalTestCase
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-empty.pdf', 'test-empty.pdf', null, null, null, true));
 
         $media = $mediaUtility->createMedia();
+
         /** @var Media $addedMedia */
         $addedMedia = $this->em->find('ChapleanCmsBundle:Media', $media->getId());
         

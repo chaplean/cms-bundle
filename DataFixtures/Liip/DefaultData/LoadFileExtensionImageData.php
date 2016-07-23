@@ -23,18 +23,12 @@ class LoadFileExtensionImageData extends AbstractFixture
      */
     public function load(ObjectManager $manager)
     {
-        $datas = array(
-            '1'  => array('png', 'image/png'),
-        );
+        $image = new FileExtensionImage();
+        $image->setExtension('png');
+        $image->setMimeType('image/png');
 
-        foreach ($datas as $data) {
-            $image = new FileExtensionImage();
-            $image->setExtension($data[0]);
-            $image->setMimeType($data[1]);
-
-            $manager->persist($image);
-            $this->setReference('file-extension-image-' . $data[0], $image);
-        }
+        $manager->persist($image);
+        $this->setReference('file-extension-image-png', $image);
 
         $manager->flush();
     }

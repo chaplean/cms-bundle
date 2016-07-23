@@ -54,14 +54,19 @@ class PostRepositoryTest extends LogicalTestCase
      */
     public function testGetAllOrderByDescId()
     {
+        /** @var Post $firstPost */
+        $firstPost = $this->getReference('post-1');
+        /** @var Post $lastPost */
+        $lastPost = $this->getReference('post-15');
+
         /** @var Post[] $posts */
         $posts = $this->postRepository->getAll();
 
-        $this->assertEquals(12, $posts[0]->getId());
+        $this->assertEquals($firstPost->getId(), $posts[0]->getId());
 
         $posts = $this->postRepository->getAll(null, 'id', 'desc');
 
-        $this->assertEquals(15, $posts[0]->getId());
+        $this->assertEquals($lastPost->getId(), $posts[0]->getId());
     }
 
     /**
@@ -96,9 +101,12 @@ class PostRepositoryTest extends LogicalTestCase
      */
     public function testGetAllOrderByDescDatePublicationEnd()
     {
+        /** @var Post $post */
+        $post = $this->getReference('post-13');
+
         $posts = new ArrayCollection($this->postRepository->getAll(null, 'datePublicationEnd', 'desc'));
 
-        $this->assertEquals(4, $posts->first()->getId());
+        $this->assertEquals($post->getId(), $posts->first()->getId());
     }
 
     /**
@@ -193,8 +201,7 @@ class PostRepositoryTest extends LogicalTestCase
 
         $this->postRepository->castPostTo($post, 'video');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
-        $this->assertCount(5, $posts);
+        // No exception
     }
 
     /**
@@ -210,11 +217,12 @@ class PostRepositoryTest extends LogicalTestCase
 
         $this->postRepository->castPostTo($post, 'news');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
-        $this->assertCount(3, $posts);
+        // No exception
     }
 
     /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage You cannot cast a Post to his own type
      * @return void
      */
     public function testCastPostVideoToPostVideo()
@@ -226,9 +234,6 @@ class PostRepositoryTest extends LogicalTestCase
         $this->assertCount(4, $posts);
 
         $this->postRepository->castPostTo($post, 'video');
-
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
-        $this->assertCount(4, $posts);
     }
 
     /**

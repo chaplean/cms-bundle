@@ -4,6 +4,7 @@ namespace Chaplean\Bundle\CmsBundle\Repository;
 
 use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -131,24 +132,28 @@ class PostRepository extends CmsRepository
      * @param Post   $post
      * @param string $to
      *
+     * @throws \Exception
      * @return void
      */
     public function castPostTo(Post $post, $to)
     {
         $class = PostUtility::getClassByInstance($to);
-        if (get_class($post) == $class) {
-            return;
+        $postClass = ClassUtils::getClass($post);
+
+        if ($postClass == $class) {
+            throw new \Exception('You cannot cast a Post to his own type');
         }
 
         $id = $post->getId();
         $this->update($to, $id);
-        if (is_subclass_of($class, get_class($post))) {
+
+        if (is_subclass_of($class, $postClass)) {
             $this->insert($class, $id);
         } elseif (get_parent_class($post) && get_parent_class($class) && get_parent_class($post) == get_parent_class($class)) {
-            $this->remove($post, $id);
+            $this->remove($class, $id);
             $this->insert($class, $id);
         } elseif (get_parent_class($post) == $class) {
-            $this->remove($post, $id);
+            $this->remove($class, $id);
         }
 
         $this->_em->flush();
@@ -177,7 +182,7 @@ class PostRepository extends CmsRepository
     public function remove($class, $id)
     {
         /** @var ClassMetadata $metadata */
-        $metadata = $this->_em->getClassMetadata(get_class($class));
+        $metadata = $this->_em->getClassMetadata($class);
         $query = 'DELETE FROM ' . $metadata->table['name'] . ' WHERE id = ' . (int) $id;
         $this->_em->getConnection()->exec($query);
     }
