@@ -20,7 +20,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return new RedirectResponse($this->generateUrl('cms_back_home'));
+        $landing_route = $this->getParameter('chaplean_cms.template.back_landing_route');
+        return new RedirectResponse($this->generateUrl($landing_route));
     }
 
     /**
