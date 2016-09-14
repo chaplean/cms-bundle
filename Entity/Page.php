@@ -142,4 +142,36 @@ class Page
 
         return $this;
     }
+
+    /**
+     * Return first image source found in content.
+     *
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("imageSource")
+     * @JMS\Type("string")
+     * @JMS\Groups({"page_image_source"})
+     *
+     * @return string
+     */
+    public function getImageSource()
+    {
+        preg_match('/src="([^"]*)"/', $this->getContent(), $matches);
+
+        return empty($matches) ? '' : $matches[1];
+    }
+
+    /**
+     * Return strip content.
+     *
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("stripContent")
+     * @JMS\Type("string")
+     * @JMS\Groups({"page_strip_content"})
+     *
+     * @return string
+     */
+    public function getStripContent()
+    {
+        return trim(strip_tags(str_replace('<br/>', ' ', $this->getContent())));
+    }
 }
