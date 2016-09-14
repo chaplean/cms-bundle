@@ -77,7 +77,8 @@ class PostController extends ChapleanRestController
     {
         return $this->getAll($request, 'ChapleanCmsBundle:Post', array(
             'post_all', 'publication_all', 'page_all',
-            'publication_status_id', 'publication_status_keyname'
+            'publication_status_id', 'publication_status_keyname',
+            'page_image_source', 'page_strip_content'
         ));
     }
 
@@ -91,7 +92,8 @@ class PostController extends ChapleanRestController
     {
         return $this->getAllActive($request, 'ChapleanCmsBundle:Post', array(
             'post_all', 'publication_all', 'page_all',
-            'publication_status_id', 'publication_status_keyname'
+            'publication_status_id', 'publication_status_keyname',
+            'page_image_source', 'page_strip_content'
         ));
     }
 

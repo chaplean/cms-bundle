@@ -14,7 +14,6 @@ cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $
             datePublicationEnd: null
         }
     };
-    $scope.onSave = false;
     $scope.datepicker = clCmsDatepicker;
     $scope.title = '';
     //$scope.postFactory = new clCmsObjectFactory('post', Post, 'postId');
@@ -44,14 +43,13 @@ cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $
     };
 
     $scope.savePost = function (postForm, formName, quit, duplicate, duplication) {
-        if (postForm.$valid && ((!$scope.onSave && !duplication) || ($scope.onSave && duplication))) {
+        if (postForm.$valid && (!duplication || duplication)) {
             var post = $scope.buildData($scope.post);
 
             //$scope.postFactory.submit($scope.buildData, $scope.post, quit, duplicate, duplication)
             //    .then(function (post) {
             //        $scope.post = post;
             //});
-            $scope.onSave = true;
             if ($scope.postId && !duplication) {
                 Post.update({postId: $scope.postId}, post,
                     function (post) {
