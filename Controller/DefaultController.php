@@ -29,6 +29,8 @@ class DefaultController extends Controller
      */
     public function homeAction()
     {
-        return $this->render('ChapleanCmsBundle:Back:index.html.twig');
+        $view = $this->getParameter('chaplean_cms.template.back_index_view');
+
+        return $this->render($view);
     }
 }

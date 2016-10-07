@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('template')
                     ->children()
                         ->scalarNode('back_layout')->defaultValue('ChapleanCmsBundle::layout-backoffice.html.twig')->end()
+                        ->scalarNode('back_index_view')->defaultValue('ChapleanCmsBundle:Back:index.html.twig')->end()
                         ->scalarNode('front_layout')->isRequired()->end()
                         ->scalarNode('front_route')->defaultValue('app_front')->end()
                         ->scalarNode('back_landing_route')->defaultValue('cms_back_home')->end()
