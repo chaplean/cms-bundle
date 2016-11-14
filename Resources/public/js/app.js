@@ -42,7 +42,7 @@ cms.controller('clCmsMainController', function($scope, $rootScope, $window, Post
     $ngBootbox.addLocale('fr', {
         OK:      TranslationService.trans('button.validate.global'),
         CANCEL:  TranslationService.trans('button.cancel.global'),
-        CONFIRM: TranslationService.trans('button.confirm.global')
+        CONFIRM: TranslationService.trans('button.validate.global')
     });
     $ngBootbox.setLocale(locale);
 
