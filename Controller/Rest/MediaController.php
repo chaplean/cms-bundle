@@ -8,10 +8,10 @@ use Chaplean\Bundle\CmsBundle\Entity\MediaPdf;
 use Chaplean\Bundle\CmsBundle\Form\Type\MediaImageType;
 use Chaplean\Bundle\CmsBundle\Form\Type\MediaPdfType;
 use Chaplean\Bundle\CmsBundle\Utility\MediaUtility;
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
-use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,9 +37,8 @@ class MediaController extends FOSRestController
                        ->getRepository('ChapleanCmsBundle:Media')
                        ->findAll();
         $response = $this->view($medias);
-        $response->setSerializationContext(
-            SerializationContext::create()
-                                ->setGroups(array('media_all'))
+        $response->setContext(
+            Context::create()->setGroups(array('media_all'))
         );
         if ($medias) {
             return $this->handleView($response);
@@ -74,9 +73,8 @@ class MediaController extends FOSRestController
             }
 
             $response = $this->view($media);
-            $response->setSerializationContext(
-                SerializationContext::create()
-                                    ->setGroups(array('media_all'))
+            $response->setContext(
+                Context::create()->setGroups(array('media_all'))
             );
 
             return $this->handleView($response);
@@ -162,9 +160,8 @@ class MediaController extends FOSRestController
             }
 
             $response = $this->view($media);
-            $response->setSerializationContext(
-                SerializationContext::create()
-                                    ->setGroups(array('media_all'))
+            $response->setContext(
+                Context::create()->setGroups(array('media_all'))
             );
 
             return $this->handleView($response);

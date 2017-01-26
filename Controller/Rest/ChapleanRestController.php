@@ -3,8 +3,8 @@
 namespace Chaplean\Bundle\CmsBundle\Controller\Rest;
 
 use Doctrine\ORM\EntityManager;
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\FOSRestController;
-use JMS\Serializer\SerializationContext;
 use Symfony\Component\Debug\Exception\UndefinedMethodException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -102,7 +102,7 @@ abstract class ChapleanRestController extends FOSRestController
         $view = $this->view($data);
 
         if (!empty($group)) {
-            $view->setSerializationContext(SerializationContext::create()->setGroups($group));
+            $view->setContext(Context::create()->setGroups($group));
         }
 
         return $this->handleView($view);
