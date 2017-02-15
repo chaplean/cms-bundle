@@ -37,9 +37,9 @@ class MediaController extends FOSRestController
                        ->getRepository('ChapleanCmsBundle:Media')
                        ->findAll();
         $response = $this->view($medias);
-        $response->setContext(
-            Context::create()->setGroups(array('media_all'))
-        );
+        $context = new Context();
+        $context->setGroups(array('media_all'));
+        $response->setContext($context);
         if ($medias) {
             return $this->handleView($response);
         } else {
@@ -73,9 +73,9 @@ class MediaController extends FOSRestController
             }
 
             $response = $this->view($media);
-            $response->setContext(
-                Context::create()->setGroups(array('media_all'))
-            );
+            $context = new Context();
+            $context->setGroups(array('media_all'));
+            $response->setContext($context);
 
             return $this->handleView($response);
         } else {
@@ -160,9 +160,9 @@ class MediaController extends FOSRestController
             }
 
             $response = $this->view($media);
-            $response->setContext(
-                Context::create()->setGroups(array('media_all'))
-            );
+            $context = new Context();
+            $context->setGroups(array('media_all'));
+            $response->setContext($context);
 
             return $this->handleView($response);
         } else {
