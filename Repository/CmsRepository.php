@@ -34,6 +34,17 @@ abstract class CmsRepository extends EntityRepository
     }
 
     /**
+     * @return array
+     */
+    public function getAllActive()
+    {
+        $qb = $this->buildQueryGetAll();
+        $qb->where($qb->expr()->eq('ps.keyname', $qb->expr()->literal('published')));
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @param QueryBuilder $qb
      * @param integer      $limit
      * @param string       $sort

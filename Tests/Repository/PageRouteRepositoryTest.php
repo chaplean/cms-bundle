@@ -3,6 +3,7 @@
 namespace Tests\Chaplean\Bundle\CmsBundle\Repository;
 
 use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
+use Chaplean\Bundle\CmsBundle\Repository\PageRouteRepository;
 use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -23,6 +24,17 @@ class PageRouteRepositoryTest extends LogicalTestCase
         $pageRouteRepository = $this->em->getRepository('ChapleanCmsBundle:PageRoute');
 
         $this->assertCount(12, $pageRouteRepository->getAll());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAllActive()
+    {
+        /** @var PageRouteRepository $pageRouteRepository */
+        $pageRouteRepository = $this->em->getRepository('ChapleanCmsBundle:PageRoute');
+
+        $this->assertCount(6, $pageRouteRepository->getAllActive());
     }
 
     /**

@@ -26,10 +26,10 @@ cms.controller('clCmsPageController', function($scope, $uibModal, $http, $log, $
                     function(page) {
                         $scope.pageRoute = page;
                         if ($scope.pageRoute.publication.datePublicationBegin) {
-                            $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                            $scope.pageRoute.publication.datePublicationBegin = moment($scope.pageRoute.publication.datePublicationBegin, 'YYYY-MM-DD').toDate();
                         }
                         if ($scope.pageRoute.publication.datePublicationEnd) {
-                            $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                            $scope.pageRoute.publication.datePublicationEnd = moment($scope.pageRoute.publication.datePublicationEnd, 'YYYY-MM-DD').toDate();
                         }
                         $scope.pagePath = $scope.pageRoute.path;
                     });
