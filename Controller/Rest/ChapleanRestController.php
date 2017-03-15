@@ -102,7 +102,9 @@ abstract class ChapleanRestController extends FOSRestController
         $view = $this->view($data);
 
         if (!empty($group)) {
-            $view->setContext(Context::create()->setGroups($group));
+            $context = new Context();
+            $context->setGroups($group);
+            $view->setContext($context);
         }
 
         return $this->handleView($view);
