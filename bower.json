@@ -25,6 +25,7 @@
         "angular-smart-table": "~2.1.2",
         "angular-symfony-translation": "~1.0.0",
         "angular-ui-mask": "~1.4.1",
+        "angular-ui-notification": "^0.3.5",
         "angular-utils-pagination": "~0.8.3",
         "bootbox.js": "~4.4.0",
         "bootstrap-sass-official": "~3.3.1",
