@@ -35,7 +35,7 @@ cms.config(function ($provide) {
     });
 });
 
-cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, $ngBootbox, filterFilter, Media, CmsAlertService, TranslationService, FileUploader, FileItem) {
+cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, $ngBootbox, filterFilter, Media, Notification, TranslationService, FileUploader, FileItem) {
 
     $scope.updateFilter = function () {
         $scope.mediasFiltered = filterFilter($scope.medias, $scope.mediaFilter);
@@ -74,9 +74,9 @@ cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, $ngBo
         },
         onErrorItem:   function (xhr, msg, status) {
             if (status == 400) {
-                CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.invalid_extension'), 5);
+                Notification.error(TranslationService.trans('media_manager.alert.invalid_extension'));
             } else {
-                CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'), 5);
+                Notification.error(TranslationService.trans('media_manager.alert.upload'));
             }
         }
     });
@@ -89,7 +89,7 @@ cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, $ngBo
             angular.extend($scope.selectedMedia, updatedMedia);
         },
         onErrorItem:        function () {
-            CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.upload'), 5);
+            Notification.error(TranslationService.trans('media_manager.alert.upload'));
         },
         onBeforeUploadItem: function (item) {
             item.url = Routing.generate('cms_rest') + 'media' + $scope.selectedMedia.id + '/edits';
@@ -157,7 +157,7 @@ cms.controller('MediaManager', function ($scope, $http, $uibModalInstance, $ngBo
                     $scope.selectedMedia = null;
                     $scope.updateFilter();
                 }, function () {
-                    CmsAlertService.addAlert('danger', TranslationService.trans('media_manager.alert.delete'), 5);
+                    Notification.error(TranslationService.trans('media_manager.alert.delete'));
                 });
             }, function() {
                 return false;

@@ -13,6 +13,7 @@
     {% block stylesheets %}
         {% stylesheets
         '@ChapleanCmsBundle/Resources/public/libs/angular/angular-csp.css'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-ui-notification/dist/angular-ui-notification.min.css'
         '@ChapleanCmsBundle/Resources/public/libs/components-font-awesome/css/font-awesome.min.css'
         '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular.css' %}
         <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
@@ -48,6 +49,7 @@
         '@ChapleanCmsBundle/Resources/public/libs/angular-utils-pagination/dirPagination.js'
         '@ChapleanCmsBundle/Resources/public/libs/angular-smart-table/dist/smart-table.min.js'
         '@ChapleanCmsBundle/Resources/public/libs/angular-ui-mask/dist/mask.min.js'
+        '@ChapleanCmsBundle/Resources/public/libs/angular-ui-notification/dist/angular-ui-notification.min.js'
         '@ChapleanCmsBundle/Resources/public/libs/angular-file-upload/dist/angular-file-upload.min.js'
         '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular-rangy.min.js'
         '@ChapleanCmsBundle/Resources/public/libs/textAngular/dist/textAngular-sanitize.min.js'
@@ -78,7 +80,6 @@
     {% if media_is_activate %}
         {% include 'ChapleanCmsBundle:Angular:media-manager-modal.html.twig' %}
     {% endif %}
-    <uib-alert ng-cloak ng-repeat="alert in alerts" type="{^ alert.type ^}" class="alert-fix-top" close="closeAlert($index)" ng-style="alert.style">{^ alert.message ^}</uib-alert>
 
         <div class="container-fluid" {% block controller %}{% endblock %}>
             <div class="row">
