@@ -61,7 +61,7 @@ cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $
                             $scope.post.publication.status = $scope.publicationStatuses[1];
                             $scope.savePost(postForm, formName, quit, false, true);
                         } else {
-                            Notification.success({message: TranslationService.trans('alert.post.updated'), delay: 1500});
+                            Notification.success({message: TranslationService.trans('alert.post.updated'), delay: 5000});
 
                             if (quit) {
                                 window.location = Routing.generate('cms_post_list');
@@ -70,9 +70,9 @@ cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $
                     }, function (response) {
                         if(response.status == 400) {
                             clCmsValidator.addError(postForm, response.data);
-                            Notification.warning({message: TranslationService.trans('error.important'), delay: 1500});
+                            Notification.warning({message: TranslationService.trans('error.important'), delay: 5000});
                         } else {
-                            Notification.error({message: TranslationService.trans('error.important'), delay: 1500});
+                            Notification.error({message: TranslationService.trans('error.important'), delay: 5000});
                         }
                     });
             } else {
@@ -86,9 +86,9 @@ cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $
                             $scope.savePost(postForm, formName, quit, false, true);
                         } else {
                             if (duplication) {
-                                Notification.success({message: TranslationService.trans('alert.post.duplicated'), delay: 1500});
+                                Notification.success({message: TranslationService.trans('alert.post.duplicated'), delay: 5000});
                             } else {
-                                Notification.success({message: TranslationService.trans('alert.post.created'), delay: 1500});
+                                Notification.success({message: TranslationService.trans('alert.post.created'), delay: 5000});
                             }
 
                             setTimeout(function () {
@@ -102,7 +102,7 @@ cms.controller('clCmsPostController', function($scope, $uibModal, $http, $log, $
                     }, function (errors) {
                         $log.error(errors);
                         $scope.errors = errors;
-                        Notification.error({message: TranslationService.trans('error.important'), delay: 1500});
+                        Notification.error({message: TranslationService.trans('error.important'), delay: 5000});
                     });
             }
         } else {
