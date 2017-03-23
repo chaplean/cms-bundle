@@ -12263,11 +12263,15 @@ cms.factory('CmsAlertService', function(Notification) {
          *
          * @param type Type of alert (danger, warning, success, info)
          * @param message Message to display
-         * @param duration How long the alert is displayed
+         * @param duration How long the alert is displayed, in seconds
          * @param link A link to add to the message
          */
         addAlert: function (type, message, duration, link) {
-            Notification({message: message, delay: duration}, type);
+			if (typeof duration === 'undefined' || duration === null) {
+				duration = 5;
+			}
+
+            Notification({message: message, delay: duration * 1000}, type);
         }
     };
 
