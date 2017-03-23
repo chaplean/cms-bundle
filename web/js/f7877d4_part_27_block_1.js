@@ -45,7 +45,7 @@ cms.controller('clCmsBlockController', function($scope, $uibModal, $http, $log, 
                 Block.update({blockId: $scope.blockId}, block,
                     function (block) {
                         $scope.block.dateUpdate = $filter('date')(block.dateUpdate, 'dd/MM/yyyy');
-                        Notification.success({message: TranslationService.trans('alert.block.updated'), delay: 1500});
+                        Notification.success({message: TranslationService.trans('alert.block.updated'), delay: 5000});
 
                         if (quit) {
                             window.location = Routing.generate('cms_block_list');
@@ -53,16 +53,16 @@ cms.controller('clCmsBlockController', function($scope, $uibModal, $http, $log, 
                     }, function (response) {
                         if(response.status == 400) {
                             clCmsValidator.addError(blockForm, response.data);
-                            //Notification.warning({message: TranslationService.trans('error.important'), delay: 1500});
+                            //Notification.warning({message: TranslationService.trans('error.important'), delay: 5000});
                         } else {
-                            Notification.error({message: TranslationService.trans('error.important'), delay: 1500});
+                            Notification.error({message: TranslationService.trans('error.important'), delay: 5000});
                         }
                     });
             } else {
                 Block.save(block, function (block) {
                     $scope.blockId = block.id;
                     $scope.block.dateAdd = $filter('date')(block.dateAdd, 'dd/MM/yyyy');
-                    Notification.success({message: TranslationService.trans('alert.block.created'), delay: 1500});
+                    Notification.success({message: TranslationService.trans('alert.block.created'), delay: 5000});
 
                     if (quit) {
                         window.location = Routing.generate('cms_block_list');
@@ -71,9 +71,9 @@ cms.controller('clCmsBlockController', function($scope, $uibModal, $http, $log, 
                     //$log.error(error);
                     if (error.status == 400) {
                         clCmsValidator.addError(blockForm, error.data);
-                        //Notification.warning({message: TranslationService.trans('error.important'), delay: 1500});
+                        //Notification.warning({message: TranslationService.trans('error.important'), delay: 5000});
                     } else {
-                        Notification.error({message: TranslationService.trans('error.important'), delay: 1500});
+                        Notification.error({message: TranslationService.trans('error.important'), delay: 5000});
                     }
                 });
             }

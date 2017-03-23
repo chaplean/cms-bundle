@@ -88,9 +88,9 @@ cms.controller('clCmsPostsController', function($scope, $log, $uibModal, $filter
                     console.log(indexSplice, post.id);
                     $scope.posts.splice(indexSplice, 1);
                     $scope.updateFilter();
-                    Notification.success({message: TranslationService.trans('alert.post.deleted'), delay: 1500});
+                    Notification.success({message: TranslationService.trans('alert.post.deleted'), delay: 5000});
                 }, function () {
-                    Notification.error({message: TranslationService.trans('error.important'), delay: 1500});
+                    Notification.error({message: TranslationService.trans('error.important'), delay: 5000});
                 }
             );
         }, function() {

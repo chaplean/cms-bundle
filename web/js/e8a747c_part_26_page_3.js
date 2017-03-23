@@ -51,16 +51,16 @@ cms.controller('clCmsPageController', function($scope, $uibModal, $http, $log, $
                 function (pageRoute) {
                     $scope.pagePath = pageRoute.path;
                     $scope.pageRoute.dateUpdate = $filter('date')(pageRoute.dateUpdate, 'dd/MM/yyyy');
-                    Notification.success({message: TranslationService.trans('alert.page.updated'), delay: 1500});
+                    Notification.success({message: TranslationService.trans('alert.page.updated'), delay: 5000});
 
                     if (quit) {
                         window.location = Routing.generate('cms_page_list');
                     }
                 }, function (response) {
                     if(response.data.error) {
-                        Notification.warning({message: response.data.error, delay: 1500});
+                        Notification.warning({message: response.data.error, delay: 5000});
                     } else {
-                        Notification.error({message: TranslationService.trans('error.important'), delay: 1500});
+                        Notification.error({message: TranslationService.trans('error.important'), delay: 5000});
                     }
                 });
             } else {
@@ -71,14 +71,14 @@ cms.controller('clCmsPageController', function($scope, $uibModal, $http, $log, $
                         $scope.pageId = pageRoute.id;
                         $scope.pagePath = pageRoute.path;
                         $scope.pageRoute.dateAdd = $filter('date')(pageRoute.dateAdd, 'dd/MM/yyyy');
-                        Notification.success({message: TranslationService.trans('alert.page.created'), delay: 1500});
+                        Notification.success({message: TranslationService.trans('alert.page.created'), delay: 5000});
 
                         if (quit) {
                             window.location = Routing.generate('cms_page_list');
                         }
                     }, function (errors) {
                         $log.error(errors);
-                        Notification.error({message: TranslationService.trans('error.important'), delay: 1500});
+                        Notification.error({message: TranslationService.trans('error.important'), delay: 5000});
                     });
             }
         } else {
