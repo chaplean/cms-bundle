@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="cl_media", uniqueConstraints={@ORM\UniqueConstraint(name="media_path_UNIQUE", columns={"path"})})
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"image"="Chaplean\Bundle\CmsBundle\Entity\MediaImage","pdf"="Chaplean\Bundle\CmsBundle\Entity\MediaPdf"})
+ * @ORM\DiscriminatorMap({"image":"Chaplean\Bundle\CmsBundle\Entity\MediaImage","pdf":"Chaplean\Bundle\CmsBundle\Entity\MediaPdf"})
  */
 abstract class Media
 {
@@ -24,6 +24,11 @@ abstract class Media
      * @JMS\Groups({"media_id", "media_all"})
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, name="is_public", options={"default":0})
+     */
+    private $isPublic;
 
     /**
      * @var string

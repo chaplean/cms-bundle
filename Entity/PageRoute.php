@@ -83,7 +83,7 @@ class PageRoute
     /**
      * @var Page
      *
-     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", columnPrefix=false)
+     * @ORM\Embedded(class="Chaplean\Bundle\CmsBundle\Entity\Page", useColumnPrefix=false)
      *
      * @JMS\Groups({"page_route_page", "page_route_all"})
      */
