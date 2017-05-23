@@ -29,9 +29,10 @@ abstract class Media
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false, name="is_public", options={"default":1})
+     *
      * @JMS\Groups({"media_is_public", "media_all"})
      */
-    private $isPublic;
+    protected $isPublic;
 
     /**
      * @var string
@@ -77,6 +78,14 @@ abstract class Media
      * @JMS\Groups({"media_date_updated", "media_all"})
      */
     protected $dateUpdated;
+
+    /**
+     * Media constructor.
+     */
+    public function __construct()
+    {
+        $this->isPublic = true;
+    }
 
     /**
      * Get id.

@@ -89,6 +89,7 @@ class MediaUtilityTest extends LogicalTestCase
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-empty.pdf', 'test-empty.pdf', null, null, null, true));
 
         $media = $mediaUtility->createMedia();
+        $this->em->flush();
 
         /** @var Media $addedMedia */
         $addedMedia = $this->em->find('ChapleanCmsBundle:Media', $media->getId());
@@ -107,6 +108,7 @@ class MediaUtilityTest extends LogicalTestCase
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-image.png', 'test-image.png', null, null, null, true));
 
         $media = $mediaUtility->createMedia();
+        $this->em->flush();
         /** @var Media $addedMedia */
         $addedMedia = $this->em->find('ChapleanCmsBundle:Media', $media->getId());
 
@@ -124,12 +126,14 @@ class MediaUtilityTest extends LogicalTestCase
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-empty.pdf', 'test-empty.pdf', null, null, null, true));
 
         $media = $mediaUtility->createMedia();
+        $this->em->flush();
         /** @var Media $addedMedia */
         $addedMedia = $this->em->find('ChapleanCmsBundle:Media', $media->getId());
         $addedMediaId = $addedMedia->getId();
 
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-empty2.pdf', 'test-empty2.pdf', null, null, null, true));
         $updatedMedia = $mediaUtility->updateMedia();
+        $this->em->flush();
         
         $this->assertNotNull($updatedMedia);
         $this->assertFileExists('web/' . $updatedMedia->getPath());
@@ -146,12 +150,14 @@ class MediaUtilityTest extends LogicalTestCase
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-image.png', 'test-image.png', null, null, null, true));
 
         $media = $mediaUtility->createMedia();
+        $this->em->flush();
         /** @var Media $addedMedia */
         $addedMedia = $this->em->find('ChapleanCmsBundle:Media', $media->getId());
         $addedMediaId = $addedMedia->getId();
 
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-image2.png', 'test-image2.png', null, null, null, true));
         $updatedMedia = $mediaUtility->updateMedia();
+        $this->em->flush();
 
         $this->assertNotNull($updatedMedia);
         $this->assertFileExists('web/' . $updatedMedia->getPath());
@@ -168,12 +174,14 @@ class MediaUtilityTest extends LogicalTestCase
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-empty.pdf', 'test-empty.pdf', null, null, null, true));
 
         $media = $mediaUtility->createMedia();
+        $this->em->flush();
         /** @var Media $addedMedia */
         $addedMedia = $this->em->find('ChapleanCmsBundle:Media', $media->getId());
         $addedMediaId = $addedMedia->getId();
 
         $mediaUtility->setMedia($addedMedia);
         $mediaUtility->deleteMedia();
+        $this->em->flush();
 
         $this->assertFileNotExists('web/' . $addedMedia->getPath());
         $this->assertNull($this->em->find('ChapleanCmsBundle:Media', $addedMediaId));
@@ -189,12 +197,15 @@ class MediaUtilityTest extends LogicalTestCase
         $mediaUtility->setFile(new UploadedFile('Tests/Resources/test-image.png', 'test-image.png', null, null, null, true));
 
         $media = $mediaUtility->createMedia();
+        $this->em->flush();
+
         /** @var Media $addedMedia */
         $addedMedia = $this->em->find('ChapleanCmsBundle:Media', $media->getId());
         $addedMediaId = $addedMedia->getId();
 
         $mediaUtility->setMedia($addedMedia);
         $mediaUtility->deleteMedia();
+        $this->em->flush();
 
         $this->assertFileNotExists('web/' . $addedMedia->getPath());
         $this->assertNull($this->em->find('ChapleanCmsBundle:Media', $addedMediaId));
