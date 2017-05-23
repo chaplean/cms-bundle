@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="cl_media", uniqueConstraints={@ORM\UniqueConstraint(name="media_path_UNIQUE", columns={"path"})})
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"image"="Chaplean\Bundle\CmsBundle\Entity\MediaImage","pdf"="Chaplean\Bundle\CmsBundle\Entity\MediaPdf"})
+ * @ORM\DiscriminatorMap({"image":"Chaplean\Bundle\CmsBundle\Entity\MediaImage","pdf":"Chaplean\Bundle\CmsBundle\Entity\MediaPdf"})
  */
 abstract class Media
 {
@@ -24,6 +24,14 @@ abstract class Media
      * @JMS\Groups({"media_id", "media_all"})
      */
     protected $id;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false, name="is_public", options={"default":1})
+     * @JMS\Groups({"media_is_public", "media_all"})
+     */
+    private $isPublic;
 
     /**
      * @var string
@@ -196,6 +204,26 @@ abstract class Media
     public function setDateUpdated(\DateTime $dateUpdated)
     {
         $this->dateUpdated = $dateUpdated;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * @param boolean $isPublic
+     *
+     * @return self
+     */
+    public function setIsPublic($isPublic)
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }

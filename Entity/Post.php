@@ -12,10 +12,10 @@ use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="category", type="string")
  * @ORM\DiscriminatorMap({
- *     "news"="Chaplean\Bundle\CmsBundle\Entity\Post",
- *     "video"="Chaplean\Bundle\CmsBundle\Entity\PostVideo",
- *     "testimonial"="Chaplean\Bundle\CmsBundle\Entity\PostTestimonial",
- *     "zoom"="Chaplean\Bundle\CmsBundle\Entity\PostZoom"
+ *     "news":"Chaplean\Bundle\CmsBundle\Entity\Post",
+ *     "video":"Chaplean\Bundle\CmsBundle\Entity\PostVideo",
+ *     "testimonial":"Chaplean\Bundle\CmsBundle\Entity\PostTestimonial",
+ *     "zoom":"Chaplean\Bundle\CmsBundle\Entity\PostZoom"
  * })
  */
 class Post
