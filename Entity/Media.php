@@ -26,7 +26,10 @@ abstract class Media
     protected $id;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, name="is_public", options={"default":0})
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false, name="is_public", options={"default":1})
+     * @JMS\Groups({"media_is_public", "media_all"})
      */
     private $isPublic;
 
@@ -201,6 +204,26 @@ abstract class Media
     public function setDateUpdated(\DateTime $dateUpdated)
     {
         $this->dateUpdated = $dateUpdated;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * @param boolean $isPublic
+     *
+     * @return self
+     */
+    public function setIsPublic($isPublic)
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }
