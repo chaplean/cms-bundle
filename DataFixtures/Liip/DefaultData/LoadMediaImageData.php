@@ -44,6 +44,7 @@ class LoadMediaImageData extends AbstractFixture implements DependentFixtureInte
 
         foreach ($datas as $key => $data) {
             $image = new MediaImage();
+            $image->setIsPublic(true);
             $image->setPath($data[0]);
             $image->setFileName($data[1]);
             $image->setFileWeight($data[2]);

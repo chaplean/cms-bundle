@@ -43,6 +43,7 @@ class LoadMediaPdfData extends AbstractFixture implements DependentFixtureInterf
 
         foreach ($datas as $key => $data) {
             $pdf = new MediaPdf();
+            $pdf->setIsPublic(true);
             $pdf->setPath($data[0]);
             $pdf->setFileName($data[1]);
             $pdf->setFileWeight($data[2]);

@@ -37,3 +37,22 @@ Chaplean\Bundle\CmsBundle\Entity\Block:
         name:
             - NotBlank:
                 message: general.not_blank
+
+Chaplean\Bundle\CmsBundle\Entity\Media:
+    properties:
+        path:
+            - NotBlank:
+                message: general.not_blank
+                groups: ['default']
+        fileName:
+            - NotBlank:
+                message: general.not_blank
+                groups: ['default']
+        fileWeight:
+            - NotBlank:
+                message: general.not_blank
+                groups: ['default']
+        isPublic:
+            - NotBlank:
+                message: general.not_blank
+                groups: ['default']

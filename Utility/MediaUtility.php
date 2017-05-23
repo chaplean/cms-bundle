@@ -104,9 +104,11 @@ class MediaUtility
     /**
      * Insert a media in DB corresponding to the uploaded file and move the file to its correct place
      *
+     * @param string $mediaDirectory
+     *
      * @return Media|null
      */
-    public function createMedia()
+    public function createMedia($mediaDirectory = 'default')
     {
         $fileExtension = $this->getUploadedFileExtension();
 
@@ -127,7 +129,7 @@ class MediaUtility
             return null;
         }
 
-        $fileDir = '/medias/';
+        $fileDir = '/medias/' . $mediaDirectory . '/';
         $fileName = md5(uniqid());
 
         $this->existingMedia->setPath($fileDir . $fileName);
@@ -138,7 +140,6 @@ class MediaUtility
         $this->existingMedia->setExtension($fileExtension);
 
         $this->em->persist($this->existingMedia);
-        $this->em->flush();
 
         return $this->moveFile($fileDir, $fileName, true);
     }
@@ -151,7 +152,7 @@ class MediaUtility
     public function updateMedia()
     {
         $fileExtension = $this->getUploadedFileExtension();
-        
+
         $var = get_class($fileExtension);
 
         if ($this->existingMedia->getExtension() instanceof $var) {
@@ -164,7 +165,6 @@ class MediaUtility
             $this->existingMedia->setExtension($fileExtension);
 
             $this->em->persist($this->existingMedia);
-            $this->em->flush();
 
             $pathSplited = explode('/', $this->existingMedia->getPath());
             $fileName = array_pop($pathSplited);
@@ -190,7 +190,6 @@ class MediaUtility
         }
 
         $this->em->remove($this->existingMedia);
-        $this->em->flush();
 
         return $result;
     }
@@ -230,7 +229,6 @@ class MediaUtility
             $this->logger->error(sprintf('[ERROR] %s : %s', __FUNCTION__, $e->getMessage()));
             if ($deleteOnFail) {
                 $this->em->remove($this->existingMedia);
-                $this->em->flush();
             }
 
             return null;

@@ -67,6 +67,7 @@ class MediaController extends FOSRestController
             $mediaUtility = $this->get('chaplean_cms.media_utility');
             $mediaUtility->setFile($uploadedMedia);
             $media = $mediaUtility->createMedia();
+            $this->getDoctrine()->getManager()->flush();
 
             if (!$media) {
                 return $this->handleView(new View('Failed to upload media', 400));
@@ -100,13 +101,16 @@ class MediaController extends FOSRestController
      */
     public function deleteAction(Media $media)
     {
+        $em = $this->getDoctrine()->getManager();
         if ($media) {
             $mediaUtility = $this->get('chaplean_cms.media_utility');
             $mediaUtility->setMedia($media);
 
             if ($mediaUtility->deleteMedia()) {
+                $em->flush();
                 return $this->handleView(new View());
             } else {
+                $em->flush();
                 return $this->handleView(new View('', 500));
             }
         } else {
@@ -138,6 +142,7 @@ class MediaController extends FOSRestController
                 $mediaUtility->setFile($uploadedMedia);
                 $mediaUtility->setMedia($media);
                 $media = $mediaUtility->updateMedia();
+                $this->getDoctrine()->getManager()->flush();
 
                 if (!$media) {
                     return $this->handleView(new View('Failed to upload media', 500));

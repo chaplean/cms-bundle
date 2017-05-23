@@ -17,28 +17,23 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class MediaController extends Controller
 {
     /**
-     * @param integer $id
+     * @param string $path
      *
      * @return Response
      */
-    public function downloadAction($id)
+    public function downloadAction($path)
     {
-        $media = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Media')->find($id);
-
-        if (empty($media)) {
-            throw new NotFoundHttpException;
-        }
-
         $fs = new Filesystem();
-        $path = $this->getParameter('kernel.root_dir') . '/../web' . $media->getPath();
+        $path = $this->getParameter('kernel.root_dir') . '/../web/' . $path;
 
         if (!$fs->exists($path)) {
             throw new NotFoundHttpException;
         }
 
+        $fileName = explode($path, '/');
         return new Response(file_get_contents($path), 200, array(
             'Content-Type' => 'application/force-download',
-            'Content-Disposition' => 'attachment; filename="' . $media->getFileName() . '"'
+            'Content-Disposition' => 'attachment; filename="' . array_pop($fileName) . '"'
         ));
     }
 }
