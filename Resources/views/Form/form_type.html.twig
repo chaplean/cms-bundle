@@ -1,5 +1,5 @@
 {% block textAngular_widget %}
     {% spaceless %}
-        <text-angular id="{{ id }}" name="{{ full_name }}" ng-model="{{ attr['ng-model'] }}" ng-class="{'text-angular-toolbar-top-fixed': textAngularToolbarTopFixed}"></text-angular>
+        <text-angular id="{{ id }}" name="{{ full_name }}" ng-model="{{ attr['ng-model'] }}" ng-class="{'text-angular-toolbar-top-fixed': textAngularToolbarTopFixed}" {% if required %}required="required"{% endif %}></text-angular>
     {% endspaceless %}
 {% endblock textAngular_widget %}
