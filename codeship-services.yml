@@ -1,5 +1,7 @@
 application:
     build: .
+    environment:
+        - COMPOSER_HOME=${HOME}/cache/composer
     volumes:
         - .:/var/www/symfony
     links:

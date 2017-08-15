@@ -1,6 +1,6 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Tests;
+namespace Tests\Chaplean\Bundle\CmsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -15,6 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class PageControllerTest extends WebTestCase
 {
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Controller\PageController::editAction()
+     *
      * @return void
      */
     public function testEditActionWithInvalidPageId()
@@ -23,9 +25,15 @@ class PageControllerTest extends WebTestCase
 
         $client->request('GET', '/administration/page/bad');
 
-        $this->assertTrue($client->getResponse()->isNotFound());
+        $this->assertTrue(
+            $client->getResponse()
+                ->isNotFound()
+        );
     }
+
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Controller\PageController::editAction()
+     *
      * @return void
      */
     public function testNewActionWorking()
@@ -34,6 +42,9 @@ class PageControllerTest extends WebTestCase
 
         $client->request('GET', '/administration/page');
 
-        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertTrue(
+            $client->getResponse()
+                ->isOk()
+        );
     }
 }
