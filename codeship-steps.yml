@@ -1,7 +1,6 @@
 # Commands to execute in CodeShip
 - type: serial
-  services:
-  - application
+  service: application
   steps:
   - command: cp ./app/config/parameters.yml.dist ./app/config/parameters.yml
   - command: cp ./phpunit.xml.dist ./phpunit-default.xml
