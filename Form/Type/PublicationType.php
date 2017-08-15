@@ -64,12 +64,6 @@ class PublicationType extends AbstractType
                 [
                     'class'        => 'ChapleanCmsBundle:PublicationStatus',
                     'choice_label' => 'id',
-                    'choice_value' => function ($choice) {
-
-                        dump($choice); //  expect an entity with id from ids
-
-                        return $choice;
-                    },
                     'required'     => true,
                 ]
             );

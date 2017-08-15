@@ -22,6 +22,9 @@ class BlockTypeTest extends TypeTestCase
      */
     public function testSubmitEmptyData()
     {
+        // We have to test the form validity in Controllers cause it is impossible here
+        @self::markTestSkipped('There is no way to properly test EntityType for now. See: https://github.com/symfony/symfony/issues/15098');
+
         $form = $this->factory->create(BlockType::class);
 
         $this->assertFalse($form->isValid());

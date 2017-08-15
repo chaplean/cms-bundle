@@ -38,7 +38,7 @@ class PageController extends Controller
         /** @var PageRoute $pageRoute */
         $pageRoute = ($pageId !== null) ? $pageRouteRepository->find($pageId) : null;
 
-        if ($pageId !== null && $pageRoute == null) {
+        if ($pageId !== null && $pageRoute === null) {
             throw new NotFoundHttpException();
         }
 

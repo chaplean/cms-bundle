@@ -16,24 +16,15 @@ use Symfony\Component\Form\Test\TypeTestCase;
 class PostTypeTest extends TypeTestCase
 {
     /**
-     * @covers \Chaplean\Bundle\CmsBundle\Form\Type\PostType::__construct()
-     *
-     * @return void
-     */
-    public function testContructWithoutArgument()
-    {
-        $postType = new PostType();
-
-        $this->assertInstanceOf(PostType::class, $postType);
-    }
-
-    /**
      * @covers \Chaplean\Bundle\CmsBundle\Form\Type\PostType::buildForm()
      *
      * @return void
      */
     public function testSubmitEmptyData()
     {
+        // We have to test the form validity in Controllers cause it is impossible here
+        @self::markTestSkipped('There is no way to properly test EntityType for now. See: https://github.com/symfony/symfony/issues/15098');
+
         $form = $this->factory->create(PostType::class);
 
         $this->assertFalse($form->isValid());

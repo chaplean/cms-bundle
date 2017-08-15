@@ -21,6 +21,7 @@ class AppKernel extends Kernel
     {
         $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
@@ -33,6 +34,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Chaplean\Bundle\UnitBundle\ChapleanUnitBundle(),
             new Liip\FunctionalTestBundle\LiipFunctionalTestBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         ];
 
         return $bundles;
