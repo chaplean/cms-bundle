@@ -8,9 +8,9 @@ use Chaplean\Bundle\CmsBundle\Entity\FileExtensionPdf;
 use Chaplean\Bundle\CmsBundle\Entity\Media;
 use Chaplean\Bundle\CmsBundle\Entity\MediaImage;
 use Chaplean\Bundle\CmsBundle\Entity\MediaPdf;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -32,7 +32,7 @@ class MediaUtility
     /** @var EntityManager $em */
     private $em;
 
-    /** @var Logger $logger */
+    /** @var LoggerInterface $logger */
     private $logger;
 
     /** @var string $publicDir */
@@ -44,12 +44,12 @@ class MediaUtility
     /**
      * MediaUtility constructor.
      *
-     * @param Registry $doctrine
-     * @param Logger   $logger
-     * @param string   $rootDir
-     * @param string   $mediaConfig
+     * @param RegistryInterface $doctrine
+     * @param LoggerInterface   $logger
+     * @param string            $rootDir
+     * @param string            $mediaConfig
      */
-    public function __construct(Registry $doctrine, Logger $logger, $rootDir, $mediaConfig)
+    public function __construct(RegistryInterface $doctrine, LoggerInterface $logger, $rootDir, $mediaConfig)
     {
         $this->em = $doctrine->getManager();
         $this->logger = $logger;
@@ -86,6 +86,15 @@ class MediaUtility
     }
 
     /**
+     * Get public dir.
+     *
+     * @return string
+     */
+    public function getPublicDir() {
+        return $this->publicDir;
+    }
+
+    /**
      * Find the file extension corresponding to the uploaded file
      *
      * @return FileExtension|null
@@ -95,7 +104,7 @@ class MediaUtility
         $mime = $this->uploadedFile->getMimeType();
 
         /** @var FileExtension $fileExtension */
-        $fileExtension = $this->em->getRepository('ChapleanCmsBundle:FileExtension')
+        $fileExtension = $this->em->getRepository(FileExtension::class)
             ->findOneBy(array('mimeType' => $mime));
 
         return $fileExtension;

@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Chaplean\Bundle\CmsBundle\Entity\MediaImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -49,7 +50,7 @@ class MediaImageType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class'         => 'Chaplean\Bundle\CmsBundle\Entity\MediaImage',
+                'data_class'         => MediaImage::class,
                 'translation_domain' => 'messages',
                 'csrf_protection'    => false,
             )

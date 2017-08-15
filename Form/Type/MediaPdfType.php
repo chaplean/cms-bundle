@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Chaplean\Bundle\CmsBundle\Entity\MediaPdf;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,7 +39,7 @@ class MediaPdfType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\MediaPdf',
+            'data_class' => MediaPdf::class,
             'translation_domain' => 'messages',
             'csrf_protection' => false,
         ]);

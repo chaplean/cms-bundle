@@ -6,7 +6,7 @@ use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
 use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
 use Chaplean\Bundle\CmsBundle\Entity\PostZoom;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * PostTest.php.
@@ -15,7 +15,7 @@ use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class PostTest extends LogicalTestCase
+class PostTest extends TestCase
 {
     /**
      * @covers \Chaplean\Bundle\CmsBundle\Entity\Post::getInstanceOf()

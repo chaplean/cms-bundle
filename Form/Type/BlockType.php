@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Chaplean\Bundle\CmsBundle\Entity\Block;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,7 +45,7 @@ class BlockType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class'         => 'Chaplean\Bundle\CmsBundle\Entity\Block',
+                'data_class'         => Block::class,
                 'translation_domain' => 'messages',
                 'csrf_protection'    => false,
             )

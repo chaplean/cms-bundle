@@ -3,7 +3,7 @@
 namespace Tests\Chaplean\Bundle\CmsBundle\Utility;
 
 use Chaplean\Bundle\CmsBundle\Utility\ErrorFormUtility;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 
@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormInterface;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class ErrorFormUtilityTest extends LogicalTestCase
+class ErrorFormUtilityTest extends TestCase
 {
     /**
      * @covers \Chaplean\Bundle\CmsBundle\Utility\ErrorFormUtility::getErrorsForAngular()

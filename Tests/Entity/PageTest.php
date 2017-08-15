@@ -3,7 +3,7 @@
 namespace Tests\Chaplean\Bundle\CmsBundle\Entity;
 
 use Chaplean\Bundle\CmsBundle\Entity\Page;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * PageTest.php.
@@ -12,7 +12,7 @@ use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class PageTest extends LogicalTestCase
+class PageTest extends TestCase
 {
     /**
      * @covers \Chaplean\Bundle\CmsBundle\Entity\Page::setContent()

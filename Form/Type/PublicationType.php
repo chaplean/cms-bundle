@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Chaplean\Bundle\CmsBundle\Entity\Publication;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -27,13 +28,13 @@ class PublicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-                'datePublicationBegin',
-                DateTimeType::class,
-                [
-                    'required' => false,
-                    'widget'   => 'single_text',
-                ]
-            )
+            'datePublicationBegin',
+            DateTimeType::class,
+            [
+                'required' => false,
+                'widget'   => 'single_text',
+            ]
+        )
             ->add(
                 'datePublicationEnd',
                 DateTimeType::class,
@@ -63,6 +64,12 @@ class PublicationType extends AbstractType
                 [
                     'class'        => 'ChapleanCmsBundle:PublicationStatus',
                     'choice_label' => 'id',
+                    'choice_value' => function ($choice) {
+
+                        dump($choice); //  expect an entity with id from ids
+
+                        return $choice;
+                    },
                     'required'     => true,
                 ]
             );
@@ -77,7 +84,7 @@ class PublicationType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'Chaplean\Bundle\CmsBundle\Entity\Publication',
+                'data_class'         => Publication::class,
                 'translation_domain' => 'messages',
                 'csrf_protection'    => false,
             ]

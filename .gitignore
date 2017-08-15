@@ -13,6 +13,7 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web/medias/
 
 # PHPUnit
 /phpunit.xml

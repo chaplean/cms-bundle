@@ -33,7 +33,6 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Chaplean\Bundle\UnitBundle\ChapleanUnitBundle(),
             new Liip\FunctionalTestBundle\LiipFunctionalTestBundle(),
-            new Sensio\Bundle\DistributionBundle\SensioDistributionBundle(),
         ];
 
         return $bundles;

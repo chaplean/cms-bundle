@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -83,7 +84,7 @@ class PostType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'Chaplean\Bundle\CmsBundle\Entity\Post',
+                'data_class'         => Post::class,
                 'translation_domain' => 'messages',
                 'csrf_protection'    => false,
             ]

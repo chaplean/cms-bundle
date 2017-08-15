@@ -85,11 +85,17 @@ class PostRepositoryTest extends LogicalTestCase
         /** @var Post[] $posts */
         $posts = $this->postRepository->getAll();
 
-        $this->assertEquals('Page-video-1', $posts[0]->getPage()->getTitle());
+        $this->assertEquals('Page-video-1',
+                            $posts[0]->getPage()
+                                ->getTitle()
+        );
 
         $posts = $this->postRepository->getAll(null, 'title', 'asc');
 
-        $this->assertEquals('Page-news-13', $posts[0]->getPage()->getTitle());
+        $this->assertEquals('Page-news-13',
+                            $posts[0]->getPage()
+                                ->getTitle()
+        );
     }
 
     /**
@@ -102,8 +108,16 @@ class PostRepositoryTest extends LogicalTestCase
         $posts = new ArrayCollection($this->postRepository->getAll(5, 'title', 'asc'));
 
         // Page-1, Page-10, Page-11, Page-12, Page-2
-        $this->assertEquals('Page-news-13', $posts->first()->getPage()->getTitle());
-        $this->assertEquals('Page-testimonial-11', $posts->last()->getPage()->getTitle());
+        $this->assertEquals('Page-news-13',
+                            $posts->first()
+                                ->getPage()
+                                ->getTitle()
+        );
+        $this->assertEquals('Page-testimonial-11',
+                            $posts->last()
+                                ->getPage()
+                                ->getTitle()
+        );
     }
 
     /**
@@ -118,7 +132,10 @@ class PostRepositoryTest extends LogicalTestCase
 
         $posts = new ArrayCollection($this->postRepository->getAll(null, 'datePublicationEnd', 'desc'));
 
-        $this->assertEquals($post->getId(), $posts->first()->getId());
+        $this->assertEquals($post->getId(),
+                            $posts->first()
+                                ->getId()
+        );
     }
 
     /**
@@ -163,12 +180,14 @@ class PostRepositoryTest extends LogicalTestCase
         /** @var Post $post */
         $post = $this->getReference('post-news-13');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')
+            ->findAll();
         $this->assertCount(4, $posts);
 
         $this->postRepository->castPostTo($post, 'video');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')
+            ->findAll();
         $this->assertCount(5, $posts);
     }
 
@@ -182,12 +201,14 @@ class PostRepositoryTest extends LogicalTestCase
         /** @var Post $post */
         $post = $this->getReference('post-news-13');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostTestimonial')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostTestimonial')
+            ->findAll();
         $this->assertCount(4, $posts);
 
         $this->postRepository->castPostTo($post, 'testimonial');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostTestimonial')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostTestimonial')
+            ->findAll();
         $this->assertCount(5, $posts);
     }
 
@@ -201,12 +222,14 @@ class PostRepositoryTest extends LogicalTestCase
         /** @var Post $post */
         $post = $this->getReference('post-news-13');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostZoom')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostZoom')
+            ->findAll();
         $this->assertCount(4, $posts);
 
         $this->postRepository->castPostTo($post, 'zoom');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostZoom')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostZoom')
+            ->findAll();
         $this->assertCount(5, $posts);
     }
 
@@ -220,11 +243,11 @@ class PostRepositoryTest extends LogicalTestCase
         /** @var Post $post */
         $post = $this->getReference('post-zoom-5');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')
+            ->findAll();
         $this->assertCount(4, $posts);
 
         $this->postRepository->castPostTo($post, 'video');
-
         // No exception
     }
 
@@ -238,16 +261,16 @@ class PostRepositoryTest extends LogicalTestCase
         /** @var Post $post */
         $post = $this->getReference('post-video-1');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')
+            ->findAll();
         $this->assertCount(4, $posts);
 
         $this->postRepository->castPostTo($post, 'news');
-
         // No exception
     }
 
     /**
-     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::castPostTo()
+     * @covers                   \Chaplean\Bundle\CmsBundle\Repository\PostRepository::castPostTo()
      *
      * @expectedException \Exception
      * @expectedExceptionMessage You cannot cast a Post to his own type
@@ -258,7 +281,8 @@ class PostRepositoryTest extends LogicalTestCase
         /** @var Post $post */
         $post = $this->getReference('post-video-1');
 
-        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')->findAll();
+        $posts = $this->em->getRepository('ChapleanCmsBundle:PostVideo')
+            ->findAll();
         $this->assertCount(4, $posts);
 
         $this->postRepository->castPostTo($post, 'video');
@@ -275,8 +299,14 @@ class PostRepositoryTest extends LogicalTestCase
         $postsActive = $this->postRepository->getAllActive();
 
         $this->assertCount(2, $postsActive);
-        $this->assertEquals('Page-zoom-5', $postsActive[0]->getPage()->getTitle());
-        $this->assertEquals('Page-zoom-6', $postsActive[1]->getPage()->getTitle());
+        $this->assertEquals('Page-zoom-5',
+                            $postsActive[0]->getPage()
+                                ->getTitle()
+        );
+        $this->assertEquals('Page-zoom-6',
+                            $postsActive[1]->getPage()
+                                ->getTitle()
+        );
     }
 
     /**
@@ -286,7 +316,8 @@ class PostRepositoryTest extends LogicalTestCase
      */
     public function testFindActiveWithPost()
     {
-        $id = self::$fixtures->getReference('post-zoom-5')->getId();
+        $id = self::$fixtures->getReference('post-zoom-5')
+            ->getId();
 
         $post = $this->postRepository->findActive($id);
 
@@ -301,7 +332,8 @@ class PostRepositoryTest extends LogicalTestCase
      */
     public function testFindActiveWithInactivePost()
     {
-        $id = self::$fixtures->getReference('post-video-1')->getId();
+        $id = self::$fixtures->getReference('post-video-1')
+            ->getId();
 
         $post = $this->postRepository->findActive($id);
 

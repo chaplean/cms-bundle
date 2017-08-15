@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -59,7 +60,7 @@ class PageRouteType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'Chaplean\Bundle\CmsBundle\Entity\PageRoute',
+                'data_class'         => PageRoute::class,
                 'translation_domain' => 'messages',
                 'csrf_protection'    => false,
             ]
