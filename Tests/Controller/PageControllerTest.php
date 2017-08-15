@@ -2,7 +2,8 @@
 
 namespace Tests\Chaplean\Bundle\CmsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PageControllerTest.
@@ -12,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @copyright 2014 - 2017 Chaplean (http://www.chaplean.coop)
  * @since     7.0.0
  */
-class PageControllerTest extends WebTestCase
+class PageControllerTest extends LogicalTestCase
 {
     /**
      * @covers \Chaplean\Bundle\CmsBundle\Controller\PageController::editAction()
@@ -42,9 +43,10 @@ class PageControllerTest extends WebTestCase
 
         $client->request('GET', '/administration/page');
 
-        $this->assertTrue(
+        $this->assertEquals(
+            Response::HTTP_OK,
             $client->getResponse()
-                ->isOk()
+                ->getStatusCode()
         );
     }
 }
