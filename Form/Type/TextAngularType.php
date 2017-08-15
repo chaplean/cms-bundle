@@ -10,8 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Class TextAngularType.
  *
  * @package   Chaplean\Bundle\CmsBundle\Form\Type
- * @author    Benoit - Chaplean <benoit@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Benoit - Chaplean <benoit@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class TextAngularType extends AbstractType

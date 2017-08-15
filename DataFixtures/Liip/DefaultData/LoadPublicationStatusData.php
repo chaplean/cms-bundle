@@ -10,8 +10,8 @@ use Chaplean\Bundle\CmsBundle\Entity\PublicationStatus;
  * Class LoadPublicationStatusData.
  *
  * @package   Chaplean\Bundle\CmsBundle\DataFixtures\Liip
- * @author    Benoit - Chaplean <benoit@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Benoit - Chaplean <benoit@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class LoadPublicationStatusData extends AbstractFixture

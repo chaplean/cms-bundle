@@ -143,7 +143,7 @@ class Block
      *
      * @return self
      */
-    public function setDateAdd($dateAdd)
+    public function setDateAdd(\DateTime $dateAdd)
     {
         $this->dateAdd = $dateAdd;
 
@@ -167,7 +167,7 @@ class Block
      *
      * @return self
      */
-    public function setDateUpdate($dateUpdate)
+    public function setDateUpdate(\DateTime $dateUpdate = null)
     {
         $this->dateUpdate = $dateUpdate;
 
@@ -191,7 +191,7 @@ class Block
      *
      * @return self
      */
-    public function setPublication($publication)
+    public function setPublication(Publication $publication)
     {
         $this->publication = $publication;
 

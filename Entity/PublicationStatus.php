@@ -132,7 +132,7 @@ class PublicationStatus
      *
      * @return self
      */
-    public function setPublications($publications)
+    public function setPublications(ArrayCollection $publications)
     {
         $this->publications = $publications;
 

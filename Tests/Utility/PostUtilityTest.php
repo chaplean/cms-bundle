@@ -7,19 +7,21 @@ use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
 use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
 use Chaplean\Bundle\CmsBundle\Entity\PostZoom;
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * PostUtilityTest.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class PostUtilityTest extends LogicalTestCase
+class PostUtilityTest extends TestCase
 {
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\PostUtility::getClassByInstance()
+     *
      * @return void
      */
     public function testGetClassByInstance()
@@ -31,6 +33,8 @@ class PostUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\PostUtility::getClassByInstance()
+     *
      * @return void
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Not defined foo type for post.

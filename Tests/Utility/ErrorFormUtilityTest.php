@@ -2,39 +2,46 @@
 
 namespace Tests\Chaplean\Bundle\CmsBundle\Utility;
 
-use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
 use Chaplean\Bundle\CmsBundle\Utility\ErrorFormUtility;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * ErrorFormUtilityTest.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class ErrorFormUtilityTest extends LogicalTestCase
+class ErrorFormUtilityTest extends TestCase
 {
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\ErrorFormUtility::getErrorsForAngular()
+     *
      * @return void
      */
     public function testGetErrorsForm()
     {
-        $formFactory = $this->getContainer()->get('form.factory');
-        $form = $formFactory->create(PostType::class);
+        $form = \Mockery::mock(FormInterface::class);
+        $form->shouldReceive('getName')
+            ->once()
+            ->andReturn('category');
 
         $error = new FormError('Ce champs est requis');
-        $error->setOrigin($form->get('category'));
+        $error->setOrigin($form);
 
-        $errors = array(
+        $errors = [
             $error
+        ];
+
+        $errorsAngular = ErrorFormUtility::getErrorsForAngular($errors, 'chaplean_cms_post_form');
+
+        $this->assertEquals(
+            array(
+                'chaplean_cms_post_form[category]' => 'Ce champs est requis'
+            ),
+            $errorsAngular
         );
-
-        $errorsAngular = ErrorFormUtility::getErrorsForAngular($errors, $form->getName());
-
-        $this->assertEquals(array(
-            'chaplean_cms_post_form[category]' => 'Ce champs est requis'
-        ), $errorsAngular);
     }
 }

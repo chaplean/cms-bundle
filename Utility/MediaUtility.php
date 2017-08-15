@@ -8,17 +8,17 @@ use Chaplean\Bundle\CmsBundle\Entity\FileExtensionPdf;
 use Chaplean\Bundle\CmsBundle\Entity\Media;
 use Chaplean\Bundle\CmsBundle\Entity\MediaImage;
 use Chaplean\Bundle\CmsBundle\Entity\MediaPdf;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * MediaUtility.php.
  *
- * @author    Matthias - Chaplean <matthias@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Matthias - Chaplean <matthias@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class MediaUtility
@@ -32,7 +32,7 @@ class MediaUtility
     /** @var EntityManager $em */
     private $em;
 
-    /** @var Logger $logger */
+    /** @var LoggerInterface $logger */
     private $logger;
 
     /** @var string $publicDir */
@@ -44,12 +44,12 @@ class MediaUtility
     /**
      * MediaUtility constructor.
      *
-     * @param Registry $doctrine
-     * @param Logger   $logger
-     * @param string   $rootDir
-     * @param string   $mediaConfig
+     * @param RegistryInterface $doctrine
+     * @param LoggerInterface   $logger
+     * @param string            $rootDir
+     * @param string            $mediaConfig
      */
-    public function __construct(Registry $doctrine, Logger $logger, $rootDir, $mediaConfig)
+    public function __construct(RegistryInterface $doctrine, LoggerInterface $logger, $rootDir, $mediaConfig)
     {
         $this->em = $doctrine->getManager();
         $this->logger = $logger;
@@ -86,6 +86,15 @@ class MediaUtility
     }
 
     /**
+     * Get public dir.
+     *
+     * @return string
+     */
+    public function getPublicDir() {
+        return $this->publicDir;
+    }
+
+    /**
      * Find the file extension corresponding to the uploaded file
      *
      * @return FileExtension|null
@@ -95,7 +104,7 @@ class MediaUtility
         $mime = $this->uploadedFile->getMimeType();
 
         /** @var FileExtension $fileExtension */
-        $fileExtension = $this->em->getRepository('ChapleanCmsBundle:FileExtension')
+        $fileExtension = $this->em->getRepository(FileExtension::class)
             ->findOneBy(array('mimeType' => $mime));
 
         return $fileExtension;
@@ -104,9 +113,11 @@ class MediaUtility
     /**
      * Insert a media in DB corresponding to the uploaded file and move the file to its correct place
      *
+     * @param string $mediaDirectory
+     *
      * @return Media|null
      */
-    public function createMedia()
+    public function createMedia($mediaDirectory = 'default')
     {
         $fileExtension = $this->getUploadedFileExtension();
 
@@ -127,7 +138,7 @@ class MediaUtility
             return null;
         }
 
-        $fileDir = '/medias/';
+        $fileDir = '/medias/' . $mediaDirectory . '/';
         $fileName = md5(uniqid());
 
         $this->existingMedia->setPath($fileDir . $fileName);
@@ -138,7 +149,6 @@ class MediaUtility
         $this->existingMedia->setExtension($fileExtension);
 
         $this->em->persist($this->existingMedia);
-        $this->em->flush();
 
         return $this->moveFile($fileDir, $fileName, true);
     }
@@ -151,7 +161,7 @@ class MediaUtility
     public function updateMedia()
     {
         $fileExtension = $this->getUploadedFileExtension();
-        
+
         $var = get_class($fileExtension);
 
         if ($this->existingMedia->getExtension() instanceof $var) {
@@ -164,7 +174,6 @@ class MediaUtility
             $this->existingMedia->setExtension($fileExtension);
 
             $this->em->persist($this->existingMedia);
-            $this->em->flush();
 
             $pathSplited = explode('/', $this->existingMedia->getPath());
             $fileName = array_pop($pathSplited);
@@ -190,7 +199,6 @@ class MediaUtility
         }
 
         $this->em->remove($this->existingMedia);
-        $this->em->flush();
 
         return $result;
     }
@@ -230,7 +238,6 @@ class MediaUtility
             $this->logger->error(sprintf('[ERROR] %s : %s', __FUNCTION__, $e->getMessage()));
             if ($deleteOnFail) {
                 $this->em->remove($this->existingMedia);
-                $this->em->flush();
             }
 
             return null;

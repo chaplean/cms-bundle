@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * DefaultController.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.1.0
  */
 class DefaultController extends Controller
@@ -20,7 +20,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return new RedirectResponse($this->generateUrl('cms_back_home'));
+        $landing_route = $this->getParameter('chaplean_cms.template.back_landing_route');
+        return new RedirectResponse($this->generateUrl($landing_route));
     }
 
     /**
@@ -28,6 +29,8 @@ class DefaultController extends Controller
      */
     public function homeAction()
     {
-        return $this->render('ChapleanCmsBundle:Back:index.html.twig');
+        $view = $this->getParameter('chaplean_cms.template.back_index_view');
+
+        return $this->render($view);
     }
 }

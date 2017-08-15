@@ -15,8 +15,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * LoadPostData.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     X.Y.Z
  */
 class LoadPostData extends AbstractFixture implements DependentFixtureInterface

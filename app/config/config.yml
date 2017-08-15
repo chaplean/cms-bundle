@@ -1,13 +1,18 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
 
 framework:
     test: ~
-    translator:      { fallback: '%locale%' }
     secret:          '%secret%'
     router:
-        resource: '%kernel.root_dir%/config/routing.yml'
+        resource: '%kernel.project_dir%/app/config/routing.yml'
         strict_requirements: true
     form:            ~
     csrf_protection: ~
@@ -16,16 +21,16 @@ framework:
         engines: ['twig']
     default_locale:  '%locale%'
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
-        # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
+        storage_id: session.storage.mock_file
     fragments:       ~
     http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
     profiler: { only_exceptions: false }
     serializer:
         enable_annotations: true
-
 
 # Twig Configuration
 twig:
@@ -34,7 +39,7 @@ twig:
 
 # Assetic Configuration
 assetic:
-    debug:          '%use_assetic_debug%'
+    debug:          '%kernel.debug%'
     use_controller: '%use_assetic_controller%'
     bundles:        ['ChapleanCmsBundle']
     ruby: '%ruby.bin%'
@@ -98,31 +103,44 @@ monolog:
 # Doctrine Configuration
 doctrine:
     dbal:
-        default_connection: default
-        connections:
-            default:
-                driver:   '%database_driver%'
-                host:     '%database_host%'
-                port:     '%database_port%'
-                dbname:   '%database_name%'
-                user:     '%database_user%'
-                password: '%database_password%'
-                charset:  UTF8
-                server_version: 5.6
-            logging: null
-            profiling: null
+        driver:   '%database_driver%'
+        host:     '%database_host%'
+        port:     '%database_port%'
+        dbname:   '%database_name%'
+        user:     '%database_user%'
+        password: '%database_password%'
+        charset:  UTF8
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        default_entity_manager: cms
-        entity_managers:
-            cms:
-                mappings:
-                    ChapleanCmsBundle: ~
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
 
 bazinga_js_translation:
     locale_fallback:      fr
     default_domain:       messages
 
+# FosRestBundle request that configuration
+sensio_framework_extra:
+   view:
+       annotations: true
+
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
+            channels: ['!event']
+        console:
+            type: console
+            process_psr_3_messages: false
+            channels: ['!event', '!doctrine', '!console']
+        # To follow logs in real time, execute the following command:
+        # `bin/console server:log -vv`
+        server_log:
+            type: server_log
+            process_psr_3_messages: false
+            host: 127.0.0.1:9911
 fos_rest:
     routing_loader:
         default_format: json

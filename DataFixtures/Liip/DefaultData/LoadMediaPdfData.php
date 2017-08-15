@@ -11,8 +11,8 @@ use Doctrine\Common\Persistence\ObjectManager;
  * Class LoadMediaPdfData.
  *
  * @package   Chaplean\Bundle\CmsBundle\DataFixtures\Liip
- * @author    Matthias - Chaplean <matthias@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Matthias - Chaplean <matthias@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class LoadMediaPdfData extends AbstractFixture implements DependentFixtureInterface
@@ -43,6 +43,7 @@ class LoadMediaPdfData extends AbstractFixture implements DependentFixtureInterf
 
         foreach ($datas as $key => $data) {
             $pdf = new MediaPdf();
+            $pdf->setIsPublic(true);
             $pdf->setPath($data[0]);
             $pdf->setFileName($data[1]);
             $pdf->setFileWeight($data[2]);

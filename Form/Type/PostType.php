@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Utility\PostUtility;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -11,8 +12,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * PostType.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class PostType extends AbstractType
@@ -27,25 +28,25 @@ class PostType extends AbstractType
      *
      * @param mixed $config
      */
-    public function __construct($config)
+    public function __construct($config = null)
     {
         $this->categories = array();
 
         if (is_bool($config) && $config) {
             $this->categories = array(
-                'news'        => 'post.category.news',
-                'testimonial' => 'post.category.testimonial',
-                'video'       => 'post.category.video',
-                'zoom'        => 'post.category.zoom',
+                'post.category.news'        => 'news',
+                'post.category.testimonial' => 'testimonial',
+                'post.category.video'       => 'video',
+                'post.category.zoom'        => 'zoom',
             );
         } elseif (is_array($config)) {
             if (!in_array('news', $config)) {
-                $this->categories += array('news' => 'post.category.news');
+                $this->categories[] = array('post.category.news' => 'news');
             }
 
             foreach ($config as $category) {
                 PostUtility::getClassByInstance($category);
-                $this->categories += array($category => 'post.category.' . $category);
+                $this->categories[] = array('post.category.' . $category => $category);
             }
         }
     }
@@ -58,17 +59,20 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $options = null;
-        $builder
-            ->add('category', ChoiceType::class, array(
-                'mapped'      => false,
-                'choices'     => $this->categories,
-                'empty_data'  => 'news',
-                'required'    => true,
-                'placeholder' => 'post.category.choose'
-            ))
-            ->add('page', new PageType())
-            ->add('publication', new PublicationType());
+        $builder->add(
+            'category',
+            ChoiceType::class,
+            [
+                'mapped'            => false,
+                'choices'           => $this->categories,
+                'choices_as_values' => true,
+                'empty_data'        => 'news',
+                'required'          => true,
+                'placeholder'       => 'post.category.choose'
+            ]
+        )
+            ->add('page', PageType::class)
+            ->add('publication', PublicationType::class);
     }
 
     /**
@@ -78,11 +82,13 @@ class PostType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\Post',
-            'translation_domain' => 'messages',
-            'csrf_protection' => false,
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class'         => Post::class,
+                'translation_domain' => 'messages',
+                'csrf_protection'    => false,
+            ]
+        );
     }
 
     /**

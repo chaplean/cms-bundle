@@ -9,13 +9,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * PageRouteRepositoryTest.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class PageRouteRepositoryTest extends LogicalTestCase
 {
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAll()
@@ -26,6 +28,8 @@ class PageRouteRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetOnly5()
@@ -36,6 +40,8 @@ class PageRouteRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAllOrderByDescId()
@@ -53,6 +59,8 @@ class PageRouteRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAllOrderByAscTitle()
@@ -70,6 +78,8 @@ class PageRouteRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAllOrderByAscTitleLimit5()
@@ -84,6 +94,8 @@ class PageRouteRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAllOrderByDescDatePublicationEnd()

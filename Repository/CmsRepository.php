@@ -8,8 +8,8 @@ use Doctrine\ORM\QueryBuilder;
 /**
  * CmsRepository.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 abstract class CmsRepository extends EntityRepository
@@ -31,6 +31,17 @@ abstract class CmsRepository extends EntityRepository
         $qb = $this->buildQueryGetAll();
 
         return $this->buildParam($qb, $limit, $sort, $order)->getQuery()->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllActive()
+    {
+        $qb = $this->buildQueryGetAll();
+        $qb->where($qb->expr()->eq('ps.keyname', $qb->expr()->literal('published')));
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

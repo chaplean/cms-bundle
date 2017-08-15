@@ -103,7 +103,7 @@ class Publication
      *
      * @return self
      */
-    public function setDatePublicationBegin($datePublicationBegin)
+    public function setDatePublicationBegin(\DateTime $datePublicationBegin = null)
     {
         $this->datePublicationBegin = $datePublicationBegin;
 
@@ -127,7 +127,7 @@ class Publication
      *
      * @return self
      */
-    public function setDatePublicationEnd($datePublicationEnd)
+    public function setDatePublicationEnd(\DateTime $datePublicationEnd = null)
     {
         $this->datePublicationEnd = $datePublicationEnd;
 
@@ -175,7 +175,7 @@ class Publication
      *
      * @return self
      */
-    public function setDateAdd($dateAdd)
+    public function setDateAdd(\DateTime $dateAdd)
     {
         $this->dateAdd = $dateAdd;
 
@@ -199,7 +199,7 @@ class Publication
      *
      * @return self
      */
-    public function setStatus($status)
+    public function setStatus(PublicationStatus $status)
     {
         $this->status = $status;
 

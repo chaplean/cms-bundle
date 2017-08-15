@@ -44,6 +44,7 @@ chaplean_cms:
         back_layout: # Optional (default: 'ChapleanCmsBundle::layout-backoffice.html.twig'), for override default back layout (add a menu in sidebar for example)
         front_layout: # Required view extended by page/post view (example: 'ChapleanCmsBundle::layout-frontoffice.html.twig')
         front_route: # Optional (default: 'app_front'), route name for return to main site
+        back_landing_route: # Optional (default: 'cms_back_home'), landing page to redirect to when requesting the backoffice without specific page
         logo_path: # Optional (default: ''), path of logo top left
         page_index: # Optional (default: 'ChapleanCmsBundle:Front/Page:index.html.twig'), Custom frontend page list
         page_view: # Optional (default: 'ChapleanCmsBundle:Front/Page:view.html.twig'), Custom frontend page

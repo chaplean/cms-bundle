@@ -33,9 +33,7 @@ cms_post_preview:
         expose: true
 
 cms_media_download:
-    path:     /media/{id}
+    path:     /media/download
     defaults: { _controller: 'ChapleanCmsBundle:Media:download' }
-    requirements:
-        id: \d+
     options:
         expose: true

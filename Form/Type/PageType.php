@@ -2,6 +2,7 @@
 
 namespace Chaplean\Bundle\CmsBundle\Form\Type;
 
+use Chaplean\Bundle\CmsBundle\Entity\Page;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -11,8 +12,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * PageType.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class PageType extends AbstractType
@@ -25,23 +26,37 @@ class PageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $options = null;
-        $builder
-            ->add('title', TextType::class, array(
-                'required' => true,
-            ))
-            ->add('subtitle', TextType::class, array(
-                'required' => false,
-            ))
-            ->add('metaDescription', TextareaType::class, array(
-                'required' => false,
-                'attr' => array(
-                    'rows' => 5
-                )
-            ))
-            ->add('content', TextAngularType::class, array(
-                'required' => false,
-            ));
+        $builder->add(
+                'title',
+                TextType::class,
+                [
+                    'required' => true,
+                ]
+            )
+            ->add(
+                'subtitle',
+                TextType::class,
+                [
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'metaDescription',
+                TextareaType::class,
+                [
+                    'required' => false,
+                    'attr'     => [
+                        'rows' => 5
+                    ]
+                ]
+            )
+            ->add(
+                'content',
+                TextAngularType::class,
+                [
+                    'required' => false,
+                ]
+            );
     }
 
     /**
@@ -51,11 +66,13 @@ class PageType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\Page',
-            'translation_domain' => 'messages',
-            'csrf_protection' => false,
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class'         => Page::class,
+                'translation_domain' => 'messages',
+                'csrf_protection'    => false,
+            ]
+        );
     }
 
     /**

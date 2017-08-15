@@ -8,10 +8,10 @@ use Chaplean\Bundle\CmsBundle\Entity\MediaPdf;
 use Chaplean\Bundle\CmsBundle\Form\Type\MediaImageType;
 use Chaplean\Bundle\CmsBundle\Form\Type\MediaPdfType;
 use Chaplean\Bundle\CmsBundle\Utility\MediaUtility;
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
-use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
  * Class MediaController.
  *
  * @package   Chaplean\Bundle\CmsBundle\Controller
- * @author    Matthias - Chaplean <matthias@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Matthias - Chaplean <matthias@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  *
  * @Annotations\RouteResource("Media")
@@ -37,10 +37,9 @@ class MediaController extends FOSRestController
                        ->getRepository('ChapleanCmsBundle:Media')
                        ->findAll();
         $response = $this->view($medias);
-        $response->setSerializationContext(
-            SerializationContext::create()
-                                ->setGroups(array('media_all'))
-        );
+        $context = new Context();
+        $context->setGroups(array('media_all'));
+        $response->setContext($context);
         if ($medias) {
             return $this->handleView($response);
         } else {
@@ -68,16 +67,16 @@ class MediaController extends FOSRestController
             $mediaUtility = $this->get('chaplean_cms.media_utility');
             $mediaUtility->setFile($uploadedMedia);
             $media = $mediaUtility->createMedia();
+            $this->getDoctrine()->getManager()->flush();
 
             if (!$media) {
                 return $this->handleView(new View('Failed to upload media', 400));
             }
 
             $response = $this->view($media);
-            $response->setSerializationContext(
-                SerializationContext::create()
-                                    ->setGroups(array('media_all'))
-            );
+            $context = new Context();
+            $context->setGroups(array('media_all'));
+            $response->setContext($context);
 
             return $this->handleView($response);
         } else {
@@ -102,13 +101,16 @@ class MediaController extends FOSRestController
      */
     public function deleteAction(Media $media)
     {
+        $em = $this->getDoctrine()->getManager();
         if ($media) {
             $mediaUtility = $this->get('chaplean_cms.media_utility');
             $mediaUtility->setMedia($media);
 
             if ($mediaUtility->deleteMedia()) {
+                $em->flush();
                 return $this->handleView(new View());
             } else {
+                $em->flush();
                 return $this->handleView(new View('', 500));
             }
         } else {
@@ -140,6 +142,7 @@ class MediaController extends FOSRestController
                 $mediaUtility->setFile($uploadedMedia);
                 $mediaUtility->setMedia($media);
                 $media = $mediaUtility->updateMedia();
+                $this->getDoctrine()->getManager()->flush();
 
                 if (!$media) {
                     return $this->handleView(new View('Failed to upload media', 500));
@@ -162,10 +165,9 @@ class MediaController extends FOSRestController
             }
 
             $response = $this->view($media);
-            $response->setSerializationContext(
-                SerializationContext::create()
-                                    ->setGroups(array('media_all'))
-            );
+            $context = new Context();
+            $context->setGroups(array('media_all'));
+            $response->setContext($context);
 
             return $this->handleView($response);
         } else {
