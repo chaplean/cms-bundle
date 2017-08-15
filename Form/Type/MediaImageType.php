@@ -10,8 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * MediaImageType.php.
  *
- * @author    Matthias - Chaplean <matthias@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Matthias - Chaplean <matthias@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class MediaImageType extends AbstractType
@@ -24,14 +24,20 @@ class MediaImageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $options = null;
-        $builder
-            ->add('title', TextType::class, array(
-                'required' => false,
-            ))
-            ->add('alternativeTitle', TextType::class, array(
-                'required' => false,
-            ));
+        $builder->add(
+                'title',
+                TextType::class,
+                [
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'alternativeTitle',
+                TextType::class,
+                [
+                    'required' => false,
+                ]
+            );
     }
 
     /**
@@ -41,11 +47,13 @@ class MediaImageType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\MediaImage',
-            'translation_domain' => 'messages',
-            'csrf_protection' => false,
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class'         => 'Chaplean\Bundle\CmsBundle\Entity\MediaImage',
+                'translation_domain' => 'messages',
+                'csrf_protection'    => false,
+            )
+        );
     }
 
     /**

@@ -1,9 +1,7 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: security.yml }
 
 framework:
-    test: ~
     translator:      { fallback: '%locale%' }
     secret:          '%secret%'
     router:
@@ -26,6 +24,10 @@ framework:
     serializer:
         enable_annotations: true
 
+# FosRestBundle request that configuration
+sensio_framework_extra:
+   view:
+       annotations: true
 
 # Twig Configuration
 twig:
@@ -34,7 +36,7 @@ twig:
 
 # Assetic Configuration
 assetic:
-    debug:          '%use_assetic_debug%'
+    debug:          '%kernel.debug%'
     use_controller: '%use_assetic_controller%'
     bundles:        ['ChapleanCmsBundle']
     ruby: '%ruby.bin%'
@@ -98,24 +100,19 @@ monolog:
 # Doctrine Configuration
 doctrine:
     dbal:
-        default_connection: default
-        connections:
-            default:
-                driver:   '%database_driver%'
-                host:     '%database_host%'
-                port:     '%database_port%'
-                dbname:   '%database_name%'
-                user:     '%database_user%'
-                password: '%database_password%'
-                charset:  UTF8
-                server_version: 5.6
-            logging: null
-            profiling: null
+        driver:   '%database_driver%'
+        host:     '%database_host%'
+        port:     '%database_port%'
+        dbname:   '%database_name%'
+        user:     '%database_user%'
+        password: '%database_password%'
+        charset:  UTF8
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        default_entity_manager: cms
+        default_entity_manager: app
         entity_managers:
-            cms:
+            app:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
                 mappings:
                     ChapleanCmsBundle: ~
 

@@ -8,8 +8,8 @@ use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 /**
  * CmsExtensionTest.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class CmsExtensionTest extends LogicalTestCase
@@ -30,6 +30,8 @@ class CmsExtensionTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Twig\Extension\CmsExtension::getGlobals()
+     *
      * @return void
      */
     public function testGetGlobals()
@@ -56,6 +58,8 @@ class CmsExtensionTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Twig\Extension\CmsExtension::getName()
+     *
      * @return void
      */
     public function testGetName()

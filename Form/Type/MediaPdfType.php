@@ -10,8 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * MediaPdfType.php.
  *
- * @author    Matthias - Chaplean <matthias@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Matthias - Chaplean <matthias@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class MediaPdfType extends AbstractType
@@ -24,11 +24,10 @@ class MediaPdfType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $options = null;
         $builder
-            ->add('title', TextType::class, array(
+            ->add('title', TextType::class, [
                 'required' => true,
-            ));
+            ]);
     }
 
     /**
@@ -38,11 +37,11 @@ class MediaPdfType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\MediaPdf',
             'translation_domain' => 'messages',
             'csrf_protection' => false,
-        ));
+        ]);
     }
 
     /**

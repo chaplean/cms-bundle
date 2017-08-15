@@ -11,8 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * PageType.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class PageType extends AbstractType
@@ -25,23 +25,22 @@ class PageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $options = null;
         $builder
-            ->add('title', TextType::class, array(
+            ->add('title', TextType::class, [
                 'required' => true,
-            ))
-            ->add('subtitle', TextType::class, array(
+            ])
+            ->add('subtitle', TextType::class, [
                 'required' => false,
-            ))
-            ->add('metaDescription', TextareaType::class, array(
+            ])
+            ->add('metaDescription', TextareaType::class, [
                 'required' => false,
-                'attr' => array(
+                'attr' => [
                     'rows' => 5
-                )
-            ))
-            ->add('content', TextAngularType::class, array(
+                ]
+            ])
+            ->add('content', TextAngularType::class, [
                 'required' => false,
-            ));
+            ]);
     }
 
     /**
@@ -51,11 +50,11 @@ class PageType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\Page',
             'translation_domain' => 'messages',
             'csrf_protection' => false,
-        ));
+        ]);
     }
 
     /**

@@ -12,8 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * PostRepositoryTest.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class PostRepositoryTest extends LogicalTestCase
@@ -34,6 +34,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAll()
@@ -42,6 +44,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetOnly5()
@@ -50,6 +54,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAllOrderByDescId()
@@ -70,6 +76,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAllOrderByAscTitle()
@@ -85,6 +93,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAllOrderByAscTitleLimit5()
@@ -97,6 +107,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
+     *
      * @return void
      */
     public function testGetAllOrderByDescDatePublicationEnd()
@@ -110,6 +122,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::getByCategory()
+     *
      * @return void
      */
     public function testGetByCategoryVideo()
@@ -124,6 +138,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::getByCategory()
+     *
      * @return void
      */
     public function testGetByCategoryTestimonial()
@@ -138,6 +154,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::castPostTo()
+     *
      * @return void
      */
     public function testCastPostToVideo()
@@ -155,6 +173,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::castPostTo()
+     *
      * @return void
      */
     public function testCastPostToTestimonial()
@@ -172,6 +192,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::castPostTo()
+     *
      * @return void
      */
     public function testCastPostToZoom()
@@ -189,6 +211,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::castPostTo()
+     *
      * @return void
      */
     public function testCastPostZoomToVideo()
@@ -205,6 +229,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::castPostTo()
+     *
      * @return void
      */
     public function testCastPostVideoToPost()
@@ -221,6 +247,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::castPostTo()
+     *
      * @expectedException \Exception
      * @expectedExceptionMessage You cannot cast a Post to his own type
      * @return void
@@ -237,6 +265,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::getAllActive()
+     *
      * @return void
      */
     public function testGetAllActive()
@@ -250,6 +280,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::findActive()
+     *
      * @return void
      */
     public function testFindActiveWithPost()
@@ -263,6 +295,8 @@ class PostRepositoryTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Repository\PostRepository::findActive()
+     *
      * @return void
      */
     public function testFindActiveWithInactivePost()

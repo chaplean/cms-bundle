@@ -11,8 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Class PageType.
  *
  * @package   Chaplean\Bundle\CmsBundle\Form\Type
- * @author    Benoit - Chaplean <benoit@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Benoit - Chaplean <benoit@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class PageRouteType extends AbstractType
@@ -25,19 +25,29 @@ class PageRouteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $options = null;
-        $builder
-            ->add('path', TextType::class, array(
-                'required' => true
-            ))
-            ->add('menuName', TextType::class, array(
-                'required' => true
-            ))
-            ->add('rollover', TextType::class, array(
-                'required' => false
-            ))
-            ->add('page', new PageType())
-            ->add('publication', new PublicationType());
+        $builder->add(
+                'path',
+                TextType::class,
+                [
+                    'required' => true
+                ]
+            )
+            ->add(
+                'menuName',
+                TextType::class,
+                [
+                    'required' => true
+                ]
+            )
+            ->add(
+                'rollover',
+                TextType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add('page', PageType::class)
+            ->add('publication', PublicationType::class);
     }
 
     /**
@@ -47,11 +57,13 @@ class PageRouteType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Chaplean\Bundle\CmsBundle\Entity\PageRoute',
-            'translation_domain' => 'messages',
-            'csrf_protection' => false,
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class'         => 'Chaplean\Bundle\CmsBundle\Entity\PageRoute',
+                'translation_domain' => 'messages',
+                'csrf_protection'    => false,
+            ]
+        );
     }
 
     /**

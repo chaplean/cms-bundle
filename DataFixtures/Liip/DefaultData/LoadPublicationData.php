@@ -11,8 +11,8 @@ use Chaplean\Bundle\CmsBundle\Entity\Publication;
  * Class LoadPublicationData.
  *
  * @package   Chaplean\Bundle\CmsBundle\DataFixtures\Liip
- * @author    Benoit - Chaplean <benoit@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Benoit - Chaplean <benoit@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
 class LoadPublicationData extends AbstractFixture implements DependentFixtureInterface

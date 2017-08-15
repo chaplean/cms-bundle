@@ -246,11 +246,10 @@ abstract class Media
      */
     public function getInstanceOf()
     {
-        switch (true) {
-            case $this instanceof MediaImage:
-                return 'image';
-            case $this instanceof MediaPdf:
-                return 'pdf';
+        if ($this instanceof MediaImage) {
+            return 'image';
+        } elseif ($this instanceof MediaPdf) {
+            return 'pdf';
         }
 
         return null;

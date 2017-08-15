@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * MediaUtilityTest.php.
  *
- * @author    Matthias - Chaplean <matthias@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Matthias - Chaplean <matthias@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     3.3.0
  */
 class MediaUtilityTest extends LogicalTestCase
@@ -54,6 +54,9 @@ class MediaUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::setFile()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::getUploadedFileExtension()
+     *
      * @return void
      */
     public function testUploadedFileExtensionPdf()
@@ -67,6 +70,9 @@ class MediaUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::setFile()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::getUploadedFileExtension()
+     *
      * @return void
      */
     public function testUploadedFileExtensionImage()
@@ -80,6 +86,9 @@ class MediaUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::setFile()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::createMedia()
+     *
      * @return void
      */
     public function testCreateMediaPdf()
@@ -99,6 +108,9 @@ class MediaUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::setFile()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::createMedia()
+     *
      * @return void
      */
     public function testCreateMediaImage()
@@ -117,6 +129,10 @@ class MediaUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::setFile()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::createMedia()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::updateMedia()
+     *
      * @return void
      */
     public function testUpdateMediaPdf()
@@ -141,6 +157,10 @@ class MediaUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::setFile()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::createMedia()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::updateMedia()
+     *
      * @return void
      */
     public function testUpdateMediaImage()
@@ -165,6 +185,10 @@ class MediaUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::setFile()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::createMedia()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::deleteMedia()
+     *
      * @return void
      */
     public function testDeleteMediaPdf()
@@ -188,6 +212,10 @@ class MediaUtilityTest extends LogicalTestCase
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::setFile()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::createMedia()
+     * @covers \Chaplean\Bundle\CmsBundle\Utility\MediaUtility::deleteMedia()
+     *
      * @return void
      */
     public function testDeleteMediaImage()

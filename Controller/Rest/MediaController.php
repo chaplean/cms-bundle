@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
  * Class MediaController.
  *
  * @package   Chaplean\Bundle\CmsBundle\Controller
- * @author    Matthias - Chaplean <matthias@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Matthias - Chaplean <matthias@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  *
  * @Annotations\RouteResource("Media")

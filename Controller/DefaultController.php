@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * DefaultController.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.1.0
  */
 class DefaultController extends Controller

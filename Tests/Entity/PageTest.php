@@ -3,18 +3,21 @@
 namespace Tests\Chaplean\Bundle\CmsBundle\Entity;
 
 use Chaplean\Bundle\CmsBundle\Entity\Page;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTest;
+use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
 
 /**
  * PageTest.php.
  *
- * @author    Valentin - Chaplean <valentin@chaplean.com>
- * @copyright 2014 - 2015 Chaplean (http://www.chaplean.com)
+ * @author    Valentin - Chaplean <valentin@chaplean.coop>
+ * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class PageTest extends LogicalTest
+class PageTest extends LogicalTestCase
 {
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Entity\Page::setContent()
+     * @covers \Chaplean\Bundle\CmsBundle\Entity\Page::getImageSource()
+     *
      * @return void
      */
     public function testGetImageSource()
@@ -28,6 +31,8 @@ class PageTest extends LogicalTest
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Entity\Page::getImageSource()
+     *
      * @return void
      */
     public function testGetImageSourceOnEmptyContent()
@@ -38,6 +43,9 @@ class PageTest extends LogicalTest
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Entity\Page::setContent()
+     * @covers \Chaplean\Bundle\CmsBundle\Entity\Page::getStripContent()
+     *
      * @return void
      */
     public function testGetStripContent()
@@ -51,6 +59,8 @@ class PageTest extends LogicalTest
     }
 
     /**
+     * @covers \Chaplean\Bundle\CmsBundle\Entity\Page::getStripContent()
+     *
      * @return void
      */
     public function testGetStripContentOnEmptyContent()
