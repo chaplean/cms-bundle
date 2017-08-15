@@ -1,2 +1,8 @@
-.*
-!private/ssh
+# PHPUnit
+phpunit.xml
+
+# PhpStorm
+.idea
+
+# Database
+.db
