@@ -175,5 +175,5 @@ publication_status:
     status:
         archived: Archivés
         published: Publiés
-        unpublished: Non publiés
+        unpublished: Publié hors menu
         published_unpublished: Publiés et non publiés
