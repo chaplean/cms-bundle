@@ -6,7 +6,7 @@ use Chaplean\Bundle\CmsBundle\Entity\Post;
 use Chaplean\Bundle\CmsBundle\Entity\PostTestimonial;
 use Chaplean\Bundle\CmsBundle\Entity\PostVideo;
 use Chaplean\Bundle\CmsBundle\Repository\PostRepository;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use Chaplean\Bundle\UnitBundle\Test\FunctionalTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class PostRepositoryTest extends LogicalTestCase
+class PostRepositoryTest extends FunctionalTestCase
 {
     /**
      * @var PostRepository
@@ -85,16 +85,18 @@ class PostRepositoryTest extends LogicalTestCase
         /** @var Post[] $posts */
         $posts = $this->postRepository->getAll();
 
-        $this->assertEquals('Page-video-1',
-                            $posts[0]->getPage()
-                                ->getTitle()
+        $this->assertEquals(
+            'Page-video-1',
+            $posts[0]->getPage()
+                ->getTitle()
         );
 
         $posts = $this->postRepository->getAll(null, 'title', 'asc');
 
-        $this->assertEquals('Page-news-13',
-                            $posts[0]->getPage()
-                                ->getTitle()
+        $this->assertEquals(
+            'Page-news-13',
+            $posts[0]->getPage()
+                ->getTitle()
         );
     }
 
@@ -108,15 +110,17 @@ class PostRepositoryTest extends LogicalTestCase
         $posts = new ArrayCollection($this->postRepository->getAll(5, 'title', 'asc'));
 
         // Page-1, Page-10, Page-11, Page-12, Page-2
-        $this->assertEquals('Page-news-13',
-                            $posts->first()
-                                ->getPage()
-                                ->getTitle()
+        $this->assertEquals(
+            'Page-news-13',
+            $posts->first()
+                ->getPage()
+                ->getTitle()
         );
-        $this->assertEquals('Page-testimonial-11',
-                            $posts->last()
-                                ->getPage()
-                                ->getTitle()
+        $this->assertEquals(
+            'Page-testimonial-11',
+            $posts->last()
+                ->getPage()
+                ->getTitle()
         );
     }
 
@@ -132,9 +136,10 @@ class PostRepositoryTest extends LogicalTestCase
 
         $posts = new ArrayCollection($this->postRepository->getAll(null, 'datePublicationEnd', 'desc'));
 
-        $this->assertEquals($post->getId(),
-                            $posts->first()
-                                ->getId()
+        $this->assertEquals(
+            $post->getId(),
+            $posts->first()
+                ->getId()
         );
     }
 
@@ -299,13 +304,15 @@ class PostRepositoryTest extends LogicalTestCase
         $postsActive = $this->postRepository->getAllActive();
 
         $this->assertCount(2, $postsActive);
-        $this->assertEquals('Page-zoom-5',
-                            $postsActive[0]->getPage()
-                                ->getTitle()
+        $this->assertEquals(
+            'Page-zoom-5',
+            $postsActive[0]->getPage()
+                ->getTitle()
         );
-        $this->assertEquals('Page-zoom-6',
-                            $postsActive[1]->getPage()
-                                ->getTitle()
+        $this->assertEquals(
+            'Page-zoom-6',
+            $postsActive[1]->getPage()
+                ->getTitle()
         );
     }
 
@@ -316,7 +323,7 @@ class PostRepositoryTest extends LogicalTestCase
      */
     public function testFindActiveWithPost()
     {
-        $id = self::$fixtures->getReference('post-zoom-5')
+        $id = $this->getReference('post-zoom-5')
             ->getId();
 
         $post = $this->postRepository->findActive($id);
@@ -332,7 +339,7 @@ class PostRepositoryTest extends LogicalTestCase
      */
     public function testFindActiveWithInactivePost()
     {
-        $id = self::$fixtures->getReference('post-video-1')
+        $id = $this->getReference('post-video-1')
             ->getId();
 
         $post = $this->postRepository->findActive($id);

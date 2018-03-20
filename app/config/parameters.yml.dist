@@ -1,15 +1,17 @@
 parameters:
-    database_driver: pdo_mysql
+    database_driver: pdo_sqlite
     database_host: mysql
     database_port: 3306
-    database_name: test_database
+    database_name: '%kernel.cache_dir%/test.db'
     database_user: root
     database_password: root
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
+    mailer_port: 465
     mailer_user: null
     mailer_password: null
+    mailer_encryption: null
 
     locale: fr
     secret: ThatsChapleanCmsBun2le

@@ -3,7 +3,7 @@
 namespace Tests\Chaplean\Bundle\CmsBundle\Repository;
 
 use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use Chaplean\Bundle\UnitBundle\Test\FunctionalTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class PageRouteRepositoryTest extends LogicalTestCase
+class PageRouteRepositoryTest extends FunctionalTestCase
 {
     /**
      * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
@@ -104,6 +104,6 @@ class PageRouteRepositoryTest extends LogicalTestCase
 
         $pageRoutes = new ArrayCollection($pageRouteRepository->getAll(null, 'datePublicationEnd', 'desc'));
 
-        $this->assertEquals(9, $pageRoutes->first()->getId());
+        $this->assertEquals(12, $pageRoutes->first()->getId());
     }
 }

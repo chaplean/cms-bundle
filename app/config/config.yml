@@ -22,7 +22,9 @@ framework:
     default_locale:  '%locale%'
     trusted_hosts:   ~
     session:
+        handler_id: session.handler.native_file
         storage_id: session.storage.mock_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -106,6 +108,7 @@ doctrine:
         driver:   '%database_driver%'
         host:     '%database_host%'
         port:     '%database_port%'
+        path:     '%kernel.cache_dir%/test.db'
         dbname:   '%database_name%'
         user:     '%database_user%'
         password: '%database_password%'
