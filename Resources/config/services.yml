@@ -1,4 +1,8 @@
 services:
+    _defaults:
+        autowire: true
+        public: true
+
     app.tokens.action_listener:
         class: Chaplean\Bundle\CmsBundle\Listener\ConfigListener
         arguments: ['%chaplean_cms%']

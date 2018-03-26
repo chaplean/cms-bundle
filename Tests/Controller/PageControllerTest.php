@@ -2,7 +2,7 @@
 
 namespace Tests\Chaplean\Bundle\CmsBundle\Controller;
 
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use Chaplean\Bundle\UnitBundle\Test\FunctionalTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @copyright 2014 - 2017 Chaplean (http://www.chaplean.coop)
  * @since     7.0.0
  */
-class PageControllerTest extends LogicalTestCase
+class PageControllerTest extends FunctionalTestCase
 {
     /**
      * @covers \Chaplean\Bundle\CmsBundle\Controller\PageController::editAction()

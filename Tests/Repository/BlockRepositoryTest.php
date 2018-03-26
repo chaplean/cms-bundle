@@ -3,7 +3,7 @@
 namespace Tests\Chaplean\Bundle\CmsBundle\Repository;
 
 use Chaplean\Bundle\CmsBundle\Entity\Block;
-use Chaplean\Bundle\UnitBundle\Test\LogicalTestCase;
+use Chaplean\Bundle\UnitBundle\Test\FunctionalTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @copyright 2014 - 2015 Chaplean (http://www.chaplean.coop)
  * @since     1.0.0
  */
-class BlockRepositoryTest extends LogicalTestCase
+class BlockRepositoryTest extends FunctionalTestCase
 {
     /**
      * @covers \Chaplean\Bundle\CmsBundle\Repository\CmsRepository::getAll()
@@ -103,6 +103,6 @@ class BlockRepositoryTest extends LogicalTestCase
 
         $blocks = new ArrayCollection($blockRepository->getAll(null, 'datePublicationEnd', 'desc'));
 
-        $this->assertEquals(9, $blocks->first()->getId());
+        $this->assertEquals(12, $blocks->first()->getId());
     }
 }
