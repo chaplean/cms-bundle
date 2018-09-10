@@ -203,8 +203,8 @@ class LoadPublicationData extends AbstractFixture implements DependentFixtureInt
      */
     public function getDependencies()
     {
-        return array(
+        return [
             'Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData\LoadPublicationStatusData'
-        );
+        ];
     }
 }

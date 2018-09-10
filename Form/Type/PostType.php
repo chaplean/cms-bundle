@@ -30,23 +30,23 @@ class PostType extends AbstractType
      */
     public function __construct($config = null)
     {
-        $this->categories = array();
+        $this->categories = [];
 
         if (is_bool($config) && $config) {
-            $this->categories = array(
+            $this->categories = [
                 'post.category.news'        => 'news',
                 'post.category.testimonial' => 'testimonial',
                 'post.category.video'       => 'video',
                 'post.category.zoom'        => 'zoom',
-            );
+            ];
         } elseif (is_array($config)) {
             if (!in_array('news', $config)) {
-                $this->categories[] = array('post.category.news' => 'news');
+                $this->categories[] = ['post.category.news' => 'news'];
             }
 
             foreach ($config as $category) {
                 PostUtility::getClassByInstance($category);
-                $this->categories[] = array('post.category.' . $category => $category);
+                $this->categories[] = ['post.category.' . $category => $category];
             }
         }
     }

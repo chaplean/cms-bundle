@@ -175,11 +175,11 @@ class Configuration implements ConfigurationInterface
      */
     public static function availableAction($type)
     {
-        $actions = array(
-            'block' => array('add', 'remove'),
-            'page'  => array('add', 'remove'),
-            'post'  => array('add', 'duplicate', 'remove')
-        );
+        $actions = [
+            'block' => ['add', 'remove'],
+            'page'  => ['add', 'remove'],
+            'post'  => ['add', 'duplicate', 'remove']
+        ];
 
         return $actions[$type];
     }

@@ -45,10 +45,11 @@ class BlockController extends ChapleanRestController
      */
     public function getAction(Block $block)
     {
-        return $this->handleResponse($block, array(
+        return $this->handleResponse($block, [
             'block_all', 'publication_all', 'publication_status_id',
             'publication_status_keyname', 'publication_status_position'
-        ));
+        ]
+        );
     }
 
     /**
@@ -58,10 +59,11 @@ class BlockController extends ChapleanRestController
      */
     public function getAllAction(Request $request)
     {
-        return $this->getAll($request, 'ChapleanCmsBundle:Block', array(
+        return $this->getAll($request, 'ChapleanCmsBundle:Block', [
             'block_all', 'publication_all', 'publication_status_id',
             'publication_status_keyname', 'publication_status_position'
-        ));
+        ]
+        );
     }
 
     /**
@@ -105,10 +107,11 @@ class BlockController extends ChapleanRestController
                 return $this->handleView($this->view('Block create failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleResponse($block, array(
+            return $this->handleResponse($block, [
                 'block_all', 'publication_all', 'publication_status_id',
                 'publication_status_keyname', 'publication_status_position',
-            ));
+            ]
+            );
         }
 
         return $this->handleView($this->view(ErrorFormUtility::getErrorsForAngular($formBlock->getErrors(true), $formBlock->getName()), 400));
@@ -160,10 +163,11 @@ class BlockController extends ChapleanRestController
                 return $this->handleView($this->view('Block update failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleResponse($block, array(
+            return $this->handleResponse($block, [
                 'block_all', 'publication_all', 'publication_status_id',
                 'publication_status_keyname', 'publication_status_position',
-            ));
+            ]
+            );
         }
 
         return $this->handleView($this->view(ErrorFormUtility::getErrorsForAngular($formBlock->getErrors(true), $formBlock->getName()), 400));

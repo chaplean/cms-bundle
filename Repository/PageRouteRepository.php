@@ -36,14 +36,14 @@ class PageRouteRepository extends CmsRepository
     {
         $filters = array_merge(
             $this->getSortable(),
-            array(
+            [
                 'id'         => 'p.id',
                 'path'       => 'p.path',
                 'menu'       => 'p.menuName',
                 'rollover'   => 'p.rollover',
                 'dateAdd'    => 'p.dateAdd',
                 'dateUpdate' => 'p.dateUpdate'
-            )
+            ]
         );
 
         return array_key_exists($sort, $filters) ? $filters[$sort] : null;

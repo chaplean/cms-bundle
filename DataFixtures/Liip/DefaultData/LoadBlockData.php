@@ -36,20 +36,20 @@ class LoadBlockData extends AbstractFixture implements DependentFixtureInterface
         $nextMonth = clone $now;
         $nextMonth->modify('+1 month');
 
-        $datas = array(
-            '1'  => array($lastMonth, 'publication-passed-published-highlighted'),
-            '2'  => array($lastMonth, 'publication-passed-published-not-highlighted'),
-            '3'  => array($lastMonth, 'publication-passed-unpublished-highlighted'),
-            '4'  => array($lastMonth, 'publication-passed-unpublished-not-highlighted'),
-            '5'  => array($yesterday, 'publication-current-published-highlighted'),
-            '6'  => array($yesterday, 'publication-current-published-not-highlighted'),
-            '7'  => array($yesterday, 'publication-current-unpublished-highlighted'),
-            '8'  => array($yesterday, 'publication-current-unpublished-not-highlighted'),
-            '9'  => array($yesterday, 'publication-incoming-published-highlighted'),
-            '10' => array($yesterday, 'publication-incoming-published-not-highlighted'),
-            '11' => array($yesterday, 'publication-incoming-unpublished-highlighted'),
-            '12' => array($yesterday, 'publication-incoming-unpublished-not-highlighted'),
-        );
+        $datas = [
+            '1'  => [$lastMonth, 'publication-passed-published-highlighted'],
+            '2'  => [$lastMonth, 'publication-passed-published-not-highlighted'],
+            '3'  => [$lastMonth, 'publication-passed-unpublished-highlighted'],
+            '4'  => [$lastMonth, 'publication-passed-unpublished-not-highlighted'],
+            '5'  => [$yesterday, 'publication-current-published-highlighted'],
+            '6'  => [$yesterday, 'publication-current-published-not-highlighted'],
+            '7'  => [$yesterday, 'publication-current-unpublished-highlighted'],
+            '8'  => [$yesterday, 'publication-current-unpublished-not-highlighted'],
+            '9'  => [$yesterday, 'publication-incoming-published-highlighted'],
+            '10' => [$yesterday, 'publication-incoming-published-not-highlighted'],
+            '11' => [$yesterday, 'publication-incoming-unpublished-highlighted'],
+            '12' => [$yesterday, 'publication-incoming-unpublished-not-highlighted'],
+        ];
 
         foreach ($datas as $key => $data) {
             /** @var Publication $publication */
@@ -76,8 +76,8 @@ class LoadBlockData extends AbstractFixture implements DependentFixtureInterface
      */
     public function getDependencies()
     {
-        return array(
+        return [
             'Chaplean\Bundle\CmsBundle\DataFixtures\Liip\DefaultData\LoadPublicationData'
-        );
+        ];
     }
 }

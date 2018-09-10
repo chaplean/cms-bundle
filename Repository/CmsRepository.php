@@ -71,13 +71,13 @@ abstract class CmsRepository extends EntityRepository
      */
     protected function getSortable()
     {
-        return array(
+        return [
             'title'                => 'p.page.title',
             'subtitle'             => 'p.page.subtitle',
             'metaDescription'      => 'p.page.metaDescription',
             'datePublicationBegin' => 'pu.datePublicationBegin',
             'datePublicationEnd'   => 'pu.datePublicationEnd',
-        );
+        ];
     }
 
     /**

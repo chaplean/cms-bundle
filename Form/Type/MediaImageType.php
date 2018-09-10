@@ -49,11 +49,11 @@ class MediaImageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class'         => MediaImage::class,
                 'translation_domain' => 'messages',
                 'csrf_protection'    => false,
-            )
+            ]
         );
     }
 

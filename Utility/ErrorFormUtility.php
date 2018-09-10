@@ -22,16 +22,16 @@ class ErrorFormUtility
      */
     public static function getErrorsForAngular($errors, $formName)
     {
-        $errorsAngular = array();
+        $errorsAngular = [];
 
         /** @var FormError $error */
         foreach ($errors as $error) {
             $message = $error->getMessage();
             $field = $error->getOrigin()->getName();
 
-            $errorsAngular += array(
+            $errorsAngular += [
                 $formName . '[' . $field . ']' => $message
-            );
+            ];
         }
 
         return $errorsAngular;

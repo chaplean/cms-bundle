@@ -38,7 +38,7 @@ class MediaController extends FOSRestController
                        ->findAll();
         $response = $this->view($medias);
         $context = new Context();
-        $context->setGroups(array('media_all'));
+        $context->setGroups(['media_all']);
         $response->setContext($context);
         if ($medias) {
             return $this->handleView($response);
@@ -75,7 +75,7 @@ class MediaController extends FOSRestController
 
             $response = $this->view($media);
             $context = new Context();
-            $context->setGroups(array('media_all'));
+            $context->setGroups(['media_all']);
             $response->setContext($context);
 
             return $this->handleView($response);
@@ -166,7 +166,7 @@ class MediaController extends FOSRestController
 
             $response = $this->view($media);
             $context = new Context();
-            $context->setGroups(array('media_all'));
+            $context->setGroups(['media_all']);
             $response->setContext($context);
 
             return $this->handleView($response);

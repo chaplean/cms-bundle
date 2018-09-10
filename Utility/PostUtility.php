@@ -22,12 +22,12 @@ class PostUtility
      */
     public static function getAvailableInstance()
     {
-        return array(
+        return [
             Post::class            => 'news',
             PostVideo::class       => 'video',
             PostTestimonial::class => 'testimonial',
             PostZoom::class        => 'zoom',
-        );
+        ];
     }
 
     /**

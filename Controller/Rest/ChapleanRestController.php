@@ -29,7 +29,7 @@ abstract class ChapleanRestController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
 
         $success = true;
-        $errors = array();
+        $errors = [];
         try {
             $em->remove($entity);
             $em->flush();
@@ -117,6 +117,6 @@ abstract class ChapleanRestController extends FOSRestController
      */
     public function getLimitOrderParamters($request)
     {
-        return array($request->query->get('limit', null), $request->query->get('sort', null), $request->query->get('order', null));
+        return [$request->query->get('limit', null), $request->query->get('sort', null), $request->query->get('order', null)];
     }
 }

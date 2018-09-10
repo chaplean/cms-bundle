@@ -23,13 +23,13 @@ class LoadFileExtensionImageData extends AbstractFixture
      */
     public function load(ObjectManager $manager)
     {
-        $datas = array(
-            array('png', 'image/png'),
-            array('bmp', 'image/bmp'),
-            array('gif', 'image/gif'),
-            array('ico', 'image/x-icon'),
-            array('jpg', 'image/jpeg'),
-        );
+        $datas = [
+            ['png', 'image/png'],
+            ['bmp', 'image/bmp'],
+            ['gif', 'image/gif'],
+            ['ico', 'image/x-icon'],
+            ['jpg', 'image/jpeg'],
+        ];
 
         foreach ($datas as $data) {
             $image = new FileExtensionImage();

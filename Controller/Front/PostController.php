@@ -1,12 +1,12 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Controller;
+namespace Chaplean\Bundle\CmsBundle\Controller\Front;
 
 use Chaplean\Bundle\CmsBundle\Entity\Post;
-use Chaplean\Bundle\CmsBundle\Form\Type\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class PostController.
@@ -19,46 +19,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PostController extends Controller
 {
     /**
-     * Edit action
+     * @Route("/posts", name="cms_post_index")
      *
-     * @param Integer $postId Page Id
-     *
-     * @return Response
-     * @throws NotFoundHttpException
-     */
-    public function editAction($postId = null)
-    {
-        $form = $this->createForm(PostType::class);
-
-        return $this->render(
-            'ChapleanCmsBundle:Back/Post:edit.html.twig',
-            array(
-                'postId' => $postId,
-                'form' => $form->createView(),
-            )
-        );
-    }
-
-    /**
-     * Return posts list
-     *
-     * @return Response
-     */
-    public function listAction()
-    {
-        $translator = $this->get('translator');
-
-        return $this->render(
-            'ChapleanCmsBundle:Back/Post:list.html.twig',
-            array(
-                'path' => array(
-                    $translator->trans('menu.posts')
-                )
-            )
-        );
-    }
-
-    /**
      * @return Response
      */
     public function indexAction()
@@ -68,6 +30,8 @@ class PostController extends Controller
     }
 
     /**
+     * @Route("/post/{postId}", name="cms_post_view")
+     *
      * @param integer $postId
      *
      * @return Response
@@ -85,12 +49,15 @@ class PostController extends Controller
         }
 
         $template = $this->getParameter('chaplean_cms.template.post_view');
-        return $this->render($template, array(
+        return $this->render($template, [
             'post' => $post,
-        ));
+        ]
+        );
     }
 
     /**
+     * @Route("/preview/post/{postId}", name="cms_post_preview")
+     *
      * @param integer $postId
      *
      * @return Response
@@ -104,8 +71,9 @@ class PostController extends Controller
         }
 
         $template = $this->getParameter('chaplean_cms.template.post_view');
-        return $this->render($template, array(
+        return $this->render($template, [
             'post' => $post,
-        ));
+        ]
+        );
     }
 }

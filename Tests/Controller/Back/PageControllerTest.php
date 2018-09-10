@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Chaplean\Bundle\CmsBundle\Controller;
+namespace Tests\Chaplean\Bundle\CmsBundle\Back\Controller;
 
 use Chaplean\Bundle\UnitBundle\Test\FunctionalTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PageControllerTest extends FunctionalTestCase
 {
     /**
-     * @covers \Chaplean\Bundle\CmsBundle\Controller\PageController::editAction()
+     * @covers \Chaplean\Bundle\CmsBundle\Controller\Back\PageController::editAction()
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class PageControllerTest extends FunctionalTestCase
     }
 
     /**
-     * @covers \Chaplean\Bundle\CmsBundle\Controller\PageController::editAction()
+     * @covers \Chaplean\Bundle\CmsBundle\Controller\Back\PageController::editAction()
      *
      * @return void
      */

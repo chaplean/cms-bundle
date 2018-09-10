@@ -38,9 +38,9 @@ class ErrorFormUtilityTest extends TestCase
         $errorsAngular = ErrorFormUtility::getErrorsForAngular($errors, 'chaplean_cms_post_form');
 
         $this->assertEquals(
-            array(
+            [
                 'chaplean_cms_post_form[category]' => 'Ce champs est requis'
-            ),
+            ],
             $errorsAngular
         );
     }

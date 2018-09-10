@@ -44,10 +44,11 @@ class PostController extends ChapleanRestController
      */
     public function getAction(Post $post)
     {
-        return $this->handleResponse($post, array(
+        return $this->handleResponse($post, [
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname'
-        ));
+        ]
+        );
     }
 
     /**
@@ -75,11 +76,12 @@ class PostController extends ChapleanRestController
      */
     public function getAllAction(Request $request)
     {
-        return $this->getAll($request, 'ChapleanCmsBundle:Post', array(
+        return $this->getAll($request, 'ChapleanCmsBundle:Post', [
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname',
             'page_image_source', 'page_strip_content'
-        ));
+        ]
+        );
     }
 
     /**
@@ -90,11 +92,12 @@ class PostController extends ChapleanRestController
      */
     public function getAllActiveAction(Request $request)
     {
-        return $this->getAllActive($request, 'ChapleanCmsBundle:Post', array(
+        return $this->getAllActive($request, 'ChapleanCmsBundle:Post', [
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname',
             'page_image_source', 'page_strip_content'
-        ));
+        ]
+        );
     }
 
     /**
@@ -111,10 +114,11 @@ class PostController extends ChapleanRestController
 
         $posts = $this->getDoctrine()->getRepository('ChapleanCmsBundle:Post')->getByCategory($category, $limit, $sort, $order);
 
-        return $this->handleResponse($posts, array(
+        return $this->handleResponse($posts, [
             'post_all', 'publication_all', 'page_all',
             'publication_status_id', 'publication_status_keyname'
-        ));
+        ]
+        );
     }
 
     /**
@@ -172,10 +176,11 @@ class PostController extends ChapleanRestController
                 return $this->handleView($this->view('Post creation failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleResponse($post, array(
+            return $this->handleResponse($post, [
                 'post_all', 'publication_all', 'page_all',
                 'publication_status_id', 'publication_status_keyname'
-            ));
+            ]
+            );
         }
 
         return $this->handleView($this->view(ErrorFormUtility::getErrorsForAngular($formPost->getErrors(true), $formPost->getName()), 400));
@@ -226,10 +231,11 @@ class PostController extends ChapleanRestController
                 return $this->handleView($this->view('Post update failed : ' . $e->getMessage(), 400));
             }
 
-            return $this->handleResponse($post, array(
+            return $this->handleResponse($post, [
                 'post_all', 'publication_all', 'page_all',
                 'publication_status_id', 'publication_status_keyname'
-            ));
+            ]
+            );
         }
 
         return $this->handleView($this->view(ErrorFormUtility::getErrorsForAngular($formPost->getErrors(true), $formPost->getName()), 400));

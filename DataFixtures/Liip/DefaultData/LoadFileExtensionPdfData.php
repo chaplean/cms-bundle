@@ -23,9 +23,9 @@ class LoadFileExtensionPdfData extends AbstractFixture
      */
     public function load(ObjectManager $manager)
     {
-        $datas = array(
-            '1'  => array('pdf', 'application/pdf'),
-        );
+        $datas = [
+            '1'  => ['pdf', 'application/pdf'],
+        ];
 
         foreach ($datas as $data) {
             $pdf = new FileExtensionPdf();

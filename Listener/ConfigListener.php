@@ -23,7 +23,7 @@ class ConfigListener
     /**
      * @var array
      */
-    private $controllerToFeature = array(
+    private $controllerToFeature = [
         'Chaplean\Bundle\CmsBundle\Controller\Rest\MediaController' => 'media',
         'Chaplean\Bundle\CmsBundle\Controller\Rest\BlockController' => 'block',
         'Chaplean\Bundle\CmsBundle\Controller\BlockController'      => 'block',
@@ -31,7 +31,7 @@ class ConfigListener
         'Chaplean\Bundle\CmsBundle\Controller\PostController'       => 'post',
         'Chaplean\Bundle\CmsBundle\Controller\Rest\PageController'  => 'page',
         'Chaplean\Bundle\CmsBundle\Controller\PageController'       => 'page',
-    );
+    ];
 
     /**
      * ConfigListener constructor.

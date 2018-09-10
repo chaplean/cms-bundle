@@ -34,14 +34,14 @@ class BlockRepository extends CmsRepository
      */
     protected function buildSort($sort)
     {
-        $filters = array(
+        $filters = [
             'id'                   => 'b.id',
             'name'                 => 'b.name',
             'dateAdd'              => 'b.dateAdd',
             'dateUpdate'           => 'b.dateUpdate',
             'datePublicationBegin' => 'pu.datePublicationBegin',
             'datePublicationEnd'   => 'pu.datePublicationEnd',
-        );
+        ];
 
         return array_key_exists($sort, $filters) ? $filters[$sort] : null;
     }

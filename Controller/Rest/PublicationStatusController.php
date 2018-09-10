@@ -25,9 +25,10 @@ class PublicationStatusController extends ChapleanRestController
      */
     public function getAction(PublicationStatus $publicationStatus)
     {
-        return $this->handleResponse($publicationStatus, array(
+        return $this->handleResponse($publicationStatus, [
             'publication_status_id', 'publication_status_keyname', 'publication_status_position'
-        ));
+        ]
+        );
     }
 
     /**
@@ -37,8 +38,9 @@ class PublicationStatusController extends ChapleanRestController
      */
     public function getAllAction(Request $request)
     {
-        return $this->getAll($request, 'ChapleanCmsBundle:PublicationStatus', array(
+        return $this->getAll($request, 'ChapleanCmsBundle:PublicationStatus', [
             'publication_status_id', 'publication_status_keyname', 'publication_status_position'
-        ));
+        ]
+        );
     }
 }

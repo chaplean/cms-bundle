@@ -105,7 +105,7 @@ class MediaUtility
 
         /** @var FileExtension $fileExtension */
         $fileExtension = $this->em->getRepository(FileExtension::class)
-            ->findOneBy(array('mimeType' => $mime));
+            ->findOneBy(['mimeType' => $mime]);
 
         return $fileExtension;
     }

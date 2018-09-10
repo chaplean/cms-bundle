@@ -1,10 +1,11 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Controller;
+namespace Chaplean\Bundle\CmsBundle\Controller\Back;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * DefaultController.php.
@@ -16,15 +17,20 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/administration", name="cms_back_index")
+     *
      * @return Response
      */
     public function indexAction()
     {
-        $landing_route = $this->getParameter('chaplean_cms.template.back_landing_route');
-        return new RedirectResponse($this->generateUrl($landing_route));
+        $landingRoute = $this->getParameter('chaplean_cms.template.back_landing_route');
+
+        return new RedirectResponse($this->generateUrl($landingRoute));
     }
 
     /**
+     * @Route("/administration/home", name="cms_back_home")
+     *
      * @return Response
      */
     public function homeAction()

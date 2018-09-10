@@ -44,11 +44,11 @@ class BlockType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class'         => Block::class,
                 'translation_domain' => 'messages',
                 'csrf_protection'    => false,
-            )
+            ]
         );
     }
 

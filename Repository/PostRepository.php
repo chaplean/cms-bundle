@@ -41,11 +41,11 @@ class PostRepository extends CmsRepository
     {
         $filters = array_merge(
             $this->getSortable(),
-            array(
+            [
                 'id'         => 'p.id',
                 'dateAdd'    => 'p.dateAdd',
                 'dateUpdate' => 'p.dateUpdate',
-            )
+            ]
         );
 
         return array_key_exists($sort, $filters) ? $filters[$sort] : null;
@@ -67,11 +67,11 @@ class PostRepository extends CmsRepository
         $qb->andWhere('pu.datePublicationBegin IS NULL OR pu.datePublicationBegin <= :now');
         $qb->andWhere('pu.datePublicationEnd IS NULL OR pu.datePublicationEnd >= :now');
         $qb->setParameters(
-            array(
+            [
                 'postId'    => $postId,
                 'published' => 'published',
                 'now'       => $now->format('Y-m-d'),
-            )
+            ]
         );
 
         try {
@@ -98,10 +98,10 @@ class PostRepository extends CmsRepository
         $qb->andWhere('pu.datePublicationBegin IS NULL OR pu.datePublicationBegin <= :now');
         $qb->andWhere('pu.datePublicationEnd IS NULL OR pu.datePublicationEnd >= :now');
         $qb->setParameters(
-            array(
+            [
                 'published' => 'published',
                 'now'       => $now->format('Y-m-d'),
-            )
+            ]
         );
 
         return $qb->getQuery()->getResult();

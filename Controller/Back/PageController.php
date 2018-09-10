@@ -1,6 +1,6 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Controller;
+namespace Chaplean\Bundle\CmsBundle\Controller\Back;
 
 use Chaplean\Bundle\CmsBundle\Form\Type\PageRouteType;
 use Doctrine\ORM\EntityManager;
@@ -9,6 +9,7 @@ use Chaplean\Bundle\CmsBundle\Entity\PageRoute;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class PageController.
@@ -21,9 +22,24 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PageController extends Controller
 {
     /**
+     * New action
+     *
+     * @Route("/administration/page", name="cms_page_new")
+     *
+     * @return Response
+     * @throws NotFoundHttpException
+     */
+    public function newAction()
+    {
+        return $this->editAction(null);
+    }
+
+    /**
      * Edit action
      *
-     * @param Integer $pageId Page Id
+     * @Route("/administration/page/{pageId}", name="cms_page_edit", requirements={"pageId" = "\d+"})
+     *
+     * @param integer $pageId Page Id
      *
      * @return Response
      * @throws NotFoundHttpException
@@ -47,27 +63,20 @@ class PageController extends Controller
 
         return $this->render(
             'ChapleanCmsBundle:Back/Page:edit.html.twig',
-            array(
+            [
                 'pageId' => ($pageRoute !== null) ? $pageRoute->getId() : null,
                 'form' => $form->createView(),
-                'path' => array(
+                'path' => [
                     $translator->trans('menu.page')
-                )
-            )
+                ]
+            ]
         );
     }
 
     /**
-     * @return Response
-     */
-    public function indexAction()
-    {
-        $template = $this->getParameter('chaplean_cms.template.page_index');
-        return $this->render($template);
-    }
-
-    /**
      * Return pages list
+     *
+     * @Route("/administration/pages", name="cms_page_list")
      *
      * @return Response
      */
@@ -77,44 +86,11 @@ class PageController extends Controller
 
         return $this->render(
             'ChapleanCmsBundle:Back/Page:list.html.twig',
-            array(
-                'path' => array(
+            [
+                'path' => [
                     $translator->trans('menu.pages')
-                )
-            )
-        );
-    }
-
-    /**
-     * Return the page attached to the given path
-     *
-     * @param string $pagePath Page path
-     *
-     * @return Response
-     */
-    public function viewAction($pagePath)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        /** @var EntityRepository $pageRouteRepository */
-        $pageRouteRepository = $em->getRepository('ChapleanCmsBundle:PageRoute');
-
-        /** @var PageRoute $pageRoute */
-        $pageRoute = $pageRouteRepository->findOneBy(array('path' => $pagePath));
-
-        if ($pageRoute === null) {
-            throw $this->createNotFoundException(
-                $this->get('translator')
-                    ->trans('error.not_found')
-            );
-        }
-
-        $template = $this->getParameter('chaplean_cms.template.page_view');
-        return $this->render(
-            $template,
-            array(
-                'pageRoute' => $pageRoute
-            )
+                ]
+            ]
         );
     }
 }

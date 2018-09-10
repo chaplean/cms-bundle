@@ -33,7 +33,7 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
      */
     public function getGlobals()
     {
-        return array(
+        return [
             'access_debug'      => $this->getParameters('access_debug'),
             'cms_back_layout'   => $this->getParameters('template', 'back_layout'),
             'cms_front_layout'  => $this->getParameters('template', 'front_layout'),
@@ -44,7 +44,7 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
             'page_is_activate'  => $this->moduleIsActived('page'),
             'media_is_activate' => $this->moduleIsActived('media'),
             'cms_action'        => $this->getActionModule(),
-        );
+        ];
     }
 
     /**
@@ -73,11 +73,11 @@ class CmsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInt
      */
     public function getActionModule()
     {
-        $actionsByModules = array(
-            'block' => array(),
-            'page'  => array(),
-            'post'  => array(),
-        );
+        $actionsByModules = [
+            'block' => [],
+            'page'  => [],
+            'post'  => [],
+        ];
 
         if (is_bool($this->parametersCms['modules']['block']) && $this->parametersCms['modules']['block']) {
             $actionsByModules['block'] = Configuration::availableAction('block');

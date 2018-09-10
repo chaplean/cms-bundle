@@ -1,12 +1,13 @@
 <?php
 
-namespace Chaplean\Bundle\CmsBundle\Controller;
+namespace Chaplean\Bundle\CmsBundle\Controller\Front;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * MediaController.php.
@@ -18,6 +19,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class MediaController extends Controller
 {
     /**
+     * @Route("/media/download", name="cms_media_download", options={"expose" = true})
+     *
      * @param Request $request
      *
      * @return Response
@@ -39,9 +42,10 @@ class MediaController extends Controller
             $fileName = array_pop($fileName);
         }
 
-        return new Response(file_get_contents($path), 200, array(
+        return new Response(file_get_contents($path), 200, [
             'Content-Type' => 'application/force-download',
             'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
-        ));
+        ]
+        );
     }
 }
