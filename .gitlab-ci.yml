@@ -17,14 +17,17 @@ cache:
 
 before_script:
     - mkdir -p /root/.ssh
-    - cp ./private/ssh/* /root/.ssh/
-    - chmod 600 /root/.ssh/*
-    - composer install --prefer-dist --no-interaction
-    - chmod -R +x ./bin/
+    - echo -e "Host *\n\tForwardAgent yes\n\n" > /root/.ssh/config
+    - echo "$CHAPLEAN_DEPLOY_KEY" >> /root/.ssh/id_rsa && chmod 0600 /root/.ssh/id_rsa
+    - echo "$CHAPLEAN_KNOWN_HOSTS" >> /root/.ssh/known_hosts && chmod 0600 /root/.ssh/known_hosts
+    - eval `ssh-agent -s`
+    - ssh-add
 
 test:
     stage: test
     script:
+        - cp app/config/parameters.yml.dist app/config/parameters.yml
+        - composer install --prefer-dist --no-interaction
         - phpdbg -qrr ./bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-html coverage/ --coverage-text
     artifacts:
         paths:
@@ -34,4 +37,4 @@ test:
 deploy:
     stage: deploy
     script:
-        - ssh chaplean@satis.chaplean.coop /home/www/chaplean.coop/satis/bin/satis build /home/www/chaplean.coop/satis/satis.json /home/www/chaplean.coop/satis/web 
+        - ssh chaplean@satis.chaplean.coop /home/www/chaplean.coop/satis/bin/satis build /home/www/chaplean.coop/satis/satis.json /home/www/chaplean.coop/satis/web
