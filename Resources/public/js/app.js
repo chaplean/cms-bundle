@@ -61,11 +61,14 @@ cms.controller('clCmsMainController', function($scope, $rootScope, $window, Post
 
     angular.element($window).bind('scroll', function() {
         var elTextAngular = angular.element('text-angular');
+        var that = this;
 
-        if (elTextAngular && elTextAngular.offset()) {
-            var offsetToolbar = elTextAngular.offset().top;
-            $rootScope.textAngularToolbarTopFixed = this.pageYOffset >= offsetToolbar && this.pageYOffset < offsetToolbar + angular.element('text-angular .ta-scroll-window').height();
-        }
+        angular.forEach(elTextAngular, function (textAngular) {
+            var el = angular.element(textAngular);
+            var offsetToolbar = el.offset().top;
+            var id = el.attr('id');
+            $rootScope.textAngularToolbarTopFixed[id] = that.pageYOffset >= offsetToolbar && that.pageYOffset < offsetToolbar + angular.element('text-angular#' + id + ' .ta-scroll-window').height();
+        });
 
         $scope.safeApply();
     });
