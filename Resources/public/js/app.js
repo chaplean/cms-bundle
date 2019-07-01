@@ -58,6 +58,7 @@ cms.run(function(amMoment) {
 });
 
 cms.controller('clCmsMainController', function($scope, $rootScope, $window, Post, $ngBootbox, TranslationService, CmsRouter, clCmsMenu) {
+    $rootScope.textAngularToolbarTopFixed = {};
 
     angular.element($window).bind('scroll', function() {
         var elTextAngular = angular.element('text-angular');
